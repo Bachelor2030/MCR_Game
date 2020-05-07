@@ -15,12 +15,13 @@ public class Player extends Receptor {
 
     public Player(String name, int lifePoints, Deque<Card> deck) {
         super(name, lifePoints);
-
-        for(Card card : deck)
+        if(deck != null && deck.size() > 0)
         {
-            deck.add(card);
+            for(Card card : deck)
+            {
+                deck.add(card);
+            }
         }
-
     }
 
     @Override
