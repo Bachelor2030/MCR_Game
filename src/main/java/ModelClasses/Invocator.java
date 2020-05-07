@@ -1,8 +1,8 @@
 package ModelClasses;
 
 
-import Command.ConcreteCommand;
+import Command.Macro;
 
 public interface Invocator {
-    void setCommand(ConcreteCommand command);
+    void setCommand(Macro command);
 }

@@ -2,7 +2,7 @@ package Command;
 
 import Player.Player;
 
-public class OnPlayer extends ConcreteCommand {
+public class OnPlayer extends Macro {
     private Player[] players;
 
     @Override

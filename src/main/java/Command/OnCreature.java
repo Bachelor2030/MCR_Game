@@ -2,7 +2,7 @@ package Command;
 
 import Player.Creature.Creature;
 
-public class OnCreature extends ConcreteCommand {
+public class OnCreature extends Macro {
     private Creature[] creatures;
 
     @Override

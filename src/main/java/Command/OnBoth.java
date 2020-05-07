@@ -3,7 +3,7 @@ package Command;
 import Player.Creature.Creature;
 import Player.Player;
 
-public class OnBoth extends ConcreteCommand {
+public class OnBoth extends Macro {
     private Creature[] creatures;
     private Player[] players;
 
