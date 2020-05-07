@@ -2,19 +2,25 @@ package Player;
 
 import ModelClasses.Receptor;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class Player extends Receptor {
     private static final int NBR_CARDS_PER_DECK = 50;
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
 
-    private Card[] deck = new Card[NBR_CARDS_PER_DECK];
-    private Card[] hand = new Card[NBR_CARDS_MAX_IN_HAND];
+    //faster than Stack or LinkedList
+    Deque<Card> deck = new ArrayDeque<Card>(NBR_CARDS_PER_DECK);
+    Deque<Card> hand = new ArrayDeque<Card>(NBR_CARDS_MAX_IN_HAND);
 
-    public Player(String name, int lifePoints, Card[] deck) {
+    public Player(String name, int lifePoints, Deque<Card> deck) {
         super(name, lifePoints);
 
-        for (int card = 0; card < NBR_CARDS_PER_DECK; ++card) {
-            this.deck[card] = deck[card];
+        for(Card card : deck)
+        {
+            deck.add(card);
         }
+
     }
 
     @Override
