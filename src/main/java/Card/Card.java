@@ -1,4 +1,4 @@
-package Player;
+package Card;
 
 import Command.Macro;
 import ModelClasses.Invocator;

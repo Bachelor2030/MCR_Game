@@ -1,5 +1,6 @@
 package Player;
 
+import Card.Card;
 import ModelClasses.Receptor;
 
 import java.util.ArrayDeque;

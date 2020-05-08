@@ -1,4 +1,4 @@
-package Player;
+package Card;
 
 import org.junit.jupiter.api.Test;
 

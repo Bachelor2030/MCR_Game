@@ -1,4 +1,4 @@
-package Player;
+package Card;
 
 public enum CardType {
     CREATURE,
