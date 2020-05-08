@@ -7,3 +7,6 @@ directories:
 
 sudo: false
 script: mvn clean test
+
+- name: Run java checkstyle
+  uses: nikitasavinov/checkstyle-action@0.1.0
