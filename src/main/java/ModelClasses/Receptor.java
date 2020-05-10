@@ -9,6 +9,10 @@ public abstract class Receptor {
         this.lifePoints = lifePoints;
     }
 
+    public int getLifePoints() {
+        return lifePoints;
+    }
+
     public void hit(int lifePoints) {
         this.lifePoints -= lifePoints;
     }
@@ -17,9 +21,5 @@ public abstract class Receptor {
 
     public String getName() {
         return name;
-    }
-
-    public int getLifePoints() {
-        return lifePoints;
     }
 }

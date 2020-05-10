@@ -21,25 +21,30 @@ public class Player extends Receptor {
     private HashMap<Integer, Card> history = new HashMap<>();
 
     private int actionPoints;
+    private int nbEggDestroyed;
 
     public Player(String name, List<Card> deck) {
         super(name, STARTING_LIFE_POINTS);
 
         actionPoints = 0;
+        if(deck != null)
+        {
+           // Shuffle the given deck
+          Collections.shuffle(deck);
+          if (!deck.isEmpty()) {
+              this.deck.addAll(deck);
+          }
 
-        // Shuffle the given deck
-        Collections.shuffle(deck);
-        if (!deck.isEmpty()) {
-            this.deck.addAll(deck);
+          init();
         }
-
-        init();
     }
 
     private void init() {
         for (int i = 0; i < NBR_INIT_CARDS; ++i) {
             hand.add(deck.remove());
         }
+
+        nbEggDestroyed = 0;
     }
 
     @Override
@@ -69,6 +74,10 @@ public class Player extends Receptor {
         return actionPoints;
     }
 
+    public int getNbEggDestroyed() {
+        return nbEggDestroyed;
+    }
+  
     public boolean playCard(int index) {
         Card cardToPlay = null;
         int i = 0;
