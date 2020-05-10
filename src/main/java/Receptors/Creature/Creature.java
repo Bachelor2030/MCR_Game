@@ -1,4 +1,4 @@
-package Player.Creature;
+package Receptors.Creature;
 
 import GameBoard.Spot;
 import ModelClasses.LiveReceptor;

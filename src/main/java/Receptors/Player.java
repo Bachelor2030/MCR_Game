@@ -1,4 +1,4 @@
-package Player;
+package Receptors;
 
 import Card.Card;
 import ModelClasses.LiveReceptor;

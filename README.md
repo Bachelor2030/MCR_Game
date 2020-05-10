@@ -2,7 +2,7 @@
 Le concept de ce jeu est fortement inspiré de Krosmaga, un jeu vidéo mêlant tower defense et jeu de cartes à collectionner virtuel développé par Ankama Games. 
 Il a été réalisé en suivant le modèle Commande.
 
-## Player
+## Receptors
 Un joueur possède : 
 - un nom
 - des points de vie
@@ -39,7 +39,7 @@ Quand elle est jouée, elle execute sa commande et diminue de cost les actionsPo
 
 ### Spell
 A une commande de type sort qui aura un effet immédiat sur le joueur adverse
-### Trap
+### Receptors.Trap
 A une commande de type piège qui va poser un piège sur une case du jeu
 ### Creature
 A une commande qui permet de créer et placer une nouvelle créature sur le plateau de jeu

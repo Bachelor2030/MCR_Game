@@ -1,7 +1,7 @@
 package Command;
 
 import GameBoard.Spot;
-import Player.Creature.Creature;
+import Receptors.Creature.Creature;
 
 public class CreateCreature extends Macro {
     private Spot position;

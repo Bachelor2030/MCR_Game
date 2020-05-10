@@ -1,7 +1,7 @@
 package Command;
 
 import GameBoard.Spot;
-import Player.Creature.Creature;
+import Receptors.Creature.Creature;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
