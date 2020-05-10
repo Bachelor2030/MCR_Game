@@ -13,6 +13,9 @@ public class Spot {
     //Est-ce que la case est piégée ou non.
     private boolean isTrapped = false;
 
+    //Est-ce qu'une créature est placée sur la case ou non.
+    private boolean isBusy = false;
+
     /**
      * Constructeur de la classe Spot.
      */
@@ -34,5 +37,21 @@ public class Spot {
      */
     public void setTrapped(boolean trapped) {
         isTrapped = trapped;
+    }
+
+    /**
+     * Permet de savoir si une case est occupée par une créature.
+     * @return true si occupée, false sinon.
+     */
+    public boolean isBusy() {
+        return isBusy;
+    }
+
+    /**
+     * Permet de définir si une case est occupée par une créature.
+     * @param busy : true si occupée, false sinon.
+     */
+    public void setBusy(boolean busy) {
+        isBusy = busy;
     }
 }
