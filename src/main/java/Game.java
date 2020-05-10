@@ -1,6 +1,8 @@
 import GameBoard.Board;
 import Player.Player;
 
+import static java.lang.System.exit;
+
 /**
  * Cette classe permet de modéliser le jeu.
  */
@@ -40,11 +42,33 @@ public class Game {
     }
 
     /**
+     * Permet de terminer le jeu
+     * @param winner : le joueur gagnant
+     * @param looser : le joueur perdant
+     */
+    public void gameOver(Player winner, Player looser)
+    {
+        System.out.println(winner.getName() + " a gagné.\nBouuuh t'es un looser, " + looser.getName() + " !");
+        //exit(0);
+    }
+
+    /**
      * Permet de savoir si le jeu est terminé.
+     * Le jeu est terminé si l'un des joueurs à épuiser ses points de vie, ou si l'un des deux joueurs à détruit
+     * au moins deux oeufs de l'adversaire.
      * @return true si le jeu est terminé, false sinon.
      */
     private boolean finished() {
-        // TODO : if a player has no lifePoints left, the game is finished
+        if(player1.getLifePoints() <= 0 || player2.getNbEggDestroyed() >= 2)
+        {
+            gameOver(player2, player1);
+            return true;
+        }
+        else if(player2.getLifePoints() <= 0 || player1.getNbEggDestroyed() >= 2)
+        {
+            gameOver(player1, player2);
+            return true;
+        }
         return false;
     }
 }

@@ -10,8 +10,10 @@ public class Player extends Receptor {
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
 
     //faster than Stack or LinkedList
-    Deque<Card> deck = new ArrayDeque<Card>(NBR_CARDS_PER_DECK);
-    Deque<Card> hand = new ArrayDeque<Card>(NBR_CARDS_MAX_IN_HAND);
+    private Deque<Card> deck = new ArrayDeque<Card>(NBR_CARDS_PER_DECK);
+    private Deque<Card> hand = new ArrayDeque<Card>(NBR_CARDS_MAX_IN_HAND);
+
+    private int nbEggDestroyed;
 
     public Player(String name, int lifePoints, Deque<Card> deck) {
         super(name, lifePoints);
@@ -22,6 +24,8 @@ public class Player extends Receptor {
                 deck.add(card);
             }
         }
+
+        nbEggDestroyed = 0;
     }
 
     @Override
@@ -32,5 +36,9 @@ public class Player extends Receptor {
     @Override
     public void playTurn() {
 
+    }
+
+    public int getNbEggDestroyed() {
+        return nbEggDestroyed;
     }
 }

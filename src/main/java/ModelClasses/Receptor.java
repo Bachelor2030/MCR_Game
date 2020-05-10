@@ -9,6 +9,14 @@ public abstract class Receptor {
         this.lifePoints = lifePoints;
     }
 
+    public int getLifePoints() {
+        return lifePoints;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public abstract void action();
     public abstract void playTurn();
 }
