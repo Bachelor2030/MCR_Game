@@ -1,7 +1,8 @@
-package Command;
+package Command.Commands;
 
 import Card.Card;
 import Card.CardType;
+import Command.Command;
 import Receptors.Player;
 
 import java.util.HashMap;

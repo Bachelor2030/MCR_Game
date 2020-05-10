@@ -1,5 +1,6 @@
-package Command;
+package Command.Commands;
 
+import Command.Command;
 import Receptors.Creature.Creature;
 
 public class MoveCreature implements Command {

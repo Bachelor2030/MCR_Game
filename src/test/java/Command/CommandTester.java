@@ -1,5 +1,6 @@
 package Command;
 
+import Command.Commands.CreateCreature;
 import GameBoard.Spot;
 import Receptors.Creature.Creature;
 import org.junit.jupiter.api.Test;

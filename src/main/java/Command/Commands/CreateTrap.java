@@ -1,5 +1,6 @@
-package Command;
+package Command.Commands;
 
+import Command.Command;
 import GameBoard.Spot;
 import Receptors.Trap;
 
