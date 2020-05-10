@@ -1,6 +1,5 @@
 package Utils;
 
-import Card.TrapCard;
 import Card.Card;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +21,7 @@ public class CardsJsonParser {
             String name = arr.getJSONObject(i).getString("name");
             // TODO set all card variables correctly
 
-            cards.add(new TrapCard());
+            //cards.add(new Card(name));
             System.out.println(name);
         }
 
