@@ -56,6 +56,7 @@ public class Game {
      * Permet de savoir si le jeu est terminé.
      * Le jeu est terminé si l'un des joueurs à épuiser ses points de vie, ou si l'un des deux joueurs à détruit
      * au moins deux oeufs de l'adversaire.
+     * Permet de savoir si le jeu est terminé.
      * @return true si le jeu est terminé, false sinon.
      */
     private boolean finished() {

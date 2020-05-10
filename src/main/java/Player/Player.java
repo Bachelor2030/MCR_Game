@@ -3,10 +3,7 @@ package Player;
 import Card.Card;
 import ModelClasses.Receptor;
 
-import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 public class Player extends Receptor {
     private static final int STARTING_LIFE_POINTS = 50;
@@ -15,12 +12,16 @@ public class Player extends Receptor {
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
 
-    //faster than Stack or LinkedList
-    private Deque<Card> deck = new ArrayDeque<Card>(NBR_CARDS_PER_DECK);
-    private Deque<Card> hand = new ArrayDeque<Card>(NBR_CARDS_MAX_IN_HAND);
+    private Deque<Card> deck = new ArrayDeque<>(NBR_CARDS_PER_DECK);
+    private Deque<Card> hand = new ArrayDeque<>(NBR_CARDS_MAX_IN_HAND);
 
-    private int nbEggDestroyed;
+    // Historic of the player
+    // the map is set as so : <trunNumber, cardPlayed>
+    // There can be multiple cards in one turn
+    private HashMap<Integer, Card> history = new HashMap<>();
+
     private int actionPoints;
+    private int nbEggDestroyed;
 
     public Player(String name, Deque<Card> deck) {
         super(name, STARTING_LIFE_POINTS);
@@ -75,5 +76,25 @@ public class Player extends Receptor {
 
     public int getNbEggDestroyed() {
         return nbEggDestroyed;
+    }
+  
+    public boolean playCard(int index) {
+        Card cardToPlay = null;
+        int i = 0;
+        for(Card card : hand) {
+            if (i++ == index) {
+                cardToPlay = card;
+                break;
+            }
+        }
+
+        if(cardToPlay != null &&
+            actionPoints >= cardToPlay.getCost()) {
+
+            cardToPlay.play();
+            actionPoints -= cardToPlay.getCost();
+            return true;
+        }
+        return false;
     }
 }
