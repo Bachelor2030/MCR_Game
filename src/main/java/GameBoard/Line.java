@@ -24,4 +24,16 @@ public class Line {
             spots.add(new Spot());
         }
     }
+
+    public int getNB_SPOTS() {
+        return NB_SPOTS;
+    }
+
+    public LinkedList<Spot> getSpots() {
+        return spots;
+    }
+
+    public int getNoLine() {
+        return noLine;
+    }
 }
