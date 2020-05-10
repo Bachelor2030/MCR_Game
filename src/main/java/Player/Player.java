@@ -1,44 +1,50 @@
 package Player;
 
 import Card.Card;
-import ModelClasses.Receptor;
+import ModelClasses.LiveReceptor;
 
-import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
-public class Player extends Receptor {
+public class Player extends LiveReceptor {
     private static final int STARTING_LIFE_POINTS = 50;
     private static final int NBR_INIT_CARDS = 3;
     private static final int NBR_CARDS_PER_DECK = 50;
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
 
-    //faster than Stack or LinkedList
     private Deque<Card> deck = new ArrayDeque<>(NBR_CARDS_PER_DECK);
     private Deque<Card> hand = new ArrayDeque<>(NBR_CARDS_MAX_IN_HAND);
 
+    // Historic of the player
+    // the map is set as so : <trunNumber, cardPlayed>
+    // There can be multiple cards in one turn
+    private HashMap<Integer, Card> history = new HashMap<>();
+
     private int actionPoints;
+    private int nbEggDestroyed;
 
     public Player(String name, List<Card> deck) {
         super(name, STARTING_LIFE_POINTS);
 
         actionPoints = 0;
+        if(deck != null)
+        {
+           // Shuffle the given deck
+          Collections.shuffle(deck);
+          if (!deck.isEmpty()) {
+              this.deck.addAll(deck);
+          }
 
-        // Shuffle the given deck
-        Collections.shuffle(deck);
-        if (!deck.isEmpty()) {
-            this.deck.addAll(deck);
+          init();
         }
-
-        init();
     }
 
     private void init() {
         for (int i = 0; i < NBR_INIT_CARDS; ++i) {
             hand.add(deck.remove());
         }
+
+        nbEggDestroyed = 0;
     }
 
     @Override
@@ -66,5 +72,29 @@ public class Player extends Receptor {
 
     public int getActionPoints() {
         return actionPoints;
+    }
+
+    public int getNbEggDestroyed() {
+        return nbEggDestroyed;
+    }
+  
+    public boolean playCard(int index) {
+        Card cardToPlay = null;
+        int i = 0;
+        for(Card card : hand) {
+            if (i++ == index) {
+                cardToPlay = card;
+                break;
+            }
+        }
+
+        if(cardToPlay != null &&
+            actionPoints >= cardToPlay.getCost()) {
+
+            cardToPlay.play();
+            actionPoints -= cardToPlay.getCost();
+            return true;
+        }
+        return false;
     }
 }
