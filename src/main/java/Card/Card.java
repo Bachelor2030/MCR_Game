@@ -1,15 +1,12 @@
-package Player;
+package Card;
 
 import Command.Macro;
 import ModelClasses.Invocator;
 
-public class Card implements Invocator {
-    private CardType type;
+public abstract class Card implements Invocator {
     private Macro command;
 
-    public Card(CardType type) {
-        this.type = type;
-    }
+    public Card() {}
 
     public void play() {
         command.execute();
