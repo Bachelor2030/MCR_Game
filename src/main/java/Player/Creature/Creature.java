@@ -1,5 +1,6 @@
 package Player.Creature;
 
+import GameBoard.Spot;
 import ModelClasses.LiveReceptor;
 
 public class Creature extends LiveReceptor {
