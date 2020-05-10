@@ -12,7 +12,6 @@ public class Player extends Receptor {
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
 
-    //faster than Stack or LinkedList
     private Deque<Card> deck = new ArrayDeque<>(NBR_CARDS_PER_DECK);
     private Deque<Card> hand = new ArrayDeque<>(NBR_CARDS_MAX_IN_HAND);
 
@@ -68,5 +67,25 @@ public class Player extends Receptor {
 
     public int getActionPoints() {
         return actionPoints;
+    }
+
+    public boolean playCard(int index) {
+        Card cardToPlay = null;
+        int i = 0;
+        for(Card card : hand) {
+            if (i++ == index) {
+                cardToPlay = card;
+                break;
+            }
+        }
+
+        if(cardToPlay != null &&
+            actionPoints >= cardToPlay.getCost()) {
+
+            cardToPlay.play();
+            actionPoints -= cardToPlay.getCost();
+            return true;
+        }
+        return false;
     }
 }
