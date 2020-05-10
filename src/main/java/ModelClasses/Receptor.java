@@ -13,10 +13,17 @@ public abstract class Receptor {
         return lifePoints;
     }
 
+    public void hit(int lifePoints) {
+        this.lifePoints -= lifePoints;
+    }
+
+    public abstract void playTurn(int turn);
+
     public String getName() {
         return name;
     }
 
     public abstract void action();
     public abstract void playTurn();
+
 }
