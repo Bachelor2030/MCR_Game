@@ -4,7 +4,7 @@ import Command.Macro;
 import ModelClasses.Invocator;
 import Player.Creature.Creature;
 
-public abstract class Card implements Invocator {
+public class Card implements Invocator {
     private Macro command;
     private String name;
     private CardType type;

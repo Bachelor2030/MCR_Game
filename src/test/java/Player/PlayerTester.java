@@ -1,7 +1,7 @@
 package Player;
 
 import Card.Card;
-import Card.TrapCard;
+import Card.CardType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,21 +19,13 @@ public class PlayerTester {
     static void initialise() {
         name = "A name";
         LinkedList<Card> cards = new LinkedList<>();
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
-        cards.add(new TrapCard());
+        cards.add(new Card("Black Hole", CardType.SPELL));
+        cards.add(new Card("Furnace", CardType.SPELL));
+        cards.add(new Card("Bombe", CardType.TRAP));
+        cards.add(new Card("Black Hole", CardType.TRAP));
+        cards.add(new Card("Pier", CardType.CREATURE));
+        cards.add(new Card("Sebas-chan", CardType.CREATURE));
+        cards.add(new Card("Gregou", CardType.CREATURE));
 
         player = new Player(name, cards);
     }
