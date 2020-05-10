@@ -1,11 +1,11 @@
 package Player;
 
 import Card.Card;
-import ModelClasses.Receptor;
+import ModelClasses.LiveReceptor;
 
 import java.util.*;
 
-public class Player extends Receptor {
+public class Player extends LiveReceptor {
     private static final int STARTING_LIFE_POINTS = 50;
     private static final int NBR_INIT_CARDS = 3;
     private static final int NBR_CARDS_PER_DECK = 50;
