@@ -2,7 +2,6 @@ package Card;
 
 import Command.Macro;
 import ModelClasses.Invocator;
-import Player.Creature.Creature;
 
 public class Card implements Invocator {
     private Macro command;

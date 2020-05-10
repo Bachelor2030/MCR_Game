@@ -7,7 +7,7 @@ public enum CardType {
 
     private String name;
 
-    private CardType(String name) {
+    CardType(String name) {
         this.name = name;
     }
 
