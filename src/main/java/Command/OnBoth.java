@@ -10,10 +10,10 @@ public class OnBoth extends Macro {
     @Override
     public void execute() {
         for (Player player : players) {
-            player.action();
+            // TODO : do the correct action
         }
         for (Creature creature : creatures) {
-            creature.action();
+            // TODO : do the correct action
         }
     }
 

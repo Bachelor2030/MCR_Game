@@ -11,12 +11,7 @@ public class Creature extends Receptor {
     }
 
     @Override
-    public void action() {
-
-    }
-
-    @Override
-    public void playTurn() {
+    public void playTurn(int turn) {
 
     }
 }
