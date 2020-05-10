@@ -9,4 +9,11 @@ public class SpotTester {
     public void EmptyTest() {
         assertEquals(0, 0);
     }
+
+    @Test
+    public void aSpotShouldBeEmptyWhenCreated()
+    {
+        Spot testSpot = new Spot();
+        assertEquals(testSpot.isBusy(), false);
+    }
 }
