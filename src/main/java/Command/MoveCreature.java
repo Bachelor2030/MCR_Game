@@ -2,7 +2,7 @@ package Command;
 
 import Receptors.Creature.Creature;
 
-public class MoveCreature extends Macro {
+public class MoveCreature implements Command {
     private Creature creature;
 
     public MoveCreature(Creature creature) {

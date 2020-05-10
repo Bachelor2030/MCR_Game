@@ -3,7 +3,7 @@ package Command;
 import GameBoard.Spot;
 import Receptors.Creature.Creature;
 
-public class CreateCreature extends Macro {
+public class CreateCreature implements Command {
     private Spot position;
     private Creature creature;
 

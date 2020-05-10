@@ -3,7 +3,7 @@ package Command;
 import GameBoard.Spot;
 import Receptors.Trap;
 
-public class CreateTrap extends Macro {
+public class CreateTrap implements Command {
     private Spot position;
     private Trap trap;
 

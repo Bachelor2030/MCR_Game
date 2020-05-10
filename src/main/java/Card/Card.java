@@ -31,4 +31,8 @@ public class Card implements Invocator {
     public String getName() {
         return name;
     }
+
+    public CardType getType() {
+        return type;
+    }
 }
