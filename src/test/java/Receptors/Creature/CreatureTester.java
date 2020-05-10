@@ -1,4 +1,4 @@
-package Player.Creature;
+package Receptors.Creature;
 
 import org.junit.jupiter.api.Test;
 

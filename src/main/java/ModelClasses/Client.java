@@ -1,4 +1,4 @@
 package ModelClasses;
 
-public interface Client {
+public class Client {
 }

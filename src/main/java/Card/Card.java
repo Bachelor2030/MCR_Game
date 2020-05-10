@@ -3,10 +3,17 @@ package Card;
 import Command.Macro;
 import ModelClasses.Invocator;
 
-public abstract class Card implements Invocator {
+public class Card implements Invocator {
     private Macro command;
+    private String name;
+    private int cost;
+    private CardType type;
 
-    public Card() {}
+    public Card(String name, CardType type, int cost) {
+        this.type = type;
+        this.name = type.toString() + " " + name;
+        this.cost = cost;
+    }
 
     public void play() {
         command.execute();
@@ -15,5 +22,17 @@ public abstract class Card implements Invocator {
     @Override
     public void setCommand(Macro command) {
         this.command = command;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CardType getType() {
+        return type;
     }
 }

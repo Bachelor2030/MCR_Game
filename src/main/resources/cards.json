@@ -1,0 +1,33 @@
+{
+  "pageInfo" : {
+    "pageName": "Card list"
+  },
+  "cards" : [
+    {
+      "name" : "Pier",
+      "type" : "Creature",
+      "cost" : 8
+    },
+    {
+      "name" : "Sebas-chan",
+      "type" : "Creature",
+      "cost" : 9
+    },
+    {
+      "name" : "Gregou",
+      "type" : "Creature",
+      "cost" : 10
+    },
+    {
+      "name" : "Black hole",
+      "type" : "Trap",
+      "cost" : 4
+    },
+    {
+      "name" : "Furnace",
+      "type" : "Spell",
+      "cost" : 3
+    }
+  ]
+}
+
