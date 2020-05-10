@@ -29,10 +29,18 @@ public class Board {
         }
     }
 
+    /**
+     * Permet de récupérer la liste des lignes du board.
+     * @return la liste des lignes du board.
+     */
     public LinkedList<Line> getLines() {
         return lines;
     }
 
+    /**
+     * Permet de savoir le nombre de lignes constituant un board.
+     * @return le nombre de lignes constituant un board.
+     */
     public int getNB_LINES() {
         return NB_LINES;
     }
