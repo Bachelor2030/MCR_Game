@@ -3,10 +3,7 @@ package Player;
 import Card.Card;
 import ModelClasses.Receptor;
 
-import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 public class Player extends Receptor {
     private static final int STARTING_LIFE_POINTS = 50;
@@ -18,6 +15,11 @@ public class Player extends Receptor {
     //faster than Stack or LinkedList
     private Deque<Card> deck = new ArrayDeque<>(NBR_CARDS_PER_DECK);
     private Deque<Card> hand = new ArrayDeque<>(NBR_CARDS_MAX_IN_HAND);
+
+    // Historic of the player
+    // the map is set as so : <trunNumber, cardPlayed>
+    // There can be multiple cards in one turn
+    private HashMap<Integer, Card> history = new HashMap<>();
 
     private int actionPoints;
 
