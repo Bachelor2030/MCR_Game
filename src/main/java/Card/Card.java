@@ -28,4 +28,8 @@ public class Card implements Invocator {
     public int getCost() {
         return cost;
     }
+
+    public String getName() {
+        return name;
+    }
 }
