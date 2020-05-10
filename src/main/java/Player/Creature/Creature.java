@@ -1,8 +1,8 @@
 package Player.Creature;
 
-import ModelClasses.Receptor;
+import ModelClasses.LiveReceptor;
 
-public class Creature extends Receptor {
+public class Creature extends LiveReceptor {
     private int steps; // exemple
 
     public Creature(String name, int lifePoints, int steps) {
