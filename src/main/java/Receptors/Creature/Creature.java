@@ -1,4 +1,4 @@
-package Player.Creature;
+package Receptors.Creature;
 
 import GameBoard.Spot;
 import ModelClasses.LiveReceptor;
@@ -7,9 +7,12 @@ public class Creature extends LiveReceptor {
     private Spot position;
     private int steps; // exemple
 
-    public Creature(String name, int lifePoints, int steps, Spot position) {
+    public Creature(String name, int lifePoints, int steps) {
         super(name, lifePoints);
         this.steps = steps;
+    }
+
+    public void place(Spot position) {
         this.position = position;
     }
 
@@ -24,5 +27,9 @@ public class Creature extends LiveReceptor {
     @Override
     public void playTurn(int turn) {
         advance();
+    }
+
+    public Spot getPosition() {
+        return position;
     }
 }

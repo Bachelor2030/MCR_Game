@@ -1,4 +1,4 @@
-package Player;
+package Receptors;
 
 import Card.Card;
 import ModelClasses.LiveReceptor;
@@ -16,9 +16,9 @@ public class Player extends LiveReceptor {
     private Deque<Card> hand = new ArrayDeque<>(NBR_CARDS_MAX_IN_HAND);
 
     // Historic of the player
-    // the map is set as so : <trunNumber, cardPlayed>
+    // the map is set as so : <trunNumber, cards played>
     // There can be multiple cards in one turn
-    private HashMap<Integer, Card> history = new HashMap<>();
+    private HashMap<Integer, List<Card>> discard = new HashMap<>();
 
     private int actionPoints;
     private int nbEggDestroyed;
@@ -96,5 +96,19 @@ public class Player extends LiveReceptor {
             return true;
         }
         return false;
+    }
+
+    public HashMap<Integer, List<Card>> getDiscard() {
+        return discard;
+    }
+
+    public void giveCard(Card card) {
+        if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
+            hand.add(card);
+        }
+    }
+
+    public void discardCard(Card card) {
+        hand.remove(card);
     }
 }

@@ -1,8 +1,9 @@
-package Command;
+package Command.Commands;
 
-import Player.Creature.Creature;
+import Command.Command;
+import Receptors.Creature.Creature;
 
-public class MoveCreature extends Macro {
+public class MoveCreature implements Command {
     private Creature creature;
 
     public MoveCreature(Creature creature) {

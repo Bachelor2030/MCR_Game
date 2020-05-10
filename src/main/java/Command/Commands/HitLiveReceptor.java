@@ -1,10 +1,11 @@
-package Command;
+package Command.Commands;
 
+import Command.Command;
 import ModelClasses.LiveReceptor;
 
 import java.util.Arrays;
 
-public class HitLiveReceptor extends Macro {
+public class HitLiveReceptor implements Command {
     private LiveReceptor[] receptors;
     private int attackPoints;
 

@@ -1,7 +1,5 @@
 import GameBoard.Board;
-import Player.Player;
-
-import static java.lang.System.exit;
+import Receptors.Player;
 
 /**
  * Cette classe permet de modéliser le jeu.

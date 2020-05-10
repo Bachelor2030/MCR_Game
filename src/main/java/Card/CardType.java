@@ -2,12 +2,12 @@ package Card;
 
 public enum CardType {
     SPELL("Spell"),
-    TRAP("Trap"),
+    TRAP("Receptors.Trap"),
     CREATURE("Creature");
 
     private String name;
 
-    private CardType(String name) {
+    CardType(String name) {
         this.name = name;
     }
 
