@@ -22,8 +22,4 @@ public abstract class Receptor {
     public String getName() {
         return name;
     }
-
-    public abstract void action();
-    public abstract void playTurn();
-
 }

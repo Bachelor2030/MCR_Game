@@ -23,20 +23,20 @@ public class Player extends Receptor {
     private int actionPoints;
     private int nbEggDestroyed;
 
-    public Player(String name, Deque<Card> deck) {
+    public Player(String name, List<Card> deck) {
         super(name, STARTING_LIFE_POINTS);
 
         actionPoints = 0;
-      if(deck != null)
-      {
-         // Shuffle the given deck
-        Collections.shuffle(deck);
-        if (!deck.isEmpty()) {
-            this.deck.addAll(deck);
-        }
+        if(deck != null)
+        {
+           // Shuffle the given deck
+          Collections.shuffle(deck);
+          if (!deck.isEmpty()) {
+              this.deck.addAll(deck);
+          }
 
-        init();
-      }
+          init();
+        }
     }
 
     private void init() {
