@@ -3,7 +3,8 @@ package Game.View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import GameBoard.Spot;
+
+import Game.GameBoard.Spot;
 import Maths.Vector2f;
 import View.Graphics.Sprite;
 import View.Graphics.SpriteSheet;
