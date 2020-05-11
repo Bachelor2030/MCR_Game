@@ -1,12 +1,26 @@
 
+import View.GameBoard;
+
 import java.io.*;
+import GameBoard.Board;
 
 public class Launcher {
+    private static GameBoard gameBoard; //front-end GUI
+    private static Board board; //back-end LOGIC
+
     public static void main(String[] args) {
         System.out.println("Hello, I am an awesome game !");
         GameCreator gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
 
+        initGame();
 
+
+    }
+
+    private static void initGame() {
+        board = new Board();
+        gameBoard = new GameBoard();
+        gameBoard.start();
     }
 
     private static GameCreator gameCreatorFromFile(String fileName) {
