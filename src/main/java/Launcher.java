@@ -1,8 +1,9 @@
 
-import View.GameBoard;
+import Game.View.GameBoard;
 
 import java.io.*;
-import GameBoard.Board;
+import Game.GameBoard.Board;
+import ModelClasses.GameClient;
 
 public class Launcher {
     private static GameBoard gameBoard; //front-end GUI
@@ -10,7 +11,7 @@ public class Launcher {
 
     public static void main(String[] args) throws IOException {
         System.out.println("Hello, I am an awesome game !");
-        GameCreator gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
+        GameClient gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
 
         initGame();
     }
@@ -21,7 +22,7 @@ public class Launcher {
         gameBoard.start();
     }
 
-    private static GameCreator gameCreatorFromFile(String fileName) {
+    private static GameClient gameCreatorFromFile(String fileName) {
         try {
             BufferedReader buf = new BufferedReader(
                     new InputStreamReader(
@@ -35,7 +36,7 @@ public class Launcher {
                 line = buf.readLine();
             }
             String fileAsString = sb.toString();
-            return new GameCreator(fileAsString);
+            return new GameClient(fileAsString);
         } catch (IOException e) {
             e.printStackTrace();
         }

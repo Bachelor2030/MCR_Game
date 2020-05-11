@@ -2,6 +2,7 @@ package Receptors;
 
 import Card.Card;
 import Card.CardType;
+import ModelClasses.Receptors.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
