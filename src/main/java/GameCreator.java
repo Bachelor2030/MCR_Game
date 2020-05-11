@@ -9,6 +9,7 @@ public class GameCreator extends Client {
     private ArrayList<Card> cards;
 
     public GameCreator(String fileAsString){
+
         try {
             cards = CardsJsonParser.parseJson(fileAsString);
         } catch (JSONException e) {

@@ -13,8 +13,6 @@ public class Launcher {
         GameCreator gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
 
         initGame();
-
-
     }
 
     private static void initGame() throws IOException {

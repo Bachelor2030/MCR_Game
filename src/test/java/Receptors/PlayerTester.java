@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+//import org.junit.jupiter.params.ParameterizedTest;
+//import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.LinkedList;
 
@@ -45,6 +47,7 @@ public class PlayerTester {
     public void PlayerShouldStartWithTheCorrectAmountOfCardsInHand() {
         assertEquals(3, player.getNbrCardsInHand());
     }
+
 
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 15, 31})

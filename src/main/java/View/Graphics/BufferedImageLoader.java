@@ -1,4 +1,4 @@
-package View;
+package View.Graphics;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
