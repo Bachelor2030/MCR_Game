@@ -6,27 +6,38 @@
     {
       "name" : "Pier",
       "type" : "Creature",
-      "cost" : 8
+      "cost" : 8,
+      "command" : ["Create creature", "Draw card"]
     },
     {
       "name" : "Sebas-chan",
       "type" : "Creature",
-      "cost" : 9
+      "cost" : 9,
+      "command" : "Create creature"
     },
     {
       "name" : "Gregou",
       "type" : "Creature",
-      "cost" : 10
+      "cost" : 10,
+      "command" : ["Create creature", "Discard card"]
     },
     {
       "name" : "Black hole",
       "type" : "Trap",
-      "cost" : 4
+      "cost" : 4,
+      "trap" : {
+        "command" : "Hit creature",
+        "damage" : 3
+      }
     },
     {
       "name" : "Furnace",
       "type" : "Spell",
-      "cost" : 3
+      "cost" : 3,
+      "commands" : {
+        "Hit player" : 5,
+        "Discard card" : 2
+      }
     }
   ]
 }
