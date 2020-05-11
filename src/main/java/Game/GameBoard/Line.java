@@ -20,7 +20,7 @@ public class Line {
      * Constructeur de la classe Line
      * @param noLine : le numéro de la ligne
      */
-    Line(int noLine) {
+    public Line(int noLine) {
         this.noLine = noLine;
         spots = new LinkedList<Spot>();
         for(int spot = 0; spot <NB_SPOTS ; ++spot)
