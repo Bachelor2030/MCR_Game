@@ -13,6 +13,7 @@ public class GameCreator {
     protected ArrayList<Card> cards;
 
     public GameCreator(String fileAsString){
+
         try {
             cards = parseJson(fileAsString);
         } catch (JSONException e) {
