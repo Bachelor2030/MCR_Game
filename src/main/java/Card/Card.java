@@ -1,6 +1,6 @@
 package Card;
 
-import Command.Macro;
+import ModelClasses.Macro;
 import ModelClasses.Invocator;
 
 public class Card implements Invocator {
