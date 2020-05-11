@@ -1,15 +1,15 @@
 package ModelClasses.Commands;
 
-import ModelClasses.Command;
 import ModelClasses.LiveReceptor;
 
 import java.util.Arrays;
 
-public class HitLiveReceptor implements Command {
+public class HitLiveReceptor extends ConcreteCommand {
     private LiveReceptor[] receptors;
     private int attackPoints;
 
     public HitLiveReceptor(LiveReceptor[] receptors, int attackPoints) {
+        super(CommandName.HIT);
         this.attackPoints = attackPoints;
         this.receptors = Arrays.copyOf(receptors, receptors.length);
     }

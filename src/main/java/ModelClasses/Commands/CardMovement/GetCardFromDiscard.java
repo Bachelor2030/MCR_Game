@@ -1,20 +1,18 @@
-package ModelClasses.Commands;
+package ModelClasses.Commands.CardMovement;
 
 import Card.Card;
 import Card.CardType;
-import ModelClasses.Command;
+import ModelClasses.Commands.CommandName;
 import ModelClasses.Receptors.Player;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class GetCardFromDiscard implements Command {
-    private Player player;
+public class GetCardFromDiscard extends CardMovement {
     private CardType type;
-    private Card cardAdded;
 
     public GetCardFromDiscard(Player player, CardType type) {
-        this.player = player;
+        super(player, CommandName.DRAW_TYPE_FROM_DISCARD);
         this.type = type;
     }
 
@@ -22,22 +20,22 @@ public class GetCardFromDiscard implements Command {
     public void execute() {
         HashMap<Integer, List<Card>> discard = player.getDiscard();
         for (int i = 1; i <= discard.size(); ++i) {
-            for (Card card: discard.get(i)) {
-                if (card.getType() == type) {
-                    cardAdded = card;
+            for (Card c: discard.get(i)) {
+                if (c.getType() == type) {
+                    card = c;
                     break;
                 }
             }
         }
-        if (cardAdded != null) {
-            player.giveCard(cardAdded);
+        if (card != null) {
+            player.giveCard(card);
         }
     }
 
     @Override
     public void undo() {
-        if(cardAdded != null) {
-            player.discardCard(cardAdded);
+        if(card != null) {
+            player.discardCard(card);
         }
     }
 }

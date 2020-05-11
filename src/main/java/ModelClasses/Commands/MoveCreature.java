@@ -1,12 +1,12 @@
 package ModelClasses.Commands;
 
-import ModelClasses.Command;
 import ModelClasses.Receptors.Creature.Creature;
 
-public class MoveCreature implements Command {
+public class MoveCreature extends ConcreteCommand {
     private Creature creature;
 
     public MoveCreature(Creature creature) {
+        super(CommandName.MOVE_CREATURE);
         this.creature = creature;
     }
 

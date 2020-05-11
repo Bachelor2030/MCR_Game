@@ -111,4 +111,18 @@ public class Player extends LiveReceptor {
     public void discardCard(Card card) {
         hand.remove(card);
     }
+
+    public void addToTopDeck(Card card) {
+        deck.addFirst(card);
+    }
+
+    public Card drawCard() {
+        Card card = deck.removeFirst();
+        hand.add(card);
+        return card;
+    }
+
+    public void removeFromHand(Card card) {
+        hand.remove(card);
+    }
 }
