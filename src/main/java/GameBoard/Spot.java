@@ -1,5 +1,13 @@
 package GameBoard;
 
+import View.BufferedImageLoader;
+import View.SpriteSheet;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 /**
  * Cette classe représente une case qui constitue une ligne de combat
  */
@@ -16,10 +24,13 @@ public class Spot {
     //Est-ce qu'une créature est placée sur la case ou non.
     private boolean isBusy = false;
 
+    private BufferedImage image = null;
+    private BufferedImage spriteSheet = null;
+
     /**
      * Constructeur de la classe Spot.
      */
-    public Spot() {
+    public Spot() throws IOException {
         this.number = ++spotCounter;
     }
 

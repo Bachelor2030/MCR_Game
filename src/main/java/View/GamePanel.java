@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 /**
  * Représente le panel intérieur pour afficher les objets du jeu
