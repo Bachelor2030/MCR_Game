@@ -1,5 +1,6 @@
 package Game.GameBoard;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -19,8 +20,7 @@ public class Board {
     /**
      * Constructeur de la classe Board
      */
-    public Board()
-    {
+    public Board() throws IOException {
         lineCounter = 0;
         lines = new LinkedList<>();
         for(int line = 0; line < NB_LINES; ++line)

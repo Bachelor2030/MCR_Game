@@ -1,5 +1,12 @@
 package Game.GameBoard;
 
+import Maths.Vector2f;
+import View.Graphics.Sprite;
+import View.Graphics.SpriteSheet;
+
+import java.awt.*;
+import java.io.IOException;
+
 /**
  * Cette classe représente une case qui constitue une ligne de combat
  */
@@ -16,11 +23,30 @@ public class Spot {
     //Est-ce qu'une créature est placée sur la case ou non.
     private boolean isBusy = false;
 
+    protected SpriteSheet sprite;
+    protected Sprite image;
+    protected Vector2f pos;
+    protected int size;
+    protected int spriteX;
+    protected int spriteY;
+
     /**
      * Constructeur de la classe Spot.
      */
-    public Spot() {
-        this.number = ++spotCounter;
+    public Spot() throws IOException {
+        this(++spotCounter, new Vector2f(), 0);
+    }
+
+    public Spot(SpriteSheet sprite, Vector2f pos, int size) {
+        this(++spotCounter, pos, size);
+        this.sprite = sprite;
+    }
+
+    public Spot(int number, Vector2f pos, int size)
+    {
+        this.number = number;
+        this.pos = pos;
+        this.size = size;
     }
 
     /**
@@ -53,5 +79,9 @@ public class Spot {
      */
     public void setBusy(boolean busy) {
         isBusy = busy;
+    }
+
+    public void render(Graphics2D g) {
+        g.drawImage(image.image, (int) (pos.getWorldVar().x), (int) (pos.getWorldVar().y), size, size, null);
     }
 }

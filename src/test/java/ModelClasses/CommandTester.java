@@ -5,13 +5,15 @@ import Game.GameBoard.Spot;
 import ModelClasses.Receptors.Creature.Creature;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CommandTester {
 
     @Test
-    public void CreatingCreatureShouldPlaceIt() {
+    public void CreatingCreatureShouldPlaceIt() throws IOException {
         Creature pier = new Creature("Pier", 12, 12);
         Spot position = new Spot();
 

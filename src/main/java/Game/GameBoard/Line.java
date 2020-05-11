@@ -1,5 +1,8 @@
 package Game.GameBoard;
 
+import Game.GameBoard.Spot;
+
+import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -20,7 +23,7 @@ public class Line {
      * Constructeur de la classe Line
      * @param noLine : le numéro de la ligne
      */
-    public Line(int noLine) {
+    Line(int noLine) throws IOException {
         this.noLine = noLine;
         spots = new LinkedList<Spot>();
         for(int spot = 0; spot <NB_SPOTS ; ++spot)

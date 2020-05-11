@@ -9,16 +9,14 @@ public class Launcher {
     private static GameBoard gameBoard; //front-end GUI
     private static Board board; //back-end LOGIC
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("Hello, I am an awesome game !");
         GameClient gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
 
         initGame();
-
-
     }
 
-    private static void initGame() {
+    private static void initGame() throws IOException {
         board = new Board();
         gameBoard = new GameBoard();
         gameBoard.start();
