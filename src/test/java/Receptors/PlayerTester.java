@@ -2,6 +2,7 @@ package Receptors;
 
 import Card.Card;
 import Card.CardType;
+import ModelClasses.Receptors.Egg;
 import ModelClasses.Receptors.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ public class PlayerTester {
 
     @BeforeAll
     static void initialise() {
-        name = "A name";
+        name = "George";
         LinkedList<Card> cards = new LinkedList<>();
         cards.add(new Card("Black Hole", CardType.SPELL, 2));
         cards.add(new Card("Furnace", CardType.SPELL, 2));
@@ -39,9 +40,12 @@ public class PlayerTester {
     }
 
     @Test
-    public void HittingAPlayerMustDiminishTheirLifePoints() {
-        player.hit(20);
-        assertEquals(30, player.getLifePoints());
+    public void HittingAPlayersEggMustDiminishTheirLifePoints() {
+        player.hitEgg(1,20);
+        assertEquals(1, player.getNbEggDestroyed());
+        for (Egg egg : player.getEggs()) {
+            System.out.println(egg);
+        }
     }
 
     @Test
@@ -55,5 +59,13 @@ public class PlayerTester {
     public void TheNumberOfActionPointMustBeCorrect(int turn) {
         player.playTurn(turn);
         assertEquals((turn <= 15 ? turn : 15), player.getActionPoints());
+    }
+
+    @Test
+    public void PlayerShouldHaveTheCorrectAmountOfEggs() {
+        for (Egg egg : player.getEggs()) {
+            System.out.println(egg);
+        }
+        assertEquals(Player.getStartingNbrEggs(), player.getNbEggs());
     }
 }

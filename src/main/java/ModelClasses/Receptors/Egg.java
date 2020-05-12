@@ -17,7 +17,7 @@ public class Egg extends LiveReceptor {
 
     @Override
     public String toString() {
-        return name + "is " + (alive ? "" : "not ") + "alive" ;
+        return name + " is " + (alive ? "alive" : "dead");
     }
 
     @Override

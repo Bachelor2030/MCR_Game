@@ -2,13 +2,13 @@ package ModelClasses.Receptors;
 
 import Card.Card;
 import ModelClasses.LiveReceptor;
+import ModelClasses.Receptor;
 
 import java.util.*;
 
-public class Player extends LiveReceptor {
-    private static final int STARTING_LIFE_POINTS = 50;
+public class Player extends Receptor {
     private static final int NBR_INIT_CARDS = 3;
-    private static final int NBR_EGGS = 3;
+    private static final int NBR_EGGS = 5;
     private static final int NBR_CARDS_PER_DECK = 50;
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
@@ -26,8 +26,7 @@ public class Player extends LiveReceptor {
     private int actionPoints;
 
     public Player(String name, List<Card> deck) {
-        super(name, STARTING_LIFE_POINTS);
-
+        super(name);
         actionPoints = 0;
         if(deck != null)
         {
@@ -47,7 +46,7 @@ public class Player extends LiveReceptor {
         }
 
         for (int i = 0; i < NBR_EGGS; ++i) {
-            eggs.add(new Egg(name + (i + 1)));
+            eggs.add(new Egg(name + " - Egg " + (i + 1)));
         }
     }
 
@@ -134,5 +133,21 @@ public class Player extends LiveReceptor {
 
     public void removeFromHand(Card card) {
         hand.remove(card);
+    }
+
+    public static int getStartingNbrEggs() {
+        return NBR_EGGS;
+    }
+
+    public int getNbEggs() {
+        return eggs.size();
+    }
+
+    public void hitEgg(int eggIndex, int attackPoints) {
+        eggs.get(eggIndex).hit(attackPoints);
+    }
+
+    public List<Egg> getEggs() {
+        return eggs;
     }
 }
