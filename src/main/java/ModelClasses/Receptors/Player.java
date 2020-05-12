@@ -8,6 +8,7 @@ import java.util.*;
 public class Player extends LiveReceptor {
     private static final int STARTING_LIFE_POINTS = 50;
     private static final int NBR_INIT_CARDS = 3;
+    private static final int NBR_EGGS = 3;
     private static final int NBR_CARDS_PER_DECK = 50;
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
@@ -20,8 +21,9 @@ public class Player extends LiveReceptor {
     // There can be multiple cards in one turn
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
 
+    private List<Egg> eggs = new LinkedList<>();
+
     private int actionPoints;
-    private int nbEggDestroyed;
 
     public Player(String name, List<Card> deck) {
         super(name, STARTING_LIFE_POINTS);
@@ -44,7 +46,9 @@ public class Player extends LiveReceptor {
             hand.add(deck.remove());
         }
 
-        nbEggDestroyed = 0;
+        for (int i = 0; i < NBR_EGGS; ++i) {
+            eggs.add(new Egg(name + (i + 1)));
+        }
     }
 
     @Override
@@ -75,7 +79,13 @@ public class Player extends LiveReceptor {
     }
 
     public int getNbEggDestroyed() {
-        return nbEggDestroyed;
+        int count = 0;
+        for (Egg egg : eggs) {
+            if(!egg.isAlive()) {
+                ++count;
+            }
+        }
+        return count;
     }
   
     public boolean playCard(int index) {
