@@ -53,7 +53,6 @@ public class PlayerTester {
         assertEquals(3, player.getNbrCardsInHand());
     }
 
-
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 15, 31})
     public void TheNumberOfActionPointMustBeCorrect(int turn) {

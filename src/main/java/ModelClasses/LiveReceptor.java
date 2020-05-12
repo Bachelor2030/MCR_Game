@@ -30,6 +30,10 @@ public abstract class LiveReceptor extends Receptor {
         return lifePoints;
     }
 
+    public int getMAX_LIFE_POINTS() {
+        return MAX_LIFE_POINTS;
+    }
+
     @Override
     public String toString() {
         return super.toString() + " " + lifePoints + "/" + MAX_LIFE_POINTS + " LP";
