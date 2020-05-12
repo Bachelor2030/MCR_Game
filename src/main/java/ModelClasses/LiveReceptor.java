@@ -11,7 +11,11 @@ public abstract class LiveReceptor extends Receptor {
     }
 
     public void hit(int points) {
-        lifePoints -= points;
+        if (lifePoints - points >= 0) {
+            lifePoints -= points;
+        } else {
+            lifePoints = 0;
+        }
     }
 
     public void heal(int points) {
@@ -24,5 +28,10 @@ public abstract class LiveReceptor extends Receptor {
 
     public int getLifePoints() {
         return lifePoints;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + lifePoints + "/" + MAX_LIFE_POINTS + " LP";
     }
 }

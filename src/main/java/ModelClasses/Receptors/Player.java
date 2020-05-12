@@ -1,7 +1,6 @@
 package ModelClasses.Receptors;
 
 import Card.Card;
-import ModelClasses.LiveReceptor;
 import ModelClasses.Receptor;
 
 import java.util.*;
