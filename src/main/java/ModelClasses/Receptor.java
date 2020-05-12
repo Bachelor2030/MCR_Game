@@ -12,4 +12,9 @@ public abstract class Receptor {
     }
 
     public abstract void playTurn(int turn);
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
