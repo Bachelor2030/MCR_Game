@@ -1,6 +1,6 @@
 package Game;
 
-import Game.GameBoard.Spot;
+import Common.GameBoard.Spot;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

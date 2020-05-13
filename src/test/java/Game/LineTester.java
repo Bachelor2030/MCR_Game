@@ -1,7 +1,7 @@
 package Game;
 
-import Game.GameBoard.Line;
-import Game.GameBoard.Spot;
+import Common.GameBoard.Line;
+import Common.GameBoard.Spot;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
