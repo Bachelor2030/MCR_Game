@@ -1,24 +1,29 @@
 package ModelClasses.Receptors;
 
+import Game.GameBoard.Position;
+import ModelClasses.LiveReceptor;
 import ModelClasses.Macro;
-import Game.GameBoard.Spot;
 import ModelClasses.Receptor;
 
 public class Trap extends Receptor {
     private Macro effect;
-    private Spot position;
+    private Position position;
 
     public Trap(String name, Macro effect) {
         super(name);
         this.effect = effect;
     }
 
-    @Override
-    public void playTurn(int turn) {
+    public void trigger(LiveReceptor victim) {
         effect.execute();
+        position.leave();
+        position = null;
     }
 
-    public void setPosition(Spot position) {
+    @Override
+    public void playTurn(int turn) {}
+
+    public void setPosition(Position position) {
         this.position = position;
     }
 }

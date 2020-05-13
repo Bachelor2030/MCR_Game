@@ -2,7 +2,6 @@ package Game.GameBoard;
 
 import Maths.Vector2f;
 import ModelClasses.Receptor;
-import ModelClasses.Receptors.Creature.Creature;
 import ModelClasses.Receptors.Trap;
 import View.Graphics.Sprite;
 import View.Graphics.SpriteSheet;
@@ -53,7 +52,7 @@ public class Spot {
      * @return true si occupée, false sinon.
      */
     public boolean isEmpty() {
-        return occupant == null;
+        return occupant == null || occupant.getClass() == Trap.class;
     }
 
     public void setOccupant(Receptor occupant) {
@@ -66,5 +65,9 @@ public class Spot {
 
     public void render(Graphics2D g) {
         g.drawImage(image.image, (int) (pos.getWorldVar().x), (int) (pos.getWorldVar().y), size, size, null);
+    }
+
+    public Receptor getOccupant() {
+        return occupant;
     }
 }
