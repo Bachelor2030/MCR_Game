@@ -26,7 +26,7 @@ public class LineTester {
 
         for(Spot spot : testLine.getSpots())
         {
-            assertEquals(spot.isBusy(), false);
+            assertEquals(true, spot.isEmpty());
         }
 
     }
