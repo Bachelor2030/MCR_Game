@@ -1,5 +1,6 @@
 package ModelClasses;
 
+import Game.GameBoard.Position;
 import ModelClasses.Commands.CreateCreature;
 import Game.GameBoard.Spot;
 import ModelClasses.Receptors.Creature.Creature;
@@ -15,7 +16,7 @@ public class CommandTester {
     @Test
     public void CreatingCreatureShouldPlaceIt() throws IOException {
         Creature pier = new Creature("Pier", 12, 12, null);
-        Spot position = new Spot();
+        Position position = new Position();
 
         CreateCreature createCreature = new CreateCreature(pier, position);
         assertNull(pier.getPosition());

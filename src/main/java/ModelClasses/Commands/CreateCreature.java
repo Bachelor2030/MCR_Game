@@ -1,13 +1,13 @@
 package ModelClasses.Commands;
 
-import Game.GameBoard.Spot;
+import Game.GameBoard.Position;
 import ModelClasses.Receptors.Creature.Creature;
 
 public class CreateCreature extends ConcreteCommand {
-    private Spot position;
+    private Position position;
     private Creature creature;
 
-    public CreateCreature(Creature creature, Spot position) {
+    public CreateCreature(Creature creature, Position position) {
         super(CommandName.CREATE_CREATURE);
         this.creature = creature;
         this.position = position;
