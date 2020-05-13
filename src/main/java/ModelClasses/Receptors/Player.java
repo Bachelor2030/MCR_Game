@@ -20,7 +20,7 @@ public class Player extends Receptor {
     // There can be multiple cards in one turn
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
 
-    private List<Egg> eggs = new LinkedList<>();
+    private List<Chest> chests = new LinkedList<>();
 
     private int actionPoints;
 
@@ -45,7 +45,7 @@ public class Player extends Receptor {
         }
 
         for (int i = 0; i < NBR_EGGS; ++i) {
-            eggs.add(new Egg(name + " - Egg " + (i + 1)));
+            chests.add(new Chest(name + " - Egg " + (i + 1)));
         }
     }
 
@@ -78,8 +78,8 @@ public class Player extends Receptor {
 
     public int getNbEggDestroyed() {
         int count = 0;
-        for (Egg egg : eggs) {
-            if(!egg.isAlive()) {
+        for (Chest chest : chests) {
+            if(!chest.isAlive()) {
                 ++count;
             }
         }
@@ -139,14 +139,14 @@ public class Player extends Receptor {
     }
 
     public int getNbEggs() {
-        return eggs.size();
+        return chests.size();
     }
 
     public void hitEgg(int eggIndex, int attackPoints) {
-        eggs.get(eggIndex).hit(attackPoints);
+        chests.get(eggIndex).hit(attackPoints);
     }
 
-    public List<Egg> getEggs() {
-        return eggs;
+    public List<Chest> getChests() {
+        return chests;
     }
 }

@@ -40,6 +40,10 @@ public class Line {
         return NB_SPOTS;
     }
 
+    public Spot getSpot(int index) {
+        return spots.get(index);
+    }
+
     /**
      * Permet de récupérer la liste des cases de la ligne.
      * @return la liste des cases de la ligne.

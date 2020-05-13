@@ -1,6 +1,6 @@
 package Receptors;
 
-import ModelClasses.Receptors.Egg;
+import ModelClasses.Receptors.Chest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,30 +8,30 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EggTester {
-    private static Egg egg;
+public class ChestTester {
+    private static Chest chest;
     private static final String name = "Saphira";
 
     @BeforeAll
     private static void init() {
-        egg = new Egg(name);
+        chest = new Chest(name);
     }
 
     @Test
     public void EggsNameShouldBeCorrect() {
-        assertEquals(name, egg.getName());
+        assertEquals(name, chest.getName());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 5, 13})
     public void HittingAnEggShouldDiminishItsLife(int points) {
-        egg.hit(points);
-        if (points < egg.getMAX_LIFE_POINTS()) {
-            assertEquals(egg.getMAX_LIFE_POINTS() - points, egg.getLifePoints());
-            assertTrue(egg.isAlive());
+        chest.hit(points);
+        if (points < chest.getMAX_LIFE_POINTS()) {
+            assertEquals(chest.getMAX_LIFE_POINTS() - points, chest.getLifePoints());
+            assertTrue(chest.isAlive());
         } else {
-            assertEquals(0, egg.getLifePoints());
-            assertFalse(egg.isAlive());
+            assertEquals(0, chest.getLifePoints());
+            assertFalse(chest.isAlive());
         }
     }
 }

@@ -5,15 +5,22 @@ import ModelClasses.LiveReceptor;
 
 public class Creature extends LiveReceptor {
     private Spot position;
-    private int steps; // exemple
+    private int steps;
+    private String owner;
 
-    public Creature(String name, int lifePoints, int steps) {
+    public Creature(String name, int lifePoints, int steps, String owner) {
         super(name, lifePoints);
         this.steps = steps;
+        this.owner = owner;
+    }
+
+    public boolean isAlly(Creature creature) {
+        return owner.equals(creature.owner);
     }
 
     public void place(Spot position) {
         this.position = position;
+        this.position.setOccupant(this);
     }
 
     public void advance() {

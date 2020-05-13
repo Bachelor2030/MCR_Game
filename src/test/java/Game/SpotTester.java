@@ -16,6 +16,6 @@ public class SpotTester {
     @Test
     public void aSpotShouldBeEmptyWhenCreated() throws IOException {
         Spot testSpot = new Spot();
-        assertEquals(testSpot.isBusy(), false);
+        assertEquals(true, testSpot.isEmpty());
     }
 }
