@@ -15,7 +15,7 @@ public class CommandTester {
 
     @Test
     public void CreatingCreatureShouldPlaceIt() throws IOException {
-        Creature pier = new Creature("Pier", 12, 12, null);
+        Creature pier = new Creature("Pier", 12, 12, 4,null);
         Position position = new Position();
 
         CreateCreature createCreature = new CreateCreature(pier, position);
