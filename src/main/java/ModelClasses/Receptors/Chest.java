@@ -2,11 +2,11 @@ package ModelClasses.Receptors;
 
 import ModelClasses.LiveReceptor;
 
-public class Egg extends LiveReceptor {
+public class Chest extends LiveReceptor {
     private static final int EGG_LIFE_POINTS = 5;
     private boolean alive;
 
-    public Egg(String name) {
+    public Chest(String name) {
         super(name, EGG_LIFE_POINTS);
         alive = true;
     }
