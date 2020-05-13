@@ -1,6 +1,6 @@
 package Receptors;
 
-import ModelClasses.Receptors.Chest;
+import Common.Receptors.Chest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
