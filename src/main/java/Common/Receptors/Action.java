@@ -14,7 +14,7 @@ public enum Action {
         return name;
     }
 
-    public Action getAction(String name) {
+    public static Action getAction(String name) {
 
         if (name.equals(TRAPPED.name)) {
             return TRAPPED;

@@ -14,6 +14,7 @@ public class Launcher {
         GameClient gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
         gameCreator.createCommands();
 
+
         initGame();
     }
 

@@ -22,4 +22,11 @@ public class Macro implements Command {
             command.undo();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Macro{" +
+                "commands=" + Arrays.toString(commands) +
+                '}';
+    }
 }
