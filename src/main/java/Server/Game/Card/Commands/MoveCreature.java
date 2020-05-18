@@ -17,6 +17,6 @@ public class MoveCreature extends ConcreteCommand {
 
     @Override
     public void undo() {
-        creature.retreat();
+        creature.retreat(creature.getSteps());
     }
 }

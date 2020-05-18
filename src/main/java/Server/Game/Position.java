@@ -42,4 +42,10 @@ public class Position {
     public Position next() {
         return new Position(line, position + 1);
     }
+
+    public Position previous() {
+        if (position == 0)
+            return this;
+        return new Position(line, position - 1);
+    }
 }

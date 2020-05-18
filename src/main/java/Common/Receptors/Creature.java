@@ -50,16 +50,33 @@ public class Creature extends LiveReceptor {
         return actions;
     }
 
-    public void retreat() {
-        // TODO move to position - steps
+    public List<Action> retreat(int distance) {
+        LinkedList<Action> actions = new LinkedList<>();
+        for (int step = 0; step < distance; ++step) {
+            if (position.previous().isEmpty()) {
+                position.leave();
+                position = position.previous();
+                if (position.getOccupant().getClass() == Trap.class) {
+                    ((Trap)position.getOccupant()).trigger(this);
+                    actions.add(Action.TRAPPED);
+                }
+            } else {
+                break;
+            }
+        }
+        return actions;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public int getSteps() {
+        return steps;
     }
 
     @Override
     public void playTurn(int turn) {
         advance();
-    }
-
-    public Position getPosition() {
-        return position;
     }
 }

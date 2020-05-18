@@ -40,7 +40,7 @@ public class PlayerTester {
     }
 
     @Test
-    public void HittingAPlayersEggMustDiminishTheirLifePoints() {
+    public void HittingAPlayersChestMustDiminishTheirLifePoints() {
         player.hitChest(1,20);
         assertEquals(1, player.getNbChestsDestroyed());
         for (Chest chest : player.getChests()) {
@@ -61,7 +61,7 @@ public class PlayerTester {
     }
 
     @Test
-    public void PlayerShouldHaveTheCorrectAmountOfEggs() {
+    public void PlayerShouldHaveTheCorrectAmountOfChests() {
         for (Chest chest : player.getChests()) {
             System.out.println(chest);
         }
