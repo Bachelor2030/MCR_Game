@@ -1,5 +1,7 @@
 package Server.Network;
 
+import Common.Network.Messages;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -97,17 +99,17 @@ public class ServerAdapter {
                 try {
                     LOG.info("Reading until client sends HELLO to open the connection...");
                     while (!shouldRun && (line = in.readLine()) != null) {
-                        if(line.equalsIgnoreCase("hello")){
+                        if(line.equalsIgnoreCase(Messages.CLIENT_HELLO)){
                             shouldRun = true;
-                            out.println("HELLO CALC");
+                            out.println(Messages.SERVER_HELLO_ANS);
                         }
                         out.flush();
                     }
 
                     LOG.info("Reading until client sends BYE or closes the connection...");
                     while ((shouldRun) && (line = in.readLine()) != null) {
-                        if (line.equalsIgnoreCase("bye")) {
-                            out.println("Goodbye !");
+                        if (line.equalsIgnoreCase(Messages.CLIENT_GOODBYE)) {
+                            out.println(Messages.SERVER_GOODBYE_ANS);
                             shouldRun = false;
                         } else {
                             try {

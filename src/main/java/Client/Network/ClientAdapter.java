@@ -1,8 +1,6 @@
 package Client.Network;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
+import Common.Network.Messages;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,8 +36,8 @@ public class ClientAdapter {
         }
 
         // Greetings
-        String msg = sendMessage("Moshimoshi");
-        if (!msg.equals("Domo hajimemashite")) {
+        String msg = sendMessage(Messages.CLIENT_HELLO);
+        if (!msg.equals(Messages.SERVER_HELLO_ANS)) {
             displayError("Server answer error: weeb not found");
         }
     }
@@ -59,7 +57,7 @@ public class ClientAdapter {
     }
 
     public void exit() {
-        sendMessage("Sayonara");
+        sendMessage(Messages.CLIENT_GOODBYE);
         try {
             in.close();
         } catch (IOException e) {
