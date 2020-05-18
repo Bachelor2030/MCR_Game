@@ -40,17 +40,26 @@ public class ClientAdapter {
         if (!msg.equals(Messages.SERVER_HELLO_ANS)) {
             displayError("Server answer error: weeb not found");
         }
+
+        exit();
     }
 
     private void displayError(String error) {
+        System.out.println(error);
+    }
 
+    private void displayMessage(String msg) {
+        System.out.println(msg);
     }
 
     public String sendMessage(String request) {
+        displayMessage("-> " + request);
         try {
             out.println(request);
             out.flush();
-            return in.readLine();
+            String ret = in.readLine();
+            displayMessage("<- " + ret);
+            return ret;
         } catch (IOException e) {
             return "IO error";
         }

@@ -8,12 +8,20 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ServerAdapter {
 
-    final static Logger LOG = Logger.getLogger(ServerAdapter.class.getName());
+    private enum MessageLevel {
+        Info, Error
+    }
+
+    private void printMessage(MessageLevel level, String className, String message) {
+        System.out.println(level + ": " + className + ": " + message);
+    }
+
+    private void printMessage(String className, String message) {
+        printMessage(MessageLevel.Info, className, message);
+    }
 
     int port;
 
@@ -34,7 +42,7 @@ public class ServerAdapter {
      * client sends the "BYE" command.
      */
     public void serveClients() {
-        LOG.info("Starting the Receptionist Worker on a new thread...");
+        printMessage("Main", "Starting the Receptionist Worker on a new thread...");
         new Thread(new ReceptionistWorker()).start();
     }
 
@@ -53,18 +61,18 @@ public class ServerAdapter {
             try {
                 serverSocket = new ServerSocket(port);
             } catch (IOException ex) {
-                LOG.log(Level.SEVERE, null, ex);
+                printMessage(MessageLevel.Error, "Receptionist", ex.toString());
                 return;
             }
 
             while (true) {
-                LOG.log(Level.INFO, "Waiting (blocking) for a new client on port {0}", port);
+                printMessage( "Receptionist", "Waiting (blocking) for a new client on port " + port);
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    LOG.info("A new client has arrived. Starting a new thread and delegating work to a new servant...");
+                    printMessage( "Receptionist", "A new client has arrived. Starting a new thread and delegating work to a new servant...");
                     new Thread(new ServantWorker(clientSocket)).start();
                 } catch (IOException ex) {
-                    Logger.getLogger(ServerAdapter.class.getName()).log(Level.SEVERE, null, ex);
+                    printMessage(MessageLevel.Error,  "Receptionist", ex.toString());
                 }
             }
         }
@@ -87,7 +95,7 @@ public class ServerAdapter {
                     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     out = new PrintWriter(clientSocket.getOutputStream());
                 } catch (IOException ex) {
-                    Logger.getLogger(ServerAdapter.class.getName()).log(Level.SEVERE, null, ex);
+                    printMessage(MessageLevel.Error, "Servant", ex.toString());
                 }
             }
 
@@ -97,23 +105,23 @@ public class ServerAdapter {
                 boolean shouldRun = false;
 
                 try {
-                    LOG.info("Reading until client sends HELLO to open the connection...");
+                    printMessage("Servant", "Reading until client sends greetings to open the connection...");
                     while (!shouldRun && (line = in.readLine()) != null) {
-                        if(line.equalsIgnoreCase(Messages.CLIENT_HELLO)){
+                        if (line.equalsIgnoreCase(Messages.CLIENT_HELLO)) {
                             shouldRun = true;
                             out.println(Messages.SERVER_HELLO_ANS);
                         }
                         out.flush();
                     }
 
-                    LOG.info("Reading until client sends BYE or closes the connection...");
+                    printMessage("Servant", "Reading until client sends goodbye or closes the connection...");
                     while ((shouldRun) && (line = in.readLine()) != null) {
                         if (line.equalsIgnoreCase(Messages.CLIENT_GOODBYE)) {
                             out.println(Messages.SERVER_GOODBYE_ANS);
                             shouldRun = false;
                         } else {
                             try {
-                                LOG.info("Received:" + line);
+                                printMessage("Servant", "Received:" + line);
                             } catch (Exception e) {
                                 out.println("ERROR : " + e.getMessage());
                             }
@@ -122,7 +130,7 @@ public class ServerAdapter {
                         out.flush();
                     }
 
-                    LOG.info("Cleaning up ressources...");
+                    printMessage("Servant", "Cleaning up ressources...");
                     clientSocket.close();
                     in.close();
                     out.close();
@@ -131,7 +139,7 @@ public class ServerAdapter {
                         try {
                             in.close();
                         } catch (IOException ex1) {
-                            LOG.log(Level.SEVERE, ex1.getMessage(), ex1);
+                            printMessage(MessageLevel.Error, "Servant", ex1.toString());
                         }
                     }
                     if (out != null) {
@@ -141,10 +149,10 @@ public class ServerAdapter {
                         try {
                             clientSocket.close();
                         } catch (IOException ex1) {
-                            LOG.log(Level.SEVERE, ex1.getMessage(), ex1);
+                            printMessage(MessageLevel.Error, "Servant", ex1.getMessage());
                         }
                     }
-                    LOG.log(Level.SEVERE, ex.getMessage(), ex);
+                    printMessage(MessageLevel.Error, "Servant", ex.getMessage());
                 }
             }
         }
