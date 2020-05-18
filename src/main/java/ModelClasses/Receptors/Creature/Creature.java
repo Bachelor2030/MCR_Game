@@ -4,6 +4,9 @@ import Game.GameBoard.Position;
 import ModelClasses.LiveReceptor;
 import ModelClasses.Receptors.Trap;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Creature extends LiveReceptor {
     private Position position;
     private int steps;
@@ -26,14 +29,15 @@ public class Creature extends LiveReceptor {
         this.position.setOccupant(this);
     }
 
-    public void advance() {
-        // TODO move to position + steps or hit
+    public List<Action> advance() {
+        LinkedList<Action> actions = new LinkedList<>();
         for (int step = 0; step < steps; ++step) {
             if (position.next().isEmpty()) {
                 position.leave();
                 position = position.next();
                 if (position.getOccupant().getClass() == Trap.class) {
                     ((Trap)position.getOccupant()).trigger(this);
+                    actions.add(Action.TRAPPED);
                 }
             } else {
                 break;
@@ -41,7 +45,10 @@ public class Creature extends LiveReceptor {
         }
         if (lifePoints > 0 && !position.next().isEmpty()) {
             ((LiveReceptor)position.next().getOccupant()).hit(attackPoints);
+            actions.add(Action.HIT);
         }
+
+        return actions;
     }
 
     public void retreat() {
