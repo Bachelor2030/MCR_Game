@@ -1,9 +1,9 @@
 package Receptors;
 
-import Card.Card;
-import Card.CardType;
-import ModelClasses.Receptors.Chest;
-import ModelClasses.Receptors.Player;
+import Server.Game.Card.Card;
+import Server.Game.Card.CardType;
+import Common.Receptors.Chest;
+import Common.Receptors.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

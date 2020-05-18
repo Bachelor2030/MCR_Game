@@ -1,9 +1,8 @@
 package ModelClasses;
 
-import Game.GameBoard.Position;
-import ModelClasses.Commands.CreateCreature;
-import Game.GameBoard.Spot;
-import ModelClasses.Receptors.Creature.Creature;
+import Server.Game.Position;
+import Server.Game.Card.Commands.CreateCreature;
+import Common.Receptors.Creature;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

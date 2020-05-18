@@ -1,5 +1,7 @@
 package Card;
 
+import Server.Game.Card.Card;
+import Server.Game.Card.CardType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

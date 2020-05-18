@@ -1,9 +1,9 @@
 
-import Game.View.GameBoard;
+import Client.View.GameBoard;
 
 import java.io.*;
-import Game.GameBoard.Board;
-import ModelClasses.GameClient;
+import Common.GameBoard.Board;
+import Server.Game.ModelClasses.GameClient;
 
 public class Launcher {
     private static GameBoard gameBoard; //front-end GUI
