@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Player extends Receptor {
     private static final int NBR_INIT_CARDS = 3;
-    private static final int NBR_EGGS = 5;
+    private static final int NBR_CHESTS = 5;
     private static final int NBR_CARDS_PER_DECK = 50;
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
@@ -44,7 +44,7 @@ public class Player extends Receptor {
             hand.add(deck.remove());
         }
 
-        for (int i = 0; i < NBR_EGGS; ++i) {
+        for (int i = 0; i < NBR_CHESTS; ++i) {
             chests.add(new Chest(name + " - Egg " + (i + 1)));
         }
     }
@@ -76,7 +76,7 @@ public class Player extends Receptor {
         return actionPoints;
     }
 
-    public int getNbEggDestroyed() {
+    public int getNbChestsDestroyed() {
         int count = 0;
         for (Chest chest : chests) {
             if(!chest.isAlive()) {
@@ -134,15 +134,15 @@ public class Player extends Receptor {
         hand.remove(card);
     }
 
-    public static int getStartingNbrEggs() {
-        return NBR_EGGS;
+    public static int getStartingNbrChests() {
+        return NBR_CHESTS;
     }
 
-    public int getNbEggs() {
+    public int getNbChests() {
         return chests.size();
     }
 
-    public void hitEgg(int eggIndex, int attackPoints) {
+    public void hitChest(int eggIndex, int attackPoints) {
         chests.get(eggIndex).hit(attackPoints);
     }
 
