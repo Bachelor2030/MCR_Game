@@ -1,5 +1,10 @@
 package Server.Game.Card.Commands;
 
+import Server.Game.Card.Commands.CardMovement.Discard;
+import Server.Game.Card.Commands.CardMovement.Draw;
+import Server.Game.Card.Commands.CardMovement.GetCardFromDiscard;
+import Server.Game.ModelClasses.Command;
+
 public enum CommandName {
     HIT("Hit"),
     DRAW_TYPE_FROM_DISCARD("Draw from discard"),
@@ -19,7 +24,7 @@ public enum CommandName {
         return name;
     }
 
-    public static CommandName getCommand(String type) {
+    public static CommandName getCommandName(String type) {
         if(type.equals(HIT.name)) {
             return HIT;
         } else if(type.equals(DRAW.name)) {
@@ -36,6 +41,27 @@ public enum CommandName {
             return MOVE_CREATURE;
         }
         return null;
+    }
+
+    public static Command getCommand(CommandName commandName) {
+        switch (commandName) {
+            case HIT:
+                return new HitLiveReceptor();
+            case DISCARD:
+                return new Discard();
+            case DRAW:
+                return new Draw();
+            case DRAW_TYPE_FROM_DISCARD:
+                return new GetCardFromDiscard();
+            case CREATE_CREATURE:
+                return new CreateCreature();
+            case CREATE_TRAP:
+                return new CreateTrap();
+            case MOVE_CREATURE:
+                return new MoveCreature();
+            default:
+                return null;
+        }
     }
 
     @Override

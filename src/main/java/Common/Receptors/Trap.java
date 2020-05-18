@@ -15,7 +15,9 @@ public class Trap extends Receptor {
     }
 
     public void trigger(LiveReceptor victim) {
-        effect.execute();
+        if (effect != null){
+            effect.execute();
+        }
         position.leave();
         position = null;
     }
@@ -25,5 +27,9 @@ public class Trap extends Receptor {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

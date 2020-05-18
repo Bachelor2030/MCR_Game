@@ -7,9 +7,9 @@ import java.util.*;
 
 public class Player extends Receptor {
     private static final int NBR_INIT_CARDS = 3;
-    private static final int NBR_EGGS = 5;
+    private static final int NBR_CHESTS = 5;
     private static final int NBR_CARDS_PER_DECK = 50;
-    private static final int NBR_CARDS_MAX_IN_HAND = 10;
+    private static final int NBR_CARDS_MAX_IN_HAND = 5;
     private static final int NBR_ACTION_POINTS_MAX = 15;
 
     private Deque<Card> deck = new ArrayDeque<>(NBR_CARDS_PER_DECK);
@@ -18,6 +18,7 @@ public class Player extends Receptor {
     // Historic of the player
     // the map is set as so : <trunNumber, cards played>
     // There can be multiple cards in one turn
+    // TODO : trouver un moyen d'indiquer si la carte a été jouée ou juste jetée
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
 
     private List<Chest> chests = new LinkedList<>();
@@ -44,7 +45,7 @@ public class Player extends Receptor {
             hand.add(deck.remove());
         }
 
-        for (int i = 0; i < NBR_EGGS; ++i) {
+        for (int i = 0; i < NBR_CHESTS; ++i) {
             chests.add(new Chest(name + " - Egg " + (i + 1)));
         }
     }
@@ -53,10 +54,13 @@ public class Player extends Receptor {
     public void playTurn(int turn) {
         // Takes a card if possible otherwise
         // one card of the deck is thrown away
-        if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
-            hand.add(deck.remove());
-        } else {
-            deck.remove();
+
+        if (deck.size() > 0) {
+            if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
+                hand.add(deck.remove());
+            } else {
+                deck.remove();
+            }
         }
 
         if(turn <= NBR_ACTION_POINTS_MAX) {
@@ -76,7 +80,7 @@ public class Player extends Receptor {
         return actionPoints;
     }
 
-    public int getNbEggDestroyed() {
+    public int getNbChestsDestroyed() {
         int count = 0;
         for (Chest chest : chests) {
             if(!chest.isAlive()) {
@@ -134,15 +138,15 @@ public class Player extends Receptor {
         hand.remove(card);
     }
 
-    public static int getStartingNbrEggs() {
-        return NBR_EGGS;
+    public static int getStartingNbrChests() {
+        return NBR_CHESTS;
     }
 
-    public int getNbEggs() {
+    public int getNbChests() {
         return chests.size();
     }
 
-    public void hitEgg(int eggIndex, int attackPoints) {
+    public void hitChest(int eggIndex, int attackPoints) {
         chests.get(eggIndex).hit(attackPoints);
     }
 

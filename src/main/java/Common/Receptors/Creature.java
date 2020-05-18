@@ -3,6 +3,9 @@ package Common.Receptors;
 import Server.Game.Position;
 import Server.Game.ModelClasses.LiveReceptor;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Creature extends LiveReceptor {
     private Position position;
     private int steps;
@@ -25,26 +28,54 @@ public class Creature extends LiveReceptor {
         this.position.setOccupant(this);
     }
 
-    public void advance() {
-        // TODO move to position + steps or hit
+    public List<Action> advance() {
+        LinkedList<Action> actions = new LinkedList<>();
         for (int step = 0; step < steps; ++step) {
             if (position.next().isEmpty()) {
                 position.leave();
                 position = position.next();
-                if (position.getOccupant().getClass() == Trap.class) {
+                if (position.isTrapped()) {
                     ((Trap)position.getOccupant()).trigger(this);
+                    actions.add(Action.TRAPPED);
                 }
             } else {
                 break;
             }
         }
         if (lifePoints > 0 && !position.next().isEmpty()) {
-            ((LiveReceptor)position.next().getOccupant()).hit(attackPoints);
+            if(!((Creature) position.next().getOccupant()).isAlly(this)) {
+                ((LiveReceptor) position.next().getOccupant()).hit(attackPoints);
+                this.hit(((Creature) position.next().getOccupant()).getAttackPoints());
+                actions.add(Action.HIT);
+            }
         }
+
+        return actions;
     }
 
-    public void retreat() {
-        // TODO move to position - steps
+    public List<Action> retreat(int distance) {
+        LinkedList<Action> actions = new LinkedList<>();
+        for (int step = 0; step < distance; ++step) {
+            if (position.previous().isEmpty()) {
+                position.leave();
+                position = position.previous();
+                if (position.isTrapped()) {
+                    ((Trap)position.getOccupant()).trigger(this);
+                    actions.add(Action.TRAPPED);
+                }
+            } else {
+                break;
+            }
+        }
+        return actions;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public int getSteps() {
+        return steps;
     }
 
     @Override
@@ -52,7 +83,7 @@ public class Creature extends LiveReceptor {
         advance();
     }
 
-    public Position getPosition() {
-        return position;
+    public int getAttackPoints() {
+        return attackPoints;
     }
 }

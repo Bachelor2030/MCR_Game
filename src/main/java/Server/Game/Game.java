@@ -60,12 +60,12 @@ public class Game {
      * @return true si le jeu est terminé, false sinon.
      */
     private boolean finished() {
-        if(player2.getNbEggDestroyed() >= 2)
+        if(player2.getNbChestsDestroyed() >= 2)
         {
             gameOver(player2, player1);
             return true;
         }
-        else if(player1.getNbEggDestroyed() >= 2)
+        else if(player1.getNbChestsDestroyed() >= 2)
         {
             gameOver(player1, player2);
             return true;

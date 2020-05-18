@@ -3,11 +3,11 @@ package Common.Receptors;
 import Server.Game.ModelClasses.LiveReceptor;
 
 public class Chest extends LiveReceptor {
-    private static final int EGG_LIFE_POINTS = 5;
+    private static final int CHEST_LIFE_POINTS = 5;
     private boolean alive;
 
     public Chest(String name) {
-        super(name, EGG_LIFE_POINTS);
+        super(name, CHEST_LIFE_POINTS);
         alive = true;
     }
 
