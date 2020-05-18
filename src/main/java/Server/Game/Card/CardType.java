@@ -2,7 +2,7 @@ package Server.Game.Card;
 
 public enum CardType {
     SPELL("Spell"),
-    TRAP("Receptors.Trap"),
+    TRAP("Trap"),
     CREATURE("Creature");
 
     private String name;

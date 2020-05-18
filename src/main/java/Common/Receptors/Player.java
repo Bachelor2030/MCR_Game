@@ -18,6 +18,7 @@ public class Player extends Receptor {
     // Historic of the player
     // the map is set as so : <trunNumber, cards played>
     // There can be multiple cards in one turn
+    // TODO : trouver un moyen d'indiquer si la carte a été jouée ou juste jetée
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
 
     private List<Chest> chests = new LinkedList<>();

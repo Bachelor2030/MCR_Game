@@ -15,15 +15,6 @@ public class Card implements Invocator {
         this.cost = cost;
     }
 
-    public void play() {
-        command.execute();
-    }
-
-    @Override
-    public void setCommand(Macro command) {
-        this.command = command;
-    }
-
     public int getCost() {
         return cost;
     }
@@ -34,5 +25,14 @@ public class Card implements Invocator {
 
     public CardType getType() {
         return type;
+    }
+
+    public void play() {
+        command.execute();
+    }
+
+    @Override
+    public void setCommand(Macro command) {
+        this.command = command;
     }
 }
