@@ -34,7 +34,7 @@ public class Creature extends LiveReceptor {
             if (position.next().isEmpty()) {
                 position.leave();
                 position = position.next();
-                if (position.getOccupant().getClass() == Trap.class) {
+                if (position.isTrapped()) {
                     ((Trap)position.getOccupant()).trigger(this);
                     actions.add(Action.TRAPPED);
                 }
@@ -43,8 +43,11 @@ public class Creature extends LiveReceptor {
             }
         }
         if (lifePoints > 0 && !position.next().isEmpty()) {
-            ((LiveReceptor)position.next().getOccupant()).hit(attackPoints);
-            actions.add(Action.HIT);
+            if(!((Creature) position.next().getOccupant()).isAlly(this)) {
+                ((LiveReceptor) position.next().getOccupant()).hit(attackPoints);
+                this.hit(((Creature) position.next().getOccupant()).getAttackPoints());
+                actions.add(Action.HIT);
+            }
         }
 
         return actions;
@@ -56,7 +59,7 @@ public class Creature extends LiveReceptor {
             if (position.previous().isEmpty()) {
                 position.leave();
                 position = position.previous();
-                if (position.getOccupant().getClass() == Trap.class) {
+                if (position.isTrapped()) {
                     ((Trap)position.getOccupant()).trigger(this);
                     actions.add(Action.TRAPPED);
                 }
@@ -78,5 +81,9 @@ public class Creature extends LiveReceptor {
     @Override
     public void playTurn(int turn) {
         advance();
+    }
+
+    public int getAttackPoints() {
+        return attackPoints;
     }
 }

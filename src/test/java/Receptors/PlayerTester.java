@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class PlayerTester {
     private static Player player;
@@ -32,6 +33,7 @@ public class PlayerTester {
         cards.add(new Card("Gregou", CardType.CREATURE, 10, null));
 
         player = new Player(name, cards);
+        assertEquals(3, player.getNbrCardsInHand());
     }
 
     @Test
@@ -48,16 +50,30 @@ public class PlayerTester {
         }
     }
 
-    @Test
-    public void PlayerShouldStartWithTheCorrectAmountOfCardsInHand() {
-        assertEquals(3, player.getNbrCardsInHand());
-    }
-
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 15, 31})
     public void TheNumberOfActionPointMustBeCorrect(int turn) {
         player.playTurn(turn);
         assertEquals((turn <= 15 ? turn : 15), player.getActionPoints());
+    }
+
+    @Test
+    public void IfPlaayersHandIsFullTheDrwanCardIsDiscarded() {
+        player.playTurn(2);
+
+        int n = player.getNbrCardsInHand();
+        player.playTurn(3);
+
+        assertEquals(n+1, player.getNbrCardsInHand());
+
+        player.playTurn(4);
+        player.playTurn(5);
+        player.playTurn(6);
+
+        n = player.getNbrCardsInHand();
+        player.playTurn(7);
+
+        assertEquals(n, player.getNbrCardsInHand());
     }
 
     @Test

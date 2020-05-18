@@ -27,6 +27,10 @@ public class Position {
         return line.getSpot(position).isEmpty();
     }
 
+    public boolean isTrapped() {
+        return line.getSpot(position).isTrapped();
+    }
+
     public Receptor getOccupant() {
         return line.getSpot(position).getOccupant();
     }
@@ -47,5 +51,13 @@ public class Position {
         if (position == 0)
             return this;
         return new Position(line, position - 1);
+    }
+
+    public Line getLine() {
+        return line;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

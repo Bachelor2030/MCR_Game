@@ -9,7 +9,7 @@ public class Player extends Receptor {
     private static final int NBR_INIT_CARDS = 3;
     private static final int NBR_CHESTS = 5;
     private static final int NBR_CARDS_PER_DECK = 50;
-    private static final int NBR_CARDS_MAX_IN_HAND = 10;
+    private static final int NBR_CARDS_MAX_IN_HAND = 5;
     private static final int NBR_ACTION_POINTS_MAX = 15;
 
     private Deque<Card> deck = new ArrayDeque<>(NBR_CARDS_PER_DECK);
@@ -54,10 +54,13 @@ public class Player extends Receptor {
     public void playTurn(int turn) {
         // Takes a card if possible otherwise
         // one card of the deck is thrown away
-        if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
-            hand.add(deck.remove());
-        } else {
-            deck.remove();
+
+        if (deck.size() > 0) {
+            if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
+                hand.add(deck.remove());
+            } else {
+                deck.remove();
+            }
         }
 
         if(turn <= NBR_ACTION_POINTS_MAX) {
