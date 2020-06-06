@@ -16,7 +16,7 @@ public class Card implements Invocator {
 
     public Card(String name, CardType type, int cost, CommandName[] commandNames) {
         this.type = type;
-        this.name = (type != null ? type.toString() + " " : "") + name;
+        this.name = (type != null ? type.toString() + " " : "");
         this.cost = cost;
         this.commandNames = commandNames;
     }
