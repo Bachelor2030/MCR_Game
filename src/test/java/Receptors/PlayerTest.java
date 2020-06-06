@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class PlayerTester {
+public class PlayerTest {
     private static Player player;
     private static String name;
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ChestTester {
+public class ChestTest {
     private static Chest chest;
     private static final String name = "Saphira";
 
