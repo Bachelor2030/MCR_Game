@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CommandTester {
     private Group root = new Group();
-
+/*
     @Test
     public void CreatingCreatureShouldPlaceIt() throws IOException {
         Group root = new Group();
@@ -28,4 +28,6 @@ public class CommandTester {
         createCreature.execute();
         assertEquals(position, pier.getPosition());
     }
+    
+ */
 }
