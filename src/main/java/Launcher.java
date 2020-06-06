@@ -12,7 +12,7 @@ public class Launcher {
   private static Board board; // back-end LOGIC
 
   public static void main(String[] args) throws IOException {
-    System.out.println("Hello, I am an awesome game !");
+    System.out.println("Hello, I am an awesome game ! I should work ! ");
     GameClient gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
 
     initGame();
