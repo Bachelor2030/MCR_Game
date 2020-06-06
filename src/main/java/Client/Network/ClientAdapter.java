@@ -12,7 +12,7 @@ public class ClientAdapter {
 
     final static int BUFFER_SIZE = 1024;
     String host;
-    int port
+    int port;
 
     Socket clientSocket = null;
     BufferedReader in = null;
