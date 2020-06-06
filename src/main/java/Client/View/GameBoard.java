@@ -10,17 +10,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 
-/**
- * Permet de représenter l'entierté du jeu
- */
+/** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
   private static Board board;
   private static GameBoard gameBoard;
 
-  public GameBoard() throws IOException{
+  public GameBoard() throws IOException {
     board = new Board();
   }
 
@@ -37,5 +34,4 @@ public class GameBoard extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
   }
-
 }

@@ -3,12 +3,6 @@ package Common.GameBoard;
 import Client.Maths.Vector2f;
 import Common.Receptors.Trap;
 import Server.Game.ModelClasses.Receptor;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,8 +17,7 @@ public class Spot {
   private static int spotCounter = 0;
 
   // l'éventuelle créature présente sur la case
-  private Receptor occupant
-          ;
+  private Receptor occupant;
   private FileInputStream image = new FileInputStream("src/main/java/Common/GameBoard/island.png");
 
   // la position du spot dans l'espace
@@ -72,8 +65,7 @@ public class Spot {
     return occupant;
   }
 
-    public FileInputStream getImage() {
-        return image;
-    }
-
+  public FileInputStream getImage() {
+    return image;
+  }
 }
