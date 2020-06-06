@@ -14,9 +14,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class PlayerTest {
+public class PlayerTester {
     private static Player player;
     private static String name;
 
@@ -24,16 +23,15 @@ public class PlayerTest {
     static void initialise() {
         name = "George";
         LinkedList<Card> cards = new LinkedList<>();
-        cards.add(new Card("Black Hole", CardType.SPELL, 2, null));
-        cards.add(new Card("Furnace", CardType.SPELL, 2, null));
-        cards.add(new Card("Bombe", CardType.TRAP, 3, null));
-        cards.add(new Card("Black Hole", CardType.TRAP, 3, null));
-        cards.add(new Card("Pier", CardType.CREATURE, 8, null));
-        cards.add(new Card("Sebas-chan", CardType.CREATURE, 9, null));
-        cards.add(new Card("Gregou", CardType.CREATURE, 10, null));
+        cards.add(new Card("Black Hole", CardType.SPELL, 2));
+        cards.add(new Card("Furnace", CardType.SPELL, 2));
+        cards.add(new Card("Bombe", CardType.TRAP, 3));
+        cards.add(new Card("Black Hole", CardType.TRAP, 3));
+        cards.add(new Card("Pier", CardType.CREATURE, 8));
+        cards.add(new Card("Sebas-chan", CardType.CREATURE, 9));
+        cards.add(new Card("Gregou", CardType.CREATURE, 10));
 
         player = new Player(name, cards);
-        assertEquals(3, player.getNbrCardsInHand());
     }
 
     @Test
@@ -42,12 +40,17 @@ public class PlayerTest {
     }
 
     @Test
-    public void HittingAPlayersChestMustDiminishTheirLifePoints() {
-        player.hitChest(1,20);
-        assertEquals(1, player.getNbChestsDestroyed());
+    public void HittingAPlayersEggMustDiminishTheirLifePoints() {
+        player.hitEgg(1,20);
+        assertEquals(1, player.getNbEggDestroyed());
         for (Chest chest : player.getChests()) {
             System.out.println(chest);
         }
+    }
+
+    @Test
+    public void PlayerShouldStartWithTheCorrectAmountOfCardsInHand() {
+        assertEquals(3, player.getNbrCardsInHand());
     }
 
     @ParameterizedTest
@@ -58,29 +61,10 @@ public class PlayerTest {
     }
 
     @Test
-    public void IfPlaayersHandIsFullTheDrwanCardIsDiscarded() {
-        player.playTurn(2);
-
-        int n = player.getNbrCardsInHand();
-        player.playTurn(3);
-
-        assertEquals(n+1, player.getNbrCardsInHand());
-
-        player.playTurn(4);
-        player.playTurn(5);
-        player.playTurn(6);
-
-        n = player.getNbrCardsInHand();
-        player.playTurn(7);
-
-        assertEquals(n, player.getNbrCardsInHand());
-    }
-
-    @Test
-    public void PlayerShouldHaveTheCorrectAmountOfChests() {
+    public void PlayerShouldHaveTheCorrectAmountOfEggs() {
         for (Chest chest : player.getChests()) {
             System.out.println(chest);
         }
-        assertEquals(Player.getStartingNbrChests(), player.getNbChests());
+        assertEquals(Player.getStartingNbrEggs(), player.getNbEggs());
     }
 }

@@ -10,16 +10,14 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class CommandTest {
+public class CommandTester {
 
     @Test
     public void CreatingCreatureShouldPlaceIt() throws IOException {
         Creature pier = new Creature("Pier", 12, 12, 4,null);
         Position position = new Position();
 
-        CreateCreature createCreature = new CreateCreature();
-        createCreature.setCreature(pier);
-        createCreature.setPosition(position);
+        CreateCreature createCreature = new CreateCreature(pier, position);
         assertNull(pier.getPosition());
 
         createCreature.execute();

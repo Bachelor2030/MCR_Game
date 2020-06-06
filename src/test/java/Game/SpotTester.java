@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SpotTest {
+public class SpotTester {
     @Test
     public void EmptyTest() {
         assertEquals(0, 0);
