@@ -3,7 +3,13 @@ import Client.View.GameBoard;
 
 import java.io.*;
 import Common.GameBoard.Board;
+import Common.Receptors.Creature;
+import Server.Game.Card.Card;
+import Server.Game.Card.CardType;
+import Server.Game.Card.Commands.CommandName;
+import Server.Game.Card.Commands.CreateCreature;
 import Server.Game.ModelClasses.GameClient;
+import Server.Game.ModelClasses.Macro;
 
 public class Launcher {
     private static GameBoard gameBoard; //front-end GUI
@@ -11,11 +17,20 @@ public class Launcher {
 
     public static void main(String[] args) throws IOException {
         System.out.println("Hello, I am an awesome game !");
-        GameClient gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
-        gameCreator.createCommands();
+        //GameClient gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
+        //gameCreator.createCommands();
 
+        Card pierCard = new Card("pier", CardType.CREATURE, 2, new CommandName[]{CommandName.CREATE_CREATURE});
+        Creature pier = new Creature("Pier", 12, 2, 4,null);
 
-        initGame();
+        CreateCreature createCreature = new CreateCreature(pier);
+        pierCard.setCommand(new Macro(new CreateCreature[]{createCreature}));
+        pierCard.play();
+        pier.setOriginCard(pierCard);
+
+        System.out.println(pier);
+
+        //initGame();
     }
 
     private static void initGame() throws IOException {

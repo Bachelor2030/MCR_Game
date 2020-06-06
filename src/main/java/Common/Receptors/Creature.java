@@ -1,5 +1,6 @@
 package Common.Receptors;
 
+import Server.Game.Card.Card;
 import Server.Game.Position;
 import Server.Game.ModelClasses.LiveReceptor;
 
@@ -10,9 +11,10 @@ public class Creature extends LiveReceptor {
     private Position position;
     private int steps;
     private int attackPoints;
-    private String owner;
+    private final Player owner;
+    private Card originCard;
 
-    public Creature(String name, int lifePoints, int steps, int attackPoints, String owner) {
+    public Creature(String name, int lifePoints, int steps, int attackPoints, Player owner) {
         super(name, lifePoints);
         this.steps = steps;
         this.owner = owner;
@@ -24,13 +26,19 @@ public class Creature extends LiveReceptor {
     }
 
     public void place(Position position) {
-        this.position = position;
-        this.position.setOccupant(this);
+        if(position != null) {
+            this.position = position;
+            this.position.setOccupant(this);
+        }
     }
 
     public List<Action> advance() {
         LinkedList<Action> actions = new LinkedList<>();
         for (int step = 0; step < steps; ++step) {
+            if (!position.next().isValid()) {
+                returnToDeck();
+            }
+
             if (position.next().isEmpty()) {
                 position.leave();
                 position = position.next();
@@ -51,6 +59,10 @@ public class Creature extends LiveReceptor {
         }
 
         return actions;
+    }
+
+    private void returnToDeck() {
+
     }
 
     public List<Action> retreat(int distance) {
@@ -85,5 +97,9 @@ public class Creature extends LiveReceptor {
 
     public int getAttackPoints() {
         return attackPoints;
+    }
+
+    public void setOriginCard(Card card) {
+        this.originCard = card;
     }
 }

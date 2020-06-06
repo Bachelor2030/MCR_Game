@@ -1,6 +1,7 @@
 package Receptors.Creature;
 
 import Common.Receptors.Creature;
+import Common.Receptors.Player;
 import Server.Game.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,11 +16,16 @@ public class CreatureTest {
     private static final int STEPS = 2;
     private static Creature creature;
     private static Creature creature1;
+    private static Player player;
+    private static Player player1;
 
     @BeforeAll
     public static void init() {
-        creature = new Creature("Pier", 10, STEPS, 4, "Elodie");
-        creature1 = new Creature("Sebas-chan", 12, 3, 1, "Elodie");
+        player    = new Player("Elodie", null);
+        player1   = new Player("Michel", null);
+
+        creature  = new Creature("Pier", 10, STEPS, 4, player);
+        creature1 = new Creature("Sebas-chan", 12, 3, 1, player);
     }
 
     @Test
@@ -29,12 +35,12 @@ public class CreatureTest {
 
     @Test
     public void CreaturesWithDifferentOwnersMustNotBeAllies() {
-        Creature c = new Creature("", 0, 0, 4, "Me");
+        Creature c = new Creature("", 0, 0, 4, player1);
         assertFalse(creature.isAlly(c));
     }
 
     @Test
-    public void CreatureMustHaveCorrectNumbreOfSteps() {
+    public void CreatureMustHaveCorrectNumberOfSteps() {
         assertEquals(STEPS, creature.getSteps());
     }
 
@@ -57,7 +63,7 @@ public class CreatureTest {
 
     @Test
     public void AdvancingToAnEnemyMustTriggerAHit() {
-        Creature c = new Creature("", 20, 0, 4, "Me");
+        Creature c = new Creature("", 20, 0, 4, player1);
         Position p = new Position();
         Position p1 = p.next();
         creature.place(p);
