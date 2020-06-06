@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BoardTester {
+public class BoardTest {
 
     @Test
     public void EmptyTest() {
