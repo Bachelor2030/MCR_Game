@@ -15,7 +15,7 @@ public class CardTester {
 
     @BeforeAll
     static void init() {
-        card = new Card(NAME, TYPE, COST);
+        card = new Card(NAME, TYPE, COST, null);
     }
 
     @Test

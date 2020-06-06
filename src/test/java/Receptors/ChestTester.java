@@ -18,13 +18,13 @@ public class ChestTester {
     }
 
     @Test
-    public void EggsNameShouldBeCorrect() {
+    public void ChestsNameShouldBeCorrect() {
         assertEquals(name, chest.getName());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 5, 13})
-    public void HittingAnEggShouldDiminishItsLife(int points) {
+    public void HittingAChestShouldDiminishItsLife(int points) {
         chest.hit(points);
         if (points < chest.getMAX_LIFE_POINTS()) {
             assertEquals(chest.getMAX_LIFE_POINTS() - points, chest.getLifePoints());

@@ -12,6 +12,8 @@ public class Launcher {
     public static void main(String[] args) throws IOException {
         System.out.println("Hello, I am an awesome game !");
         GameClient gameCreator = gameCreatorFromFile("src/main/resources/cards.json");
+        gameCreator.createCommands();
+
 
         initGame();
     }

@@ -1,6 +1,7 @@
 package Server.Game.ModelClasses;
 
 import Server.Game.Card.Card;
+import Server.Game.Card.Commands.CommandName;
 import Server.Game.Utils.CardsJsonParser;
 
 import java.util.ArrayList;
@@ -19,7 +20,17 @@ public class GameClient {
 
     public void createCommands() {
         for (Card card : cards) {
+            CommandName[] names = card.getCommandNames();
+            int size = names.length;
+            Command[] commands = new Command[size];
 
+            for (int i = 0; i < size; i++) {
+                commands[i] = CommandName.getCommand(names[i]);
+            }
+
+            card.setCommand(new Macro(commands));
+
+            System.out.println(card);
         }
     }
 }

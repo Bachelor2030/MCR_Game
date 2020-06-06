@@ -70,4 +70,8 @@ public class Spot {
     public Receptor getOccupant() {
         return occupant;
     }
+
+    public boolean isTrapped() {
+        return occupant != null && occupant.getClass() == Trap.class;
+    }
 }

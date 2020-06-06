@@ -14,8 +14,8 @@ public class GameBoard extends JFrame {
         super("TITRE DU JEU - PROJET DE MCR");
         board = new Board();
         gamePanel = new GamePanel();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         start();
-
     }
 
     public void start() {
