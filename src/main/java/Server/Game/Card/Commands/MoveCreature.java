@@ -5,11 +5,8 @@ import Common.Receptors.Creature;
 public class MoveCreature extends ConcreteCommand {
     private Creature creature;
 
-    public MoveCreature() {
+    public MoveCreature(Creature creature) {
         super(CommandName.MOVE_CREATURE);
-    }
-
-    public void setCreature(Creature creature) {
         this.creature = creature;
     }
 
@@ -20,6 +17,6 @@ public class MoveCreature extends ConcreteCommand {
 
     @Override
     public void undo() {
-        creature.retreat(creature.getSteps());
+        creature.retreat();
     }
 }

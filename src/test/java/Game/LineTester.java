@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LineTest {
+public class LineTester {
     @Test
     public void EmptyTest() {
         assertEquals(0, 0);

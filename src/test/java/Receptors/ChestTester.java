@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ChestTest {
+public class ChestTester {
     private static Chest chest;
     private static final String name = "Saphira";
 
@@ -18,13 +18,13 @@ public class ChestTest {
     }
 
     @Test
-    public void ChestsNameShouldBeCorrect() {
+    public void EggsNameShouldBeCorrect() {
         assertEquals(name, chest.getName());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 5, 13})
-    public void HittingAChestShouldDiminishItsLife(int points) {
+    public void HittingAnEggShouldDiminishItsLife(int points) {
         chest.hit(points);
         if (points < chest.getMAX_LIFE_POINTS()) {
             assertEquals(chest.getMAX_LIFE_POINTS() - points, chest.getLifePoints());

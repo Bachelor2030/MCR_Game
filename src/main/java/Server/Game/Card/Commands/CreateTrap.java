@@ -7,15 +7,9 @@ public class CreateTrap extends ConcreteCommand {
     private Position position;
     private Trap trap;
 
-    public CreateTrap() {
+    public CreateTrap(Trap trap, Position position){
         super(CommandName.CREATE_TRAP);
-    }
-
-    public void setTrap(Trap trap) {
         this.trap = trap;
-    }
-
-    public void setPosition(Position position) {
         this.position = position;
     }
 
