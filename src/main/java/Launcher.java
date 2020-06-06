@@ -19,7 +19,6 @@ public class Launcher {
   }
 
   private static void initGame() throws IOException {
-    board = new Board();
     gameBoard = new GameBoard();
   }
 

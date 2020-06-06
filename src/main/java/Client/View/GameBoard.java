@@ -1,37 +1,49 @@
 package Client.View;
 
 import Common.GameBoard.Board;
+import Common.GameBoard.Line;
 import Common.GameBoard.Spot;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 
 /** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
   private static Board board;
-  private static GameBoard gameBoard;
+  private LinkedList<Line> lines;
+  private Group root;
+  private Stage primaryStage;
+  private Scene scene;
 
   public GameBoard() throws IOException {
-    board = new Board();
+    root = new Group();
+    board = new Board(root);
+    primaryStage = new Stage();
+    initGame();
   }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Spot spot = new Spot();
-    primaryStage = new Stage();
-    Image img = new Image(spot.getImage());
-    ImageView imageView = new ImageView(img);
 
-    HBox hbox = new HBox(imageView);
-
-    Scene scene = new Scene(hbox, 1100, 700, Color.BLACK);
+    scene = new Scene(root, Color.BLACK);
+    primaryStage.setFullScreen(true);
     primaryStage.setScene(scene);
     primaryStage.show();
+  }
+
+  /**
+   * Permet d'initialiser correctement les différentes structures du board.
+   * @throws IOException
+   */
+  private void initGame() throws IOException {
+
   }
 }

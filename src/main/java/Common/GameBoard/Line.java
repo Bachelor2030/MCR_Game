@@ -1,5 +1,7 @@
 package Common.GameBoard;
 
+import javafx.scene.Group;
+
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -15,16 +17,21 @@ public class Line {
   // Les cases composant la ligne
   private LinkedList<Spot> spots;
 
+  //le groupe d'îlots qu'on affichera par la suite
+  Group root;
+
   /**
    * Constructeur de la classe Line
    *
    * @param noLine : le numéro de la ligne
+   * @param root : le groupe d'îlots qu'on affichera par la suite
    */
-  public Line(int noLine) throws IOException {
+  public Line(int noLine, Group root) throws IOException {
+    this.root = root;
     this.noLine = noLine;
-    spots = new LinkedList<Spot>();
+    spots = new LinkedList<>();
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
-      spots.add(new Spot());
+      spots.add(new Spot(root));
     }
   }
 

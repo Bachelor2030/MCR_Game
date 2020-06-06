@@ -14,14 +14,6 @@ public class Position {
         this.position = position;
     }
 
-    public Position() {
-        try {
-            line = new Line(1);
-            position = 1;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public boolean isEmpty() {
         return line.getSpot(position).isEmpty();
