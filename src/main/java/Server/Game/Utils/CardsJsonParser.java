@@ -2,17 +2,16 @@ package Server.Game.Utils;
 
 import Server.Game.Card.Card;
 import Server.Game.Card.CardType;
+import Server.Game.Card.Commands.CommandName;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CardsJsonParser {
     private String json;
     private ArrayList<Card> cards = new ArrayList<>();
-    private HashMap<String, String> commands = new HashMap<>();
 
     public CardsJsonParser(String json) {
         this.json = json;
@@ -38,9 +37,13 @@ public class CardsJsonParser {
             CardType type = CardType.getType(card.getString("type"));
             int cost = card.getInt("cost");
 
-            commands.put("", null);
+            JSONArray commands = card.getJSONArray("commands");
+            CommandName[] commandNames = new CommandName[commands.length()];
+            for (int j = 0; j < commandNames.length; ++j) {
+                commandNames[j] = CommandName.getCommandName((String) commands.get(j));
+            }
 
-            cards.add(new Card(name, type, cost));
+            cards.add(new Card(name, type, cost, commandNames));
         }
     }
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CardTester {
+public class CardTest {
     private static Card card;
     private static final String NAME = "An awesome card";
     private static final CardType TYPE = CardType.CREATURE;
@@ -15,7 +15,7 @@ public class CardTester {
 
     @BeforeAll
     static void init() {
-        card = new Card(NAME, TYPE, COST);
+        card = new Card(NAME, TYPE, COST, null);
     }
 
     @Test

@@ -65,7 +65,9 @@ public class Spot {
     return occupant;
   }
 
+
   public FileInputStream getImage() {
     return image;
   }
+
 }
