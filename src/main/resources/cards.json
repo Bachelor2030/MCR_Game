@@ -1,0 +1,41 @@
+{
+  "pageInfo" : {
+    "pageName": "Card list"
+  },
+  "cards" : [
+    {
+      "name" : "Pier",
+      "type" : "Creature",
+      "cost" : 8,
+      "commands" : ["Create creature", "Draw card"]
+    },
+    {
+      "name" : "Sebas-chan",
+      "type" : "Creature",
+      "cost" : 9,
+      "commands" : "Create creature"
+    },
+    {
+      "name" : "Gregou",
+      "type" : "Creature",
+      "cost" : 10,
+      "commands" : ["Create creature", "Discard card"]
+    },
+    {
+      "name" : "Black hole",
+      "type" : "Trap",
+      "cost" : 4,
+      "trap" : {
+        "command" : "Hit creature",
+        "damage" : 3
+      }
+    },
+    {
+      "name" : "Furnace",
+      "type" : "Spell",
+      "cost" : 3,
+      "commands" : ["Hit player", "Discard card"]
+    }
+  ]
+}
+
