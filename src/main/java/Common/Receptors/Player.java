@@ -6,6 +6,9 @@ import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
 
+/**
+ * Modelises a player of the game
+ */
 public class Player extends Receptor {
     private static final int NBR_INIT_CARDS = 3;
     private static final int NBR_CHESTS = 5;
@@ -17,8 +20,6 @@ public class Player extends Receptor {
     private Deque<Card> hand = new ArrayDeque<>(NBR_CARDS_MAX_IN_HAND);
 
     // Historic of the player
-    // the map is set as so : <trunNumber, cards played>
-    // There can be multiple cards in one turn
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
 
     private List<Chest> chests = new LinkedList<>();
@@ -27,6 +28,11 @@ public class Player extends Receptor {
 
     private int actionPoints;
 
+    /**
+     * Creates a player with the given name and deck
+     * @param name the name of the player
+     * @param deck the dock of cards the player has
+     */
     public Player(String name, List<Card> deck) {
         super(name);
         actionPoints = 0;
@@ -42,6 +48,9 @@ public class Player extends Receptor {
         }
     }
 
+    /**
+     * Initializes the player
+     */
     private void init() {
         for (int i = 0; i < NBR_INIT_CARDS; ++i) {
             hand.add(deck.remove());
@@ -52,14 +61,26 @@ public class Player extends Receptor {
         }
     }
 
+    /**
+     * Returns the number of cards the player has in his/her hand
+     * @return size of the hand list of cards
+     */
     public int getNbrCardsInHand() {
         return hand.size();
     }
 
+    /**
+     * Returns the number of action points the player currently has
+     * @return actionsPoints
+     */
     public int getActionPoints() {
         return actionPoints;
     }
 
+    /**
+     * Returns the number of the player's chests that have been opened
+     * @return nbrOpenedChests
+     */
     public int getNbChestsDestroyed() {
         int count = 0;
         for (Chest chest : chests) {
@@ -69,7 +90,12 @@ public class Player extends Receptor {
         }
         return count;
     }
-  
+
+    /**
+     * Makes the player play the card at the given index in his/her hand
+     * @param index index of the card to play
+     * @return true if the card can be played, false otherwise
+     */
     public boolean playCard(int index) {
         Card cardToPlay = null;
         int i = 0;
@@ -95,52 +121,72 @@ public class Player extends Receptor {
         return false;
     }
 
+    /**
+     * Get the discard pile of the player
+     * @returna hashmap representing the discrad pile
+     */
     public HashMap<Integer, List<Card>> getDiscard() {
         return discard;
     }
 
+    /**
+     * Puts the given card in the players hand
+     * @param card the card to give to the player
+     */
     public void giveCard(Card card) {
         if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
             hand.add(card);
         }
     }
 
+    /**
+     * Makes the player discard the given cardd, it will put it in the discard pile
+     * @param card the card to discard
+     */
     public void discardCard(Card card) {
         hand.remove(card);
     }
 
+    /**
+     * Add a card to the top of the players deck
+     * @param card the card to add to the players deck
+     */
     public void addToTopDeck(Card card) {
         deck.addFirst(card);
     }
 
+    /**
+     * Makes the player draw a card in his/her deck
+     * @return the card that went from the players deck to his/her hand
+     */
     public Card drawCard() {
         Card card = deck.removeFirst();
         hand.add(card);
         return card;
     }
 
+    /**
+     * Removes the given card from the players hand
+     * @param card the card to remove from the players hand
+     */
     public void removeFromHand(Card card) {
         hand.remove(card);
     }
 
+    /**
+     * Get the initial number of chests
+     * @return the number of chests the player started with
+     */
     public static int getStartingNbrChests() {
         return NBR_CHESTS;
     }
 
-    public int getNbChests() {
-        return chests.size();
-    }
-
-    public void hitChest(int chestsIndex, int attackPoints) {
-        chests.get(chestsIndex).hit(attackPoints);
-    }
-
-    public List<Chest> getChests() {
-        return chests;
-    }
-
-    public void addToDeck(Card originCard) {
-        deck.addLast(originCard);
+    /**
+     * Adds the given card to the players deck
+     * @param card the card to add in the deck at a random position
+     */
+    public void addToDeck(Card card) {
+        deck.addLast(card);
         ArrayList<Card> d = new ArrayList<>();
         d.addAll(deck);
         Collections.shuffle(d);
@@ -160,7 +206,7 @@ public class Player extends Receptor {
             } else {
                 for (Chest chest : chests) {
                     System.out.println(name + "'s chests lose a life");
-                    chest.hit(1);
+                    chest.loseLifePoints(1);
                 }
             }
         }

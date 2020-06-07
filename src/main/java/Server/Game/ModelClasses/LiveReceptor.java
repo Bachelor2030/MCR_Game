@@ -16,7 +16,7 @@ public abstract class LiveReceptor extends Receptor {
         this.type = type;
     }
 
-    public void hit(int points) {
+    public void loseLifePoints(int points) {
         if (lifePoints - points >= 0) {
             lifePoints -= points;
         } else {
@@ -24,7 +24,7 @@ public abstract class LiveReceptor extends Receptor {
         }
     }
 
-    public void heal(int points) {
+    public void gainLifePoints(int points) {
         if(lifePoints + points <= MAX_LIFE_POINTS) {
             lifePoints += points;
         } else {
