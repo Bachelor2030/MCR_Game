@@ -20,7 +20,6 @@ public class LineTester {
     @Test
     public void aLineShouldHaveTheCorrectNumberOfSpot() throws IOException {
         Line testLine = new Line(3, root);
-        System.out.println("********************" + testLine.getSpots().size());
         assertEquals(testLine.getSpots().size(), testLine.getNB_SPOTS());
     }
 
@@ -34,6 +33,6 @@ public class LineTester {
         }
 
     }
-    
+
      */
 }
