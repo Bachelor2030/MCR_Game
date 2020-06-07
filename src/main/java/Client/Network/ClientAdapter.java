@@ -23,11 +23,44 @@ public class ClientAdapter {
 
 
     public ClientAdapter(String host, int port) {
-        // Network stuff
+        // Setting up connection
+        setup(host, port);
+
+        // Greeting the server
+        greetings();
+
+        // Saying goodbye to the server
+        exit();
+    }
+
+    public void greetings() {
+        String answer = sendJsonMessage(Messages.CLIENT_HELLO);
+
+        if (answer.equals(Messages.SERVER_HELLO_ANS)) {
+            printMessage("Successful connection to the server: ");
+        } else {
+            printMessage("Unexpected server answer: '"  + answer + "'. Expected '" + Messages.SERVER_HELLO_ANS + "'");
+            exit();
+        }
+    }
+
+    public void exit() {
+        String answer = sendJsonMessage(Messages.CLIENT_GOODBYE);
+        cleanupResources();
+
+        if (answer.equals(Messages.SERVER_GOODBYE_ANS)) {
+            printMessage("Exiting as expected");
+            System.exit(0);
+        } else {
+            printMessage("Unexpected server answer: '"  + answer + "'. Expected '" + Messages.SERVER_GOODBYE_ANS + "'");
+            System.exit(1);
+        }
+    }
+
+    public void setup(String host, int port) {
         this.host = host;
         this.port = port;
 
-        // Setting up connection
         try {
             clientSocket = new Socket(host, port);
             inBufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -37,11 +70,20 @@ public class ClientAdapter {
         } catch (IOException e) {
             printError("IO Error", e);
         }
+    }
 
-        // Greetings
-        String answer = sendJsonMessage(Messages.CLIENT_HELLO);
-
-        exit();
+    public void cleanupResources() {
+        try {
+            inBufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        outPrintWriter.close();
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /***********************************************************************************************************
@@ -62,9 +104,7 @@ public class ClientAdapter {
         try {
             sendJson(jsonMessage(message));
 
-            String ret = readJsonMessage(inBufferedReader.readLine());
-
-            return ret;
+            return readJsonMessage(inBufferedReader.readLine());
 
         } catch (IOException | JSONException e) {
             return "IO error";
@@ -86,42 +126,24 @@ public class ClientAdapter {
 
     private String readJsonMessage(String jsonMessage) {
 
-        String message = "Unprocessed";
+        String message;
 
         try {
 
             JSONObject obj = new JSONObject(jsonMessage);
             message = obj.getString("message");
 
-        } catch (JSONException e) {
-            printMessage("Answer was not Json!");
-            printMessage(e.toString());
-            message = "Error";
-        } finally {
-
             printMessage("<- " + message);
             return message;
 
+        } catch (JSONException e) {
+            printMessage("Answer was not Json!");
+            printMessage(e.toString());
+            return "Error";
         }
     }
 
     /***********************************************************************************************************
      *                                        END OF UTILITIES                                                 *
      **********************************************************************************************************/
-
-    public void exit() {
-        sendJsonMessage(Messages.CLIENT_GOODBYE);
-        try {
-            inBufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        outPrintWriter.close();
-        try {
-            clientSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.exit(0);
-    }
 }

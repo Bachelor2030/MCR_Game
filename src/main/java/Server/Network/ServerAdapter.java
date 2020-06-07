@@ -111,45 +111,17 @@ public class ServerAdapter {
             @Override
             public void run() {
                 try {
-
+                    // Awaiting client greetings
                     awaitClientIO(false, "Reading until client sends greetings to open the connection...");
 
-
-                    // Here we process any of the game messages
-
-
+                    // Awaiting client goodbye
                     awaitClientIO(true, "Reading until client sends goodbye or closes the connection...");
-
 
                     cleanupResources();
 
                 } catch (IOException | JSONException ex) {
-                    if (inBufferedReader != null) {
-                        try {
-                            inBufferedReader.close();
-                        } catch (IOException ex1) {
-                            printMessage(MessageLevel.Error, "Servant", ex1.getMessage());
-                        }
-                    }
-                    if (outPrintWriter != null) {
-                        outPrintWriter.close();
-                    }
-                    if (clientSocket != null) {
-                        try {
-                            clientSocket.close();
-                        } catch (IOException ex1) {
-                            printMessage(MessageLevel.Error, "Servant", ex1.getMessage());
-                        }
-                    }
-                    printMessage(MessageLevel.Error, "Servant", ex.getMessage());
+                    runErrorCleanup(ex);
                 }
-            }
-
-            private void cleanupResources() throws IOException {
-                printMessage("Servant", "Cleaning up resources...");
-                clientSocket.close();
-                inBufferedReader.close();
-                outPrintWriter.close();
             }
 
             private void awaitClientIO(boolean shouldRun, String consoleMessage) throws IOException, JSONException {
@@ -176,6 +148,34 @@ public class ServerAdapter {
                 }
             }
 
+            private void runErrorCleanup(Exception ex) {
+                if (inBufferedReader != null) {
+                    try {
+                        inBufferedReader.close();
+                    } catch (IOException ex1) {
+                        printMessage(MessageLevel.Error, "Servant", ex1.getMessage());
+                    }
+                }
+                if (outPrintWriter != null) {
+                    outPrintWriter.close();
+                }
+                if (clientSocket != null) {
+                    try {
+                        clientSocket.close();
+                    } catch (IOException ex1) {
+                        printMessage(MessageLevel.Error, "Servant", ex1.getMessage());
+                    }
+                }
+                printMessage(MessageLevel.Error, "Servant", ex.getMessage());
+            }
+
+            private void cleanupResources() throws IOException {
+                printMessage("Servant", "Cleaning up resources...");
+                clientSocket.close();
+                inBufferedReader.close();
+                outPrintWriter.close();
+            }
+
             /*************************************************************************************************
              *                                           UTILITIES                                           *
              ************************************************************************************************/
@@ -195,19 +195,19 @@ public class ServerAdapter {
             }
 
             private String readJsonMessage(String jsonMessage) {
-                String message = "Unprocessed JSON";
+                String message;
 
                 try {
                     JSONObject obj = new JSONObject(jsonMessage);
                     message = obj.getString("message");
                     printMessage("Servant", "<- " + message);
 
+                    return message;
+
                 } catch (JSONException e) {
-                    message = "Error";
                     debugMessage("Answer was not Json!");
 
-                } finally {
-                    return message;
+                    return "Error";
                 }
             }
 
