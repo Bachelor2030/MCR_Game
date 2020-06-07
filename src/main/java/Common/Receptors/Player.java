@@ -63,6 +63,7 @@ public class Player extends Receptor {
                 deck.remove();
             } else {
                 for (Chest chest : chests) {
+                    System.out.println(name + "'s chests lose a life");
                     chest.hit(1);
                 }
             }

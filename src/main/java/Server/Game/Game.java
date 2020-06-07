@@ -54,7 +54,7 @@ public class Game {
      */
     public void gameOver(Player winner, Player looser)
     {
-        System.out.println(winner.getName() + " a gagné.\nBouuuh t'es un looser, " + looser.getName() + " !");
+        System.out.println(winner.getName() + " a gagné en ouvrant " + looser.getNbChestsDestroyed() + " coffres !\nBouuuh t'es un looser, " + looser.getName() + " !");
         //exit(0);
     }
 
@@ -68,12 +68,12 @@ public class Game {
     private boolean finished() {
         if(player2.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY)
         {
-            gameOver(player2, player1);
+            gameOver(player1, player2);
             return true;
         }
         else if(player1.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY)
         {
-            gameOver(player1, player2);
+            gameOver(player2, player1);
             return true;
         }
         return false;
