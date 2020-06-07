@@ -65,9 +65,15 @@ public class Player extends Receptor {
             actionPoints = NBR_ACTION_POINTS_MAX;
         }
 
-        // TODO : allow the player to play cards
-
-
+        boolean keepPlaying = true;
+        while (keepPlaying) {
+            // TODO get the players actions
+            System.out.println(name + " is playing...");
+            // /!\ the player has a button indication if he has finished his turn
+            // If the player selects the button then...
+            keepPlaying = false;
+        }
+        System.out.println(name + " finished his/her turn.");
     }
 
     public int getNbrCardsInHand() {
