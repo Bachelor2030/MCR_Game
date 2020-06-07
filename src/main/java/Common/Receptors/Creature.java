@@ -61,9 +61,9 @@ public class Creature extends LiveReceptor {
         if (lifePoints > 0 && !position.next().isEmpty()) {
             if(!((LiveReceptor) position.next().getOccupant()).isAlly(this)) {
 
-                ((LiveReceptor) position.next().getOccupant()).hit(attackPoints);
+                ((LiveReceptor) position.next().getOccupant()).loseLifePoints(attackPoints);
                 if(((LiveReceptor) position.next().getOccupant()).getType().equals(this.getType())) {
-                    this.hit(((Creature) position.next().getOccupant()).getAttackPoints());
+                    this.loseLifePoints(((Creature) position.next().getOccupant()).getAttackPoints());
                 }
             }
         }

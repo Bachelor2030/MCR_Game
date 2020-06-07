@@ -6,7 +6,7 @@ import Server.Game.ModelClasses.LiveReceptor;
  * Chest owned by a player. Said player must protect it by using creatures and spells
  */
 public class Chest extends LiveReceptor {
-    // Max life points for a chesgt
+    // Max life points for a chest
     private static final int CHEST_LIFE_POINTS = 5;
 
     /**

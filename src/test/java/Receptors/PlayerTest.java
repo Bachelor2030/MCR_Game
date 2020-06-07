@@ -40,15 +40,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void HittingAPlayersEggMustDiminishTheirLifePoints() {
-        player.hitChest(1,20);
-        assertEquals(1, player.getNbChestsDestroyed());
-        for (Chest chest : player.getChests()) {
-            System.out.println(chest);
-        }
-    }
-
-    @Test
     public void PlayerShouldStartWithTheCorrectAmountOfCardsInHand() {
         assertEquals(3, player.getNbrCardsInHand());
     }
@@ -60,11 +51,4 @@ public class PlayerTest {
         assertEquals((Math.min(turn, 15)), player.getActionPoints());
     }
 
-    @Test
-    public void PlayerShouldHaveTheCorrectAmountOfEggs() {
-        for (Chest chest : player.getChests()) {
-            System.out.println(chest);
-        }
-        assertEquals(Player.getStartingNbrChests(), player.getNbChests());
-    }
 }
