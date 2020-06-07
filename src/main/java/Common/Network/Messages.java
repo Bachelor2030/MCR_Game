@@ -7,6 +7,8 @@ public final class Messages {
     public static final String CLIENT_GOODBYE = "Sayonara";
     public static final String SERVER_GOODBYE_ANS = "O-genki de";
 
+    public static final String SERVER_UNKNOWN_ANS = "Nani?";
+
     private Messages() {
         throw new IllegalStateException("Can't instantiate the messages class");
     }
