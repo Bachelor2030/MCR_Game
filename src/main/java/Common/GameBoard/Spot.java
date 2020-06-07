@@ -68,4 +68,8 @@ public class Spot {
   public FileInputStream getImage() {
     return image;
   }
+
+  public boolean isTrapped() {
+    return occupant != null && occupant.getClass() == Trap.class;
+  }
 }
