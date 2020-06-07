@@ -1,6 +1,9 @@
 package Client.Network;
 
 import Common.Network.Messages;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,8 +18,8 @@ public class ClientAdapter {
     int port;
 
     Socket clientSocket = null;
-    BufferedReader in = null;
-    PrintWriter out = null;
+    BufferedReader inBufferedReader = null;
+    PrintWriter outPrintWriter = null;
 
 
     public ClientAdapter(String host, int port) {
@@ -27,52 +30,93 @@ public class ClientAdapter {
         // Setting up connection
         try {
             clientSocket = new Socket(host, port);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            out = new PrintWriter(clientSocket.getOutputStream());
+            inBufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            outPrintWriter = new PrintWriter(clientSocket.getOutputStream());
         } catch (UnknownHostException e) {
-            System.out.println("Unknown host error");
+            printError("Unknown host error", e);
         } catch (IOException e) {
-            System.out.println("IO error");
+            printError("IO Error", e);
         }
 
         // Greetings
-        String msg = sendMessage(Messages.CLIENT_HELLO);
-        if (!msg.equals(Messages.SERVER_HELLO_ANS)) {
-            displayError("Server answer error: weeb not found");
-        }
+        String answer = sendJsonMessage(Messages.CLIENT_HELLO);
 
         exit();
     }
 
-    private void displayError(String error) {
-        System.out.println(error);
+    /***********************************************************************************************************
+     *                                           UTILITIES                                                     *
+     **********************************************************************************************************/
+
+    private void printError(String message, Exception e) {
+        System.out.println(message);
+        System.out.println(e);
     }
 
-    private void displayMessage(String msg) {
+    private void printMessage(String msg) {
         System.out.println(msg);
     }
 
-    public String sendMessage(String request) {
-        displayMessage("-> " + request);
+    private String sendJsonMessage(String message) {
+        printMessage("-> " + message);
         try {
-            out.println(request);
-            out.flush();
-            String ret = in.readLine();
-            displayMessage("<- " + ret);
+            sendJson(jsonMessage(message));
+
+            String ret = readJsonMessage(inBufferedReader.readLine());
+
             return ret;
-        } catch (IOException e) {
+
+        } catch (IOException | JSONException e) {
             return "IO error";
         }
     }
 
-    public void exit() {
-        sendMessage(Messages.CLIENT_GOODBYE);
+    private void sendJson(JSONObject json) {
+        outPrintWriter.println(json.toString());
+        outPrintWriter.flush();
+    }
+
+    private JSONObject jsonMessage(String message) throws JSONException {
+
+        JSONObject json = new JSONObject();
+        json.put("message", message);
+
+        return json;
+    }
+
+    private String readJsonMessage(String jsonMessage) {
+
+        String message = "Unprocessed";
+
         try {
-            in.close();
+
+            JSONObject obj = new JSONObject(jsonMessage);
+            message = obj.getString("message");
+
+        } catch (JSONException e) {
+            printMessage("Answer was not Json!");
+            printMessage(e.toString());
+            message = "Error";
+        } finally {
+
+            printMessage("<- " + message);
+            return message;
+
+        }
+    }
+
+    /***********************************************************************************************************
+     *                                        END OF UTILITIES                                                 *
+     **********************************************************************************************************/
+
+    public void exit() {
+        sendJsonMessage(Messages.CLIENT_GOODBYE);
+        try {
+            inBufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        out.close();
+        outPrintWriter.close();
         try {
             clientSocket.close();
         } catch (IOException e) {

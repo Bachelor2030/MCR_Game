@@ -1,6 +1,8 @@
 package Server.Network;
 
 import Common.Network.Messages;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 
 public class ServerAdapter {
 
@@ -21,6 +24,10 @@ public class ServerAdapter {
 
     private void printMessage(String className, String message) {
         printMessage(MessageLevel.Info, className, message);
+    }
+
+    private void debugMessage(String message) {
+        printMessage("Debug", message);
     }
 
     int port;
@@ -66,13 +73,13 @@ public class ServerAdapter {
             }
 
             while (true) {
-                printMessage( "Receptionist", "Waiting (blocking) for a new client on port " + port);
+                printMessage("Receptionist", "Waiting (blocking) for a new client on port " + port);
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    printMessage( "Receptionist", "A new client has arrived. Starting a new thread and delegating work to a new servant...");
+                    printMessage("Receptionist", "A new client has arrived. Starting a new thread and delegating work to a new servant...");
                     new Thread(new ServantWorker(clientSocket)).start();
                 } catch (IOException ex) {
-                    printMessage(MessageLevel.Error,  "Receptionist", ex.toString());
+                    printMessage(MessageLevel.Error, "Receptionist", ex.toString());
                 }
             }
         }
@@ -86,64 +93,105 @@ public class ServerAdapter {
         private class ServantWorker implements Runnable {
 
             Socket clientSocket;
-            BufferedReader in = null;
-            PrintWriter out = null;
+            BufferedReader inBufferedReader = null;
+            PrintWriter outPrintWriter = null;
 
             public ServantWorker(Socket clientSocket) {
                 try {
                     this.clientSocket = clientSocket;
-                    in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                    out = new PrintWriter(clientSocket.getOutputStream());
+                    inBufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    outPrintWriter = new PrintWriter(clientSocket.getOutputStream());
                 } catch (IOException ex) {
                     printMessage(MessageLevel.Error, "Servant", ex.toString());
                 }
             }
 
+            /***********************************************************************************************************
+             *                                           UTILITIES                                                     *
+             **********************************************************************************************************/
+
+            private void sendJson(JSONObject json) {
+                outPrintWriter.println(json.toString());
+                outPrintWriter.flush();
+            }
+
+            private void sendJsonMessage(String message) throws JSONException {
+                printMessage("Servant", "-> " + message);
+
+                JSONObject json = new JSONObject();
+                json.put("message", message);
+
+                sendJson(json);
+            }
+
+            private String readJsonMessage(String jsonMessage) {
+                String message = "Unprocessed JSON";
+
+                try {
+                    JSONObject obj = new JSONObject(jsonMessage);
+                    message = obj.getString("message");
+                    printMessage("Servant", "<- " + message);
+
+                } catch (JSONException e) {
+                    message = "Error";
+                    debugMessage("Answer was not Json!");
+
+                } finally {
+                    return message;
+                }
+            }
+
+            /***********************************************************************************************************
+             *                                        END OF UTILITIES                                                 *
+             **********************************************************************************************************/
+
             @Override
             public void run() {
-                String line;
+                String receivedMessage;
                 boolean shouldRun = false;
 
                 try {
                     printMessage("Servant", "Reading until client sends greetings to open the connection...");
-                    while (!shouldRun && (line = in.readLine()) != null) {
-                        if (line.equalsIgnoreCase(Messages.CLIENT_HELLO)) {
+                    // Waiting for client greetings
+                    while (!shouldRun
+                            && (receivedMessage = readJsonMessage(inBufferedReader.readLine())) != null) {
+
+                        if (receivedMessage.equals(Messages.CLIENT_HELLO)) {
                             shouldRun = true;
-                            out.println(Messages.SERVER_HELLO_ANS);
+
+                            // Send json message as answer to hello
+                            sendJsonMessage(Messages.SERVER_HELLO_ANS);
                         }
-                        out.flush();
                     }
 
                     printMessage("Servant", "Reading until client sends goodbye or closes the connection...");
-                    while ((shouldRun) && (line = in.readLine()) != null) {
-                        if (line.equalsIgnoreCase(Messages.CLIENT_GOODBYE)) {
-                            out.println(Messages.SERVER_GOODBYE_ANS);
+                    // Reading client messages
+                    while (shouldRun
+                            && (receivedMessage = readJsonMessage(inBufferedReader.readLine())) != null) {
+
+                        if (receivedMessage.equals(Messages.CLIENT_GOODBYE)) {
                             shouldRun = false;
-                        } else {
-                            try {
-                                printMessage("Servant", "Received:" + line);
-                            } catch (Exception e) {
-                                out.println("ERROR : " + e.getMessage());
-                            }
+
+                            // Send json message as answer to goodbye
+                            sendJsonMessage(Messages.SERVER_GOODBYE_ANS);
 
                         }
-                        out.flush();
                     }
 
                     printMessage("Servant", "Cleaning up ressources...");
                     clientSocket.close();
-                    in.close();
-                    out.close();
-                } catch (IOException ex) {
-                    if (in != null) {
+                    inBufferedReader.close();
+                    outPrintWriter.close();
+                } catch (IOException | JSONException ex) {
+                    if (inBufferedReader != null) {
                         try {
-                            in.close();
+                            inBufferedReader.close();
                         } catch (IOException ex1) {
                             printMessage(MessageLevel.Error, "Servant", ex1.toString());
                         }
                     }
-                    if (out != null) {
-                        out.close();
+                    if (outPrintWriter != null) {
+                        outPrintWriter.close();
                     }
                     if (clientSocket != null) {
                         try {
