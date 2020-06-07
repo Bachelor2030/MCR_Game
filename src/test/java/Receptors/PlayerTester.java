@@ -57,7 +57,7 @@ public class PlayerTester {
     @ValueSource(ints = {0, 3, 15, 31})
     public void TheNumberOfActionPointMustBeCorrect(int turn) {
         player.playTurn(turn);
-        assertEquals((turn <= 15 ? turn : 15), player.getActionPoints());
+        assertEquals((Math.min(turn, 15)), player.getActionPoints());
     }
 
     @Test
