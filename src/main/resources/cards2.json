@@ -5,23 +5,23 @@
     },
     "cards" : [
       {
-        "id" : 1,
+        "id" : 3,
         "quantity" : 5
       },
       {
-        "id" : 2,
-        "quantity" : 8
-      },
-      {
-        "id" : 3,
+        "id" : 5,
         "quantity" : 8
       },
       {
         "id" : 4,
+        "quantity" : 8
+      },
+      {
+        "id" : 1,
         "quantity" : 12
       },
       {
-        "id" : 5,
+        "id" : 2,
         "quantity" : 12
       }
     ]
