@@ -59,7 +59,13 @@ public class Player extends Receptor {
         if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
             hand.add(deck.remove());
         } else {
-            deck.remove();
+            if(!deck.isEmpty()) {
+                deck.remove();
+            } else {
+                for (Chest chest : chests) {
+                    chest.hit(1);
+                }
+            }
         }
 
         if(turn <= NBR_ACTION_POINTS_MAX) {

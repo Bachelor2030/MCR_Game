@@ -15,10 +15,12 @@ public class GameCreator {
     protected ArrayList<Card> cards;
 
     public GameCreator(String fileAsString){
+        /*
         try {
-            cards = CardsJsonParser.parseJson(fileAsString);
+            cards = CardsJsonParser.parseReferencesJson(fileAsString);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        */
     }
 }

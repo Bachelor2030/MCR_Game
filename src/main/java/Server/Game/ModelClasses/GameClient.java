@@ -14,11 +14,13 @@ public class GameClient {
     protected ArrayList<Card> cards;
 
     public GameClient(String fileAsString){
+        /*
         try {
-            cards = CardsJsonParser.parseJson(fileAsString);
+            cards = CardsJsonParser.parseReferencesJson(fileAsString, "strc/main/resources/cards,java");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        */
     }
 
     public void createCommands() {

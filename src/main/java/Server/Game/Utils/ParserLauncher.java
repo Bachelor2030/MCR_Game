@@ -1,15 +1,20 @@
 package Server.Game.Utils;
 
-import Server.Game.Card.Card;
-import Server.Game.Utils.Parsers.CardsJsonParser;
+import Server.Game.Game;
+import Server.Game.Utils.Parsers.GameJsonParser;
 import org.json.JSONException;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class ParserLauncher {
     public static void main(String[] args) {
-        String file = "src/main/resources/cards.json";
+        String file = "src/main/resources/game.json";
+        Game game = testGameParser(file);
+        game.startGame();
+    }
+
+    private static Game testGameParser(String file) {
+        Game game = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             BufferedReader br = new BufferedReader( new InputStreamReader(fileInputStream));
@@ -22,13 +27,12 @@ public class ParserLauncher {
             }
 
             System.out.println("Read " + file);
-            ArrayList<Card> cards = CardsJsonParser.parseJson(sb.toString());
-            for (Card card : cards) {
-                System.out.println(card);
-            }
+            game = GameJsonParser.parseJson(sb.toString(), "src/main/resources/");
 
+            fileInputStream.close();
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
+        return game;
     }
 }

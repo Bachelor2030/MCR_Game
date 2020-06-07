@@ -61,4 +61,8 @@ public class Card implements Invocator {
     public String toString() {
         return "id : " + ID + "\nname : " + name + "\ncost : " + cost + "\ncommands : " + Arrays.toString(commandNames) + "\n";
     }
+
+    public int getID() {
+        return ID;
+    }
 }
