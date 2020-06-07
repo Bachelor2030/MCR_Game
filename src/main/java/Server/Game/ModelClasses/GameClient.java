@@ -1,7 +1,8 @@
 package Server.Game.ModelClasses;
 
 import Server.Game.Card.Card;
-import Server.Game.Utils.CardsJsonParser;
+import Server.Game.Utils.Parsers.CardsJsonParser;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -13,8 +14,11 @@ public class GameClient {
     protected ArrayList<Card> cards;
 
     public GameClient(String fileAsString){
-        CardsJsonParser cjp = new CardsJsonParser(fileAsString);
-        cards = cjp.getCards();
+        try {
+            cards = CardsJsonParser.parseJson(fileAsString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createCommands() {

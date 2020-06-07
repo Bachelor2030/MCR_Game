@@ -1,6 +1,8 @@
 package Server.Game.Utils;
 
 import Server.Game.Card.Card;
+import Server.Game.Utils.Parsers.CardsJsonParser;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -13,7 +15,10 @@ public class GameCreator {
     protected ArrayList<Card> cards;
 
     public GameCreator(String fileAsString){
-        CardsJsonParser cardsJsonParser = new CardsJsonParser(fileAsString);
-        cards = cardsJsonParser.getCards();
+        try {
+            cards = CardsJsonParser.parseJson(fileAsString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
