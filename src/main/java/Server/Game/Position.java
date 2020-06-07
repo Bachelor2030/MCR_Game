@@ -14,7 +14,6 @@ public class Position {
         this.position = position;
     }
 
-
     public boolean isEmpty() {
         if(isValid()) {
             return line.getSpot(position).isEmpty();

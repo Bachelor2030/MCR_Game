@@ -34,9 +34,11 @@ public class Launcher {
     }
 
     private static void initGame() throws IOException {
+        /*
         board = new Board();
         gameBoard = new GameBoard();
-        //gameBoard.start();
+        gameBoard.start();
+        */
     }
 
     private static GameClient gameCreatorFromFile(String fileName) {
