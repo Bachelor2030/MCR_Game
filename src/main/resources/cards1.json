@@ -1,0 +1,30 @@
+{
+    "pageInfo" : {
+      "pageName": "Player card list",
+      "pageContent" : ["cards"]
+    },
+    "cards" : [
+      {
+        "id" : 1,
+        "quantity" : 5
+      },
+      {
+        "id" : 2,
+        "quantity" : 8
+      },
+      {
+        "id" : 3,
+        "quantity" : 8
+      },
+      {
+        "id" : 4,
+        "quantity" : 12
+      },
+      {
+        "id" : 5,
+        "quantity" : 12
+      }
+    ]
+  }
+  
+  
