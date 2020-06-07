@@ -33,10 +33,14 @@ public class Trap extends Receptor {
         position = null;
     }
 
-    @Override
-    public void playTurn(int turn) {}
-
+    /**
+     * Sets the position of the trap which places it on the game board
+     * @param position the position of the trap on the board
+     */
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    @Override
+    public void playTurn(int turn) {}
 }
