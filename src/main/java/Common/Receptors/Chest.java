@@ -3,16 +3,16 @@ package Common.Receptors;
 import Server.Game.ModelClasses.LiveReceptor;
 
 public class Chest extends LiveReceptor {
-    private static final int EGG_LIFE_POINTS = 5;
-    private boolean alive;
+    private static final int CHEST_LIFE_POINTS = 5;
+    private boolean closed;
 
     public Chest(String name) {
-        super(name, EGG_LIFE_POINTS);
-        alive = true;
+        super(name, CHEST_LIFE_POINTS);
+        closed = true;
     }
 
-    public boolean isAlive() {
-        return alive;
+    public boolean isClosed() {
+        return closed;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Chest extends LiveReceptor {
     public void hit(int points) {
         super.hit(points);
         if (lifePoints <= 0) {
-            alive = false;
+            closed = false;
         }
     }
 }

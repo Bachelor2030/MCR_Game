@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BoardTester {
+public class BoardTest {
     private Group root = new Group();
 
     @Test

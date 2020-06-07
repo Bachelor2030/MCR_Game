@@ -87,7 +87,7 @@ public class Player extends Receptor {
     public int getNbEggDestroyed() {
         int count = 0;
         for (Chest chest : chests) {
-            if(!chest.isAlive()) {
+            if(!chest.isClosed()) {
                 ++count;
             }
         }
@@ -169,5 +169,14 @@ public class Player extends Receptor {
                 Objects.equals(hand, player.hand) &&
                 Objects.equals(discard, player.discard) &&
                 Objects.equals(chests, player.chests);
+    }
+
+    public void addToDeck(Card originCard) {
+        deck.addLast(originCard);
+        ArrayList<Card> d = new ArrayList<>();
+        d.addAll(deck);
+        Collections.shuffle(d);
+        deck.clear();
+        deck.addAll(d);
     }
 }

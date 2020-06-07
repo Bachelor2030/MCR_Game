@@ -62,7 +62,7 @@ public class Creature extends LiveReceptor {
     }
 
     private void returnToDeck() {
-
+        owner.addToDeck(originCard);
     }
 
     public List<Action> retreat(int distance) {

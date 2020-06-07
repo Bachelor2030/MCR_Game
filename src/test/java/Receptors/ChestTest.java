@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ChestTester {
+public class ChestTest {
     private static Chest chest;
     private static final String name = "Saphira";
 
@@ -28,10 +28,10 @@ public class ChestTester {
         chest.hit(points);
         if (points < chest.getMAX_LIFE_POINTS()) {
             assertEquals(chest.getMAX_LIFE_POINTS() - points, chest.getLifePoints());
-            assertTrue(chest.isAlive());
+            assertTrue(chest.isClosed());
         } else {
             assertEquals(0, chest.getLifePoints());
-            assertFalse(chest.isAlive());
+            assertFalse(chest.isClosed());
         }
     }
 }
