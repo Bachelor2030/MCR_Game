@@ -1,6 +1,8 @@
 package Server.Game.Card;
 
 import Server.Game.Card.Commands.CommandName;
+import Server.Game.Card.Commands.HitLiveReceptor;
+import Server.Game.ModelClasses.Command;
 import Server.Game.ModelClasses.Macro;
 import Server.Game.ModelClasses.Invocator;
 
@@ -16,7 +18,6 @@ public class Card implements Invocator {
     private String name;                    // the name of the card
     private int cost;                       // the cost (in action points)
     private CardType type;                  // the type of the card
-    private CommandName[] commandNames;     // the name(s) of the command(s) that compose the card's macro
 
     /**
      * Creates a card with the given information
@@ -24,22 +25,6 @@ public class Card implements Invocator {
      * @param name  the name of the card
      * @param type  the type of the card
      * @param cost  it's cost (int action points)
-     * @param commandNames  the list of commands
-     */
-    public Card(int id, String name, CardType type, int cost, CommandName[] commandNames) {
-        this.type = type;
-        this.name = (type != null ? type.toString() + " " : "") + name;
-        this.cost = cost;
-        this.commandNames = commandNames;
-        this.ID = id;
-    }
-
-    /**
-     * Creates a card with the given information
-     * @param id the id of the card to be created
-     * @param name  the name of the card
-     * @param type  the type of the card
-     * @param cost  its cost (int action points)
      */
     public Card(int id, String name, CardType type, int cost) {
         this.type = type;
@@ -99,7 +84,7 @@ public class Card implements Invocator {
 
     @Override
     public String toString() {
-        return "id : " + ID + "\nname : " + name + "\ncost : " + cost + "\ncommands : " + Arrays.toString(commandNames) + "\n";
+        return "ID : " + ID + "\nName : " + name + "\nCost : " + cost + "\nCommand : " + command + "\n";
     }
 
     @Override

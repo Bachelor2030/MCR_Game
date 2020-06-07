@@ -13,6 +13,10 @@ public class CreateTrap extends ConcreteCommand {
         this.position = position;
     }
 
+    public CreateTrap() {
+        super(CommandName.CREATE_TRAP);
+    }
+
     @Override
     public void execute() {
         trap.setPosition(position);

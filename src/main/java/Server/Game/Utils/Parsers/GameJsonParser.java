@@ -10,7 +10,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GameJsonParser {
+    private static String PATH;
     public static Game parseJson(String json, String path) throws JSONException {
+        PATH = path;
         JSONObject obj = new JSONObject(json);
         String pageName = obj.getJSONObject("pageInfo").getString("pageName");
 
@@ -36,12 +38,10 @@ public class GameJsonParser {
     private static ArrayList<Card> cardParser(String file) {
         ArrayList<Card> cards = null;
         try {
-            String allCards = getJsonContent("src/main/resources/cards.json");
             String playersCards = getJsonContent(file);
 
-
             System.out.println("Read " + file);
-            cards = CardsJsonParser.parseReferencesJson(playersCards, allCards);
+            cards = CardsJsonParser.parseJson(playersCards, PATH);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,25 +1,32 @@
 package Server.Game.Card.Commands;
 
+import Server.Game.Card.Commands.CardMovement.Discard;
+import Server.Game.Card.Commands.CardMovement.Draw;
+import Server.Game.Card.Commands.CardMovement.GetCardFromDiscard;
+import Server.Game.ModelClasses.Command;
+
 public enum CommandName {
-    HIT("Hit"),
-    DRAW_TYPE_FROM_DISCARD("Draw from discard"),
-    DRAW("Draw"),
-    DISCARD("Discard"),
-    CREATE_CREATURE("Create creature"),
-    CREATE_TRAP("Create trap"),
-    MOVE_CREATURE("Move creature");
+    HIT("Hit", new HitLiveReceptor()),
+    DRAW_TYPE_FROM_DISCARD("Draw from discard", new GetCardFromDiscard()),
+    DRAW("Draw", new Draw()),
+    DISCARD("Discard", new Discard()),
+    CREATE_CREATURE("Create creature", new CreateCreature()),
+    CREATE_TRAP("Create trap", new CreateTrap()),
+    MOVE_CREATURE("Move creature", new MoveCreature());
 
     private String name;
+    private Command command;
 
-    CommandName(String name) {
+    CommandName(String name, Command command) {
         this.name = name;
+        this.command = command;
     }
 
     public String getName() {
         return name;
     }
 
-    public static CommandName getCommand(String type) {
+    public static CommandName getCommandName(String type) {
         if(type.equals(HIT.name)) {
             return HIT;
         } else if(type.equals(DRAW.name)) {
@@ -36,6 +43,10 @@ public enum CommandName {
             return MOVE_CREATURE;
         }
         return null;
+    }
+
+    public Command getCommand() {
+        return command;
     }
 
     @Override

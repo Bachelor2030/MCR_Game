@@ -10,6 +10,10 @@ public class MoveCreature extends ConcreteCommand {
         this.creature = creature;
     }
 
+    public MoveCreature() {
+        super(CommandName.MOVE_CREATURE);
+    }
+
     @Override
     public void execute() {
         creature.advance();
