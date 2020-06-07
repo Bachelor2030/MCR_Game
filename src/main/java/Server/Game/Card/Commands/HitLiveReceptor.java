@@ -17,14 +17,14 @@ public class HitLiveReceptor extends ConcreteCommand {
     @Override
     public void execute() {
         for (LiveReceptor receptor : receptors) {
-            receptor.hit(attackPoints);
+            receptor.loseLifePoints(attackPoints);
         }
     }
 
     @Override
     public void undo() {
         for (LiveReceptor receptor : receptors) {
-            receptor.heal(attackPoints);
+            receptor.gainLifePoints(attackPoints);
         }
     }
 }

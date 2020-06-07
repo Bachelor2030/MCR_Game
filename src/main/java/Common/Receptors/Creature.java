@@ -4,18 +4,34 @@ import Server.Game.Card.Card;
 import Server.Game.Position;
 import Server.Game.ModelClasses.LiveReceptor;
 
+/**
+ * Creature class, modelises the creatures that move on the board of the game and fight each other
+ */
 public class Creature extends LiveReceptor {
-    private Position position;
-    private int steps;
-    private int attackPoints;
-    private Card originCard;
+    private Position position;       // Position of the creature
+    private int steps;               // Number of stpes the creature can do in one turn
+    private int attackPoints;        // Number of points the creature takes from an ennemi when hitting it
+    private Card originCard;         // The card that created the creature
 
+    /**
+     * Creates a creature with the given infomration
+     * @param name the name of the creature
+     * @param lifePoints the nombre of life points the creature starts with
+     * @param steps the number of steps the creature can do in one move
+     * @param attackPoints the number of life points the creature removes form an ennemy
+     * @param owner the owner of the creature
+     */
     public Creature(String name, int lifePoints, int steps, int attackPoints, Player owner) {
         super(name, lifePoints, owner, "Creature");
         this.steps = steps;
         this.attackPoints = attackPoints;
     }
 
+    /**
+     * Places the creature at the given position
+     * This puts the creature on the game board
+     * @param position the position at which to place the creature on the board
+     */
     public void place(Position position) {
         if(position != null) {
             this.position = position;
@@ -23,6 +39,9 @@ public class Creature extends LiveReceptor {
         }
     }
 
+    /**
+     * Moves the creature of it's number of steps and hits the first ennemy encountered
+     */
     public void advance() {
         for (int step = 0; step < steps; ++step) {
             if (!position.next().isValid()) {
@@ -42,18 +61,25 @@ public class Creature extends LiveReceptor {
         if (lifePoints > 0 && !position.next().isEmpty()) {
             if(!((LiveReceptor) position.next().getOccupant()).isAlly(this)) {
 
-                ((LiveReceptor) position.next().getOccupant()).hit(attackPoints);
+                ((LiveReceptor) position.next().getOccupant()).loseLifePoints(attackPoints);
                 if(((LiveReceptor) position.next().getOccupant()).getType().equals(this.getType())) {
-                    this.hit(((Creature) position.next().getOccupant()).getAttackPoints());
+                    this.loseLifePoints(((Creature) position.next().getOccupant()).getAttackPoints());
                 }
             }
         }
     }
 
+    /**
+     * Returns the creature creating card in it's owner's deck
+     */
     private void returnToDeck() {
         owner.addToDeck(originCard);
     }
 
+    /**
+     * Moves the creature backwards of the given number of steps
+     * @param distance the number of steps the creature must do backwards
+     */
     public void retreat(int distance) {
         for (int step = 0; step < distance; ++step) {
             if (position.previous().isEmpty()) {
@@ -68,20 +94,20 @@ public class Creature extends LiveReceptor {
         }
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
+    /**
+     * Returns the number of steps the creature can do in a turn
+     * @return steps
+     */
     public int getSteps() {
         return steps;
     }
 
+    /**
+     * Returns the number of attack points the creature has
+     * @return attackPoints
+     */
     public int getAttackPoints() {
         return attackPoints;
-    }
-
-    public void setOriginCard(Card card) {
-        this.originCard = card;
     }
 
     @Override
