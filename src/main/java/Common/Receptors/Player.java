@@ -52,46 +52,6 @@ public class Player extends Receptor {
         }
     }
 
-    @Override
-    public void playTurn(int turn) {
-        // Takes a card if possible otherwise
-        // one card of the deck is thrown away
-        if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
-            hand.add(deck.remove());
-        } else {
-            deck.remove();
-        }
-
-        if(turn <= NBR_ACTION_POINTS_MAX) {
-            actionPoints = turn;
-        } else {
-            actionPoints = NBR_ACTION_POINTS_MAX;
-        }
-
-        boolean keepPlaying = true;
-        while (keepPlaying) {
-            System.out.println(name + " is playing...");
-            /*
-             * TODO get the players actions (card)
-             *  /!\ the player has a button indication if he has finished his turn, if the player selects the button then...
-             */
-            if(hand.size() != 0) {
-                int chosenCard = 0;
-                playCard(chosenCard);
-                keepPlaying = false;
-            }
-        }
-
-        for (Creature creature : creatures) {
-            creature.playTurn(turn);
-            if (!creature.isAlive()) {
-                creatures.remove(creature);
-            }
-        }
-
-        System.out.println(name + " finished his/her turn.");
-    }
-
     public int getNbrCardsInHand() {
         return hand.size();
     }
@@ -179,6 +139,64 @@ public class Player extends Receptor {
         return chests;
     }
 
+    public void addToDeck(Card originCard) {
+        deck.addLast(originCard);
+        ArrayList<Card> d = new ArrayList<>();
+        d.addAll(deck);
+        Collections.shuffle(d);
+        deck.clear();
+        deck.addAll(d);
+    }
+
+    @Override
+    public void playTurn(int turn) {
+        // Takes a card if possible otherwise
+        // one card of the deck is thrown away
+        if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
+            hand.add(deck.remove());
+        } else {
+            if(!deck.isEmpty()) {
+                deck.remove();
+            } else {
+                for (Chest chest : chests) {
+                    System.out.println(name + "'s chests lose a life");
+                    chest.hit(1);
+                }
+            }
+        }
+
+        if(turn <= NBR_ACTION_POINTS_MAX) {
+            actionPoints = turn;
+        } else {
+            actionPoints = NBR_ACTION_POINTS_MAX;
+        }
+
+        boolean keepPlaying = true;
+        while (keepPlaying) {
+            System.out.println(name + " is playing...");
+            /*
+             * TODO get the players actions (card)
+             *  /!\ the player has a button indication if he has finished his turn, if the player selects the button then...
+             */
+            if(hand.size() != 0) {
+                int chosenCard = 0;
+                if(!playCard(chosenCard)) {
+                    System.out.println("You don't have enough action points");
+                }
+                keepPlaying = false;
+            }
+        }
+
+        for (Creature creature : creatures) {
+            creature.playTurn(turn);
+            if (!creature.isAlive()) {
+                creatures.remove(creature);
+            }
+        }
+
+        System.out.println(name + " finished his/her turn.");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -190,14 +208,5 @@ public class Player extends Receptor {
                 Objects.equals(hand, player.hand) &&
                 Objects.equals(discard, player.discard) &&
                 Objects.equals(chests, player.chests);
-    }
-
-    public void addToDeck(Card originCard) {
-        deck.addLast(originCard);
-        ArrayList<Card> d = new ArrayList<>();
-        d.addAll(deck);
-        Collections.shuffle(d);
-        deck.clear();
-        deck.addAll(d);
     }
 }
