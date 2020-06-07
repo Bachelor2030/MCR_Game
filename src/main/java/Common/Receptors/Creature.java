@@ -4,25 +4,16 @@ import Server.Game.Card.Card;
 import Server.Game.Position;
 import Server.Game.ModelClasses.LiveReceptor;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class Creature extends LiveReceptor {
     private Position position;
     private int steps;
     private int attackPoints;
-    private final Player owner;
     private Card originCard;
 
     public Creature(String name, int lifePoints, int steps, int attackPoints, Player owner) {
-        super(name, lifePoints);
+        super(name, lifePoints, owner, "Creature");
         this.steps = steps;
-        this.owner = owner;
         this.attackPoints = attackPoints;
-    }
-
-    public boolean isAlly(Creature creature) {
-        return owner.equals(creature.owner);
     }
 
     public void place(Position position) {
@@ -32,8 +23,7 @@ public class Creature extends LiveReceptor {
         }
     }
 
-    public List<Action> advance() {
-        LinkedList<Action> actions = new LinkedList<>();
+    public void advance() {
         for (int step = 0; step < steps; ++step) {
             if (!position.next().isValid()) {
                 returnToDeck();
@@ -44,42 +34,38 @@ public class Creature extends LiveReceptor {
                 position = position.next();
                 if (position.isTrapped()) {
                     ((Trap)position.getOccupant()).trigger(this);
-                    actions.add(Action.TRAPPED);
                 }
             } else {
                 break;
             }
         }
         if (lifePoints > 0 && !position.next().isEmpty()) {
-            if(!((Creature) position.next().getOccupant()).isAlly(this)) {
+            if(!((LiveReceptor) position.next().getOccupant()).isAlly(this)) {
+
                 ((LiveReceptor) position.next().getOccupant()).hit(attackPoints);
-                this.hit(((Creature) position.next().getOccupant()).getAttackPoints());
-                actions.add(Action.HIT);
+                if(((LiveReceptor) position.next().getOccupant()).getType().equals(this.getType())) {
+                    this.hit(((Creature) position.next().getOccupant()).getAttackPoints());
+                }
             }
         }
-
-        return actions;
     }
 
     private void returnToDeck() {
-
+        owner.addToDeck(originCard);
     }
 
-    public List<Action> retreat(int distance) {
-        LinkedList<Action> actions = new LinkedList<>();
+    public void retreat(int distance) {
         for (int step = 0; step < distance; ++step) {
             if (position.previous().isEmpty()) {
                 position.leave();
                 position = position.previous();
                 if (position.isTrapped()) {
                     ((Trap)position.getOccupant()).trigger(this);
-                    actions.add(Action.TRAPPED);
                 }
             } else {
                 break;
             }
         }
-        return actions;
     }
 
     public Position getPosition() {
@@ -90,11 +76,6 @@ public class Creature extends LiveReceptor {
         return steps;
     }
 
-    @Override
-    public void playTurn(int turn) {
-        advance();
-    }
-
     public int getAttackPoints() {
         return attackPoints;
     }
@@ -102,4 +83,10 @@ public class Creature extends LiveReceptor {
     public void setOriginCard(Card card) {
         this.originCard = card;
     }
+
+    @Override
+    public void playTurn(int turn) {
+        advance();
+    }
+
 }

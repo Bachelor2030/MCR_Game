@@ -1,13 +1,17 @@
 package Common.Receptors;
 
 import Server.Game.Card.Card;
+import Server.Game.Card.Commands.CommandName;
+import Server.Game.Card.Commands.ConcreteCommand;
+import Server.Game.Card.Commands.CreateCreature;
+import Server.Game.ModelClasses.Command;
 import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
 
 public class Player extends Receptor {
     private static final int NBR_INIT_CARDS = 3;
-    private static final int NBR_EGGS = 5;
+    private static final int NBR_CHESTS = 5;
     private static final int NBR_CARDS_PER_DECK = 50;
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
@@ -21,6 +25,8 @@ public class Player extends Receptor {
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
 
     private List<Chest> chests = new LinkedList<>();
+
+    private ArrayList<Creature> creatures = new ArrayList<>();
 
     private int actionPoints;
 
@@ -44,8 +50,8 @@ public class Player extends Receptor {
             hand.add(deck.remove());
         }
 
-        for (int i = 0; i < NBR_EGGS; ++i) {
-            chests.add(new Chest(name + " - Egg " + (i + 1)));
+        for (int i = 0; i < NBR_CHESTS; ++i) {
+            chests.add(new Chest(name + " - Chest " + (i + 1), this));
         }
     }
 
@@ -67,12 +73,25 @@ public class Player extends Receptor {
 
         boolean keepPlaying = true;
         while (keepPlaying) {
-            // TODO get the players actions
             System.out.println(name + " is playing...");
-            // /!\ the player has a button indication if he has finished his turn
-            // If the player selects the button then...
-            keepPlaying = false;
+            /*
+             * TODO get the players actions (card)
+             *  /!\ the player has a button indication if he has finished his turn, if the player selects the button then...
+             */
+            if(hand.size() != 0) {
+                int chosenCard = 0;
+                playCard(chosenCard);
+                keepPlaying = false;
+            }
         }
+
+        for (Creature creature : creatures) {
+            creature.playTurn(turn);
+            if (!creature.isAlive()) {
+                creatures.remove(creature);
+            }
+        }
+
         System.out.println(name + " finished his/her turn.");
     }
 
@@ -84,10 +103,10 @@ public class Player extends Receptor {
         return actionPoints;
     }
 
-    public int getNbEggDestroyed() {
+    public int getNbChestsDestroyed() {
         int count = 0;
         for (Chest chest : chests) {
-            if(!chest.isAlive()) {
+            if(!chest.isClosed()) {
                 ++count;
             }
         }
@@ -108,6 +127,11 @@ public class Player extends Receptor {
             actionPoints >= cardToPlay.getCost()) {
 
             cardToPlay.play();
+
+            if(cardToPlay.getCommand() != null && cardToPlay.getCommand().getName() == CommandName.CREATE_CREATURE) {
+
+            }
+
             actionPoints -= cardToPlay.getCost();
             return true;
         }
@@ -142,16 +166,16 @@ public class Player extends Receptor {
         hand.remove(card);
     }
 
-    public static int getStartingNbrEggs() {
-        return NBR_EGGS;
+    public static int getStartingNbrChests() {
+        return NBR_CHESTS;
     }
 
-    public int getNbEggs() {
+    public int getNbChests() {
         return chests.size();
     }
 
-    public void hitEgg(int eggIndex, int attackPoints) {
-        chests.get(eggIndex).hit(attackPoints);
+    public void hitChest(int chestsIndex, int attackPoints) {
+        chests.get(chestsIndex).hit(attackPoints);
     }
 
     public List<Chest> getChests() {
@@ -169,5 +193,14 @@ public class Player extends Receptor {
                 Objects.equals(hand, player.hand) &&
                 Objects.equals(discard, player.discard) &&
                 Objects.equals(chests, player.chests);
+    }
+
+    public void addToDeck(Card originCard) {
+        deck.addLast(originCard);
+        ArrayList<Card> d = new ArrayList<>();
+        d.addAll(deck);
+        Collections.shuffle(d);
+        deck.clear();
+        deck.addAll(d);
     }
 }

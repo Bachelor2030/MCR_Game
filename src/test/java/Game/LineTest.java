@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LineTester {
+public class LineTest {
     private Group root = new Group();
     @Test
     public void EmptyTest() {

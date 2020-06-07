@@ -1,19 +1,14 @@
 package Server.Game;
 
 import Common.GameBoard.Board;
-import Common.Receptors.Creature;
 import Common.Receptors.Player;
-
-import java.util.ArrayList;
 
 /**
  * Cette classe permet de modéliser le jeu.
  */
 public class Game {
+    private static final int NBR_CHESTS_TO_DESTROY = 2;
     private Player player1, player2;
-
-    private ArrayList<Creature> player1Creatures;
-    private ArrayList<Creature> player2Creatures;
 
     private Board board;
     private int turn;
@@ -36,15 +31,10 @@ public class Game {
      */
     private void nextTurn() {
         ++turn;
-
         player1.playTurn(turn);
-        for (Creature creature : player1Creatures) {
-            creature.playTurn(turn);
-        }
 
-        player2.playTurn(turn);
-        for (Creature creature : player2Creatures) {
-            creature.playTurn(turn);
+        if(!finished()) {
+            player2.playTurn(turn);
         }
     }
 
@@ -76,12 +66,12 @@ public class Game {
      * @return true si le jeu est terminé, false sinon.
      */
     private boolean finished() {
-        if(player2.getNbEggDestroyed() >= 2)
+        if(player2.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY)
         {
             gameOver(player2, player1);
             return true;
         }
-        else if(player1.getNbEggDestroyed() >= 2)
+        else if(player1.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY)
         {
             gameOver(player1, player2);
             return true;
