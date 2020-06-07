@@ -6,6 +6,9 @@ import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
 
+/**
+ * Modelises a player of the game
+ */
 public class Player extends Receptor {
     private static final int NBR_INIT_CARDS = 3;
     private static final int NBR_CHESTS = 5;
@@ -27,6 +30,11 @@ public class Player extends Receptor {
 
     private int actionPoints;
 
+    /**
+     * Creates a player with the given name and deck
+     * @param name the name of the player
+     * @param deck the dock of cards the player has
+     */
     public Player(String name, List<Card> deck) {
         super(name);
         actionPoints = 0;
@@ -42,6 +50,9 @@ public class Player extends Receptor {
         }
     }
 
+    /**
+     * Initializes the player
+     */
     private void init() {
         for (int i = 0; i < NBR_INIT_CARDS; ++i) {
             hand.add(deck.remove());
@@ -51,7 +62,7 @@ public class Player extends Receptor {
             chests.add(new Chest(name + " - Chest " + (i + 1), this));
         }
     }
-
+    
     @Override
     public void playTurn(int turn) {
         // Takes a card if possible otherwise
