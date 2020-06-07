@@ -26,15 +26,11 @@ public class GameJsonParser {
         cardsPlayer1 = cardParser(path + cards1);
         cardsPlayer2 = cardParser(path + cards2);
 
-        if(cardsPlayer1.size() == cardsPlayer2.size()) {
-            System.out.println("BORDEL");
-        }
-
         Player p1 = new Player(player1, cardsPlayer1);
         Player p2 = new Player(player2, cardsPlayer2);
 
         // TODO remove null and replace with correct root
-        return new Game(p1, p2, null);
+        return new Game(p1, p2);
     }
 
     private static ArrayList<Card> cardParser(String file) {
