@@ -103,7 +103,7 @@
 /* ************************************************ */
 
 .alert.confirmation.dialog-pane {
-    -fx-graphic: url("/design/images/julien.png");
+    -fx-graphic: url("/design/images/yUQuit.png");
     -fx-alignment: center;
     -fx-background-color: #CDAEF3;
 }

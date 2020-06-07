@@ -1,9 +1,11 @@
 package Client.View;
 
+import Common.GameBoard.Board;
 import javafx.application.Application;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -13,6 +15,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
+
 /** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
   //TAILLE FENÊTRE
@@ -20,20 +24,29 @@ public class GameBoard extends Application {
   final int HEIGHT_WINDOW = 800;
 
   //BUTTONS
-  private Button validateTourButton;
-  private Button abandonTourButton;
-  private Button quitButton;
-  private Button minimizeButton;
+  private Button validateTourButton; //valide le tour
+  private Button abandonTourButton; //abandonne la partie
+  private Button quitButton; //quitte le jeu
+  private Button minimizeButton; //rabat la fenêtre de jeu
 
   //Cors du jeu -> là où se trouvent les îles + créatures & shit
   private StackPane sp;
 
   //Affiche les actions joueurs par le player 1
   private ListView<String> actionPlayer1Labels;
-  private Label deleteActionLabel;
+  private Label deleteActionLabelP1;
+
+  //Affiche les actions joueurs par le player 1
+  private ListView<String> actionPlayer2Labels;
+  private Label deleteActionLabelP2;
 
   //INDICATION JEU FINI
-  boolean gameOver;
+  private boolean gameOver;
+
+  //Répertoire contenant nos îles
+  private Group islands;
+
+  private Board board;
 
   @Override
   public void start(Stage stage) throws Exception {
@@ -51,16 +64,16 @@ public class GameBoard extends Application {
 
 
     validateTourButton = new Button("Valider tour");
-    //validateTourButton.getStyleClass().add("header-button");
-/*
+    validateTourButton.getStyleClass().add("header-button");
+
     abandonTourButton = new Button("Abandonner");
-    //abandonTourButton.getStyleClass().add("header-button");
+    abandonTourButton.getStyleClass().add("header-button");
 
     minimizeButton = new Button();
-    //minimizeButton.getStyleClass().add("header-quit-button");
+    minimizeButton.getStyleClass().add("header-quit-button");
 
     quitButton = new Button();
-    //quitButton.getStyleClass().add("header-quit-button");
+    quitButton.getStyleClass().add("header-quit-button");
 
     //On crée une barre de navigation dans le BorderPane
     racine.setTop(navBar());
@@ -80,13 +93,20 @@ public class GameBoard extends Application {
     racine.setLeft(getPlayer1Informations());
 
     //------------------------------------------------------------------
+    // COLONNE GAUCHE - PLAYER 2
+    //------------------------------------------------------------------
+
+    //On crée une colonne contenant les labels
+    racine.setRight(getPlayer2Informations());
+
+    //------------------------------------------------------------------
     // FOOTER
     //------------------------------------------------------------------
 
     //On crée un footer dans le BorderPane
     racine.setBottom(footerBar());
 
-     */
+
 
     //------------------------------------------------------------------
     // PARAMÈTRES DE LA FENÊTRE DU LOGICIEL
@@ -94,7 +114,7 @@ public class GameBoard extends Application {
 
     Scene scene = new Scene(racine, WIDTH_WINDOW, HEIGHT_WINDOW);
 
-    scene.getStylesheets().add("/design/stylesheet.css");
+    scene.getStylesheets().add("/design/css/styleSheet.css");
 
     stage.setScene(scene);
     //met la fenêtre au max
@@ -114,8 +134,8 @@ public class GameBoard extends Application {
     //On l'affiche
     panneauVerticalGauche.getStyleClass().add("menuLabelsGauche-vbox");
 
-    //On créé le titre "labels"
-    Label titrePanneauLabeal = new Label("Labels");
+    //On créé le titre "Actions"
+    Label titrePanneauLabeal = new Label("Joueur 1");
 
     //On le stylise grâce à la feuille CSS
     titrePanneauLabeal.getStyleClass().add("titre-label");
@@ -123,7 +143,7 @@ public class GameBoard extends Application {
     //On l'affiche
     panneauVerticalGauche.getChildren().add(titrePanneauLabeal);
 
-    //On initialise la liste de labels liés à l'image
+    //On initialise la liste d'actions liées au tour du joueur
     actionPlayer1Labels = new ListView();
 
     //On fait en sorte qu'ils soient cliquables
@@ -140,12 +160,12 @@ public class GameBoard extends Application {
     //----------------------------------------------------
     // DELETE LABEL BUTTON
     //----------------------------------------------------
-    deleteActionLabel = new Label("");
+    deleteActionLabelP1 = new Label("");
     Button deleteLabelButton = new Button();
     panneauVerticalGauche.getChildren().add(deleteLabelButton); //permet d'afficher l'élément dans le panneau
-    panneauVerticalGauche.getChildren().add(deleteActionLabel); //indique l'état de l'ajout d'un label
+    panneauVerticalGauche.getChildren().add(deleteActionLabelP1); //indique l'état de l'ajout d'un label
 
-    Image deleteIcon = new Image(getClass().getResourceAsStream("/images/delete.png"));
+    Image deleteIcon = new Image(getClass().getResourceAsStream("/design/images/delete.png"));
     ImageView deleteIconView = new ImageView(deleteIcon);
     deleteIconView.setFitHeight(15);
     deleteIconView.setFitWidth(15);
@@ -166,31 +186,115 @@ public class GameBoard extends Application {
             actionPlayer1Labels.getItems().remove(actionPlayer1Labels.getSelectionModel().getSelectedItem());
             --taille;
           }
-          deleteActionLabel.setText("Les actions ont été correctement supprimées.");
+          deleteActionLabelP1.setText("Les actions ont été correctement supprimées.");
         }
         //condition pour un unique élément sélectionné
         else
         {
           actionPlayer1Labels.getItems().remove(actionPlayer1Labels.getSelectionModel().getSelectedItem());
-          deleteActionLabel.setText("L'action a été correctement supprimée.");
+          deleteActionLabelP1.setText("L'action a été correctement supprimée.");
         }
 
       } catch (Exception ex) {
-        deleteActionLabel.setText("Aucune action sélectionnée.");
+        deleteActionLabelP1.setText("Aucune action sélectionnée.");
       }
     });
 
     //marges extérieures des deux cases + buttons
     VBox.setMargin(actionPlayer1Labels, new Insets(10, 10, 10, 10));
-    VBox.setMargin(deleteActionLabel, new Insets(1, 10, 10, 10));
+    VBox.setMargin(deleteActionLabelP1, new Insets(1, 10, 10, 10));
     VBox.setMargin(deleteLabelButton, new Insets(1, 10, 1, 200));
 
     return panneauVerticalGauche;
   }
 
-  private StackPane corpsLogiciel() {
+  private VBox getPlayer2Informations() {
+    VBox panneauVerticalGauche = new VBox();
+
+    //On l'affiche
+    panneauVerticalGauche.getStyleClass().add("menuLabelsGauche-vbox");
+
+    //On créé le titre "Actions"
+    Label titrePanneauLabeal = new Label("Joueur 2");
+
+    //On le stylise grâce à la feuille CSS
+    titrePanneauLabeal.getStyleClass().add("titre-label");
+
+    //On l'affiche
+    panneauVerticalGauche.getChildren().add(titrePanneauLabeal);
+
+    //On initialise la liste d'actions liées au tour du joueur
+    actionPlayer2Labels = new ListView();
+
+    //On fait en sorte qu'ils soient cliquables
+    actionPlayer2Labels.setCellFactory(TextFieldListCell.forListView());
+    actionPlayer2Labels.setEditable(true);
+
+    //On l'affiche et on le stylise
+    panneauVerticalGauche.getChildren().add(actionPlayer2Labels);
+    actionPlayer2Labels.getStyleClass().add("actionPlayer");
+
+    //Permet de sélectionner plusieurs labels
+    actionPlayer2Labels.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+    //----------------------------------------------------
+    // DELETE LABEL BUTTON
+    //----------------------------------------------------
+    deleteActionLabelP2 = new Label("");
+    Button deleteLabelButton = new Button();
+    panneauVerticalGauche.getChildren().add(deleteLabelButton); //permet d'afficher l'élément dans le panneau
+    panneauVerticalGauche.getChildren().add(deleteActionLabelP2); //indique l'état de l'ajout d'un label
+
+    Image deleteIcon = new Image(getClass().getResourceAsStream("/design/images/delete.png"));
+    ImageView deleteIconView = new ImageView(deleteIcon);
+    deleteIconView.setFitHeight(15);
+    deleteIconView.setFitWidth(15);
+    deleteLabelButton.setGraphic(deleteIconView);//setting icon to button
+    deleteLabelButton.getStyleClass().add("left-button");
+
+    //On créé un event lié à l'action de la suppression du label
+    deleteLabelButton.setOnAction(e ->
+    {
+      try {
+
+        //Permet de supprimer plusieurs éléments en même temps
+        if(actionPlayer2Labels.getSelectionModel().getSelectedItems().size() > 1)
+        {
+          int taille = actionPlayer2Labels.getSelectionModel().getSelectedItems().size();
+          while (taille > 0)
+          {
+            actionPlayer2Labels.getItems().remove(actionPlayer2Labels.getSelectionModel().getSelectedItem());
+            --taille;
+          }
+          deleteActionLabelP2.setText("Les actions ont été correctement supprimées.");
+        }
+        //condition pour un unique élément sélectionné
+        else
+        {
+          actionPlayer2Labels.getItems().remove(actionPlayer2Labels.getSelectionModel().getSelectedItem());
+          deleteActionLabelP2.setText("L'action a été correctement supprimée.");
+        }
+
+      } catch (Exception ex) {
+        deleteActionLabelP2.setText("Aucune action sélectionnée.");
+      }
+    });
+
+    //marges extérieures des deux cases + buttons
+    VBox.setMargin(actionPlayer2Labels, new Insets(10, 10, 10, 10));
+    VBox.setMargin(deleteActionLabelP2, new Insets(1, 10, 10, 10));
+    VBox.setMargin(deleteLabelButton, new Insets(1, 10, 1, 200));
+
+    return panneauVerticalGauche;
+  }
+
+  private StackPane corpsLogiciel() throws IOException {
     sp = new StackPane();
     sp.getStyleClass().add("corps-gridPane");
+
+    islands = new Group();
+    board = new Board(islands);
+    sp.getChildren().add(islands);
 
     return sp;
   }
@@ -240,7 +344,7 @@ public class GameBoard extends Application {
     // MINIMIZE BUTTON
     //----------------------------------------------------
 
-    Image minimizeIcon = new Image(getClass().getResourceAsStream("/images/minimize.png"));
+    Image minimizeIcon = new Image(getClass().getResourceAsStream("/design/images/minimize.png"));
     ImageView minimizeIconView = new ImageView(minimizeIcon);
     minimizeIconView.setFitHeight(21);
     minimizeIconView.setFitWidth(21);
@@ -258,7 +362,7 @@ public class GameBoard extends Application {
     //----------------------------------------------------
     // QUIT BUTTON
     //----------------------------------------------------
-    Image quitIcon = new Image(getClass().getResourceAsStream("/images/quit.png"));
+    Image quitIcon = new Image(getClass().getResourceAsStream("/design/images/quit.png"));
     ImageView quitIconView = new ImageView(quitIcon);
     quitIconView.setFitHeight(21);
     quitIconView.setFitWidth(21);
@@ -289,7 +393,7 @@ public class GameBoard extends Application {
 
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-                getClass().getResource("/design/stylesheet.css").toExternalForm());
+                getClass().getResource("/design/css/styleSheet.css").toExternalForm());
 
         alert.showAndWait();
         if (alert.getResult() == oui) {
