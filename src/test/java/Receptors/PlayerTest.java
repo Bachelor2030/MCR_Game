@@ -23,13 +23,13 @@ public class PlayerTest {
     static void initialise() {
         name = "George";
         LinkedList<Card> cards = new LinkedList<>();
-        cards.add(new Card("Black Hole", CardType.SPELL, 0));
-        cards.add(new Card("Furnace", CardType.SPELL, 0));
-        cards.add(new Card("Bombe", CardType.TRAP, 0));
-        cards.add(new Card("Black Hole", CardType.TRAP, 0));
-        cards.add(new Card("Pier", CardType.CREATURE, 0));
-        cards.add(new Card("Sebas-chan", CardType.CREATURE, 0));
-        cards.add(new Card("Gregou", CardType.CREATURE, 0));
+        cards.add(new Card(1, "Black Hole", CardType.SPELL, 0));
+        cards.add(new Card(1, "Furnace", CardType.SPELL, 0));
+        cards.add(new Card(1, "Bombe", CardType.TRAP, 0));
+        cards.add(new Card(1, "Black Hole", CardType.TRAP, 0));
+        cards.add(new Card(1, "Pier", CardType.CREATURE, 0));
+        cards.add(new Card(1, "Sebas-chan", CardType.CREATURE, 0));
+        cards.add(new Card(1, "Gregou", CardType.CREATURE, 0));
 
         player = new Player(name, cards);
     }
