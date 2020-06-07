@@ -37,7 +37,7 @@ public class ClientAdapter {
         String answer = sendJsonMessage(Messages.CLIENT_HELLO);
 
         if (answer.equals(Messages.SERVER_HELLO_ANS)) {
-            printMessage("Successful connection to the server: ");
+            printMessage("Successful connection to the server");
         } else {
             printMessage("Unexpected server answer: '"  + answer + "'. Expected '" + Messages.SERVER_HELLO_ANS + "'");
             exit();

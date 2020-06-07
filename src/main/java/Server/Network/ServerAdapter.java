@@ -112,10 +112,10 @@ public class ServerAdapter {
             public void run() {
                 try {
                     // Awaiting client greetings
-                    awaitClientIO(false, "Reading until client sends greetings to open the connection...");
+                    awaitClientHandshake(false, "Reading until client sends greetings to open the connection...");
 
                     // Awaiting client goodbye
-                    awaitClientIO(true, "Reading until client sends goodbye or closes the connection...");
+                    awaitClientHandshake(true, "Reading until client sends goodbye or closes the connection...");
 
                     cleanupResources();
 
@@ -124,7 +124,7 @@ public class ServerAdapter {
                 }
             }
 
-            private void awaitClientIO(boolean shouldRun, String consoleMessage) throws IOException, JSONException {
+            private void awaitClientHandshake(boolean shouldRun, String consoleMessage) throws IOException, JSONException {
                 String receivedMessage;
                 printMessage("Servant", consoleMessage);
 
