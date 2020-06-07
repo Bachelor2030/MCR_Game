@@ -25,7 +25,13 @@ public class Card implements Invocator {
     }
 
     public void play() {
-        command.execute();
+        if(command != null) {
+            command.execute();
+        }
+    }
+
+    public Macro getCommand() {
+        return command;
     }
 
     @Override

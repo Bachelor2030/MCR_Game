@@ -6,8 +6,8 @@ public class Chest extends LiveReceptor {
     private static final int CHEST_LIFE_POINTS = 5;
     private boolean closed;
 
-    public Chest(String name) {
-        super(name, CHEST_LIFE_POINTS);
+    public Chest(String name, Player owner) {
+        super(name, CHEST_LIFE_POINTS, owner, "Chest");
         closed = true;
     }
 

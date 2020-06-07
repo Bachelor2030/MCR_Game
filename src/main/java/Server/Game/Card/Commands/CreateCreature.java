@@ -1,6 +1,5 @@
 package Server.Game.Card.Commands;
 
-import Server.Game.Card.Card;
 import Server.Game.Position;
 import Common.Receptors.Creature;
 

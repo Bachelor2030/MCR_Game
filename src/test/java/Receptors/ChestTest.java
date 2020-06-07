@@ -14,7 +14,7 @@ public class ChestTest {
 
     @BeforeAll
     private static void init() {
-        chest = new Chest(name);
+        chest = new Chest(name, null);
     }
 
     @Test

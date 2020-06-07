@@ -1,5 +1,7 @@
 package Server.Game.ModelClasses;
 
+import Server.Game.Card.Commands.CommandName;
+
 import java.util.Arrays;
 
 public class Macro implements Command {
@@ -21,5 +23,10 @@ public class Macro implements Command {
         for(Command command : commands) {
             command.undo();
         }
+    }
+
+    @Override
+    public CommandName getName() {
+        return null;
     }
 }
