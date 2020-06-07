@@ -149,4 +149,8 @@ public class Spot extends Application {
   public FileInputStream getImagePath() {
     return imagePath;
   }
+
+  public boolean isTrapped() {
+    return occupant != null && occupant.getClass() == Trap.class;
+  }
 }

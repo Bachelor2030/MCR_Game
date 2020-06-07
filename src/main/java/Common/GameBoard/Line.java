@@ -20,6 +20,10 @@ public class Line {
   //le groupe d'îlots qu'on affichera par la suite
   Group root;
 
+  public Line(int noLine) {
+    this.noLine = noLine;
+  }
+
   /**
    * Constructeur de la classe Line
    *

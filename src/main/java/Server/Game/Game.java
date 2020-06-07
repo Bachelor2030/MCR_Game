@@ -1,13 +1,20 @@
 package Server.Game;
 
 import Common.GameBoard.Board;
+import Common.Receptors.Creature;
 import Common.Receptors.Player;
+
+import java.util.ArrayList;
 
 /**
  * Cette classe permet de modéliser le jeu.
  */
 public class Game {
     private Player player1, player2;
+
+    private ArrayList<Creature> player1Creatures;
+    private ArrayList<Creature> player2Creatures;
+
     private Board board;
     private int turn;
 
@@ -29,7 +36,16 @@ public class Game {
      */
     private void nextTurn() {
         ++turn;
-        // TODO : do actions
+
+        player1.playTurn(turn);
+        for (Creature creature : player1Creatures) {
+            creature.playTurn(turn);
+        }
+
+        player2.playTurn(turn);
+        for (Creature creature : player2Creatures) {
+            creature.playTurn(turn);
+        }
     }
 
     /**

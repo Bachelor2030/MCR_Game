@@ -14,17 +14,31 @@ public class Position {
         this.position = position;
     }
 
-
     public boolean isEmpty() {
-        return line.getSpot(position).isEmpty();
+        if(isValid()) {
+            return line.getSpot(position).isEmpty();
+        }
+        return false;
+    }
+
+    public boolean isTrapped() {
+        if(isValid()) {
+            return line.getSpot(position).isTrapped();
+        }
+        return false;
     }
 
     public Receptor getOccupant() {
-        return line.getSpot(position).getOccupant();
+        if(isValid()) {
+            return line.getSpot(position).getOccupant();
+        }
+        return null;
     }
 
     public void setOccupant(Receptor occupant) {
-        line.getSpot(position).setOccupant(occupant);
+        if(isValid()) {
+            line.getSpot(position).setOccupant(occupant);
+        }
     }
 
     public void leave() {
@@ -33,5 +47,23 @@ public class Position {
 
     public Position next() {
         return new Position(line, position + 1);
+    }
+
+    public Position previous() {
+        if (position == 0)
+            return this;
+        return new Position(line, position - 1);
+    }
+
+    public Line getLine() {
+        return line;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public boolean isValid() {
+        return position < line.getNB_SPOTS();
     }
 }

@@ -65,7 +65,9 @@ public class Player extends Receptor {
             actionPoints = NBR_ACTION_POINTS_MAX;
         }
 
-        // TODO : allow a certain amount of time to play
+        // TODO : allow the player to play cards
+
+
     }
 
     public int getNbrCardsInHand() {
@@ -148,5 +150,18 @@ public class Player extends Receptor {
 
     public List<Chest> getChests() {
         return chests;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return  name.equals(player.name) &&
+                actionPoints == player.actionPoints &&
+                Objects.equals(deck, player.deck) &&
+                Objects.equals(hand, player.hand) &&
+                Objects.equals(discard, player.discard) &&
+                Objects.equals(chests, player.chests);
     }
 }
