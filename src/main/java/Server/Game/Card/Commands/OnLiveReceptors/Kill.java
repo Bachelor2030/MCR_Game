@@ -23,4 +23,8 @@ public class Kill extends OnLiveReceptors {
             receptors[i].gainLifePoints(lifePoints[i]);
         }
     }
+
+    public void setLifePoints(int[] lp) {
+        lifePoints = lp;
+    }
 }
