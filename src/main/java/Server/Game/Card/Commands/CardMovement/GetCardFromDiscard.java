@@ -16,6 +16,10 @@ public class GetCardFromDiscard extends CardMovement {
         this.type = type;
     }
 
+    public GetCardFromDiscard() {
+        super(CommandName.DRAW_TYPE_FROM_DISCARD);
+    }
+
     @Override
     public void execute() {
         HashMap<Integer, List<Card>> discard = player.getDiscard();

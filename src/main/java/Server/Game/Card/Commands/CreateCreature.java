@@ -11,19 +11,12 @@ public class CreateCreature extends ConcreteCommand {
         super(CommandName.CREATE_CREATURE);
     }
 
-    public CreateCreature(Creature creature) {
-        super(CommandName.CREATE_CREATURE);
-        this.creature = creature;
-    }
-
-    public CreateCreature(Creature creature, Position position) {
-        super(CommandName.CREATE_CREATURE);
-        this.creature = creature;
-        this.position = position;
-    }
-
     public void setCreature(Creature creature) {
         this.creature = creature;
+    }
+
+    public Creature getCreature() {
+       return creature;
     }
 
     public void setPosition(Position position) {

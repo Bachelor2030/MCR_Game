@@ -14,17 +14,33 @@ public class HitLiveReceptor extends ConcreteCommand {
         this.receptors = Arrays.copyOf(receptors, receptors.length);
     }
 
+    public HitLiveReceptor() {
+        super(CommandName.HIT);
+    }
+
+    public void setAttackPoints(int attackPoints) {
+        this.attackPoints = attackPoints;
+    }
+
+    public void setReceptors(LiveReceptor[] receptors) {
+        this.receptors = receptors;
+    }
+
     @Override
     public void execute() {
+        if (receptors == null)
+            return;
+
         for (LiveReceptor receptor : receptors) {
-            receptor.hit(attackPoints);
+            if(receptor != null)
+                receptor.loseLifePoints(attackPoints);
         }
     }
 
     @Override
     public void undo() {
         for (LiveReceptor receptor : receptors) {
-            receptor.heal(attackPoints);
+            receptor.gainLifePoints(attackPoints);
         }
     }
 }

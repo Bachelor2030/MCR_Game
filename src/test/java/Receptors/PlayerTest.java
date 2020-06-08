@@ -23,13 +23,13 @@ public class PlayerTest {
     static void initialise() {
         name = "George";
         LinkedList<Card> cards = new LinkedList<>();
-        cards.add(new Card(1, "Black Hole", CardType.SPELL, 0));
-        cards.add(new Card(1, "Furnace", CardType.SPELL, 0));
-        cards.add(new Card(1, "Bombe", CardType.TRAP, 0));
-        cards.add(new Card(1, "Black Hole", CardType.TRAP, 0));
-        cards.add(new Card(1, "Pier", CardType.CREATURE, 0));
+        cards.add(new Card(1, "Black Hole", CardType.SPELL,    0));
+        cards.add(new Card(1, "Furnace",    CardType.SPELL,    0));
+        cards.add(new Card(1, "Bombe",      CardType.TRAP,     0));
+        cards.add(new Card(1, "Black Hole", CardType.TRAP,     0));
+        cards.add(new Card(1, "Pier",       CardType.CREATURE, 0));
         cards.add(new Card(1, "Sebas-chan", CardType.CREATURE, 0));
-        cards.add(new Card(1, "Gregou", CardType.CREATURE, 0));
+        cards.add(new Card(1, "Gregou",     CardType.CREATURE, 0));
 
         player = new Player(name, cards);
     }
@@ -37,15 +37,6 @@ public class PlayerTest {
     @Test
     public void PlayerShouldHaveTheCorrectName() {
         assertEquals(name, player.getName());
-    }
-
-    @Test
-    public void HittingAPlayersEggMustDiminishTheirLifePoints() {
-        player.hitChest(1,20);
-        assertEquals(1, player.getNbChestsDestroyed());
-        for (Chest chest : player.getChests()) {
-            System.out.println(chest);
-        }
     }
 
     @Test
@@ -60,11 +51,4 @@ public class PlayerTest {
         assertEquals((Math.min(turn, 15)), player.getActionPoints());
     }
 
-    @Test
-    public void PlayerShouldHaveTheCorrectAmountOfEggs() {
-        for (Chest chest : player.getChests()) {
-            System.out.println(chest);
-        }
-        assertEquals(Player.getStartingNbrChests(), player.getNbChests());
-    }
 }
