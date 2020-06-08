@@ -1,10 +1,10 @@
-package Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature;
+package Server.Game.Card.Commands.OnLiveReceptors.OnCreature;
 
 import Common.Receptors.Creature;
 import Server.Game.Card.Commands.CommandName;
 
-public class AdvanceCreature extends ActOnCreature {
-    public AdvanceCreature() {
+public class Advance extends OnCreature {
+    public Advance() {
         super(CommandName.ADVANCE_CREATURE);
     }
 

@@ -8,10 +8,10 @@ import Common.Receptors.Player;
 import java.util.HashMap;
 import java.util.List;
 
-public class GetCardFromDiscard extends CardMovement {
+public class DrawTypeFromDiscard extends CardMovement {
     private CardType type;
 
-    public GetCardFromDiscard() {
+    public DrawTypeFromDiscard() {
         super(CommandName.DRAW_TYPE_FROM_DISCARD);
     }
 

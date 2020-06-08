@@ -5,7 +5,7 @@ import Common.Receptors.Trap;
 import Server.Game.Card.Card;
 import Server.Game.Card.CardType;
 import Server.Game.Card.Commands.*;
-import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.CreateCreature;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.Game;
 import Server.Game.ModelClasses.Macro;
 import org.json.JSONArray;
@@ -68,15 +68,15 @@ public class ParserLauncher {
             ArrayList<ConcreteCommand> concreteCommands = new ArrayList<>();
 
             if (cardType == CardType.CREATURE) {
-                CreateCreature createCreature = new CreateCreature();
+                Create create = new Create();
                 JSONObject jsonCreature = card.getJSONObject("creature");
                 Creature creature = new Creature(
                         jsonCreature.getString("name"),
                         jsonCreature.getInt("life"),
                         jsonCreature.getInt("steps"),
                         jsonCreature.getInt("attack"));
-                createCreature.setCreature(creature);
-                concreteCommands.add(createCreature);
+                create.setCreature(creature);
+                concreteCommands.add(create);
             }
             else if (cardType == CardType.TRAP) {
                 JSONObject jsonTrap = card.getJSONObject("trap");

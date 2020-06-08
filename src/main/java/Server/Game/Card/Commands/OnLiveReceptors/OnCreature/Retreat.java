@@ -1,10 +1,10 @@
-package Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature;
+package Server.Game.Card.Commands.OnLiveReceptors.OnCreature;
 
 import Common.Receptors.Creature;
 import Server.Game.Card.Commands.CommandName;
 
-public class RetreatCreature extends ActOnCreature {
-    public RetreatCreature() {
+public class Retreat extends OnCreature {
+    public Retreat() {
         super(CommandName.RETREAT_CREATURE);
     }
 

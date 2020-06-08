@@ -1,12 +1,12 @@
-package Server.Game.Card.Commands.ActsOnLiveReceptors;
+package Server.Game.Card.Commands.OnLiveReceptors;
 
 import Server.Game.Card.Commands.CommandName;
 import Server.Game.ModelClasses.LiveReceptor;
 
-public class KillLiveReceptor extends ActOnLiveReceptors {
+public class Kill extends OnLiveReceptors {
     private int[] lifePoints;
 
-    public KillLiveReceptor() {
+    public Kill() {
         super(CommandName.KILL);
     }
 

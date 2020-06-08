@@ -1,13 +1,13 @@
 package Server.Game.Card.Commands;
 
-import Server.Game.Card.Commands.ActsOnLiveReceptors.*;
-import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.AdvanceCreature;
-import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.CreateCreature;
-import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.KnockOutCreature;
-import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.RetreatCreature;
+import Server.Game.Card.Commands.OnLiveReceptors.*;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Advance;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.KnockOut;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Retreat;
 import Server.Game.Card.Commands.CardMovement.Discard;
 import Server.Game.Card.Commands.CardMovement.Draw;
-import Server.Game.Card.Commands.CardMovement.GetCardFromDiscard;
+import Server.Game.Card.Commands.CardMovement.DrawTypeFromDiscard;
 
 public enum CommandName {
 
@@ -64,16 +64,16 @@ public enum CommandName {
 
     public ConcreteCommand getCommand() {
         switch (this) {
-            case HIT: return new HitLiveReceptor();
-            case DRAW_TYPE_FROM_DISCARD: return new GetCardFromDiscard();
+            case HIT: return new Hit();
+            case DRAW_TYPE_FROM_DISCARD: return new DrawTypeFromDiscard();
             case CREATE_TRAP: return new CreateTrap();
             case DISCARD: return new Discard();
             case DRAW: return new Draw();
-            case CREATE_CREATURE: return new CreateCreature();
-            case KILL: return new KillLiveReceptor();
-            case KNOCK_OUT: return new KnockOutCreature();
-            case ADVANCE_CREATURE: return new AdvanceCreature();
-            case RETREAT_CREATURE: return new RetreatCreature();
+            case CREATE_CREATURE: return new Create();
+            case KILL: return new Kill();
+            case KNOCK_OUT: return new KnockOut();
+            case ADVANCE_CREATURE: return new Advance();
+            case RETREAT_CREATURE: return new Retreat();
             default: return null;
         }
 

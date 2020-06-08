@@ -1,12 +1,12 @@
-package Server.Game.Card.Commands.ActsOnLiveReceptors;
+package Server.Game.Card.Commands.OnLiveReceptors;
 
 import Server.Game.Card.Commands.CommandName;
 import Server.Game.ModelClasses.LiveReceptor;
 
-public class HitLiveReceptor extends ActOnLiveReceptors {
+public class Hit extends OnLiveReceptors {
     private int attackPoints;
 
-    public HitLiveReceptor() {
+    public Hit() {
         super(CommandName.HIT);
     }
 

@@ -1,10 +1,10 @@
-package Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature;
+package Server.Game.Card.Commands.OnLiveReceptors.OnCreature;
 
 import Common.Receptors.Creature;
 import Server.Game.Card.Commands.CommandName;
 
-public class KnockOutCreature extends ActOnCreature {
-    public KnockOutCreature() {
+public class KnockOut extends OnCreature {
+    public KnockOut() {
         super(CommandName.KNOCK_OUT);
     }
 

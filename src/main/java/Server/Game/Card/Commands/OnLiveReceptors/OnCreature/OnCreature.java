@@ -1,12 +1,12 @@
-package Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature;
+package Server.Game.Card.Commands.OnLiveReceptors.OnCreature;
 
 import Common.Receptors.Creature;
-import Server.Game.Card.Commands.ActsOnLiveReceptors.ActOnLiveReceptors;
+import Server.Game.Card.Commands.OnLiveReceptors.OnLiveReceptors;
 import Server.Game.Card.Commands.CommandName;
 import Server.Game.ModelClasses.LiveReceptor;
 
-public abstract class ActOnCreature extends ActOnLiveReceptors {
-    public ActOnCreature(CommandName name) {
+public abstract class OnCreature extends OnLiveReceptors {
+    public OnCreature(CommandName name) {
         super(name);
     }
 

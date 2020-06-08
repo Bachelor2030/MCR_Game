@@ -1,13 +1,13 @@
-package Server.Game.Card.Commands.ActsOnLiveReceptors;
+package Server.Game.Card.Commands.OnLiveReceptors;
 
 import Server.Game.Card.Commands.CommandName;
 import Server.Game.Card.Commands.ConcreteCommand;
 import Server.Game.ModelClasses.LiveReceptor;
 
-public abstract class ActOnLiveReceptors extends ConcreteCommand {
+public abstract class OnLiveReceptors extends ConcreteCommand {
     protected LiveReceptor[] receptors;
 
-    public ActOnLiveReceptors(CommandName name) {
+    public OnLiveReceptors(CommandName name) {
         super(name);
     }
 

@@ -1,13 +1,13 @@
-package Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature;
+package Server.Game.Card.Commands.OnLiveReceptors.OnCreature;
 
 import Server.Game.Card.Commands.CommandName;
 import Server.Game.Position;
 import Common.Receptors.Creature;
 
-public class CreateCreature extends ActOnCreature {
+public class Create extends OnCreature {
     private Position position;
 
-    public CreateCreature(){
+    public Create(){
         super(CommandName.CREATE_CREATURE);
     }
 
