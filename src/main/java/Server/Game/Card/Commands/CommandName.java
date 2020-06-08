@@ -1,27 +1,31 @@
 package Server.Game.Card.Commands;
 
+import Server.Game.Card.Commands.OnLiveReceptors.*;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Advance;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.KnockOut;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Retreat;
 import Server.Game.Card.Commands.CardMovement.Discard;
 import Server.Game.Card.Commands.CardMovement.Draw;
-import Server.Game.Card.Commands.CardMovement.GetCardFromDiscard;
+import Server.Game.Card.Commands.CardMovement.DrawTypeFromDiscard;
 
 public enum CommandName {
-    HIT("Hit", new HitLiveReceptor()),
-    KILL("Kill", new KillLiveReceptor()),
-    DRAW_TYPE_FROM_DISCARD("Draw from discard", new GetCardFromDiscard()),
-    DRAW("Draw", new Draw()),
-    DISCARD("Discard", new Discard()),
-    CREATE_CREATURE("Create creature", new CreateCreature()),
-    CREATE_TRAP("Create trap", new CreateTrap()),
-    ADVANCE_CREATURE("Advance", new AdvanceCreature()),
-    RETREAT_CREATURE("Retreat", new RetreatCreature()),
-    KNOCK_OUT("KnockOut", new KnockOutCreature());
 
-    private String name;
-    private ConcreteCommand command;
+    HIT("Hit"), // Problem
+    KILL("Kill"),
+    DRAW_TYPE_FROM_DISCARD("Draw from discard"),
+    DRAW("Draw"),
+    DISCARD("Discard"),
+    CREATE_CREATURE("Create creature"),
+    CREATE_TRAP("Create trap"),
+    ADVANCE_CREATURE("Advance"),
+    RETREAT_CREATURE("Retreat"),
+    KNOCK_OUT("KnockOut");
 
-    CommandName(String name, ConcreteCommand command) {
+    private final String name;
+
+    CommandName(String name) {
         this.name = name;
-        this.command = command;
     }
 
     public String getName() {
@@ -50,16 +54,28 @@ public enum CommandName {
         } else if(type.equals(KNOCK_OUT.name)) {
             return KNOCK_OUT;
         }
-        System.out.println(type + " is not an existing command name");
         return null;
-    }
-
-    public ConcreteCommand getCommand() {
-        return command;
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    public ConcreteCommand getCommand() {
+        switch (this) {
+            case HIT: return new Hit();
+            case DRAW_TYPE_FROM_DISCARD: return new DrawTypeFromDiscard();
+            case CREATE_TRAP: return new CreateTrap();
+            case DISCARD: return new Discard();
+            case DRAW: return new Draw();
+            case CREATE_CREATURE: return new Create();
+            case KILL: return new Kill();
+            case KNOCK_OUT: return new KnockOut();
+            case ADVANCE_CREATURE: return new Advance();
+            case RETREAT_CREATURE: return new Retreat();
+            default: return null;
+        }
+
     }
 }

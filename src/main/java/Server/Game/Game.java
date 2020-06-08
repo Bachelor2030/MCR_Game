@@ -22,6 +22,14 @@ public class Game {
         turn = 0;
     }
 
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
     /**
      * Permet de passer au tour suivant.
      */
@@ -74,5 +82,9 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 }

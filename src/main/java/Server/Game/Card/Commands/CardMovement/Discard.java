@@ -5,10 +5,6 @@ import Server.Game.Card.Commands.CommandName;
 import Common.Receptors.Player;
 
 public class Discard extends CardMovement {
-    public Discard(Player player, Card card) {
-        super(player, card, CommandName.DISCARD);
-    }
-
     public Discard() {
         super(CommandName.DISCARD);
     }
