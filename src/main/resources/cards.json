@@ -9,7 +9,7 @@
       "name" : "Pier",
       "type" : "Creature",
       "cost" : 4,
-      "commands" : ["KnockOut"],
+      "card commands" : ["KnockOut"],
       "creature" : 
       {
         "name" : "Pier",
@@ -24,7 +24,7 @@
       "name" : "Sebas-chan",
       "type" : "Creature",
       "cost" : 9,
-      "commands" : [],
+      "card commands" : [],
       "creature" : 
       {
         "name" : "Sebas-chan",
@@ -39,7 +39,7 @@
       "name" : "Gregou",
       "type" : "Creature",
       "cost" : 10,
-      "commands" : [],
+      "card commands" : [],
       "creature" :
       {
         "name" : "Gregou",
@@ -54,7 +54,7 @@
       "name" : "Black hole",
       "type" : "Trap",
       "cost" : 14,
-      "commands" : [],
+      "card commands" : [],
       "trap" : {
         "name" :"Black hole",
         "commands" : ["Kill"],
@@ -66,7 +66,7 @@
       "name" : "Furnace",
       "type" : "Spell",
       "cost" : 3,
-      "commands" : ["Hit"],
+      "card commands" : ["Hit"],
       "target" : "all",
       "effect point" : 3
     },
@@ -74,7 +74,7 @@
       "id" : 5,
       "name" : "Coward",
       "type" : "Spell",
-      "commands" : ["Retreat"],
+      "card commands" : ["Retreat"],
       "cost" : 3,
       "effect point" : 4,
       "target" : "one"

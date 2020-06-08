@@ -4,10 +4,6 @@ import Server.Game.Card.Commands.CommandName;
 import Common.Receptors.Player;
 
 public class Draw extends CardMovement {
-    public Draw(Player player) {
-        super(player, CommandName.DRAW);
-    }
-
     public Draw() {
         super(CommandName.DRAW);
     }

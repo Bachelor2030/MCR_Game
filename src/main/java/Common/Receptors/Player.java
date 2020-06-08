@@ -1,8 +1,6 @@
 package Common.Receptors;
 
 import Server.Game.Card.Card;
-import Server.Game.Card.Commands.CommandName;
-import Server.Game.Card.Commands.CreateCreature;
 import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
@@ -207,10 +205,12 @@ public class Player extends Receptor {
             if(!deck.isEmpty()) {
                 deck.remove();
             } else {
+                System.out.println("Chests to lose a life : ");
                 for (Chest chest : chests) {
-                    System.out.println(name + "'s chests lose a life");
+                    System.out.println("  " + chest.getName());
                     chest.loseLifePoints(1);
                 }
+                System.out.println();
             }
         }
 
@@ -227,11 +227,13 @@ public class Player extends Receptor {
              * TODO get the players actions (card)
              *  /!\ the player has a button indication if he has finished his turn, if the player selects the button then...
              */
+            Random rand = new Random();
             if(hand.size() != 0) {
-                int chosenCard = 0;
-                if(!playCard(chosenCard)) {
-                    System.out.println("You don't have enough action points");
-                }
+                int max = hand.size();
+                int chosenCard;
+                do {
+                    chosenCard = rand.nextInt() % hand.size();
+                } while (!playCard(chosenCard) && --max > 0);
                 keepPlaying = false;
             }
         }
