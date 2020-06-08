@@ -8,6 +8,10 @@ public class Draw extends CardMovement {
         super(player, CommandName.DRAW);
     }
 
+    public Draw() {
+        super(CommandName.DRAW);
+    }
+
     @Override
     public void execute() {
         card = player.drawCard();

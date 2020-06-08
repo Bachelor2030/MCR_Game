@@ -5,27 +5,27 @@
     },
     "traps" : {
         "Black hole" : {
-            "commands" : ["Kill creature"],
+            "commands" : ["Kill"],
             "effect point" : 0
         },
         "Bomb" : {
-            "commands" : ["Hit creature"],
+            "commands" : ["Hit"],
             "effect point" : 3
         },
         "Sleeping sleeper" : {
-            "commands" : ["Sleep creature"],
+            "commands" : ["Sleep"],
             "effect point" : 1
         },
         "Attack in the sand" : {
-            "commands" : ["GiveAP creature"],
+            "commands" : ["GiveAP"],
             "effect point" : 3
         },
         "Defense in the sand" : {
-            "commands" : ["GiveLP creature"],
+            "commands" : ["GiveLP"],
             "effect point" : 3
         },
         "Steps in the sand" : {
-            "commands" : ["GiveMP creature"],
+            "commands" : ["GiveMP"],
             "effect point" : 3
         }
     }

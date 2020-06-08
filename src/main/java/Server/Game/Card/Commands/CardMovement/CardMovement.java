@@ -9,6 +9,10 @@ public abstract class CardMovement extends ConcreteCommand {
     protected Player player;
     protected Card card;
 
+    public CardMovement(CommandName name) {
+        super(name);
+    }
+
     public CardMovement(Player player, CommandName name) {
         super(name);
         this.player = player;

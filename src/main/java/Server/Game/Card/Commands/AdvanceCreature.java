@@ -2,12 +2,16 @@ package Server.Game.Card.Commands;
 
 import Common.Receptors.Creature;
 
-public class MoveCreature extends ConcreteCommand {
+public class AdvanceCreature extends ConcreteCommand {
     private Creature creature;
 
-    public MoveCreature(Creature creature) {
-        super(CommandName.MOVE_CREATURE);
+    public AdvanceCreature(Creature creature) {
+        super(CommandName.ADVANCE_CREATURE);
         this.creature = creature;
+    }
+
+    public AdvanceCreature() {
+        super(CommandName.ADVANCE_CREATURE);
     }
 
     @Override

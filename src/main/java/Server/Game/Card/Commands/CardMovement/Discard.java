@@ -9,6 +9,10 @@ public class Discard extends CardMovement {
         super(player, card, CommandName.DISCARD);
     }
 
+    public Discard() {
+        super(CommandName.DISCARD);
+    }
+
     @Override
     public void execute() {
         player.discardCard(card);
