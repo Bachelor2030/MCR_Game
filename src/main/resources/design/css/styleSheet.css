@@ -1,0 +1,109 @@
+/* ************************************************ */
+/* GENERAL */
+/* ************************************************ */
+.general-borderPanel
+{
+    -fx-background-color: FFFFFF;
+}
+
+/* ************************************************ */
+/* HEADER */
+/* ************************************************ */
+.header-hbox
+{
+    -fx-background-color: #CDAEF3;
+}
+.header-button
+{
+    -fx-background-color: #E9DBFA;
+    -fx-background-radius: 15px;
+}
+
+.header-quit-button
+{
+    -fx-background-color: none;
+    -fx-background-radius: 15px;
+}
+
+.header-button:hover
+{
+    -fx-background-color: #E4D5F7;
+}
+
+.header-interieur-case
+{
+    -fx-text-fill: #7b7b8d;
+}
+
+/* ************************************************ */
+/* BODY */
+/* ************************************************ */
+
+.corps-gridPane
+{
+    -fx-background-color: #DEEAFF;
+    -fx-pref-width:400;
+    /*-fx-padding: 15,15,15,15;*/
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+/* ************************************************ */
+/* COLONNE GAUCHE */
+/* ************************************************ */
+.menuLabelsGauche-vbox
+{
+    -fx-background-color: #FFDEF7;
+    -fx-padding: 15 15 15 15;
+}
+
+.titre-label
+{
+    -fx-font:15 Impact;
+    -fx-text-fill: #636366;
+    -fx-padding: 0 0 0 15;
+}
+
+.actionPlayer
+{
+    -fx-pref-width: 230;
+    -fx-pref-height: 300;
+}
+
+.left-button
+{
+    -fx-background-color: none;
+}
+
+.left-button:hover
+{
+    -fx-background-color: #E4DAE2;
+}
+
+
+/* ************************************************ */
+/* COLONNE DROITE */
+/* ************************************************ */
+.menuLabelsDroite-vbox
+{
+    -fx-background-color: #FFDEF7;
+    -fx-padding: 15 15 15 15;
+}
+
+/* ************************************************ */
+/* FOOTER */
+/* ************************************************ */
+
+.footer-header-hbox
+{
+    -fx-background-color: #CDAEF3;
+    -fx-alignment: center;
+}
+
+/* ************************************************ */
+
+.alert.confirmation.dialog-pane {
+    -fx-graphic: url("/design/images/yUQuit.png");
+    -fx-alignment: center;
+    -fx-background-color: #CDAEF3;
+}
