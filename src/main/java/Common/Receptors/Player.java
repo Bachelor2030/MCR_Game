@@ -2,6 +2,7 @@ package Common.Receptors;
 
 import Server.Game.Card.Card;
 import Server.Game.Card.Commands.CommandName;
+import Server.Game.Card.Commands.CreateCreature;
 import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
@@ -111,9 +112,11 @@ public class Player extends Receptor {
 
             cardToPlay.play();
 
+            /*
             if(cardToPlay.getCommand() != null && cardToPlay.getCommand().getName() == CommandName.CREATE_CREATURE) {
-
+                // TODO
             }
+            */
 
             actionPoints -= cardToPlay.getCost();
             return true;

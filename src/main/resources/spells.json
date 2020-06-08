@@ -4,33 +4,39 @@
         "pageContent" : ["spells"]
     },
     "spells" : {
-        "Furnace" : {
-            "commands" : ["Hit creature"],
+        "spell" : {
+            "name" : "Furnace",
+            "command" : "Hit",
             "target" : "all",
             "effect point" : 3
         },
-        "OnePunch spell" : {
-            "commands" : ["Hit creature"],
+        "spell" : {
+            "name" : "OnePunch spell",
+            "command" : "Hit",
             "target" : "one",
             "effect point" : 5
         },
-        "Sheep counting" : {
-            "commands" : ["Sleep creature"],
+        "spell" : {
+            "name" : "Sheep counting",
+            "command" : "Sleep",
             "target" : "one",
             "effect point" : 3
         },
-        "Attack!" : {
-            "commands" : ["Move creature"],
+        "spell" : {
+            "name" : "Attack!",
+            "command" : "Move",
             "target" : "one",
             "effect point" : 3
         },
-        "Run away!" : {
-            "commands" : ["Retreate creature"],
+        "spell" : {
+            "name" : "Run away!",
+            "command" : "Retreat",
             "target" : "all",
             "effect point" : 2
         },
-        "Coward" : {
-            "commands" : ["Retreate creature"],
+        "spell" : {
+            "name" : "Coward",
+            "command" : "Retreat",
             "target" : "one",
             "effect point" : 4
         }

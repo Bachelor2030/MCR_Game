@@ -15,7 +15,7 @@ public class Chest extends LiveReceptor {
      * @param owner the player that owns the current chest
      */
     public Chest(String name, Player owner) {
-        super(name, CHEST_LIFE_POINTS, owner, "Chest");
+        super(name, CHEST_LIFE_POINTS, "Chest");
     }
 
     /**

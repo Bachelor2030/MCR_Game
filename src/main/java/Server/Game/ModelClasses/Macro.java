@@ -1,14 +1,18 @@
 package Server.Game.ModelClasses;
 
-import Server.Game.Card.Commands.CommandName;
+import Server.Game.Card.Commands.ConcreteCommand;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Macro implements Command {
-    private Command[] commands;
+    private ArrayList<ConcreteCommand> commands;
 
-    public Macro(Command[] commands) {
-        this.commands = Arrays.copyOf(commands, commands.length);
+    public Macro(ArrayList<ConcreteCommand> commands) {
+        this.commands = commands;
+    }
+
+    public ArrayList<ConcreteCommand> getCommands() {
+        return commands;
     }
 
     @Override
@@ -26,7 +30,13 @@ public class Macro implements Command {
     }
 
     @Override
-    public CommandName getName() {
-        return null;
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (ConcreteCommand c : commands) {
+            sb.append(c.toString() + " ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

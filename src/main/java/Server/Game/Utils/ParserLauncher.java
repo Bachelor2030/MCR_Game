@@ -1,7 +1,6 @@
 package Server.Game.Utils;
 
 import Server.Game.Game;
-import Server.Game.Utils.Parsers.GameJsonParser;
 import org.json.JSONException;
 
 import java.io.*;
@@ -9,11 +8,12 @@ import java.io.*;
 public class ParserLauncher {
     public static void main(String[] args) {
         String file = "src/main/resources/game.json";
-        Game game = testGameParser(file);
+
+        Game game = parseJsonGame(file);
         game.startGame();
     }
 
-    private static Game testGameParser(String file) {
+    private static Game parseJsonGame(String file) {
         Game game = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
