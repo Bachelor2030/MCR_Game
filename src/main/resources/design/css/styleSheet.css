@@ -42,7 +42,7 @@
 .corps-gridPane
 {
     -fx-background-color: #DEEAFF;
-    -fx-pref-width:400;
+    -fx-pref-width:800;
     /*-fx-padding: 15,15,15,15;*/
     -fx-vgap: 10;
     -fx-hgap: 10;
@@ -66,7 +66,8 @@
 
 .actionPlayer
 {
-    -fx-pref-width: 230;
+    -fx-min-width: 150;
+    -fx-pref-width: 150;
     -fx-pref-height: 300;
 }
 
@@ -98,6 +99,7 @@
 {
     -fx-background-color: #CDAEF3;
     -fx-alignment: center;
+    -fx-pref-height: 150;
 }
 
 /* ************************************************ */

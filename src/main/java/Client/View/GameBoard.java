@@ -203,7 +203,7 @@ public class GameBoard extends Application {
     //marges extérieures des deux cases + buttons
     VBox.setMargin(actionPlayer1Labels, new Insets(10, 10, 10, 10));
     VBox.setMargin(deleteActionLabelP1, new Insets(1, 10, 10, 10));
-    VBox.setMargin(deleteLabelButton, new Insets(1, 10, 1, 200));
+    VBox.setMargin(deleteLabelButton, new Insets(1, 10, 1, 150));
 
     return panneauVerticalGauche;
   }
@@ -283,7 +283,7 @@ public class GameBoard extends Application {
     //marges extérieures des deux cases + buttons
     VBox.setMargin(actionPlayer2Labels, new Insets(10, 10, 10, 10));
     VBox.setMargin(deleteActionLabelP2, new Insets(1, 10, 10, 10));
-    VBox.setMargin(deleteLabelButton, new Insets(1, 10, 1, 200));
+    VBox.setMargin(deleteLabelButton, new Insets(1, 10, 1, 150));
 
     return panneauVerticalGauche;
   }
