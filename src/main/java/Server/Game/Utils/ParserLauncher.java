@@ -23,7 +23,7 @@ public class ParserLauncher {
         game.startGame();
     }
 
-    private static Game parseJsonGame(String file) {
+    public static Game parseJsonGame(String file) {
         Game game = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -50,7 +50,7 @@ public class ParserLauncher {
         return game;
     }
 
-    private static ArrayList<Card> parseJsonCards(String json) throws JSONException {
+    public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
         ArrayList<Card> cards = new ArrayList<>();
 
         JSONObject obj = new JSONObject(json);

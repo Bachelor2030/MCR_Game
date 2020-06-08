@@ -1,5 +1,7 @@
 package Common.Receptors;
 
+import Server.Game.Card.Commands.ConcreteCommand;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.OnCreature;
 import Server.Game.Position;
 import Server.Game.ModelClasses.LiveReceptor;
 import Server.Game.ModelClasses.Macro;
@@ -24,12 +26,10 @@ public class Trap extends Receptor {
 
     /**
      * Triggers the trap on the given victim
-     * @param victim the victim of the trap
      */
-    public void trigger(LiveReceptor victim) {
-        // Todo apply the trap to victim
+    public void trigger() {
         effect.execute();
-        position.leave();
+        //TODO position.leave();
         position = null;
     }
 
@@ -38,9 +38,21 @@ public class Trap extends Receptor {
      * @param position the position of the trap on the board
      */
     public void setPosition(Position position) {
+        //Todo position.setOccupant(this);
         this.position = position;
     }
 
     @Override
     public void playTurn(int turn) {}
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setVictim(Creature creature) {
+        for (ConcreteCommand c :
+                effect.getCommands()) {
+            ((OnCreature)c).setCreature(creature);
+        }
+    }
 }

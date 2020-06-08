@@ -42,7 +42,9 @@ public class Position {
     }
 
     public void leave() {
-        line.getSpot(position).leave();
+        if(line != null) {
+            line.getSpot(position).leave();
+        }
     }
 
     public Position next() {
