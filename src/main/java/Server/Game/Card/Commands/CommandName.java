@@ -5,23 +5,22 @@ import Server.Game.Card.Commands.CardMovement.Draw;
 import Server.Game.Card.Commands.CardMovement.GetCardFromDiscard;
 
 public enum CommandName {
-    HIT("Hit", new HitLiveReceptor()),
-    KILL("Kill", new KillLiveReceptor()),
-    DRAW_TYPE_FROM_DISCARD("Draw from discard", new GetCardFromDiscard()),
-    DRAW("Draw", new Draw()),
-    DISCARD("Discard", new Discard()),
-    CREATE_CREATURE("Create creature", new CreateCreature()),
-    CREATE_TRAP("Create trap", new CreateTrap()),
-    ADVANCE_CREATURE("Advance", new AdvanceCreature()),
-    RETREAT_CREATURE("Retreat", new RetreatCreature()),
-    KNOCK_OUT("KnockOut", new KnockOutCreature());
 
-    private String name;
-    private ConcreteCommand command;
+    HIT("Hit"), // Problem
+    KILL("Kill"),
+    DRAW_TYPE_FROM_DISCARD("Draw from discard"),
+    DRAW("Draw"),
+    DISCARD("Discard"),
+    CREATE_CREATURE("Create creature"),
+    CREATE_TRAP("Create trap"),
+    ADVANCE_CREATURE("Advance"),
+    RETREAT_CREATURE("Retreat"),
+    KNOCK_OUT("KnockOut");
 
-    CommandName(String name, ConcreteCommand command) {
+    private final String name;
+
+    CommandName(String name) {
         this.name = name;
-        this.command = command;
     }
 
     public String getName() {
@@ -50,16 +49,28 @@ public enum CommandName {
         } else if(type.equals(KNOCK_OUT.name)) {
             return KNOCK_OUT;
         }
-        System.out.println(type + " is not an existing command name");
         return null;
-    }
-
-    public ConcreteCommand getCommand() {
-        return command;
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    public ConcreteCommand getCommand() {
+        switch (this) {
+            case HIT: return new HitLiveReceptor();
+            case DRAW_TYPE_FROM_DISCARD: return new GetCardFromDiscard();
+            case CREATE_TRAP: return new CreateTrap();
+            case DISCARD: return new Discard();
+            case DRAW: return new Draw();
+            case CREATE_CREATURE: return new CreateCreature();
+            case KILL: return new KillLiveReceptor();
+            case KNOCK_OUT: return new KnockOutCreature();
+            case ADVANCE_CREATURE: return new AdvanceCreature();
+            case RETREAT_CREATURE: return new RetreatCreature();
+            default: return null;
+        }
+
     }
 }

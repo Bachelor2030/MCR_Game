@@ -8,18 +8,8 @@ public class KillLiveReceptor extends ConcreteCommand {
     private LiveReceptor[] receptors;
     private int[] lifePoints;
 
-    public KillLiveReceptor(LiveReceptor[] receptors) {
-        super(CommandName.HIT);
-        this.receptors = Arrays.copyOf(receptors, receptors.length);
-        lifePoints = new int[receptors.length];
-
-        for (int i = 0; i < receptors.length; i++) {
-            lifePoints[i] = receptors[i].getLifePoints();
-        }
-    }
-
     public KillLiveReceptor() {
-        super(CommandName.HIT);
+        super(CommandName.KILL);
     }
 
     public void setReceptors(LiveReceptor[] receptors) {

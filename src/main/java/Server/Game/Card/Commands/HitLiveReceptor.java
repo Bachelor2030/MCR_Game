@@ -8,12 +8,6 @@ public class HitLiveReceptor extends ConcreteCommand {
     private LiveReceptor[] receptors;
     private int attackPoints;
 
-    public HitLiveReceptor(LiveReceptor[] receptors, int attackPoints) {
-        super(CommandName.HIT);
-        this.attackPoints = attackPoints;
-        this.receptors = Arrays.copyOf(receptors, receptors.length);
-    }
-
     public HitLiveReceptor() {
         super(CommandName.HIT);
     }

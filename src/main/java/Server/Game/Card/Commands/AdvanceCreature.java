@@ -5,11 +5,6 @@ import Common.Receptors.Creature;
 public class AdvanceCreature extends ConcreteCommand {
     private Creature creature;
 
-    public AdvanceCreature(Creature creature) {
-        super(CommandName.ADVANCE_CREATURE);
-        this.creature = creature;
-    }
-
     public AdvanceCreature() {
         super(CommandName.ADVANCE_CREATURE);
     }

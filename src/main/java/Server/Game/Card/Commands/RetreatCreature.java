@@ -5,11 +5,6 @@ import Common.Receptors.Creature;
 public class RetreatCreature extends ConcreteCommand {
     private Creature creature;
 
-    public RetreatCreature(Creature creature) {
-        super(CommandName.RETREAT_CREATURE);
-        this.creature = creature;
-    }
-
     public RetreatCreature() {
         super(CommandName.RETREAT_CREATURE);
     }

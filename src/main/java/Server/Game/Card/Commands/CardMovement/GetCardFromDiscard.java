@@ -11,11 +11,6 @@ import java.util.List;
 public class GetCardFromDiscard extends CardMovement {
     private CardType type;
 
-    public GetCardFromDiscard(Player player, CardType type) {
-        super(player, CommandName.DRAW_TYPE_FROM_DISCARD);
-        this.type = type;
-    }
-
     public GetCardFromDiscard() {
         super(CommandName.DRAW_TYPE_FROM_DISCARD);
     }
