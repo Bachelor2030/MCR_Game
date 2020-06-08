@@ -1,7 +1,10 @@
-package Server.Game.Utils.Parsers;
+package Server.Game.Utils;
 
 import Common.Receptors.Player;
 import Server.Game.Card.Card;
+import Server.Game.Card.Commands.CommandName;
+import Server.Game.Card.Commands.ConcreteCommand;
+import Server.Game.Card.Commands.CreateCreature;
 import Server.Game.Game;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,26 +28,39 @@ public class GameJsonParser {
         String cards2 = obj.getJSONObject("cardsPlayer2").getString("file");
 
         ArrayList<Card> cardsPlayer1, cardsPlayer2;
-        cardsPlayer1 = cardParser(path + cards1);
-        cardsPlayer2 = cardParser(path + cards2);
+        cardsPlayer1 = Card.parseJson(path + cards1);
+        cardsPlayer2 = Card.parseJson(path + cards2);
 
         Player p1 = new Player(player1, cardsPlayer1);
         Player p2 = new Player(player2, cardsPlayer2);
 
-        // TODO remove null and replace with correct root
+        for (Card card : cardsPlayer1) {
+            for (ConcreteCommand command :
+                    card.getCommand().getCommands()) {
+                if (command.getName() == CommandName.CREATE_CREATURE) {
+                    ((CreateCreature)command).getCreature().setOwner(p1);
+                }
+            }
+        }
+
+        for (Card card : cardsPlayer2) {
+            for (ConcreteCommand command :
+                    card.getCommand().getCommands()) {
+                if (command.getName() == CommandName.CREATE_CREATURE) {
+                    ((CreateCreature)command).getCreature().setOwner(p2);
+                }
+            }
+        }
+
         return new Game(p1, p2);
     }
 
     private static ArrayList<Card> cardParser(String file) {
         ArrayList<Card> cards = null;
-        try {
-            String playersCards = getJsonContent(file);
+        String playersCards = getJsonContent(file);
 
-            System.out.println("Read " + file);
-            cards = CardsJsonParser.parseJson(playersCards, PATH);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Read " + file);
+        //cards = CardsJsonParser.parseJson(playersCards, PATH);
 
         return cards;
     }

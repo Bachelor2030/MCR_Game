@@ -5,14 +5,13 @@ import Common.Receptors.Player;
 public abstract class LiveReceptor extends Receptor {
     protected final int MAX_LIFE_POINTS;
     protected int lifePoints;
-    protected final Player owner;
+    protected Player owner;
     private final String type;
 
-    public LiveReceptor(String name, int lifePoints, Player owner, String type) {
+    public LiveReceptor(String name, int lifePoints, String type) {
         super(name);
         this.lifePoints = lifePoints;
         this.MAX_LIFE_POINTS = lifePoints;
-        this.owner = owner;
         this.type = type;
     }
 
@@ -50,6 +49,10 @@ public abstract class LiveReceptor extends Receptor {
 
     public String getType() {
         return type;
+    }
+
+    public void setOwner(Player player) {
+        owner = player;
     }
 
     @Override

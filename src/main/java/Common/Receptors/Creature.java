@@ -12,19 +12,20 @@ public class Creature extends LiveReceptor {
     private int steps;               // Number of stpes the creature can do in one turn
     private int attackPoints;        // Number of points the creature takes from an ennemi when hitting it
     private Card originCard;         // The card that created the creature
+    private boolean asleep;
 
     /**
-     * Creates a creature with the given infomration
+     * Creates a creature with the given information
      * @param name the name of the creature
      * @param lifePoints the nombre of life points the creature starts with
      * @param steps the number of steps the creature can do in one move
      * @param attackPoints the number of life points the creature removes form an ennemy
-     * @param owner the owner of the creature
      */
-    public Creature(String name, int lifePoints, int steps, int attackPoints, Player owner) {
-        super(name, lifePoints, owner, "Creature");
+    public Creature(String name, int lifePoints, int steps, int attackPoints) {
+        super(name, lifePoints, "Creature");
         this.steps = steps;
         this.attackPoints = attackPoints;
+        asleep = false;
     }
 
     /**
@@ -110,9 +111,20 @@ public class Creature extends LiveReceptor {
         return attackPoints;
     }
 
+    public void wakeUp() {
+        asleep = false;
+    }
+
+    public void knockOut() {
+        asleep = true;
+    }
+
     @Override
     public void playTurn(int turn) {
-        advance();
+        if (!asleep) {
+            advance();
+        }
+        asleep = false;
     }
 
 }

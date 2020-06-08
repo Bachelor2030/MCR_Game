@@ -28,8 +28,12 @@ public class HitLiveReceptor extends ConcreteCommand {
 
     @Override
     public void execute() {
+        if (receptors == null)
+            return;
+
         for (LiveReceptor receptor : receptors) {
-            receptor.loseLifePoints(attackPoints);
+            if(receptor != null)
+                receptor.loseLifePoints(attackPoints);
         }
     }
 
