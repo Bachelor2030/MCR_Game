@@ -127,4 +127,7 @@ public class Creature extends LiveReceptor {
         asleep = false;
     }
 
+    public void setAttackPoints(int newAP) {
+        attackPoints = newAP;
+    }
 }

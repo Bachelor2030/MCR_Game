@@ -1,18 +1,17 @@
 package Server.Game.Card.Commands;
 
 import Server.Game.Card.Commands.OnLiveReceptors.*;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Advance;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.KnockOut;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Retreat;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.*;
 import Server.Game.Card.Commands.CardMovement.Discard;
 import Server.Game.Card.Commands.CardMovement.Draw;
 import Server.Game.Card.Commands.CardMovement.DrawTypeFromDiscard;
 
 public enum CommandName {
 
-    HIT("Hit"), // Problem
+    HIT("Hit"),
+    HEAL("Heal"),
     KILL("Kill"),
+    CHANGE_AP("Change attack points"),
     DRAW_TYPE_FROM_DISCARD("Draw from discard"),
     DRAW("Draw"),
     DISCARD("Discard"),
@@ -35,9 +34,13 @@ public enum CommandName {
     public static CommandName getCommandName(String type) {
         if(type.equals(HIT.name)) {
             return HIT;
+        } else if(type.equals(HEAL.name)) {
+            return HEAL;
         } else if(type.equals(KILL.name)) {
             return KILL;
-        }else if(type.equals(DRAW.name)) {
+        } else if(type.equals(CHANGE_AP.name)) {
+            return CHANGE_AP;
+        } else if(type.equals(DRAW.name)) {
             return DRAW;
         } else if(type.equals(DRAW_TYPE_FROM_DISCARD.name)) {
             return DRAW_TYPE_FROM_DISCARD;
@@ -65,6 +68,8 @@ public enum CommandName {
     public ConcreteCommand getCommand() {
         switch (this) {
             case HIT: return new Hit();
+            case HEAL: return new Heal();
+            case CHANGE_AP: return new ChangeAttackPoints();
             case DRAW_TYPE_FROM_DISCARD: return new DrawTypeFromDiscard();
             case CREATE_TRAP: return new CreateTrap();
             case DISCARD: return new Discard();
