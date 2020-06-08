@@ -1,6 +1,9 @@
 package Client.Network;
 
 import Common.Network.Messages;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,69 +18,132 @@ public class ClientAdapter {
     int port;
 
     Socket clientSocket = null;
-    BufferedReader in = null;
-    PrintWriter out = null;
+    BufferedReader inBufferedReader = null;
+    PrintWriter outPrintWriter = null;
 
 
     public ClientAdapter(String host, int port) {
-        // Network stuff
-        this.host = host;
-        this.port = port;
-
         // Setting up connection
-        try {
-            clientSocket = new Socket(host, port);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            out = new PrintWriter(clientSocket.getOutputStream());
-        } catch (UnknownHostException e) {
-            System.out.println("Unknown host error");
-        } catch (IOException e) {
-            System.out.println("IO error");
-        }
+        setup(host, port);
 
-        // Greetings
-        String msg = sendMessage(Messages.CLIENT_HELLO);
-        if (!msg.equals(Messages.SERVER_HELLO_ANS)) {
-            displayError("Server answer error: weeb not found");
-        }
+        // Greeting the server
+        greetings();
 
+        // Saying goodbye to the server
         exit();
     }
 
-    private void displayError(String error) {
-        System.out.println(error);
-    }
+    public void greetings() {
+        String answer = sendJsonMessage(Messages.CLIENT_HELLO);
 
-    private void displayMessage(String msg) {
-        System.out.println(msg);
-    }
-
-    public String sendMessage(String request) {
-        displayMessage("-> " + request);
-        try {
-            out.println(request);
-            out.flush();
-            String ret = in.readLine();
-            displayMessage("<- " + ret);
-            return ret;
-        } catch (IOException e) {
-            return "IO error";
+        if (answer.equals(Messages.SERVER_HELLO_ANS)) {
+            printMessage("Successful connection to the server");
+        } else {
+            printMessage("Unexpected server answer: '"  + answer + "'. Expected '" + Messages.SERVER_HELLO_ANS + "'");
+            exit();
         }
     }
 
     public void exit() {
-        sendMessage(Messages.CLIENT_GOODBYE);
+        String answer = sendJsonMessage(Messages.CLIENT_GOODBYE);
+        cleanupResources();
+
+        if (answer.equals(Messages.SERVER_GOODBYE_ANS)) {
+            printMessage("Exiting as expected");
+            System.exit(0);
+        } else {
+            printMessage("Unexpected server answer: '"  + answer + "'. Expected '" + Messages.SERVER_GOODBYE_ANS + "'");
+            System.exit(1);
+        }
+    }
+
+    public void setup(String host, int port) {
+        this.host = host;
+        this.port = port;
+
         try {
-            in.close();
+            clientSocket = new Socket(host, port);
+            inBufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            outPrintWriter = new PrintWriter(clientSocket.getOutputStream());
+        } catch (UnknownHostException e) {
+            printError("Unknown host error", e);
+        } catch (IOException e) {
+            printError("IO Error", e);
+        }
+    }
+
+    public void cleanupResources() {
+        try {
+            inBufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        out.close();
+        outPrintWriter.close();
         try {
             clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.exit(0);
     }
+
+    /***********************************************************************************************************
+     *                                           UTILITIES                                                     *
+     **********************************************************************************************************/
+
+    private void printError(String message, Exception e) {
+        System.out.println(message);
+        System.out.println(e);
+    }
+
+    private void printMessage(String msg) {
+        System.out.println(msg);
+    }
+
+    private String sendJsonMessage(String message) {
+        printMessage("-> " + message);
+        try {
+            sendJson(jsonMessage(message));
+
+            return readJsonMessage(inBufferedReader.readLine());
+
+        } catch (IOException | JSONException e) {
+            return "IO error";
+        }
+    }
+
+    private void sendJson(JSONObject json) {
+        outPrintWriter.println(json.toString());
+        outPrintWriter.flush();
+    }
+
+    private JSONObject jsonMessage(String message) throws JSONException {
+
+        JSONObject json = new JSONObject();
+        json.put("message", message);
+
+        return json;
+    }
+
+    private String readJsonMessage(String jsonMessage) {
+
+        String message;
+
+        try {
+
+            JSONObject obj = new JSONObject(jsonMessage);
+            message = obj.getString("message");
+
+            printMessage("<- " + message);
+            return message;
+
+        } catch (JSONException e) {
+            printMessage("Answer was not Json!");
+            printMessage(e.toString());
+            return "Error";
+        }
+    }
+
+    /***********************************************************************************************************
+     *                                        END OF UTILITIES                                                 *
+     **********************************************************************************************************/
 }
