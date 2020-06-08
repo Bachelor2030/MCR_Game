@@ -25,7 +25,7 @@ public class ChestTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 5, 13})
     public void HittingAnEggShouldDiminishItsLife(int points) {
-        chest.hit(points);
+        chest.loseLifePoints(points);
         if (points < chest.getMAX_LIFE_POINTS()) {
             assertEquals(chest.getMAX_LIFE_POINTS() - points, chest.getLifePoints());
             assertTrue(chest.isClosed());

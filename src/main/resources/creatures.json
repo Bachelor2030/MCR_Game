@@ -4,103 +4,120 @@
         "pageContent" : ["creatures"]
     },
     "creatures" : {
-        "Pier" : {
+        "creature" : {
+            "name" : "Pier",
             "img" : "link to the image",
             "life" : 6,
             "steps" : 3,
             "attack" : 4
         },
-        "Sebas-chan" : {
+        "creature" : {
+            "name" : "Sebas-chan",
             "img" : "link to the image",
             "life" : 4,
             "steps" : 2,
             "attack" : 2            
         },
-        "Gregou" : {
+        "creature" : {
+            "name" : "Gregou",
             "img" : "link to the image",
             "life" : 4,
             "steps" : 1,
             "attack" : 3
         },
-        "Cosmic Elodie" : {
+        "creature" : {
+            "name" : "Cosmic Elodie",
             "img" : "link to the image",
             "life" : 3,
             "steps" : 3,
             "attack" : 5
         },
-        "Gus the cook" : {
+        "creature" : {
+            "name" : "Gus the cook",
             "img" : "link to the image",
             "life" : 4,
             "steps" : 2,
             "attack" : 5
         },
-        "Matt the dwarf" : {
+        "creature" : {
+            "name" : "Matt the dwarf",
             "img" : "link to the image",
             "life" : 7,
             "steps" : 1,
             "attack" : 4
         },
-        "Clarusso the elf" : {
+        "creature" : {
+            "name" : "Clarusso the elf",
             "img" : "link to the image",
             "life" : 2,
             "steps" : 5,
             "attack" : 3
         },
-        "Loris the Vampire" : {
+        "creature" : {
+            "name" : "Loris the Vampire",
             "img" : "link to the image",
             "life" : 2,
             "steps" : 4,
             "attack" : 4
         },
-        "Guy-Laurent the brazilian fighter" : {
+        "creature" : {
+            "name" : "Guy-Laurent the brazilian fighter",
             "img" : "link to the image",
             "life" : 2,
             "steps" : 1,
             "attack" : 5
         },
-        "Unicorn of death" : {
+        "creature" : {
+            "name" : "Unicorn of death",
             "img" : "link to the image",
             "life" : 6,
             "steps" : 4,
             "attack" : 5
         },
-        "Jaquette the Bear" : {
+        "creature" : {
+            "name" : "Jaquette the Bear",
             "img" : "link to the image",
             "life" : 1,
             "steps" : 1,
             "attack" : 1
         },
-        "CA the un-understandable" : {
+        "creature" : {
+            "name" : "CA the un-understandable",
             "img" : "link to the image",
             "life" : 6,
             "steps" : "random :)",
             "attack" : 4
         },
-        "Alexandre the wizard" : {
+        "creature" : {
+            "name" : "Alexandre the wizard",
             "img" : "link to the image",
             "life" : 2,
             "steps" : 2,
             "attack" : 5
         },
-        "Mateo the bauf'" : {
+        "creature" : {
+            "name" : "Mateo the bauf'",
             "img" : "link to the image",
             "life" : 2,
             "steps" : 3,
             "attack" : 4
         },
-        "Alison or power of the kittens" : {
+        "creature" : {
+            "name" : "Alison or power of the kittens",
             "img" : "link to the image",
             "life" : 1,
             "steps" : 2,
             "attack" : 3
         },
-        "Loris Gibbs" : {
+        "creature" : {
+            "name" : "Loris Gibbs",
             "img" : "link to the image",
             "life" : 3,
             "steps" : 3,
             "attack" : 3
         },
-        "Guillaume, killer on wheels" : {
+        "creature" : {
+            "name" : "Guillaume, killer on wheels",
             "img" : "link to the image",
             "life" : 4,
             "steps" : 6,

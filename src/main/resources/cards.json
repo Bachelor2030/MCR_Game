@@ -6,38 +6,78 @@
   "cards" : [
     {
       "id" : 1,
-      "commands" : ["Create creature", "Draw card"],
       "name" : "Pier",
       "type" : "Creature",
-      "cost" : 4
+      "cost" : 4,
+      "card commands" : ["KnockOut"],
+      "creature" : 
+      {
+        "name" : "Pier",
+        "img" : "link to the image",
+        "life" : 6,
+        "steps" : 3,
+        "attack" : 4
+      }
     },
     {
       "id" : 2,
-      "commands" : ["Create creature"],
       "name" : "Sebas-chan",
       "type" : "Creature",
-      "cost" : 9
+      "cost" : 9,
+      "card commands" : [],
+      "creature" : 
+      {
+        "name" : "Sebas-chan",
+        "img" : "link to the image",
+        "life" : 4,
+        "steps" : 2,
+        "attack" : 2            
+      }
     },
     {
       "id" : 3,
-      "commands" : ["Create creature", "Discard card"],
       "name" : "Gregou",
       "type" : "Creature",
-      "cost" : 10
+      "cost" : 10,
+      "card commands" : [],
+      "creature" :
+      {
+        "name" : "Gregou",
+        "img" : "link to the image",
+        "life" : 4,
+        "steps" : 1,
+        "attack" : 3
+      }
     },
     {
       "id" : 4,
-      "commands" : ["Create creature", "Discard card"],
       "name" : "Black hole",
       "type" : "Trap",
-      "cost" : 14
+      "cost" : 14,
+      "card commands" : [],
+      "trap" : {
+        "name" :"Black hole",
+        "commands" : ["Kill"],
+        "effect point" : 0
+      }
     },
     {
       "id" : 5,
-      "commands" : ["Hit creature", "Discard card"],
       "name" : "Furnace",
       "type" : "Spell",
-      "cost" : 3
+      "cost" : 3,
+      "card commands" : ["Hit"],
+      "target" : "all",
+      "effect point" : 3
+    },
+    {
+      "id" : 5,
+      "name" : "Coward",
+      "type" : "Spell",
+      "card commands" : ["Retreat"],
+      "cost" : 3,
+      "effect point" : 4,
+      "target" : "one"
     }
   ]
 }
