@@ -5,9 +5,7 @@ import Common.Receptors.Trap;
 import Server.Game.Card.Card;
 import Server.Game.Card.CardType;
 import Server.Game.Card.Commands.*;
-import Server.Game.Card.Commands.CardMovement.Discard;
-import Server.Game.Card.Commands.CardMovement.Draw;
-import Server.Game.Card.Commands.CardMovement.GetCardFromDiscard;
+import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.CreateCreature;
 import Server.Game.Game;
 import Server.Game.ModelClasses.Macro;
 import org.json.JSONArray;
@@ -106,22 +104,5 @@ public class ParserLauncher {
         }
 
         return cards;
-    }
-
-    private static ConcreteCommand getCommand(CommandName commandName) {
-        switch (commandName) {
-            case HIT: return new HitLiveReceptor();
-            case DRAW_TYPE_FROM_DISCARD: return new GetCardFromDiscard();
-            case CREATE_TRAP: return new CreateTrap();
-            case DISCARD: return new Discard();
-            case DRAW: return new Draw();
-            case CREATE_CREATURE: return new CreateCreature();
-            case KILL: return new KillLiveReceptor();
-            case KNOCK_OUT: return new KnockOutCreature();
-            case ADVANCE_CREATURE: return new AdvanceCreature();
-            case RETREAT_CREATURE: return new RetreatCreature();
-            default: return null;
-        }
-
     }
 }

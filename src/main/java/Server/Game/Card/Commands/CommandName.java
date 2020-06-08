@@ -1,5 +1,10 @@
 package Server.Game.Card.Commands;
 
+import Server.Game.Card.Commands.ActsOnLiveReceptors.*;
+import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.AdvanceCreature;
+import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.CreateCreature;
+import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.KnockOutCreature;
+import Server.Game.Card.Commands.ActsOnLiveReceptors.OnCreature.RetreatCreature;
 import Server.Game.Card.Commands.CardMovement.Discard;
 import Server.Game.Card.Commands.CardMovement.Draw;
 import Server.Game.Card.Commands.CardMovement.GetCardFromDiscard;

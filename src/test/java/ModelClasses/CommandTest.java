@@ -1,13 +1,6 @@
 package ModelClasses;
 
-import Common.GameBoard.Board;
-import Server.Game.Position;
-import Server.Game.Card.Commands.CreateCreature;
-import Common.Receptors.Creature;
 import javafx.scene.Group;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

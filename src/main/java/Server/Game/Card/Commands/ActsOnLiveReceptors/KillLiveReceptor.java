@@ -1,19 +1,13 @@
-package Server.Game.Card.Commands;
+package Server.Game.Card.Commands.ActsOnLiveReceptors;
 
+import Server.Game.Card.Commands.CommandName;
 import Server.Game.ModelClasses.LiveReceptor;
 
-import java.util.Arrays;
-
-public class KillLiveReceptor extends ConcreteCommand {
-    private LiveReceptor[] receptors;
+public class KillLiveReceptor extends ActOnLiveReceptors {
     private int[] lifePoints;
 
     public KillLiveReceptor() {
         super(CommandName.KILL);
-    }
-
-    public void setReceptors(LiveReceptor[] receptors) {
-        this.receptors = receptors;
     }
 
     @Override

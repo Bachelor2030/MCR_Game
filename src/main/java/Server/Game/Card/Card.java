@@ -1,18 +1,7 @@
 package Server.Game.Card;
 
-import Common.Receptors.Creature;
-import Common.Receptors.Trap;
-import Server.Game.Card.Commands.*;
 import Server.Game.ModelClasses.Macro;
 import Server.Game.ModelClasses.Invocator;
-import Server.Game.Utils.JsonUtil;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Modelizes a card for the game
