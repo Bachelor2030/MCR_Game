@@ -2,7 +2,7 @@ package Server.Game.Card.Commands.OnLiveReceptors;
 
 import Common.Receptors.Creature;
 import Server.Game.Card.Commands.CommandName;
-import Server.Game.Card.Commands.ConcreteCommand;
+import Server.Game.ModelClasses.ConcreteCommand;
 import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.ChangeAttackPoints;
 import Server.Game.ModelClasses.LiveReceptor;
 
