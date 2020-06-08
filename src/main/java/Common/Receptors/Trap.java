@@ -2,6 +2,7 @@ package Common.Receptors;
 
 import Server.Game.Card.Commands.ConcreteCommand;
 import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.OnCreature;
+import Server.Game.Card.Commands.OnLiveReceptors.OnLiveReceptors;
 import Server.Game.Position;
 import Server.Game.ModelClasses.LiveReceptor;
 import Server.Game.ModelClasses.Macro;
@@ -27,7 +28,8 @@ public class Trap extends Receptor {
     /**
      * Triggers the trap on the given victim
      */
-    public void trigger() {
+    public void trigger(Creature creature) {
+        setVictim(creature);
         effect.execute();
         //TODO position.leave();
         position = null;
@@ -49,10 +51,10 @@ public class Trap extends Receptor {
         return position;
     }
 
-    public void setVictim(Creature creature) {
+    private void setVictim(Creature creature) {
         for (ConcreteCommand c :
                 effect.getCommands()) {
-            ((OnCreature)c).setCreature(creature);
+            ((OnLiveReceptors)c).setReceptors(new LiveReceptor[]{creature});
         }
     }
 }

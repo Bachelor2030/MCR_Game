@@ -32,7 +32,7 @@ public class TrapTest {
 
         Hit h = new Hit();
         h.setAttackPoints(attackPoints);
-        h.setReceptors(new LiveReceptor[]{creature1, creature2, creature3});
+        //h.setReceptors(new LiveReceptor[]{creature1, creature2, creature3});
 
         concreteCommands.add(new Hit());
 
@@ -48,12 +48,17 @@ public class TrapTest {
     }
 
     @Test
-    public void triggeringTheTrapShouldExecuteItsCommandsAndRemoveItFromThePosition() {
-        trap.trigger();
+    public void triggeringTheTrapShouldExecuteItsCommandsOnTheGivenVictimAndRemoveItFromThePosition() {
+        trap.trigger(creature1);
 
         assertEquals((Math.max(0, lp1 - attackPoints)), creature1.getLifePoints());
-        assertEquals(Math.max(0, lp2 - attackPoints), creature2.getLifePoints());
-        assertEquals(Math.max(0, lp2 - attackPoints), creature2.getLifePoints());
+        assertEquals(lp2, creature2.getLifePoints());
+        assertEquals(lp3, creature3.getLifePoints());
         assertNull(trap.getPosition());
+    }
+
+    @Test
+    public void playingTrapTurnShouldDoNothing() {
+        trap.playTurn(12);
     }
 }

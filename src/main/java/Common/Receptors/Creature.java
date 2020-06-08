@@ -53,8 +53,7 @@ public class Creature extends LiveReceptor {
                 position.leave();
                 position = position.next();
                 if (position.isTrapped()) {
-                    ((Trap)position.getOccupant()).setVictim(this);
-                    ((Trap)position.getOccupant()).trigger();
+                    ((Trap)position.getOccupant()).trigger(this);
                 }
             } else {
                 break;
@@ -88,8 +87,7 @@ public class Creature extends LiveReceptor {
                 position.leave();
                 position = position.previous();
                 if (position.isTrapped()) {
-                    ((Trap)position.getOccupant()).setVictim(this);
-                    ((Trap)position.getOccupant()).trigger();
+                    ((Trap)position.getOccupant()).trigger(this);
                 }
             } else {
                 break;

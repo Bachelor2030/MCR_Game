@@ -11,7 +11,7 @@ public abstract class OnCreature extends OnLiveReceptors {
     }
 
     public void setCreature(Creature creature) {
-        setReceptors(new LiveReceptor[]{creature});
+        setReceptors(new LiveReceptor[]{(LiveReceptor) creature});
     }
 
     public Creature getCreature() {
