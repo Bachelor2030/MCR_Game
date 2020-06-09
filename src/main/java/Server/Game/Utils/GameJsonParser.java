@@ -3,7 +3,7 @@ package Server.Game.Utils;
 import Common.Receptors.Player;
 import Server.Game.Card.Card;
 import Server.Game.Card.Commands.CommandName;
-import Server.Game.Card.Commands.ConcreteCommand;
+import Server.Game.ModelClasses.ConcreteCommand;
 import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.Game;
 import org.json.JSONException;

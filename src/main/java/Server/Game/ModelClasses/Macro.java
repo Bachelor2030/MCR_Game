@@ -1,7 +1,5 @@
 package Server.Game.ModelClasses;
 
-import Server.Game.Card.Commands.ConcreteCommand;
-
 import java.util.ArrayList;
 
 public class Macro implements Command {

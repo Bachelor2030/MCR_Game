@@ -1,5 +1,6 @@
 package Server.Game.Card.Commands;
 
+import Server.Game.ModelClasses.ConcreteCommand;
 import Server.Game.Position;
 import Common.Receptors.Trap;
 

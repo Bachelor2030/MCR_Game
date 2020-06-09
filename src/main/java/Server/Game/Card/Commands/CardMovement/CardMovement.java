@@ -2,7 +2,7 @@ package Server.Game.Card.Commands.CardMovement;
 
 import Server.Game.Card.Card;
 import Server.Game.Card.Commands.CommandName;
-import Server.Game.Card.Commands.ConcreteCommand;
+import Server.Game.ModelClasses.ConcreteCommand;
 import Common.Receptors.Player;
 
 public abstract class CardMovement extends ConcreteCommand {

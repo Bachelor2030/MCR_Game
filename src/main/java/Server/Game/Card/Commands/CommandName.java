@@ -5,6 +5,7 @@ import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.*;
 import Server.Game.Card.Commands.CardMovement.Discard;
 import Server.Game.Card.Commands.CardMovement.Draw;
 import Server.Game.Card.Commands.CardMovement.DrawTypeFromDiscard;
+import Server.Game.ModelClasses.ConcreteCommand;
 
 public enum CommandName {
 

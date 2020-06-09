@@ -63,6 +63,7 @@ public class ServerAdapter {
 
         @Override
         public void run() {
+            int nbrClients = 0;
             ServerSocket serverSocket;
 
             try {
@@ -72,7 +73,7 @@ public class ServerAdapter {
                 return;
             }
 
-            while (true) {
+            while (++nbrClients <= 2) {
                 printMessage("Receptionist", "Waiting (blocking) for a new client on port " + port);
                 try {
                     Socket clientSocket = serverSocket.accept();

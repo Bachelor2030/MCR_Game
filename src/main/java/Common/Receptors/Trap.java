@@ -1,7 +1,6 @@
 package Common.Receptors;
 
-import Server.Game.Card.Commands.ConcreteCommand;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.OnCreature;
+import Server.Game.ModelClasses.ConcreteCommand;
 import Server.Game.Card.Commands.OnLiveReceptors.OnLiveReceptors;
 import Server.Game.Position;
 import Server.Game.ModelClasses.LiveReceptor;

@@ -10,7 +10,7 @@ public class ParsersTest {
 
     @BeforeAll
     public static void init() {
-        String file = "src/main/resources/game.json";
+        String file = "src/main/resources/json/game.json";
 
         game = ParserLauncher.parseJsonGame(file);
     }
