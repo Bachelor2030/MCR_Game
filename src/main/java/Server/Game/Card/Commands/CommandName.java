@@ -1,5 +1,6 @@
 package Server.Game.Card.Commands;
 
+import Common.Receptors.PlayerCommands.*;
 import Server.Game.Card.Commands.OnLiveReceptors.*;
 import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.*;
 import Server.Game.Card.Commands.CardMovement.Discard;
@@ -8,7 +9,6 @@ import Server.Game.Card.Commands.CardMovement.DrawTypeFromDiscard;
 import Server.Game.ModelClasses.ConcreteCommand;
 
 public enum CommandName {
-
     HIT("Hit"),
     HEAL("Heal"),
     KILL("Kill"),
@@ -20,7 +20,14 @@ public enum CommandName {
     CREATE_TRAP("Create trap"),
     ADVANCE_CREATURE("Advance"),
     RETREAT_CREATURE("Retreat"),
-    KNOCK_OUT("KnockOut");
+    KNOCK_OUT("KnockOut"),
+    /* Player commands */
+    PLAY_CARD("Card"),
+    CHOOSE_POSITION("Position"),
+    CHOOSE_CREATURE("Creature"),
+    UNDO("Undo"),
+    END_TURN("Turn"),
+    ABANDON("Quit");
 
     private final String name;
 
@@ -57,6 +64,18 @@ public enum CommandName {
             return RETREAT_CREATURE;
         } else if(type.equals(KNOCK_OUT.name)) {
             return KNOCK_OUT;
+        } else if (type.equals(PLAY_CARD.name)) {
+            return PLAY_CARD;
+        } else if (type.equals(CHOOSE_POSITION.name)) {
+            return CHOOSE_POSITION;
+        } else if (type.equals(CHOOSE_CREATURE.name)) {
+            return CHOOSE_CREATURE;
+        } else if (type.equals(UNDO.name)) {
+            return UNDO;
+        } else if (type.equals(END_TURN.name)) {
+            return END_TURN;
+        } else if (type.equals(ABANDON.name)) {
+            return ABANDON;
         }
         return null;
     }
@@ -80,6 +99,11 @@ public enum CommandName {
             case KNOCK_OUT: return new KnockOut();
             case ADVANCE_CREATURE: return new Advance();
             case RETREAT_CREATURE: return new Retreat();
+            case ABANDON : return new Abandon();
+            case END_TURN: return new EndTurn();
+            case PLAY_CARD: return new PlayCard();
+            case CHOOSE_CREATURE: return new ChooseCreature();
+            case CHOOSE_POSITION: return new ChoosePosition();
             default: return null;
         }
 
