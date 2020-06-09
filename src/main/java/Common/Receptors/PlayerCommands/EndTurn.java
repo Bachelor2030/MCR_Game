@@ -10,7 +10,7 @@ public class EndTurn extends PlayersAction {
 
     @Override
     public void execute() {
-
+        player.endTurn();
     }
 
     @Override

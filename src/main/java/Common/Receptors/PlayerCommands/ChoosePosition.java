@@ -10,7 +10,7 @@ public class ChoosePosition extends PlayersAction {
 
     @Override
     public void execute() {
-
+        // TODO : idée, choix de position sur laquelle faire action --> set action et l'executer ici (?)
     }
 
     @Override

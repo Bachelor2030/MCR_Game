@@ -10,7 +10,7 @@ public class ChooseCreature extends PlayersAction {
 
     @Override
     public void execute() {
-
+        // TODO : idée, choix de créature sur laquelle faire action --> set action et l'executer ici (?)
     }
 
     @Override

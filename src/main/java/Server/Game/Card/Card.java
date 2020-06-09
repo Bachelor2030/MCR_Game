@@ -27,6 +27,12 @@ public class Card implements Invocator {
         this.ID = id;
     }
 
+    public void undo() {
+        if(command != null) {
+            command.undo();
+        }
+    }
+
     /**
      * Plays the card which executes its commands
      */

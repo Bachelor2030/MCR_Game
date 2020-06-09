@@ -4,13 +4,13 @@ import Common.Receptors.PlayersAction;
 import Server.Game.Card.Commands.CommandName;
 
 public class Abandon extends PlayersAction {
-    Abandon() {
+    public Abandon() {
         super(CommandName.ABANDON);
     }
 
     @Override
     public void execute() {
-
+        player.abandon();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package Common.Receptors.PlayerCommands;
 
 import Common.Receptors.PlayersAction;
+import Server.Game.Card.Card;
 import Server.Game.Card.Commands.CommandName;
 
 public class Undo extends PlayersAction {
@@ -10,11 +11,13 @@ public class Undo extends PlayersAction {
 
     @Override
     public void execute() {
-
+        Card card = player.lastCardPlayed();
+        if (card != null)
+            card.undo();
     }
 
     @Override
     public void undo() {
-
+        player.lastCardPlayed().play();
     }
 }

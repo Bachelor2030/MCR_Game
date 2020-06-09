@@ -26,6 +26,7 @@ public class Player extends Receptor {
     private ArrayList<Creature> creatures = new ArrayList<>();
 
     private int actionPoints;
+    private boolean abandoned, play;
 
     /**
      * Creates a player with the given name and deck
@@ -51,6 +52,8 @@ public class Player extends Receptor {
      * Initializes the player
      */
     private void init() {
+        abandoned = false;
+        play = true;
         for (int i = 0; i < NBR_INIT_CARDS; ++i) {
             hand.add(deck.remove());
         }
@@ -95,7 +98,7 @@ public class Player extends Receptor {
      * @param index index of the card to play
      * @return true if the card can be played, false otherwise
      */
-    public boolean playCard(int index) {
+    public boolean playCard(int index, int turn) {
         Card cardToPlay = null;
         int i = 0;
         for(Card card : hand) {
@@ -116,6 +119,7 @@ public class Player extends Receptor {
             }
             */
 
+            discard.get(turn).add(cardToPlay);
             actionPoints -= cardToPlay.getCost();
             return true;
         }
@@ -195,8 +199,21 @@ public class Player extends Receptor {
         deck.addAll(d);
     }
 
+    public boolean hasAbandoned() {
+        return abandoned;
+    }
+
+    public void abandon() {
+        abandoned = true;
+    }
+
+    public void endTurn() {
+        play = false;
+    }
+
     @Override
     public void playTurn(int turn) {
+        play = true;
         // Takes a card if possible otherwise
         // one card of the deck is thrown away
         if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
@@ -220,13 +237,16 @@ public class Player extends Receptor {
             actionPoints = NBR_ACTION_POINTS_MAX;
         }
 
-        boolean keepPlaying = true;
-        while (keepPlaying) {
+        while (play && !abandoned) {
             System.out.println(name + " is playing...");
+
+            PlayersAction.askAction(this).execute();
+
+
             /*
              * TODO get the players actions (card)
              *  /!\ the player has a button indication if he has finished his turn, if the player selects the button then...
-             */
+
             Random rand = new Random();
             if(hand.size() != 0) {
                 int max = hand.size();
@@ -235,7 +255,7 @@ public class Player extends Receptor {
                     chosenCard = rand.nextInt() % hand.size();
                 } while (!playCard(chosenCard) && --max > 0);
                 keepPlaying = false;
-            }
+            } */
         }
 
         for (Creature creature : creatures) {
@@ -259,5 +279,17 @@ public class Player extends Receptor {
                 Objects.equals(hand, player.hand) &&
                 Objects.equals(discard, player.discard) &&
                 Objects.equals(chests, player.chests);
+    }
+
+    public Card lastCardPlayed() {
+        int turn = 0;
+        Card card = null;
+        for (HashMap.Entry<Integer, List<Card>> turnCards : discard.entrySet()) {
+            if (turnCards.getKey() < turn) {
+                turn = turnCards.getKey();
+                card = turnCards.getValue().get(turnCards.getValue().size()-1);
+            }
+        }
+        return card;
     }
 }

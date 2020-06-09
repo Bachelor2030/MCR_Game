@@ -104,6 +104,7 @@ public enum CommandName {
             case PLAY_CARD: return new PlayCard();
             case CHOOSE_CREATURE: return new ChooseCreature();
             case CHOOSE_POSITION: return new ChoosePosition();
+            case UNDO: return new Undo();
             default: return null;
         }
 
