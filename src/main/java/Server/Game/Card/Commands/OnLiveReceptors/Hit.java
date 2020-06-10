@@ -1,29 +1,17 @@
-package Server.Game.Card.Commands;
+package Server.Game.Card.Commands.OnLiveReceptors;
 
+import Server.Game.Card.Commands.CommandName;
 import Server.Game.ModelClasses.LiveReceptor;
 
-import java.util.Arrays;
-
-public class HitLiveReceptor extends ConcreteCommand {
-    private LiveReceptor[] receptors;
+public class Hit extends OnLiveReceptors {
     private int attackPoints;
 
-    public HitLiveReceptor(LiveReceptor[] receptors, int attackPoints) {
-        super(CommandName.HIT);
-        this.attackPoints = attackPoints;
-        this.receptors = Arrays.copyOf(receptors, receptors.length);
-    }
-
-    public HitLiveReceptor() {
+    public Hit() {
         super(CommandName.HIT);
     }
 
     public void setAttackPoints(int attackPoints) {
         this.attackPoints = attackPoints;
-    }
-
-    public void setReceptors(LiveReceptor[] receptors) {
-        this.receptors = receptors;
     }
 
     @Override
