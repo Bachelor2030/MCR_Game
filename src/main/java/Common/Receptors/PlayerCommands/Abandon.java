@@ -15,6 +15,6 @@ public class Abandon extends PlayersAction {
 
     @Override
     public void undo() {
-
+        player.undoAbandon();
     }
 }

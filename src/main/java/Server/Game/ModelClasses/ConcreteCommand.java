@@ -2,6 +2,8 @@ package Server.Game.ModelClasses;
 
 import Server.Game.Card.Commands.CommandName;
 
+import java.util.Objects;
+
 public abstract class ConcreteCommand implements Command {
     protected final CommandName name;
 
@@ -18,5 +20,18 @@ public abstract class ConcreteCommand implements Command {
         if (name != null)
             return name.toString();
         return "";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConcreteCommand that = (ConcreteCommand) o;
+        return name == that.name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

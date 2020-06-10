@@ -1,5 +1,8 @@
 package Common.Receptors;
 
+import Common.Receptors.PlayerCommands.PlayCard;
+import Server.Game.Card.Card;
+import Server.Game.Card.CardType;
 import Server.Game.Card.Commands.CommandName;
 import Server.Game.ModelClasses.ConcreteCommand;
 
@@ -30,11 +33,11 @@ public abstract class PlayersAction extends ConcreteCommand {
         PlayersAction playersAction = (PlayersAction) CommandName.getCommandName(action).getCommand();
         playersAction.setPlayer(player);
 
-        if (playersAction.getName() == CommandName.CHOOSE_CREATURE ||
-                playersAction.getName() == CommandName.CHOOSE_POSITION ||
-                playersAction.getName() == CommandName.PLAY_CARD) {
-            System.out.println("What target do you chose for this action ?");
-            action = in.nextLine();
+        if (playersAction.getName() == CommandName.PLAY_CARD) {
+            System.out.println("What card do you want to play ?");
+            //action = in.nextLine();
+            // TODO change the following line to the chosen card
+            ((PlayCard)playersAction).setCardToPlay(new Card(1, "1", CardType.SPELL, 1));
         }
 
         return playersAction;

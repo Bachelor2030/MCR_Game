@@ -23,8 +23,6 @@ public enum CommandName {
     KNOCK_OUT("KnockOut"),
     /* Player commands */
     PLAY_CARD("Card"),
-    CHOOSE_POSITION("Position"),
-    CHOOSE_CREATURE("Creature"),
     UNDO("Undo"),
     END_TURN("Turn"),
     ABANDON("Quit");
@@ -66,10 +64,6 @@ public enum CommandName {
             return KNOCK_OUT;
         } else if (type.equals(PLAY_CARD.name)) {
             return PLAY_CARD;
-        } else if (type.equals(CHOOSE_POSITION.name)) {
-            return CHOOSE_POSITION;
-        } else if (type.equals(CHOOSE_CREATURE.name)) {
-            return CHOOSE_CREATURE;
         } else if (type.equals(UNDO.name)) {
             return UNDO;
         } else if (type.equals(END_TURN.name)) {
@@ -102,8 +96,6 @@ public enum CommandName {
             case ABANDON : return new Abandon();
             case END_TURN: return new EndTurn();
             case PLAY_CARD: return new PlayCard();
-            case CHOOSE_CREATURE: return new ChooseCreature();
-            case CHOOSE_POSITION: return new ChoosePosition();
             case UNDO: return new Undo();
             default: return null;
         }

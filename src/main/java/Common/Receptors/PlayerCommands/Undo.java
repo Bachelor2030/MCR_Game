@@ -13,7 +13,7 @@ public class Undo extends PlayersAction {
     public void execute() {
         Card card = player.lastCardPlayed();
         if (card != null)
-            card.undo();
+            player.undoCard(card);
     }
 
     @Override

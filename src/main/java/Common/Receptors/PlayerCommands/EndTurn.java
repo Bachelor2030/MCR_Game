@@ -15,6 +15,6 @@ public class EndTurn extends PlayersAction {
 
     @Override
     public void undo() {
-
+        player.continueTurn();
     }
 }
