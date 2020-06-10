@@ -43,12 +43,13 @@ public class PlayerTest {
     public void PlayerShouldStartWithTheCorrectAmountOfCardsInHand() {
         assertEquals(3, player.getNbrCardsInHand());
     }
-
+/*
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 15, 31})
     public void TheNumberOfActionPointMustBeCorrect(int turn) {
         player.playTurn(turn);
         assertEquals((Math.min(turn, 15)), player.getActionPoints());
     }
+ */
 
 }
