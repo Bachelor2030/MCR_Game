@@ -1,11 +1,16 @@
-package Server.Game.Card.Commands;
+package Server.Game.ModelClasses.Commands;
 
-import Common.Receptors.PlayerCommands.*;
-import Server.Game.Card.Commands.OnLiveReceptors.*;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.*;
-import Server.Game.Card.Commands.CardMovement.Discard;
-import Server.Game.Card.Commands.CardMovement.Draw;
-import Server.Game.Card.Commands.CardMovement.DrawTypeFromDiscard;
+import Server.Game.ModelClasses.Commands.CardMovement.Discard;
+import Server.Game.ModelClasses.Commands.CardMovement.Draw;
+import Server.Game.ModelClasses.Commands.CardMovement.DrawTypeFromDiscard;
+import Server.Game.ModelClasses.Commands.PlayersAction.Abandon;
+import Server.Game.ModelClasses.Commands.PlayersAction.EndTurn;
+import Server.Game.ModelClasses.Commands.PlayersAction.PlayCard;
+import Server.Game.ModelClasses.Commands.PlayersAction.Undo;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.Heal;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.Hit;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.Kill;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.*;
 import Server.Game.ModelClasses.ConcreteCommand;
 
 public enum CommandName {

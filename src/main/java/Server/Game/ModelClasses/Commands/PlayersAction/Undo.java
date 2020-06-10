@@ -1,8 +1,8 @@
-package Common.Receptors.PlayerCommands;
+package Server.Game.ModelClasses.Commands.PlayersAction;
 
-import Common.Receptors.PlayersAction;
+import Server.Game.ModelClasses.PlayersAction;
 import Server.Game.Card.Card;
-import Server.Game.Card.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.CommandName;
 
 public class Undo extends PlayersAction {
     public Undo() {

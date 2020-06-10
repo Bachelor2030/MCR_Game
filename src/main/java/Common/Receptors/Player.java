@@ -1,7 +1,8 @@
 package Common.Receptors;
 
 import Server.Game.Card.Card;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
+import Server.Game.ModelClasses.PlayersAction;
 import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
@@ -16,18 +17,24 @@ public class Player extends Receptor {
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
 
+    // Players deck of cards
     private Deque<Card> deck = new ArrayDeque<>(NBR_CARDS_PER_DECK);
+    // Players hand (cards he/she can play in the current turn)
     private Deque<Card> hand = new ArrayDeque<>(NBR_CARDS_MAX_IN_HAND);
 
     // Historic of the player
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
-
+    // Chests the player must protect
     private List<Chest> chests = new LinkedList<>();
-
+    // Players creatures that move on the board
     private ArrayList<Creature> creatures = new ArrayList<>();
 
-    private int actionPoints, currentTurn;
-    private boolean abandoned, play;
+    private int
+            actionPoints,   // Players action points
+            currentTurn;    // Current turn the player is in
+    private boolean
+            abandoned,      // True if the player abandons the game
+            play;           // False when the player ends his/her turn
 
     /**
      * Creates a player with the given name and deck
@@ -248,23 +255,7 @@ public class Player extends Receptor {
 
         while (play && !abandoned) {
             System.out.println(name + " is playing...");
-
             PlayersAction.askAction(this).execute();
-
-
-            /*
-             * TODO get the players actions (card)
-             *  /!\ the player has a button indication if he has finished his turn, if the player selects the button then...
-
-            Random rand = new Random();
-            if(hand.size() != 0) {
-                int max = hand.size();
-                int chosenCard;
-                do {
-                    chosenCard = rand.nextInt() % hand.size();
-                } while (!playCard(chosenCard) && --max > 0);
-                keepPlaying = false;
-            } */
         }
 
         for (Creature creature : creatures) {

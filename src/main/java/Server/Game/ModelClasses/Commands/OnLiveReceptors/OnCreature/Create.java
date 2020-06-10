@@ -1,6 +1,6 @@
-package Server.Game.Card.Commands.OnLiveReceptors.OnCreature;
+package Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature;
 
-import Server.Game.Card.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.Position;
 import Common.Receptors.Creature;
 

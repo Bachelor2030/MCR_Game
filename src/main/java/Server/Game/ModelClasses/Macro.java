@@ -1,7 +1,7 @@
 package Server.Game.ModelClasses;
 
-import Server.Game.Card.Commands.CommandName;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
+import Server.Game.ModelClasses.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
 
 import java.util.ArrayList;
 import java.util.Objects;

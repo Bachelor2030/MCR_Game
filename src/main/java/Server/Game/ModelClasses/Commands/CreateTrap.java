@@ -1,4 +1,4 @@
-package Server.Game.Card.Commands;
+package Server.Game.ModelClasses.Commands;
 
 import Server.Game.ModelClasses.ConcreteCommand;
 import Server.Game.Position;

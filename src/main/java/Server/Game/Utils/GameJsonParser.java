@@ -2,9 +2,9 @@ package Server.Game.Utils;
 
 import Common.Receptors.Player;
 import Server.Game.Card.Card;
-import Server.Game.Card.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.ModelClasses.ConcreteCommand;
-import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.Game;
 import org.json.JSONException;
 import org.json.JSONObject;
