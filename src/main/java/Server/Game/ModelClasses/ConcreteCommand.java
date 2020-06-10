@@ -1,6 +1,6 @@
-package Server.Game.Card.Commands;
+package Server.Game.ModelClasses;
 
-import Server.Game.ModelClasses.Command;
+import Server.Game.Card.Commands.CommandName;
 
 public abstract class ConcreteCommand implements Command {
     protected final CommandName name;

@@ -18,8 +18,13 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
+                <configuration>
+                    <release>11</release>
+                    <!--  or 11  -->
+                </configuration>
             </plugin>
             <!-- JUnit 5 requires Surefire version 2.22.1 or higher -->
             <plugin>
@@ -32,15 +37,6 @@
                 <version>8.8.3</version>
                 <configuration>
                     <mainClass>your.package.with.Launcher</mainClass>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <release>11</release>
-                    <!--  or 11  -->
                 </configuration>
             </plugin>
         </plugins>
@@ -94,16 +90,6 @@
             <artifactId>javafx-fxml</artifactId>
             <version>11</version>
             <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.skyscreamer</groupId>
-            <artifactId>jsonassert</artifactId>
-            <version>1.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>net.minidev</groupId>
-            <artifactId>json-smart</artifactId>
-            <version>2.3</version>
         </dependency>
     </dependencies>
 </project>

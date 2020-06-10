@@ -7,6 +7,7 @@ import Server.Game.Card.CardType;
 import Server.Game.Card.Commands.*;
 import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.Game;
+import Server.Game.ModelClasses.ConcreteCommand;
 import Server.Game.ModelClasses.Macro;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 public class ParserLauncher {
     public static void main(String[] args) {
-        String file = "src/main/resources/game.json";
+        String file = "src/main/resources/json/game.json";
 
         Game game = parseJsonGame(file);
         game.startGame();
@@ -37,10 +38,10 @@ public class ParserLauncher {
             }
 
             JsonUtil jsonUtil = new JsonUtil();
-            ArrayList<Card> allCards = parseJsonCards(jsonUtil.getJsonContent("src/main/resources/cards.json"));
+            ArrayList<Card> allCards = parseJsonCards(jsonUtil.getJsonContent("src/main/resources/json/cards.json"));
 
             System.out.println("Read " + file);
-            GameJsonParser gameJsonParser = new GameJsonParser(allCards, "src/main/resources/");
+            GameJsonParser gameJsonParser = new GameJsonParser(allCards, "src/main/resources/json/");
             game = gameJsonParser.parseJson(sb.toString());
 
             fileInputStream.close();
