@@ -73,9 +73,11 @@ public class ClientAdapter {
 
                     case Messages.JSON_TYPE_YOUR_TURN:
                         state = ClientState.SERVER_LISTENING;
+                        break;
 
                     case Messages.JSON_TYPE_WAIT_TURN:
                         state = ClientState.CLIENT_LISTENING;
+                        break;
 
                     case Messages.JSON_TYPE_GAME_END:
                         state = ClientState.GAME_ENDED;

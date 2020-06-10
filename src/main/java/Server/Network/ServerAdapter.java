@@ -32,19 +32,26 @@ public class ServerAdapter {
     }
 
     private int port;
+    private int playing;
     private int players = 0;
+
+    public synchronized int getPlaying() {
+        return playing;
+    }
+
+    public synchronized void nextPlayer() {
+        this.playing = ((playing++) % 2) + 1;
+    }
 
     public synchronized int getPlayers() {
         return players;
     }
 
     public synchronized int incrementPlayers() {
-        System.out.println("Increment players: " + (players+1));
         return ++players;
     }
 
     public synchronized int decrementPlayers() {
-        System.out.println("Decrement players: " + (players-1));
         return --players;
     }
 
@@ -55,8 +62,9 @@ public class ServerAdapter {
      *
      * @param port the port to listen on
      */
-    public ServerAdapter(int port) {
+    public ServerAdapter(int port, int firstPlayerId) {
         this.port = port;
+        playing = firstPlayerId;
     }
 
     /**
@@ -143,14 +151,21 @@ public class ServerAdapter {
 
                         switch(state) {
                             case INIT:
-                                JSONObject turn = new JSONObject().put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
+                                JSONObject turn;
+                                if (playerId == getPlaying()) {
+                                    turn = new JSONObject().put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
+                                    state = ServerState.SERVER_LISTENING;
+                                } else {
+                                    turn = new JSONObject().put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
+                                    state = ServerState.CLIENT_LISTENING;
+                                }
+
                                 JSONObject gamestate = new JSONObject();
 
                                 gamestate.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
                                 gamestate.put(Messages.JSON_GAMESTATE, turn);
 
                                 sendJson(gamestate);
-                                state = ServerState.SERVER_LISTENING;
                                 break;
 
                             case INIT_WAITING:
@@ -164,7 +179,9 @@ public class ServerAdapter {
                                 break;
 
                             case CLIENT_LISTENING:
-
+                                while (getPlaying() != playerId) {}
+                                sendJsonType(Messages.JSON_TYPE_YOUR_TURN);
+                                state = ServerState.SERVER_LISTENING;
                                 break;
 
                             case GAME_ENDED:
@@ -194,11 +211,9 @@ public class ServerAdapter {
                     if (type.equals(Messages.JSON_TYPE_HELLO)) {
 
                         if (getPlayers() == 1) {
-                            System.out.println("Players:" + getPlayers());
                             sendJsonType(Messages.JSON_TYPE_WAIT_PLAYER);
                             state = ServerState.INIT_WAITING;
                         } else if (getPlayers() == 2) {
-                            System.out.println("Players:" + getPlayers());
                             sendJsonType(Messages.JSON_TYPE_GAME_START);
                             state = ServerState.INIT;
                         } else {
@@ -223,6 +238,7 @@ public class ServerAdapter {
                     switch (type) {
                         case Messages.JSON_TYPE_PLAY:
                             state = ServerState.CLIENT_LISTENING;
+                            nextPlayer();
                             sendJsonType(Messages.JSON_TYPE_PLAY_OK);
                             break;
 
