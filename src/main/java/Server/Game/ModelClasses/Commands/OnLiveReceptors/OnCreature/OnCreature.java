@@ -1,8 +1,8 @@
-package Server.Game.Card.Commands.OnLiveReceptors.OnCreature;
+package Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature;
 
 import Common.Receptors.Creature;
-import Server.Game.Card.Commands.OnLiveReceptors.OnLiveReceptors;
-import Server.Game.Card.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors;
+import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.ModelClasses.LiveReceptor;
 
 public abstract class OnCreature extends OnLiveReceptors {

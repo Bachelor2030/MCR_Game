@@ -1,7 +1,7 @@
-package Server.Game.Card.Commands.CardMovement;
+package Server.Game.ModelClasses.Commands.CardMovement;
 
 import Server.Game.Card.Card;
-import Server.Game.Card.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.ModelClasses.ConcreteCommand;
 import Common.Receptors.Player;
 

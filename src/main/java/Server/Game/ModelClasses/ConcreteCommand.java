@@ -1,6 +1,6 @@
 package Server.Game.ModelClasses;
 
-import Server.Game.Card.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.CommandName;
 
 import java.util.Objects;
 

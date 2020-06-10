@@ -1,6 +1,6 @@
-package Server.Game.Card.Commands.OnLiveReceptors;
+package Server.Game.ModelClasses.Commands.OnLiveReceptors;
 
-import Server.Game.Card.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.ModelClasses.LiveReceptor;
 
 public class Kill extends OnLiveReceptors {

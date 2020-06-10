@@ -1,10 +1,10 @@
-package Common.Receptors;
+package Server.Game.ModelClasses;
 
-import Common.Receptors.PlayerCommands.PlayCard;
+import Common.Receptors.Player;
+import Server.Game.ModelClasses.Commands.PlayersAction.PlayCard;
 import Server.Game.Card.Card;
 import Server.Game.Card.CardType;
-import Server.Game.Card.Commands.CommandName;
-import Server.Game.ModelClasses.ConcreteCommand;
+import Server.Game.ModelClasses.Commands.CommandName;
 
 import java.util.Scanner;
 

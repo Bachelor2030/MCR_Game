@@ -4,7 +4,7 @@ import Common.GameBoard.Line;
 import Common.Receptors.Creature;
 import Common.Receptors.Trap;
 import Server.Game.ModelClasses.ConcreteCommand;
-import Server.Game.Card.Commands.OnLiveReceptors.Hit;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.Hit;
 import Server.Game.ModelClasses.Macro;
 import Server.Game.Position;
 import org.junit.jupiter.api.BeforeAll;
