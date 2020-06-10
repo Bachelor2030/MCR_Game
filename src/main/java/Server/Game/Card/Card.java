@@ -3,6 +3,8 @@ package Server.Game.Card;
 import Server.Game.ModelClasses.Macro;
 import Server.Game.ModelClasses.Invocator;
 
+import java.util.Objects;
+
 /**
  * Modelizes a card for the game
  */
@@ -25,6 +27,12 @@ public class Card implements Invocator {
         this.name = (type != null ? type.toString() + " " : "") + name;
         this.cost = cost;
         this.ID = id;
+    }
+
+    public void undo() {
+        if(command != null) {
+            command.undo();
+        }
     }
 
     /**
@@ -85,5 +93,22 @@ public class Card implements Invocator {
     @Override
     public void setCommand(Macro command) {
         this.command = command;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return ID == card.ID &&
+                cost == card.cost &&
+                Objects.equals(command, card.command) &&
+                Objects.equals(name, card.name) &&
+                type == card.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID, command, name, cost, type);
     }
 }

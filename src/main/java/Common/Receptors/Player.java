@@ -1,6 +1,7 @@
 package Common.Receptors;
 
 import Server.Game.Card.Card;
+import Server.Game.Card.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
@@ -25,7 +26,8 @@ public class Player extends Receptor {
 
     private ArrayList<Creature> creatures = new ArrayList<>();
 
-    private int actionPoints;
+    private int actionPoints, currentTurn;
+    private boolean abandoned, play;
 
     /**
      * Creates a player with the given name and deck
@@ -51,6 +53,9 @@ public class Player extends Receptor {
      * Initializes the player
      */
     private void init() {
+        abandoned = false;
+        play = true;
+        currentTurn = 0;
         for (int i = 0; i < NBR_INIT_CARDS; ++i) {
             hand.add(deck.remove());
         }
@@ -69,14 +74,6 @@ public class Player extends Receptor {
     }
 
     /**
-     * Returns the number of action points the player currently has
-     * @return actionsPoints
-     */
-    public int getActionPoints() {
-        return actionPoints;
-    }
-
-    /**
      * Returns the number of the player's chests that have been opened
      * @return nbrOpenedChests
      */
@@ -91,32 +88,27 @@ public class Player extends Receptor {
     }
 
     /**
-     * Makes the player play the card at the given index in his/her hand
-     * @param index index of the card to play
+     * Makes the player play given the card
+     * @param card the card to play
      * @return true if the card can be played, false otherwise
      */
-    public boolean playCard(int index) {
-        Card cardToPlay = null;
-        int i = 0;
-        for(Card card : hand) {
-            if (i++ == index) {
-                cardToPlay = card;
-                break;
+    public boolean playCard(Card card) {
+        if (!hand.contains(card))
+            return false;
+
+        if(card != null &&
+            actionPoints >= card.getCost()) {
+
+            card.play();
+
+            ArrayList<Create> createCreatures = card.getCommand().getCreateCreature();
+            for (Create create : createCreatures) {
+                creatures.add(create.getCreature());
             }
-        }
 
-        if(cardToPlay != null &&
-            actionPoints >= cardToPlay.getCost()) {
-
-            cardToPlay.play();
-
-            /*
-            if(cardToPlay.getCommand() != null && cardToPlay.getCommand().getName() == CommandName.CREATE_CREATURE) {
-                // TODO
-            }
-            */
-
-            actionPoints -= cardToPlay.getCost();
+            discard.get(currentTurn).add(card);
+            actionPoints -= card.getCost();
+            hand.remove(card);
             return true;
         }
         return false;
@@ -175,14 +167,6 @@ public class Player extends Receptor {
     }
 
     /**
-     * Get the initial number of chests
-     * @return the number of chests the player started with
-     */
-    public static int getStartingNbrChests() {
-        return NBR_CHESTS;
-    }
-
-    /**
      * Adds the given card to the players deck
      * @param card the card to add in the deck at a random position
      */
@@ -195,8 +179,50 @@ public class Player extends Receptor {
         deck.addAll(d);
     }
 
+    public boolean hasAbandoned() {
+        return abandoned;
+    }
+
+    public void abandon() {
+        abandoned = true;
+    }
+
+    public void undoAbandon() {
+        abandoned = false;
+    }
+
+    public void endTurn() {
+        play = false;
+    }
+
+    public void continueTurn() {
+        play = true;
+    }
+
+    public Card lastCardPlayed() {
+        int turn = 0;
+        Card card = null;
+        for (HashMap.Entry<Integer, List<Card>> turnCards : discard.entrySet()) {
+            if (turnCards.getKey() < turn) {
+                turn = turnCards.getKey();
+                card = turnCards.getValue().get(turnCards.getValue().size()-1);
+            }
+        }
+        return card;
+    }
+
+    public void undoCard(Card cardToUndo) {
+        if (discard.get(currentTurn).remove(cardToUndo)) {
+            hand.add(cardToUndo);
+            cardToUndo.undo();
+            actionPoints += cardToUndo.getCost();
+        }
+    }
+
     @Override
     public void playTurn(int turn) {
+        play = true;
+        currentTurn = turn;
         // Takes a card if possible otherwise
         // one card of the deck is thrown away
         if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
@@ -220,13 +246,16 @@ public class Player extends Receptor {
             actionPoints = NBR_ACTION_POINTS_MAX;
         }
 
-        boolean keepPlaying = true;
-        while (keepPlaying) {
+        while (play && !abandoned) {
             System.out.println(name + " is playing...");
+
+            PlayersAction.askAction(this).execute();
+
+
             /*
              * TODO get the players actions (card)
              *  /!\ the player has a button indication if he has finished his turn, if the player selects the button then...
-             */
+
             Random rand = new Random();
             if(hand.size() != 0) {
                 int max = hand.size();
@@ -235,7 +264,7 @@ public class Player extends Receptor {
                     chosenCard = rand.nextInt() % hand.size();
                 } while (!playCard(chosenCard) && --max > 0);
                 keepPlaying = false;
-            }
+            } */
         }
 
         for (Creature creature : creatures) {

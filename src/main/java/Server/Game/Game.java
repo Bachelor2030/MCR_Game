@@ -71,12 +71,12 @@ public class Game {
      * @return true si le jeu est terminé, false sinon.
      */
     private boolean finished() {
-        if(player2.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY)
+        if(player2.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY || player2.hasAbandoned())
         {
             gameOver(player1, player2);
             return true;
         }
-        else if(player1.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY)
+        else if(player1.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY || player1.hasAbandoned())
         {
             gameOver(player2, player1);
             return true;
