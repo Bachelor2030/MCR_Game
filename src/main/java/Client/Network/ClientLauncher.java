@@ -2,6 +2,6 @@ package Client.Network;
 
 public class ClientLauncher {
     public static void main(String[] args) {
-        ClientAdapter client = new ClientAdapter("localhost", 2205, "Caillou");
+        ClientAdapter client = new ClientAdapter(args[0], Integer.valueOf(args[1]), args[2]);
     }
 }
