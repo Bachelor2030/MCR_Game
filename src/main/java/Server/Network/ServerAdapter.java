@@ -39,10 +39,12 @@ public class ServerAdapter {
     }
 
     public synchronized int incrementPlayers() {
+        System.out.println("Increment players: " + (players+1));
         return ++players;
     }
 
     public synchronized int decrementPlayers() {
+        System.out.println("Decrement players: " + (players-1));
         return --players;
     }
 
@@ -89,10 +91,11 @@ public class ServerAdapter {
                 return;
             }
 
-            while (incrementPlayers() <= 2) {
+            while (getPlayers() < 2) {
                 printMessage("Receptionist", "Waiting (blocking) for a new player on port " + port);
                 try {
                     Socket clientSocket = serverSocket.accept();
+                    incrementPlayers();
                     printMessage("Receptionist", "A new player has arrived. Starting a new thread and delegating work to a new servant...");
                     new Thread(new ServantWorker(clientSocket, getPlayers())).start();
                 } catch (IOException ex) {
@@ -140,11 +143,13 @@ public class ServerAdapter {
 
                         switch(state) {
                             case INIT:
-                                JSONObject json = new JSONObject();
+                                JSONObject turn = new JSONObject().put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
+                                JSONObject gamestate = new JSONObject();
 
-                                json.put(Messages.JSON_GAMESTATE, "Test");
-                                json.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
-                                sendJson(json);
+                                gamestate.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
+                                gamestate.put(Messages.JSON_GAMESTATE, turn);
+
+                                sendJson(gamestate);
                                 state = ServerState.SERVER_LISTENING;
                                 break;
 
@@ -189,9 +194,11 @@ public class ServerAdapter {
                     if (type.equals(Messages.JSON_TYPE_HELLO)) {
 
                         if (getPlayers() == 1) {
+                            System.out.println("Players:" + getPlayers());
                             sendJsonType(Messages.JSON_TYPE_WAIT_PLAYER);
                             state = ServerState.INIT_WAITING;
                         } else if (getPlayers() == 2) {
+                            System.out.println("Players:" + getPlayers());
                             sendJsonType(Messages.JSON_TYPE_GAME_START);
                             state = ServerState.INIT;
                         } else {
@@ -214,6 +221,11 @@ public class ServerAdapter {
 
                     String type = readJsonType(receivedMessage);
                     switch (type) {
+                        case Messages.JSON_TYPE_PLAY:
+                            state = ServerState.CLIENT_LISTENING;
+                            sendJsonType(Messages.JSON_TYPE_PLAY_OK);
+                            break;
+
                         case Messages.JSON_TYPE_GOODBYE:
                             state = ServerState.GAME_ENDED;
                             sendJsonType(Messages.JSON_TYPE_GOODBYE_ANS);
