@@ -1,6 +1,7 @@
 package Server.Network;
 
 import Common.Network.Messages;
+import Common.Network.ServerState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +31,22 @@ public class ServerAdapter {
         printMessage("Debug", message);
     }
 
-    int port;
+    private int port;
+    private int players = 0;
+
+    public synchronized int getPlayers() {
+        return players;
+    }
+
+    public synchronized int incrementPlayers() {
+        return ++players;
+    }
+
+    public synchronized int decrementPlayers() {
+        return --players;
+    }
+
+
 
     /**
      * Constructor
@@ -63,7 +79,7 @@ public class ServerAdapter {
 
         @Override
         public void run() {
-            int nbrClients = 0;
+
             ServerSocket serverSocket;
 
             try {
@@ -73,16 +89,17 @@ public class ServerAdapter {
                 return;
             }
 
-            while (++nbrClients <= 2) {
-                printMessage("Receptionist", "Waiting (blocking) for a new client on port " + port);
+            while (incrementPlayers() <= 2) {
+                printMessage("Receptionist", "Waiting (blocking) for a new player on port " + port);
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    printMessage("Receptionist", "A new client has arrived. Starting a new thread and delegating work to a new servant...");
-                    new Thread(new ServantWorker(clientSocket)).start();
+                    printMessage("Receptionist", "A new player has arrived. Starting a new thread and delegating work to a new servant...");
+                    new Thread(new ServantWorker(clientSocket, getPlayers())).start();
                 } catch (IOException ex) {
                     printMessage(MessageLevel.Error, "Receptionist", ex.toString());
                 }
             }
+            printMessage("Receptionist", "Two players have connected to the server. Stop listening for new connexions.");
         }
 
         /**
@@ -97,9 +114,12 @@ public class ServerAdapter {
             BufferedReader inBufferedReader = null;
             PrintWriter outPrintWriter = null;
 
-            boolean running = false;
+            ServerState state = ServerState.CONNECTING;
+            int playerId;
 
-            public ServantWorker(Socket clientSocket) {
+            public ServantWorker(Socket clientSocket, int playerId) {
+                this.playerId = playerId;
+                printMessage("ServantWorker", "Starting worker for player " + playerId);
                 try {
                     this.clientSocket = clientSocket;
                     inBufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -113,37 +133,94 @@ public class ServerAdapter {
             public void run() {
                 try {
                     // Awaiting client greetings
-                    awaitClientHandshake(false, "Reading until client sends greetings to open the connection...");
+                    awaitClientHandshake();
 
-                    // Awaiting client goodbye
-                    awaitClientHandshake(true, "Reading until client sends goodbye or closes the connection...");
+                    // Awaiting client messages
+                    while (state != ServerState.GAME_ENDED) {
 
+                        switch(state) {
+                            case INIT:
+                                JSONObject json = new JSONObject();
+
+                                json.put(Messages.JSON_GAMESTATE, "Test");
+                                json.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
+                                sendJson(json);
+                                state = ServerState.SERVER_LISTENING;
+                                break;
+
+                            case INIT_WAITING:
+                                while (getPlayers() < 2) {}
+                                sendJsonType(Messages.JSON_TYPE_GAME_START);
+                                state = ServerState.INIT;
+                                break;
+
+                            case SERVER_LISTENING:
+                                awaitClientMessage();
+                                break;
+
+                            case CLIENT_LISTENING:
+
+                                break;
+
+                            case GAME_ENDED:
+                                sendJsonType(Messages.JSON_TYPE_GAME_END);
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
                     cleanupResources();
-
                 } catch (IOException | JSONException ex) {
                     runErrorCleanup(ex);
+                } finally {
+                    decrementPlayers();
                 }
             }
 
-            private void awaitClientHandshake(boolean shouldRun, String consoleMessage) throws IOException, JSONException {
+            private void awaitClientHandshake() throws IOException, JSONException {
                 String receivedMessage;
-                printMessage("Servant", consoleMessage);
+                printMessage("Servant", "Reading until client sends greetings to open the connection...");
 
-                while (running == shouldRun
-                        && (receivedMessage = readJsonMessage(inBufferedReader.readLine())) != null) {
-                    switch(receivedMessage) {
-                        case Messages.CLIENT_HELLO:
-                            running = true;
-                            sendJsonMessage(Messages.SERVER_HELLO_ANS);
-                            break;
+                while (state == ServerState.CONNECTING
+                        && (receivedMessage = readJson(inBufferedReader.readLine())) != null) {
 
-                        case Messages.CLIENT_GOODBYE:
-                            running = false;
-                            sendJsonMessage(Messages.SERVER_GOODBYE_ANS);
+                    String type = readJsonType(receivedMessage);
+                    if (type.equals(Messages.JSON_TYPE_HELLO)) {
+
+                        if (getPlayers() == 1) {
+                            sendJsonType(Messages.JSON_TYPE_WAIT_PLAYER);
+                            state = ServerState.INIT_WAITING;
+                        } else if (getPlayers() == 2) {
+                            sendJsonType(Messages.JSON_TYPE_GAME_START);
+                            state = ServerState.INIT;
+                        } else {
+                            debugMessage("WTF DUDE YOU HAVE " + getPlayers() + " PLAYERS");
+                            state = ServerState.CONNECTING;
+                        }
+                    } else {
+                        sendJsonType(Messages.JSON_TYPE_UNKNOWN);
+                        state = ServerState.CONNECTING;
+                    }
+                }
+            }
+
+            private void awaitClientMessage() throws IOException, JSONException {
+                String receivedMessage;
+                printMessage("Servant", "Reading until client sends messages or closes the connection...");
+
+                while (state != ServerState.GAME_ENDED
+                        && (receivedMessage = readJson(inBufferedReader.readLine())) != null) {
+
+                    String type = readJsonType(receivedMessage);
+                    switch (type) {
+                        case Messages.JSON_TYPE_GOODBYE:
+                            state = ServerState.GAME_ENDED;
+                            sendJsonType(Messages.JSON_TYPE_GOODBYE_ANS);
                             break;
 
                         default:
-                            sendJsonMessage(Messages.SERVER_UNKNOWN_ANS);
+                            sendJsonType(Messages.JSON_TYPE_UNKNOWN);
                             break;
                     }
                 }
@@ -172,6 +249,7 @@ public class ServerAdapter {
 
             private void cleanupResources() throws IOException {
                 printMessage("Servant", "Cleaning up resources...");
+
                 clientSocket.close();
                 inBufferedReader.close();
                 outPrintWriter.close();
@@ -181,35 +259,61 @@ public class ServerAdapter {
              *                                           UTILITIES                                           *
              ************************************************************************************************/
 
-            private void sendJson(JSONObject json) {
-                outPrintWriter.println(json.toString());
+            private void sendJson(JSONObject jsonObject) {
+                printMessage("Servant", "-> " + jsonObject.toString());
+                outPrintWriter.println(jsonObject.toString());
                 outPrintWriter.flush();
             }
 
-            private void sendJsonMessage(String message) throws JSONException {
-                printMessage("Servant", "-> " + message);
-
+            private void sendJsonType(String message) throws JSONException {
                 JSONObject json = new JSONObject();
-                json.put("message", message);
+                json.put(Messages.JSON_TYPE, message);
 
                 sendJson(json);
             }
 
-            private String readJsonMessage(String jsonMessage) {
-                String message;
+            private String readJson(String jsonMessage) {
+                printMessage("Servant", "<- " + jsonMessage);
+                try {
+                    JSONObject obj = new JSONObject(jsonMessage);
+                    return obj.toString();
+                } catch (JSONException e) {
+                    return jsonError();
+                }
+            }
+
+            private String readJsonType(String jsonMessage) {
+                String type;
 
                 try {
                     JSONObject obj = new JSONObject(jsonMessage);
-                    message = obj.getString("message");
-                    printMessage("Servant", "<- " + message);
+                    type = obj.getString(Messages.JSON_TYPE);
 
-                    return message;
+                    return type;
 
                 } catch (JSONException e) {
-                    debugMessage("Answer was not Json!");
-
-                    return "Error";
+                    return jsonError();
                 }
+            }
+
+            private String readJsonPlayerName(String jsonMessage) {
+                String name;
+
+                try {
+                    JSONObject obj = new JSONObject(jsonMessage);
+                    name = obj.getString(Messages.JSON_TYPE_PLAYERNAME);
+
+                    return name;
+
+                } catch (JSONException e) {
+                    return jsonError();
+                }
+            }
+
+            private String jsonError() {
+                debugMessage("Answer was not Json!");
+
+                return "Error";
             }
 
             /*************************************************************************************************

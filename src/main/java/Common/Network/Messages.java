@@ -2,12 +2,33 @@ package Common.Network;
 
 public final class Messages {
 
-    public static final String CLIENT_HELLO = "Hello server";
-    public static final String SERVER_HELLO_ANS = "Hello client";
-    public static final String CLIENT_GOODBYE = "Goodbye server";
-    public static final String SERVER_GOODBYE_ANS = "Goodbye client";
 
-    public static final String SERVER_UNKNOWN_ANS = "Nani?";
+    public static final String JSON_TYPE = "type";
+    public static final String JSON_GAMESTATE = "Gamestate";
+
+    public static final String JSON_TYPE_UNKNOWN = "Nani?";
+
+    public static final String JSON_TYPE_HELLO = "Hello";
+    public static final String JSON_TYPE_HELLO_ANS = "Hello";
+    public static final String JSON_TYPE_WAIT_PLAYER = "Waiting for player 2";
+    public static final String JSON_TYPE_INIT = "Init";
+
+    public static final String JSON_TYPE_GOODBYE = "Goodbye";
+    public static final String JSON_TYPE_GOODBYE_ANS = "Goodbye";
+    public static final String JSON_TYPE_GAME_END = "Game end";
+    public static final String JSON_TYPE_GAME_START = "Game start";
+
+    public static final String JSON_TYPE_PLAYERNAME = "playername";
+
+
+    public static final String JSON_TYPE_TURN = "turn";
+    public static final String JSON_TYPE_WAIT_TURN = "Wait turn";
+    public static final String JSON_TYPE_YOUR_TURN = "Your turn";
+    public static final String JSON_TYPE_PLAY = "play";
+
+    public static final String JSON_TYPE_PLAY_OK = "play ok";
+    public static final String JSON_TYPE_PLAY_BAD = "play bad";
+
 
     private Messages() {
         throw new IllegalStateException("Can't instantiate the messages class");
