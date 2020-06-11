@@ -17,20 +17,20 @@ public enum CommandName {
     HIT("Hit"),
     HEAL("Heal"),
     KILL("Kill"),
-    CHANGE_AP("Change attack points"),
-    DRAW_TYPE_FROM_DISCARD("Draw from discard"),
+    CHANGE_AP("Change_AP"),
+    DRAW_TYPE_FROM_DISCARD("Draw_type_from_discard"),
     DRAW("Draw"),
     DISCARD("Discard"),
-    CREATE_CREATURE("Create creature"),
-    CREATE_TRAP("Create trap"),
-    ADVANCE_CREATURE("Advance"),
-    RETREAT_CREATURE("Retreat"),
-    KNOCK_OUT("KnockOut"),
+    CREATE_CREATURE("Create_creature"),
+    CREATE_TRAP("Create_trap"),
+    ADVANCE_CREATURE("Advance_creature"),
+    RETREAT_CREATURE("Retreat_creature"),
+    KNOCK_OUT("Knock_Out"),
     /* Player commands */
-    PLAY_CARD("Card"),
+    PLAY_CARD("Play_card"),
     UNDO("Undo"),
-    END_TURN("Turn"),
-    ABANDON("Quit");
+    END_TURN("End_turn"),
+    ABANDON("Abandon");
 
     private final String name;
 
@@ -43,40 +43,7 @@ public enum CommandName {
     }
 
     public static CommandName getCommandName(String type) {
-        if(type.equals(HIT.name)) {
-            return HIT;
-        } else if(type.equals(HEAL.name)) {
-            return HEAL;
-        } else if(type.equals(KILL.name)) {
-            return KILL;
-        } else if(type.equals(CHANGE_AP.name)) {
-            return CHANGE_AP;
-        } else if(type.equals(DRAW.name)) {
-            return DRAW;
-        } else if(type.equals(DRAW_TYPE_FROM_DISCARD.name)) {
-            return DRAW_TYPE_FROM_DISCARD;
-        } else if(type.equals(DISCARD.name)) {
-            return DISCARD;
-        } else if(type.equals(CREATE_CREATURE.name)) {
-            return CREATE_CREATURE;
-        } else if(type.equals(CREATE_TRAP.name)) {
-            return CREATE_TRAP;
-        } else if(type.equals(ADVANCE_CREATURE.name)) {
-            return ADVANCE_CREATURE;
-        } else if(type.equals(RETREAT_CREATURE.name)) {
-            return RETREAT_CREATURE;
-        } else if(type.equals(KNOCK_OUT.name)) {
-            return KNOCK_OUT;
-        } else if (type.equals(PLAY_CARD.name)) {
-            return PLAY_CARD;
-        } else if (type.equals(UNDO.name)) {
-            return UNDO;
-        } else if (type.equals(END_TURN.name)) {
-            return END_TURN;
-        } else if (type.equals(ABANDON.name)) {
-            return ABANDON;
-        }
-        return null;
+        return CommandName.valueOf(type.toUpperCase());
     }
 
     @Override
