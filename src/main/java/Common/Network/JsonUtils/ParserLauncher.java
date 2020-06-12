@@ -77,7 +77,7 @@ public class ParserLauncher {
                         jsonCreature.getInt("life"),
                         jsonCreature.getInt("steps"),
                         jsonCreature.getInt("attack"));
-                create.setCreature(creature);
+                create.setCreature(new Creature[]{creature});
                 concreteCommands.add(create);
             }
             else if (cardType == CardType.TRAP) {

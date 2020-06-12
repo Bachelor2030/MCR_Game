@@ -27,18 +27,4 @@ public class Kill extends OnLiveReceptors {
             receptors[i].gainLifePoints(lifePoints[i]);
         }
     }
-
-    @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"" + name + "\", \"receptors\" : [");
-
-        // TODO tout faux
-        for (LiveReceptor receptor : receptors) {
-            receptor.loseLifePoints(receptor.getLifePoints());
-        }
-
-
-        return sb.toString();
-    }
 }
