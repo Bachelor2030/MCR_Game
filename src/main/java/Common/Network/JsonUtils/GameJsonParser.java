@@ -23,9 +23,6 @@ public class GameJsonParser {
 
     public Game parseJson(String json) throws JSONException {
         JSONObject obj = new JSONObject(json);
-        String pageName = obj.getJSONObject("pageInfo").getString("pageName");
-
-        System.out.println("Reading " + pageName);
 
         String player1 = obj.getJSONObject("playerNames").getString("player1");
         String player2 = obj.getJSONObject("playerNames").getString("player2");
@@ -43,28 +40,21 @@ public class GameJsonParser {
         Player p1 = new Player(player1, cardsPlayer1);
         Player p2 = new Player(player2, cardsPlayer2);
 
-        for (Card card : cardsPlayer1) {
-            for (ConcreteCommand command :
-                    card.getCommand().getCommands()) {
-                if (command.getName() == CommandName.CREATE_CREATURE) {
-                    for (Creature c : ((Create)command).getCreature()) {
-                        c.setOwner(p1);
-                    }
-                }
-            }
-        }
-
-        for (Card card : cardsPlayer2) {
-            for (ConcreteCommand command :
-                    card.getCommand().getCommands()) {
-                if (command.getName() == CommandName.CREATE_CREATURE) {
-                    for (Creature c : ((Create)command).getCreature()) {
-                        c.setOwner(p2);
-                    }
-                }
-            }
-        }
+        setOwner(cardsPlayer1, p1);
+        setOwner(cardsPlayer2, p2);
 
         return new Game(p1, p2);
+    }
+
+    private void setOwner(ArrayList<Card> cards, Player player) {
+        for (Card card : cards) {
+            for (ConcreteCommand command : card.getCommand().getCommands()) {
+                if (command.getName() == CommandName.CREATE_CREATURE) {
+                    for (Creature c : ((Create)command).getCreature()) {
+                        c.setOwner(player);
+                    }
+                }
+            }
+        }
     }
 }
