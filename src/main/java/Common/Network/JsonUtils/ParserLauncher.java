@@ -1,4 +1,4 @@
-package Server.Game.Utils;
+package Common.Network.JsonUtils;
 
 import Common.Receptors.Creature;
 import Common.Receptors.Trap;
@@ -77,7 +77,7 @@ public class ParserLauncher {
                         jsonCreature.getInt("life"),
                         jsonCreature.getInt("steps"),
                         jsonCreature.getInt("attack"));
-                create.setCreature(creature);
+                create.setCreature(new Creature[]{creature});
                 concreteCommands.add(create);
             }
             else if (cardType == CardType.TRAP) {

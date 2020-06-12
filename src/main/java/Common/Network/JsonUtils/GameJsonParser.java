@@ -1,5 +1,6 @@
-package Server.Game.Utils;
+package Common.Network.JsonUtils;
 
+import Common.Receptors.Creature;
 import Common.Receptors.Player;
 import Server.Game.Card.Card;
 import Server.Game.ModelClasses.Commands.CommandName;
@@ -46,7 +47,9 @@ public class GameJsonParser {
             for (ConcreteCommand command :
                     card.getCommand().getCommands()) {
                 if (command.getName() == CommandName.CREATE_CREATURE) {
-                    ((Create)command).getCreature().setOwner(p1);
+                    for (Creature c : ((Create)command).getCreature()) {
+                        c.setOwner(p1);
+                    }
                 }
             }
         }
@@ -55,7 +58,9 @@ public class GameJsonParser {
             for (ConcreteCommand command :
                     card.getCommand().getCommands()) {
                 if (command.getName() == CommandName.CREATE_CREATURE) {
-                    ((Create)command).getCreature().setOwner(p2);
+                    for (Creature c : ((Create)command).getCreature()) {
+                        c.setOwner(p2);
+                    }
                 }
             }
         }

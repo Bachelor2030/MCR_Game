@@ -6,10 +6,13 @@ import Common.Receptors.Player;
  * Cette classe permet de modéliser le jeu.
  */
 public class Game {
-    private static final int NBR_CHESTS_TO_DESTROY = 2;
-    private Player player1, player2;
-
-    private int turn;
+    private static final int
+            NBR_CHESTS_TO_DESTROY = 2;
+    private Player
+            player1,
+            player2;
+    private int
+            turn;
 
     /**
      * Constructeur de la classe Game
@@ -31,24 +34,19 @@ public class Game {
     }
 
     /**
-     * Permet de passer au tour suivant.
-     */
-    private void nextTurn() {
-        System.out.println("Turn " + (++turn));
-
-        player1.playTurn(turn);
-
-        if(!finished()) {
-            player2.playTurn(turn);
-        }
-    }
-
-    /**
      * Permet de commencer le jeu.
      */
     public void startGame() {
         while (!finished()) {
-            nextTurn();
+            System.out.println("Turn " + (++turn));
+
+            //todo player1.sendyourturn
+            player1.playTurn(turn);
+
+            if(!finished()) {
+                //todo player2.sendyourturn
+                player2.playTurn(turn);
+            }
         }
     }
 

@@ -17,14 +17,18 @@ public class ChangeAttackPoints extends OnCreature {
 
     @Override
     public void execute() {
-        if (receptors != null && receptors[0] != null)
-            ((Creature)receptors[0]).setAttackPoints(newAP);
+        if (receptors == null)
+            return;
+        for (int i = 0; i < receptors.length; i++)
+            ((Creature)receptors[i]).setAttackPoints(newAP);
     }
 
     @Override
     public void undo() {
-        if (receptors != null && receptors[0] != null)
-            ((Creature)receptors[0]).wakeUp();
+        if (receptors == null)
+            return;
+        for (int i = 0; i < receptors.length; i++)
+            ((Creature)receptors[i]).wakeUp();
     }
 
     public void setAttackPoints(int ap) {

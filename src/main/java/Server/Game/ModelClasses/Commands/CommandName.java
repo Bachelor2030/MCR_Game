@@ -3,7 +3,6 @@ package Server.Game.ModelClasses.Commands;
 import Server.Game.ModelClasses.Commands.CardMovement.Discard;
 import Server.Game.ModelClasses.Commands.CardMovement.Draw;
 import Server.Game.ModelClasses.Commands.CardMovement.DrawTypeFromDiscard;
-import Server.Game.ModelClasses.Commands.GUI.*;
 import Server.Game.ModelClasses.Commands.PlayersAction.Abandon;
 import Server.Game.ModelClasses.Commands.PlayersAction.EndTurn;
 import Server.Game.ModelClasses.Commands.PlayersAction.PlayCard;
@@ -33,20 +32,7 @@ public enum CommandName {
     PLAY_CARD("Play_card"),
     UNDO("Undo"),
     END_TURN("End_turn"),
-    ABANDON("Abandon"),
-
-    /* Gui commands */
-    GUI_HIT("GUI_Hit"),
-    GUI_HEAL("GUI_Heal"),
-    GUI_KILL("GUI_Kill"),
-    GUI_CHANGE_AP("GUI_Change_AP"),
-    GUI_DRAW("GUI_Draw"),
-    GUI_DISCARD("GUI_Discard"),
-    GUI_CREATE_CREATURE("GUI_Create_creature"),
-    GUI_CREATE_TRAP("GUI_Create_trap"),
-    GUI_ADVANCE_CREATURE("GUI_Advance_creature"),
-    GUI_RETREAT_CREATURE("GUI_Retreat_creature"),
-    GUI_KNOCK_OUT("GUI_Knock_Out");
+    ABANDON("Abandon");
 
     private final String name;
 
@@ -106,29 +92,6 @@ public enum CommandName {
             case UNDO:
                 return new Undo();
 
-            /* Players actions */
-            case GUI_HIT:
-                return new GUIHit();
-            case GUI_DRAW:
-                return new GUIDraw();
-            case GUI_HEAL:
-                return new GUIHeal();
-            case GUI_KILL:
-                return new GUIKill();
-            case GUI_DISCARD:
-                return new GUIDiscard();
-            case GUI_CHANGE_AP:
-                return new GUIChangeAP();
-            case GUI_KNOCK_OUT:
-                return new GUIKnockOut();
-            case GUI_CREATE_TRAP:
-                return new GUICreateTrap();
-            case GUI_CREATE_CREATURE:
-                return new GUICreateCreature();
-            case GUI_ADVANCE_CREATURE:
-                return new GUIAdvanceCreature();
-            case GUI_RETREAT_CREATURE:
-                return new GUIRetreatCreature();
             default: return null;
         }
 

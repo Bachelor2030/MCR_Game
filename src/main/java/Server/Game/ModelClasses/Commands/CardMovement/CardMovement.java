@@ -27,4 +27,9 @@ public abstract class CardMovement extends ConcreteCommand {
     protected void setCard(Card card) {
         this.card = card;
     }
+
+    @Override
+    public String toJson() {
+        return "{\"type\" : \"Card command " + name + "\", \"player\" : " + player.getName() + ", \"cardID\" : " + card.getID() + "}";
+    }
 }
