@@ -570,14 +570,23 @@ public class GameBoard extends Application {
   }
 
   private GridPane corpsLogiciel() throws IOException {
+
     islandsPanel = new GridPane();
     islandsPanel.getStyleClass().add("corps-gridPane");
+
+    int numRows = 5;
+    for(int i = 0;i < numRows; i++)
+    {
+      RowConstraints rc = new RowConstraints();
+      rc.setPercentHeight(100 / numRows);
+      islandsPanel.getRowConstraints().add(rc);
+    }
+
 
     // Répertoire contenant nos îles
     Group islands = new Group();
     Board board = new Board(islands, islandsPanel);
     islandsPanel.setAlignment(Pos.CENTER);
-    
     return islandsPanel;
   }
 

@@ -2,7 +2,6 @@ package Common.GameBoard;
 
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
 
 import java.io.IOException;
 import java.util.LinkedList;
