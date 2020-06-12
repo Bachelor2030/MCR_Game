@@ -29,6 +29,11 @@ public class Spot extends Application {
   //l'image représentant le spot
   private FileInputStream imagePath = new FileInputStream("src/main/java/Common/GameBoard/island.png");
   Image image;
+
+  public ImageView getImageView() {
+    return imageView;
+  }
+
   ImageView imageView;
 
   Group root;
@@ -65,40 +70,14 @@ public class Spot extends Application {
     imageView = new ImageView(image);
     this.number = number % 10;
     this.pos = pos;
-
     initSpot();
   }
 
-  /**
-   * Permet de choisir le bon facteur pour adapter la distance verticale entre les îles.
-   * @param absoluteNumber : le nombre d'îles créées jusqu'à maintenant.
-   * @return le facteur selon le nombre absolu d'île.
-   */
-  private int chooseFactor(int absoluteNumber) {
-    if(absoluteNumber > 10 && absoluteNumber < 21)
-    {
-      return 1;
-    }
-    else if(absoluteNumber > 20 && absoluteNumber < 31)
-    {
-      return 2;
-    }
-    else if(absoluteNumber > 30)
-    {
-      return 3;
-    }
-
-    return 0;
-  }
 
   /**
    * permet d'initialiser correctement la place d'un îlot
    */
   private void initSpot() {
-    pos.x = (this.number % 10 == 0 ? (int)STARTING_COORDINATE_X : pos.x);
-    pos.x += HORIZONTAL_DISTANCE_BETWEEN_ISLANDS * (number % 10);
-    pos.y += (VERTICAL_DISTANCE_BETWEEN_ISLANDS * chooseFactor(spotCounter));
-    System.out.println("position spot " + this.number + " : " + pos.x + ' ' + pos.y);
     root.getChildren().add(imageView);
 
     imageView.setFitWidth(image.getWidth() * MIN_WIDTH_RATIO);

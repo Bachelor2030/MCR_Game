@@ -13,11 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.*;
+
+
+//TODO : commande qui font des actions graphiques. (genre déplacer créature)
 
 /** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
@@ -39,7 +41,7 @@ public class GameBoard extends Application {
   private Button returnToMenu; // permet de retourner au menu principal
 
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
-  private StackPane sp;
+  private GridPane islandsPanel;
 
   // Affiche les actions joueurs par le player 1
   private ListView<String> actionPlayer1Labels;
@@ -567,16 +569,16 @@ public class GameBoard extends Application {
     return panneauVerticalGauche;
   }
 
-  private StackPane corpsLogiciel() throws IOException {
-    sp = new StackPane();
-    sp.getStyleClass().add("corps-gridPane");
+  private GridPane corpsLogiciel() throws IOException {
+    islandsPanel = new GridPane();
+    islandsPanel.getStyleClass().add("corps-gridPane");
 
     // Répertoire contenant nos îles
     Group islands = new Group();
-    Board board = new Board(islands);
-    sp.getChildren().add(islands);
-
-    return sp;
+    Board board = new Board(islands, islandsPanel);
+    islandsPanel.setAlignment(Pos.CENTER);
+    
+    return islandsPanel;
   }
 
   /** @return la barre de navigation contenant les différents boutons gérant la partie. */
