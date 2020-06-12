@@ -2,6 +2,7 @@ package Server.Game.ModelClasses.Commands.OnLiveReceptors;
 
 import Common.Receptors.Creature;
 import Server.Game.ModelClasses.Commands.CommandName;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.ChangeMovementsPoints;
 import Server.Game.ModelClasses.ConcreteCommand;
 import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.ChangeAttackPoints;
 import Server.Game.ModelClasses.LiveReceptor;
@@ -23,6 +24,8 @@ public abstract class OnLiveReceptors extends ConcreteCommand {
             ((Kill)this).setLifePoints(lp);
         } else if (this.getName() == CommandName.CHANGE_AP) {
             ((ChangeAttackPoints)this).setAttackPoints(((Creature)receptors[0]).getAttackPoints());
+        } else if (this.getName() == CommandName.CHANGE_MP) {
+            ((ChangeMovementsPoints)this).setMovementsPoints(((Creature)receptors[0]).getSteps());
         }
     }
 }
