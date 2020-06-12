@@ -37,7 +37,7 @@ public abstract class OnLiveReceptors extends ConcreteCommand {
 
         for (int i = 0; i < receptors.length; i++) {
             LiveReceptor receptor = receptors[i];
-            sb.append("{\"type\" : \"" + name + "\", \"player\" : " + receptor.getOwnerName());
+            sb.append("{\"type\" : \"Command\", \"name\"" + name + "\", \"player\" : " + receptor.getOwnerName());
 
             if (name == CommandName.CHANGE_AP       ||
                 name == CommandName.CHANGE_MP       ||

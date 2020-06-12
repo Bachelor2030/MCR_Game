@@ -2,7 +2,7 @@ package Common.Receptors;
 
 import Server.Game.Card.Card;
 import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
-import Server.Game.ModelClasses.PlayersAction;
+import Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction;
 import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
