@@ -8,7 +8,6 @@ import Server.Game.ModelClasses.LiveReceptor;
  * Creature class, modelises the creatures that move on the board of the game and fight each other
  */
 public class Creature extends LiveReceptor {
-    private Position position;       // Position of the creature
     private int steps;               // Number of stpes the creature can do in one turn
     private int attackPoints;        // Number of points the creature takes from an ennemi when hitting it
     private Card originCard;         // The card that created the creature
@@ -26,18 +25,6 @@ public class Creature extends LiveReceptor {
         this.steps = steps;
         this.attackPoints = attackPoints;
         asleep = false;
-    }
-
-    /**
-     * Places the creature at the given position
-     * This puts the creature on the game board
-     * @param position the position at which to place the creature on the board
-     */
-    public void place(Position position) {
-        if(position != null) {
-            this.position = position;
-            this.position.setOccupant(this);
-        }
     }
 
     /**

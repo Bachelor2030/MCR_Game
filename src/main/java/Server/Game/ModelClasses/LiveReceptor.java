@@ -1,8 +1,10 @@
 package Server.Game.ModelClasses;
 
 import Common.Receptors.Player;
+import Server.Game.Position;
 
 public abstract class LiveReceptor extends Receptor {
+    protected Position position;       // Position of the creature
     protected final int MAX_LIFE_POINTS;
     protected int lifePoints;
     protected Player owner;
@@ -57,6 +59,22 @@ public abstract class LiveReceptor extends Receptor {
 
     public void setOwner(Player player) {
         owner = player;
+    }
+
+    /**
+     * Places the creature at the given position
+     * This puts the creature on the game board
+     * @param position the position at which to place the creature on the board
+     */
+    public void place(Position position) {
+        if(position != null) {
+            this.position = position;
+            this.position.setOccupant(this);
+        }
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     @Override

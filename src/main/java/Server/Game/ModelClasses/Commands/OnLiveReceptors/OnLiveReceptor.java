@@ -7,10 +7,10 @@ import Server.Game.ModelClasses.ConcreteCommand;
 import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.ChangeAttackPoints;
 import Server.Game.ModelClasses.LiveReceptor;
 
-public abstract class OnLiveReceptors extends ConcreteCommand {
+public abstract class OnLiveReceptor extends ConcreteCommand {
     protected LiveReceptor[] receptors;
 
-    public OnLiveReceptors(CommandName name) {
+    public OnLiveReceptor(CommandName name) {
         super(name);
     }
 
@@ -19,7 +19,7 @@ public abstract class OnLiveReceptors extends ConcreteCommand {
         if (this.getName() == CommandName.KILL) {
             int[] lp = new int[receptors.length];
             for (int i = 0; i < receptors.length; i++) {
-                lp[i] = ((Creature)receptors[i]).getLifePoints();
+                lp[i] = receptors[i].getLifePoints();
             }
             ((Kill)this).setLifePoints(lp);
         } else if (this.getName() == CommandName.CHANGE_AP) {
@@ -27,5 +27,13 @@ public abstract class OnLiveReceptors extends ConcreteCommand {
         } else if (this.getName() == CommandName.CHANGE_MP) {
             ((ChangeMovementsPoints)this).setMovementsPoints(((Creature)receptors[0]).getSteps());
         }
+    }
+
+    @Override
+    public String toJson() {
+        return  "{\"type\" : \"Command " + name +
+                "\", \"player\" : \"" + receptors[0].getOwnerName() +
+                "\", \"position\" : { \"line\" : " + receptors[0].getPosition().getLine() +
+                ", \"spot\" : " + receptors[0].getPosition().getPosition() + "}";
     }
 }
