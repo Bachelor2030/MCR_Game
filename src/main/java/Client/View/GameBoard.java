@@ -574,6 +574,7 @@ public class GameBoard extends Application {
     gridIslandsPanel.getStyleClass().add("corps-gridPane");
     VBox vbox = new VBox();
 
+    /*
     int numRows = 5;
     for(int i = 0;i < numRows; i++)
     {
@@ -581,6 +582,7 @@ public class GameBoard extends Application {
       rc.setPercentHeight(100 / numRows);
       gridIslandsPanel.getRowConstraints().add(rc);
     }
+    */
 
 
     // Répertoire contenant nos îles

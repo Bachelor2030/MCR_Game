@@ -2,9 +2,7 @@ package Common.GameBoard;
 
 import Common.Receptors.Creature;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -22,10 +20,10 @@ public class Line {
   // Les cases composant la ligne
   private LinkedList<Spot> spots;
 
-  //La liste de creatures
+  // La liste de creatures
   private LinkedList<Creature> creatures;
 
-  //le groupe d'îlots qu'on affichera par la suite
+  // le groupe d'îlots qu'on affichera par la suite
   Group root;
 
   public Line(int noLine) {
@@ -39,13 +37,15 @@ public class Line {
    */
   public Line(int noLine, GridPane gridPane, VBox vbox) throws IOException {
     this.noLine = noLine;
-    creatures = new LinkedList<>(); //on initialise la liste de créatures.
-    spots = new LinkedList<>(); //on initialise la liste de spots.
+    creatures = new LinkedList<>(); // on initialise la liste de créatures.
+    spots = new LinkedList<>(); // on initialise la liste de spots.
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
-      vbox = new VBox();
+      vbox = new VBox(); // On créé une box verticale pour aligne la créature à l'île.
       spots.add(new Spot());
-      creatures.add(new Creature("unknown",0,0,0));
-      vbox.getChildren().addAll((creatures.get(spot).getImageView()),(spots.get(spot).getImageView()));
+
+      creatures.add(new Creature("unknown", 0, 0, 0));
+      vbox.getChildren()
+          .addAll((creatures.get(spot).getImageView()), (spots.get(spot).getImageView()));
       gridPane.add(vbox, spot, noLine);
     }
   }

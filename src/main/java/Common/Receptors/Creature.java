@@ -18,6 +18,7 @@ public class Creature extends LiveReceptor {
     private int attackPoints;        // Number of points the creature takes from an ennemi when hitting it
     private Card originCard;         // The card that created the creature
     private boolean asleep;
+
     private FileInputStream imagePath = new FileInputStream("src/main/resources/design/images/creatures/shark.gif");
     Image image;
     ImageView imageView;
@@ -149,5 +150,9 @@ public class Creature extends LiveReceptor {
 
     public ImageView getImageView() {
         return imageView;
+    }
+
+    public void setImagePath(FileInputStream imagePath) {
+        this.imagePath = imagePath;
     }
 }
