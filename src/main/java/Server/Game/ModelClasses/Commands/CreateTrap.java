@@ -41,7 +41,6 @@ public class CreateTrap extends ConcreteCommand {
         trap.setPosition(null);
     }
 
-    // TODO
     @Override
     public String toJson() {
         return "{\"type\" : \"Command " + name + "\", \"player\" : " + player.getName() + "}";

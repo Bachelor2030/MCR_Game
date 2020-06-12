@@ -36,13 +36,13 @@ public class Position {
     }
 
     public void setOccupant(Receptor occupant) {
-        if(isValid()) {
+        if(isValid() && line != null && line.getSpot(position) != null) {
             line.getSpot(position).setOccupant(occupant);
         }
     }
 
     public void leave() {
-        if(line != null) {
+        if(line != null && line.getSpot(position) != null) {
             line.getSpot(position).leave();
         }
     }

@@ -37,7 +37,6 @@ public class CommandParser {
 
             }
 
-
             // TODO set les infos données dans la commande
 
             commands.add(concreteCommand);
