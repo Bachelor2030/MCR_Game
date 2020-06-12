@@ -17,6 +17,10 @@ public class Kill extends OnLiveReceptors {
         }
     }
 
+    public void setLifePoints(int[] lp) {
+        lifePoints = lp;
+    }
+
     @Override
     public void undo() {
         for (int i = 0; i < receptors.length; i++) {
@@ -24,7 +28,17 @@ public class Kill extends OnLiveReceptors {
         }
     }
 
-    public void setLifePoints(int[] lp) {
-        lifePoints = lp;
+    @Override
+    public String toJson() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{\"type\" : \"" + name + "\", \"receptors\" : [");
+
+        // TODO tout faux
+        for (LiveReceptor receptor : receptors) {
+            receptor.loseLifePoints(receptor.getLifePoints());
+        }
+
+
+        return sb.toString();
     }
 }

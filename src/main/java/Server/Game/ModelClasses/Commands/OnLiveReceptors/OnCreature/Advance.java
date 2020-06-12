@@ -21,4 +21,5 @@ public class Advance extends OnCreature {
             ((Creature) receptors[0]).retreat(((Creature) receptors[0]).getSteps());
         }
     }
+
 }

@@ -42,4 +42,9 @@ public abstract class PlayersAction extends ConcreteCommand {
 
         return playersAction;
     }
+
+    @Override
+    public String toJson() {
+        return "{\"type\" : \"" + name + "\", \"player\" : " + player.getName() + "}";
+    }
 }

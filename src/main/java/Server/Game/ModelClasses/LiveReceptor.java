@@ -15,6 +15,10 @@ public abstract class LiveReceptor extends Receptor {
         this.type = type;
     }
 
+    public String getOwnerName() {
+        return owner.getName();
+    }
+
     public void loseLifePoints(int points) {
         if (lifePoints - points >= 0) {
             lifePoints -= points;

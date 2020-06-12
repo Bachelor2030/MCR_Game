@@ -20,4 +20,10 @@ public abstract class OnCreature extends OnLiveReceptors {
         }
         return null;
     }
+
+    @Override
+    public String toJson() {
+        return  "{\"type\" : \"Command " + name + "\", \"player\" : " + ((LiveReceptor) receptors[0]).getOwnerName() +
+                "}";
+    }
 }
