@@ -3,6 +3,7 @@ package Server.Game.ModelClasses.Commands;
 import Server.Game.ModelClasses.Commands.CardMovement.Discard;
 import Server.Game.ModelClasses.Commands.CardMovement.Draw;
 import Server.Game.ModelClasses.Commands.CardMovement.DrawTypeFromDiscard;
+import Server.Game.ModelClasses.Commands.GUI.*;
 import Server.Game.ModelClasses.Commands.PlayersAction.Abandon;
 import Server.Game.ModelClasses.Commands.PlayersAction.EndTurn;
 import Server.Game.ModelClasses.Commands.PlayersAction.PlayCard;
@@ -68,29 +69,66 @@ public enum CommandName {
 
     public ConcreteCommand getCommand() {
         switch (this) {
-            case HIT: return new Hit();
-            case HEAL: return new Heal();
-            case CHANGE_AP: return new ChangeAttackPoints();
-            case CHANGE_MP: return new ChangeMovementsPoints();
-            case DRAW_TYPE_FROM_DISCARD: return new DrawTypeFromDiscard();
-            case CREATE_TRAP: return new CreateTrap();
-            case DISCARD: return new Discard();
-            case DRAW: return new Draw();
-            case CREATE_CREATURE: return new Create();
-            case KILL: return new Kill();
-            case KNOCK_OUT: return new KnockOut();
-            case ADVANCE_CREATURE: return new Advance();
-            case RETREAT_CREATURE: return new Retreat();
+            case HIT:
+                return new Hit();
+            case HEAL:
+                return new Heal();
+            case CHANGE_AP:
+                return new ChangeAttackPoints();
+            case CHANGE_MP:
+                return new ChangeMovementsPoints();
+            case DRAW_TYPE_FROM_DISCARD:
+                return new DrawTypeFromDiscard();
+            case CREATE_TRAP:
+                return new CreateTrap();
+            case DISCARD:
+                return new Discard();
+            case DRAW:
+                return new Draw();
+            case CREATE_CREATURE:
+                return new Create();
+            case KILL:
+                return new Kill();
+            case KNOCK_OUT:
+                return new KnockOut();
+            case ADVANCE_CREATURE:
+                return new Advance();
+            case RETREAT_CREATURE:
+                return new Retreat();
 
             /* Players actions */
-            case ABANDON : return new Abandon();
-            case END_TURN: return new EndTurn();
-            case PLAY_CARD: return new PlayCard();
-            case UNDO: return new Undo();
+            case ABANDON :
+                return new Abandon();
+            case END_TURN:
+                return new EndTurn();
+            case PLAY_CARD:
+                return new PlayCard();
+            case UNDO:
+                return new Undo();
 
             /* Players actions */
-
-
+            case GUI_HIT:
+                return new GUIHit();
+            case GUI_DRAW:
+                return new GUIDraw();
+            case GUI_HEAL:
+                return new GUIHeal();
+            case GUI_KILL:
+                return new GUIKill();
+            case GUI_DISCARD:
+                return new GUIDiscard();
+            case GUI_CHANGE_AP:
+                return new GUIChangeAP();
+            case GUI_KNOCK_OUT:
+                return new GUIKnockOut();
+            case GUI_CREATE_TRAP:
+                return new GUICreateTrap();
+            case GUI_CREATE_CREATURE:
+                return new GUICreateCreature();
+            case GUI_ADVANCE_CREATURE:
+                return new GUIAdvanceCreature();
+            case GUI_RETREAT_CREATURE:
+                return new GUIRetreatCreature();
             default: return null;
         }
 
