@@ -1,7 +1,5 @@
 package Server.Game.Card;
 
-import Server.Game.ModelClasses.Commands.CommandName;
-
 /**
  * All the types of card that exist in the game
  */
