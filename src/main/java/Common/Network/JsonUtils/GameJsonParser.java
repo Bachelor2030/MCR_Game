@@ -1,4 +1,4 @@
-package Server.Game.Utils;
+package Common.Network.JsonUtils;
 
 import Common.Receptors.Player;
 import Server.Game.Card.Card;

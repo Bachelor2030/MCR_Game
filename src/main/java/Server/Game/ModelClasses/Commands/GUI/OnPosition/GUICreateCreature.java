@@ -1,8 +1,8 @@
-package Server.Game.ModelClasses.Commands.GUI;
+package Server.Game.ModelClasses.Commands.GUI.OnPosition;
 
 import Server.Game.ModelClasses.Commands.CommandName;
 
-public class GUICreateCreature extends GUICommand {
+public class GUICreateCreature extends GUIOnPosition {
     public GUICreateCreature() {
         super(CommandName.GUI_CREATE_CREATURE);
     }

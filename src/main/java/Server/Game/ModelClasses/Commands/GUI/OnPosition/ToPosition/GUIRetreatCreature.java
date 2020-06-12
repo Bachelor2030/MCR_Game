@@ -1,8 +1,8 @@
-package Server.Game.ModelClasses.Commands.GUI;
+package Server.Game.ModelClasses.Commands.GUI.OnPosition.ToPosition;
 
 import Server.Game.ModelClasses.Commands.CommandName;
 
-public class GUIRetreatCreature extends GUICommand {
+public class GUIRetreatCreature extends GUIMoveCreature {
     public GUIRetreatCreature() {
         super(CommandName.GUI_RETREAT_CREATURE);
     }

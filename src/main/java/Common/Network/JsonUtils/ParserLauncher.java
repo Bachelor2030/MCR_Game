@@ -1,4 +1,4 @@
-package Server.Game.Utils;
+package Common.Network.JsonUtils;
 
 import Common.Receptors.Creature;
 import Common.Receptors.Trap;

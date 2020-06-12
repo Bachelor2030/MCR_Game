@@ -1,10 +1,11 @@
-package Server.Game.ModelClasses.Commands.GUI;
+package Server.Game.ModelClasses.Commands.GUI.OnPosition;
 
 import Server.Game.ModelClasses.Commands.CommandName;
 
-public class GUIDiscard extends GUICommand {
-    public GUIDiscard() {
-        super(CommandName.GUI_DISCARD);
+public class GUIHit extends GUIOnPosition {
+
+    public GUIHit() {
+        super(CommandName.GUI_HIT);
     }
 
     @Override

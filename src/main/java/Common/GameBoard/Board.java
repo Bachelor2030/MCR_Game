@@ -35,6 +35,13 @@ public class Board {
         }
     }
 
+    public Line getLine(int index) {
+        if (index < lines.size()) {
+            return lines.get(index);
+        }
+        return null;
+    }
+
     /**
      * Permet de récupérer la liste des lignes du board.
      * @return la liste des lignes du board.
