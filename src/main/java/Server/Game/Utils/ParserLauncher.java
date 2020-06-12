@@ -52,7 +52,7 @@ public class ParserLauncher {
         return game;
     }
 
-    public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
+    public static ArrayList<Card> parseJsonCards(String json) throws JSONException, FileNotFoundException {
         ArrayList<Card> cards = new ArrayList<>();
 
         JSONObject obj = new JSONObject(json);

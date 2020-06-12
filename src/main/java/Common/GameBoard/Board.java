@@ -2,6 +2,7 @@ package Common.GameBoard;
 
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -27,13 +28,12 @@ public class Board {
     /**
      * Constructeur de la classe Board
      */
-    public Board(Group root, GridPane gridPane) throws IOException {
-        this.root = root;
+    public Board(GridPane gridPane, VBox vbox) throws IOException {
         lineCounter = 0;
         lines = new LinkedList<>();
         for(int line = 0; line < NB_LINES; ++line)
         {
-            lines.add(new Line(++lineCounter, root, gridPane));
+            lines.add(new Line(++lineCounter, gridPane, vbox));
         }
     }
 

@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -41,7 +40,7 @@ public class GameBoard extends Application {
   private Button returnToMenu; // permet de retourner au menu principal
 
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
-  private GridPane islandsPanel;
+  private GridPane gridIslandsPanel;
 
   // Affiche les actions joueurs par le player 1
   private ListView<String> actionPlayer1Labels;
@@ -571,23 +570,23 @@ public class GameBoard extends Application {
 
   private GridPane corpsLogiciel() throws IOException {
 
-    islandsPanel = new GridPane();
-    islandsPanel.getStyleClass().add("corps-gridPane");
+    gridIslandsPanel = new GridPane();
+    gridIslandsPanel.getStyleClass().add("corps-gridPane");
+    VBox vbox = new VBox();
 
     int numRows = 5;
     for(int i = 0;i < numRows; i++)
     {
       RowConstraints rc = new RowConstraints();
       rc.setPercentHeight(100 / numRows);
-      islandsPanel.getRowConstraints().add(rc);
+      gridIslandsPanel.getRowConstraints().add(rc);
     }
 
 
     // Répertoire contenant nos îles
-    Group islands = new Group();
-    Board board = new Board(islands, islandsPanel);
-    islandsPanel.setAlignment(Pos.CENTER);
-    return islandsPanel;
+    Board board = new Board(gridIslandsPanel, vbox);
+    gridIslandsPanel.setAlignment(Pos.CENTER);
+    return gridIslandsPanel;
   }
 
   /** @return la barre de navigation contenant les différents boutons gérant la partie. */
@@ -612,6 +611,7 @@ public class GameBoard extends Application {
     validateTourButton.setOnAction(
         actionEvent -> {
           // blablabla définir ce que fait le bouton "valider tour" ici.
+          System.out.println("you hit the validate button...");
         });
 
     abandonTourButton.setOnAction(
@@ -700,18 +700,26 @@ public class GameBoard extends Application {
    *
    * @return le footer
    */
-  private HBox footerBar() {
+  private HBox footerBar() throws FileNotFoundException {
 
     // On définit une boxe horizontale qui définira l'espace "footer" -> cartes du joueur
     HBox footerCardsPlayer = new HBox();
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
-    // À REMPLACER PAR LES CARTES-----------
-    Label blabla = new Label();
-    blabla.setText("Blablabla test");
-    // -------------------------------------
-    footerCardsPlayer.getChildren().add(blabla);
+    // À REFACTORER SA MERE DANS UNE AUTRE CLASSE -----------
+    for(int i = 0; i < 5; i++)
+    {
+      FileInputStream imagePath = new FileInputStream("src/main/resources/design/images/cards/cardSample.png");
+      Image image = new Image(imagePath);
+      ImageView imageView = new ImageView(image);
+      imageView.setFitWidth(image.getWidth() * 0.7);
+      imageView.setFitHeight(image.getHeight() * 0.7);
+      // -------------------------------------
+      footerCardsPlayer.getChildren().add(imageView);
+      footerCardsPlayer.getStyleClass().add("corps-gridPane");
+    }
+
 
     return footerCardsPlayer;
   }
