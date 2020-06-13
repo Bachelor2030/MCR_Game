@@ -27,8 +27,10 @@ public class CreatureTest {
         player    = new Player("Elodie", null);
         player1   = new Player("Michel", null);
 
-        creature  = new Creature("Pier", 10, STEPS, 4, player);
-        creature1 = new Creature("Sebas-chan", 12, 3, 1, player);
+        creature  = new Creature("Pier", 10, STEPS, 4);
+        creature.setOwner(player);
+        creature1 = new Creature("Sebas-chan", 12, 3, 1);
+        creature1.setOwner(player);
     }
 
     @Test
@@ -38,7 +40,8 @@ public class CreatureTest {
 
     @Test
     public void CreaturesWithDifferentOwnersMustNotBeAllies() {
-        Creature c = new Creature("", 0, 0, 4, player1);
+        Creature c = new Creature("", 0, 0, 4);
+        c.setOwner(player1);
         assertFalse(creature.isAlly(c));
     }
 
