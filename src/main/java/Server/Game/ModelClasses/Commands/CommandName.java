@@ -1,9 +1,9 @@
 package Server.Game.ModelClasses.Commands;
 
+import Client.GuiCommands.*;
 import Server.Game.ModelClasses.Commands.CardMovement.Discard;
 import Server.Game.ModelClasses.Commands.CardMovement.Draw;
 import Server.Game.ModelClasses.Commands.CardMovement.DrawTypeFromDiscard;
-import Server.Game.ModelClasses.Commands.GUI.*;
 import Server.Game.ModelClasses.Commands.PlayersAction.Abandon;
 import Server.Game.ModelClasses.Commands.PlayersAction.EndTurn;
 import Server.Game.ModelClasses.Commands.PlayersAction.PlayCard;
@@ -15,38 +15,39 @@ import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.*;
 import Server.Game.ModelClasses.ConcreteCommand;
 
 public enum CommandName {
+    /* GUI */
+    MOVE("Move"),
+    CHANGE_POINTS("Change_points"),
+    PLACE("Place"),
+    KNOCK_OUT_CREATURE("Knock_out_creature"),
+    ADD_CARD("Add_card"),
+    REMOVE_CARD("Remove_card"),
+    END_GAME("End_game"),
+
+    /* Needs one position */
     HIT("Hit"),
     HEAL("Heal"),
     KILL("Kill"),
     CHANGE_AP("Change_AP"),
     CHANGE_MP("Change_MP"),
+    CREATE_CREATURE("Create_creature"),
+    CREATE_TRAP("Create_trap"),
+    KNOCK_OUT("Knock_Out"),
+
+    /* Needs two positions */
+    ADVANCE_CREATURE("Advance_creature"),
+    RETREAT_CREATURE("Retreat_creature"),
+
+    /* Needs a card */
     DRAW_TYPE_FROM_DISCARD("Draw_type_from_discard"),
     DRAW("Draw"),
     DISCARD("Discard"),
-    CREATE_CREATURE("Create_creature"),
-    CREATE_TRAP("Create_trap"),
-    ADVANCE_CREATURE("Advance_creature"),
-    RETREAT_CREATURE("Retreat_creature"),
-    KNOCK_OUT("Knock_Out"),
+    PLAY_CARD("Play_card"),
 
     /* Player commands */
-    PLAY_CARD("Play_card"),
     UNDO("Undo"),
     END_TURN("End_turn"),
-    ABANDON("Abandon"),
-
-    /* Gui commands */
-    GUI_HIT("GUI_Hit"),
-    GUI_HEAL("GUI_Heal"),
-    GUI_KILL("GUI_Kill"),
-    GUI_CHANGE_AP("GUI_Change_AP"),
-    GUI_DRAW("GUI_Draw"),
-    GUI_DISCARD("GUI_Discard"),
-    GUI_CREATE_CREATURE("GUI_Create_creature"),
-    GUI_CREATE_TRAP("GUI_Create_trap"),
-    GUI_ADVANCE_CREATURE("GUI_Advance_creature"),
-    GUI_RETREAT_CREATURE("GUI_Retreat_creature"),
-    GUI_KNOCK_OUT("GUI_Knock_Out");
+    ABANDON("Abandon");
 
     private final String name;
 
@@ -106,29 +107,22 @@ public enum CommandName {
             case UNDO:
                 return new Undo();
 
-            /* Players actions */
-            case GUI_HIT:
-                return new GUIHit();
-            case GUI_DRAW:
-                return new GUIDraw();
-            case GUI_HEAL:
-                return new GUIHeal();
-            case GUI_KILL:
-                return new GUIKill();
-            case GUI_DISCARD:
-                return new GUIDiscard();
-            case GUI_CHANGE_AP:
-                return new GUIChangeAP();
-            case GUI_KNOCK_OUT:
-                return new GUIKnockOut();
-            case GUI_CREATE_TRAP:
-                return new GUICreateTrap();
-            case GUI_CREATE_CREATURE:
-                return new GUICreateCreature();
-            case GUI_ADVANCE_CREATURE:
-                return new GUIAdvanceCreature();
-            case GUI_RETREAT_CREATURE:
-                return new GUIRetreatCreature();
+            /* GUI */
+            case MOVE:
+                return new Move();
+            case PLACE:
+                return new Place();
+            case KNOCK_OUT_CREATURE:
+                return new KnockOutCreature();
+            case CHANGE_POINTS:
+                return new ChangePoints();
+            case ADD_CARD:
+                return new AddCard();
+            case REMOVE_CARD:
+                return new RemoveCard();
+            case END_GAME:
+                return new EndGame();
+
             default: return null;
         }
 

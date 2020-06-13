@@ -78,6 +78,24 @@
       "cost" : 3,
       "effect point" : 4,
       "target" : "one"
+    },
+    {
+      "id" : 6,
+      "name" : "All powerful you",
+      "type" : "Spell",
+      "card commands" : ["Change_AP"],
+      "cost" : 3,
+      "effect point" : 6,
+      "target" : "one"
+    },
+    {
+      "id" : 7,
+      "name" : "No fighting spirit for you",
+      "type" : "Spell",
+      "card commands" : ["Change_AP"],
+      "cost" : 3,
+      "effect point" : 1,
+      "target" : "one"
     }
   ]
 }

@@ -15,6 +15,8 @@ public abstract class ConcreteCommand implements Command {
         return name;
     }
 
+    public abstract String toJson();
+
     @Override
     public String toString() {
         if (name != null)
