@@ -20,20 +20,13 @@ public class CommandParser {
             JSONObject command = jsonCommands.getJSONObject(commandNo);
 
             String player = command.getString("player");
-            int cardID = command.getInt("cardID");
 
             ConcreteCommand concreteCommand = CommandName.getCommandName(command.getString("name")).getCommand();
 
-            int line, spot;
-
             // TODO Tout refaire
-
-            if (concreteCommand.getName() != CommandName.DRAW                &&
-                concreteCommand.getName() != CommandName.DISCARD             &&
-                concreteCommand.getName() != CommandName.RETREAT_CREATURE    &&
-                concreteCommand.getName() != CommandName.ADVANCE_CREATURE    ) {
-                line = command.getJSONObject("position").getInt("line");
-                spot = command.getJSONObject("position").getInt("spot");
+            // Needs two positions
+            if (concreteCommand.getName() == CommandName.ADVANCE_CREATURE ||
+                concreteCommand.getName() == CommandName.RETREAT_CREATURE) {
 
             }
 
