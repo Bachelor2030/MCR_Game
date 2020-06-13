@@ -1,5 +1,6 @@
 package Server.Game.ModelClasses;
 
+import Common.Receptors.Creature;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,7 +17,7 @@ public abstract class Receptor {
     }
 
     public Receptor() {
-        this.name = "";
+        this.name = "empty";
         initDisplay();
     }
 
@@ -57,8 +58,13 @@ public abstract class Receptor {
 
     public void setTo(Receptor receptor) {
         System.out.println("I am a new receptor");
-        imagePath = receptor.imagePath;
-        image = receptor.image;
-        imageView = receptor.imageView;
+        if(receptor == null) {
+            imagePath = "design/images/creatures/empty.jpg";
+            initDisplay();
+        } else {
+            imagePath = receptor.imagePath;
+            image = receptor.image;
+            imageView = receptor.imageView;
+        }
     }
 }

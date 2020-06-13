@@ -3,6 +3,7 @@ package Common.GameBoard;
 import Common.Receptors.Chest;
 import Common.Receptors.Creature;
 import Common.Receptors.Player;
+import Common.Receptors.Trap;
 import Server.Game.ModelClasses.Receptor;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -93,7 +94,7 @@ public class BoardLine {
     ObservableList<Node> childrens = gridPane.getChildren();
     for (Node node : childrens) {
       if(gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
-        ((VBox)node).getChildren().set(0, receptor.getImageView());
+        ((VBox)node).getChildren().set(0, receptors.get(spot).getImageView());
         break;
       }
     }

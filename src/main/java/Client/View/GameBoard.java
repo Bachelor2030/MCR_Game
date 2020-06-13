@@ -1,12 +1,14 @@
 package Client.View;
 
 import Client.GuiCommands.EndGame;
+import Client.GuiCommands.Move;
 import Common.GameBoard.Board;
 import Common.Receptors.Creature;
 import Common.Receptors.Player;
 import Server.Game.Card.Card;
 import Server.Game.ModelClasses.Commands.PlayersAction.EndTurn;
 import Server.Game.ModelClasses.Receptor;
+import Server.Game.Position;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -118,6 +120,7 @@ public class GameBoard extends Application {
 
   public void place(Receptor receptor, int line, int position) {
     board.place(receptor, line, position);
+    board.getLine(line).getSpot(position).setOccupant(receptor);
   }
 
   public void exitGame() {
@@ -680,7 +683,13 @@ public class GameBoard extends Application {
           endGame.setPlayerName(player1.getName());
           endGame.setplayerState('L');
 
+          Move m = new Move();
+          m.setFrom(new Position(board.getLine(1), 2));
+          m.setTo(new Position(board.getLine(1), 5));
+          m.execute(this);
+
           //TODO send this to backend
+          System.out.println(m.toJson());
           System.out.println(endGame.toJson());
         });
 

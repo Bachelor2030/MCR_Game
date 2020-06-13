@@ -30,12 +30,9 @@ public class EndGame extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // TODO trouver un moyen pour le faire sur le jeu lancé
         gameBoard.exitGame();
     }
 
     @Override
-    public void undo(GameBoard gameBoard) {
-        // Todo : undo on the GUI
-    }
+    public void undo(GameBoard gameBoard) {}
 }

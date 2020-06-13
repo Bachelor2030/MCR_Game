@@ -2,6 +2,7 @@ package Client.GuiCommands;
 
 import Client.View.GameBoard;
 import Server.Game.ModelClasses.Commands.CommandName;
+import Server.Game.ModelClasses.LiveReceptor;
 import Server.Game.Position;
 
 public class KnockOutCreature extends GuiCommand {
@@ -32,10 +33,20 @@ public class KnockOutCreature extends GuiCommand {
     @Override
     public void execute(GameBoard gameBoard) {
         // Todo : execution on the GUI
+        LiveReceptor receptor = (LiveReceptor)gameBoard
+                .getBoard()
+                .getLine(position.getBoardLine().getNoLine())
+                .getSpot(position.getPosition())
+                .getOccupant();
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
         // Todo : undo on the GUI
+        LiveReceptor receptor = (LiveReceptor)gameBoard
+                .getBoard()
+                .getLine(position.getBoardLine().getNoLine())
+                .getSpot(position.getPosition())
+                .getOccupant();
     }
 }

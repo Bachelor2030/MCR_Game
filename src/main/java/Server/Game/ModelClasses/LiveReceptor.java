@@ -81,4 +81,8 @@ public abstract class LiveReceptor extends Receptor {
     public String toString() {
         return super.toString() + " " + lifePoints + "/" + MAX_LIFE_POINTS + " LP";
     }
+
+    public void setLifePoints(int newPointValue) {
+        lifePoints = newPointValue;
+    }
 }

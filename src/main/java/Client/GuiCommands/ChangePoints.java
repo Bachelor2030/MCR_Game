@@ -1,12 +1,16 @@
 package Client.GuiCommands;
 
 import Client.View.GameBoard;
+import Common.Receptors.Creature;
 import Server.Game.ModelClasses.Commands.CommandName;
+import Server.Game.ModelClasses.LiveReceptor;
+import Server.Game.ModelClasses.Receptor;
 import Server.Game.Position;
 
 public class ChangePoints extends GuiCommand {
     private Position position;
     private int newPointValue;
+    private int oldPointValue;
     private char pointsType;
 
     public ChangePoints() {
@@ -49,23 +53,54 @@ public class ChangePoints extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // Todo : execution on the GUI
+        LiveReceptor receptor = (LiveReceptor)gameBoard
+                .getBoard()
+                .getLine(position.getBoardLine().getNoLine())
+                .getSpot(position.getPosition())
+                .getOccupant();
+
         switch (pointsType) {
             // Movement Points
             case 'M':
-
+                oldPointValue = ((Creature)receptor).getSteps();
+                ((Creature)receptor).setMovementsPoints(newPointValue);
+                return;
             // Attack Points
             case 'A':
-
+                oldPointValue = ((Creature)receptor).getAttackPoints();
+                ((Creature)receptor).setAttackPoints(newPointValue);
+                return;
             // Life Points
             case 'L':
-
+                oldPointValue = receptor.getLifePoints();
+                receptor.setLifePoints(newPointValue);
+                return;
             default: return;
         }
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
-        // Todo : undo on the GUI
+        LiveReceptor receptor = (LiveReceptor)gameBoard
+                .getBoard()
+                .getLine(position.getBoardLine().getNoLine())
+                .getSpot(position.getPosition())
+                .getOccupant();
+
+        switch (pointsType) {
+            // Movement Points
+            case 'M':
+                ((Creature)receptor).setMovementsPoints(oldPointValue);
+                return;
+            // Attack Points
+            case 'A':
+                ((Creature)receptor).setAttackPoints(oldPointValue);
+                return;
+            // Life Points
+            case 'L':
+                receptor.setLifePoints(oldPointValue);
+                return;
+            default: return;
+        }
     }
 }
