@@ -1,6 +1,6 @@
 package GameLogic;
 
-import GameLogic.GameBoard.Board;
+import GameLogic.Board.Board;
 import GameLogic.Receptors.Player;
 
 /**

@@ -1,14 +1,14 @@
 package GUI;
 
-import GameLogic.GuiCommands.EndGame;
-import GameLogic.GuiCommands.Move;
-import GameLogic.GameBoard.Board;
+import GameLogic.Commands.GuiCommands.EndGame;
+import GameLogic.Commands.GuiCommands.Move;
+import GameLogic.Board.Board;
 import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Player;
-import GameLogic.Card.Card;
-import GameLogic.ModelClasses.Commands.PlayersAction.EndTurn;
-import GameLogic.ModelClasses.Receptor;
-import GameLogic.Position;
+import GameLogic.Invocator.Card.Card;
+import GameLogic.Commands.PlayersAction.EndTurn;
+import GameLogic.Receptors.Receptor;
+import GameLogic.Board.Position;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

@@ -1,11 +1,11 @@
 package Network.JsonUtils;
 
-import GameLogic.GuiCommands.*;
-import GameLogic.GameBoard.Board;
-import GameLogic.ModelClasses.Commands.CommandName;
-import GameLogic.ModelClasses.ConcreteCommand;
-import GameLogic.ModelClasses.Macro;
-import GameLogic.Position;
+import GameLogic.Commands.GuiCommands.*;
+import GameLogic.Board.Board;
+import GameLogic.Commands.CommandName;
+import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Commands.Macro;
+import GameLogic.Board.Position;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

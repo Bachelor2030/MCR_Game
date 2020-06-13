@@ -1,7 +1,6 @@
 package GameLogic.Receptors;
 
-import GameLogic.Card.Card;
-import GameLogic.ModelClasses.LiveReceptor;
+import GameLogic.Invocator.Card.Card;
 
 /**
  * Creature class, modelises the creatures that move on the board of the game and fight each other

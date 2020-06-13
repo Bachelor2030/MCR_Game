@@ -1,12 +1,12 @@
 package Network.JsonUtils;
 
-import GameLogic.GameBoard.Board;
+import GameLogic.Board.Board;
 import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Player;
-import GameLogic.Card.Card;
-import GameLogic.ModelClasses.Commands.CommandName;
-import GameLogic.ModelClasses.ConcreteCommand;
-import GameLogic.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
+import GameLogic.Invocator.Card.Card;
+import GameLogic.Commands.CommandName;
+import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
 import GameLogic.Game;
 import org.json.JSONException;
 import org.json.JSONObject;

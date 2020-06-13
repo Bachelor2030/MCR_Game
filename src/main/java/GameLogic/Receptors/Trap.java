@@ -1,11 +1,9 @@
 package GameLogic.Receptors;
 
-import GameLogic.ModelClasses.ConcreteCommand;
-import GameLogic.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors;
-import GameLogic.Position;
-import GameLogic.ModelClasses.LiveReceptor;
-import GameLogic.ModelClasses.Macro;
-import GameLogic.ModelClasses.Receptor;
+import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
+import GameLogic.Board.Position;
+import GameLogic.Commands.Macro;
 
 /**
  * Modelizes a trap in the game

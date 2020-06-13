@@ -1,17 +1,17 @@
 package Network.JsonUtils;
 
 import GUI.GameBoard;
-import GameLogic.GameBoard.Board;
+import GameLogic.Board.Board;
 import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Trap;
-import GameLogic.Card.Card;
-import GameLogic.Card.CardType;
-import GameLogic.ModelClasses.Commands.CommandName;
-import GameLogic.ModelClasses.Commands.CreateTrap;
-import GameLogic.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
+import GameLogic.Invocator.Card.Card;
+import GameLogic.Invocator.Card.CardType;
+import GameLogic.Commands.CommandName;
+import GameLogic.Commands.CreateTrap;
+import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
 import GameLogic.Game;
-import GameLogic.ModelClasses.ConcreteCommand;
-import GameLogic.ModelClasses.Macro;
+import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Commands.Macro;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
