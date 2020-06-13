@@ -1,4 +1,4 @@
-package Server.Game.Utils;
+package Common.Network.JsonUtils;
 
 import Server.Game.Card.Card;
 import org.json.JSONArray;

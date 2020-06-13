@@ -64,4 +64,14 @@ public class Macro implements Command {
     public int hashCode() {
         return Objects.hash(commands);
     }
+
+    public String[] toJson() {
+        String[] macro = new String[commands.size()];
+
+        for (int i = 0; i < commands.size(); i++) {
+            macro[i] = commands.get(i).toJson();
+        }
+
+        return macro;
+    }
 }

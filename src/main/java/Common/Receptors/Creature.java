@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
  * Creature class, modelises the creatures that move on the board of the game and fight each other
  */
 public class Creature extends LiveReceptor {
-    private Position position;       // Position of the creature
     private int steps;               // Number of stpes the creature can do in one turn
     private int attackPoints;        // Number of points the creature takes from an ennemi when hitting it
     private Card originCard;         // The card that created the creature
@@ -45,16 +44,12 @@ public class Creature extends LiveReceptor {
         imageView.setFitHeight(image.getHeight() * 0.2);
     }
 
-    /**
-     * Places the creature at the given position
-     * This puts the creature on the game board
-     * @param position the position at which to place the creature on the board
-     */
-    public void place(Position position) {
-        if(position != null) {
-            this.position = position;
-            this.position.setOccupant(this);
-        }
+    public void setOriginCard(Card originCard) {
+        this.originCard = originCard;
+    }
+
+    public Card getOriginCard() {
+        return originCard;
     }
 
     /**
@@ -76,7 +71,7 @@ public class Creature extends LiveReceptor {
                 break;
             }
         }
-        if (lifePoints > 0 && !position.next().isEmpty()) {
+        if (lifePoints > 0 && !position.next().isEmpty() && position.next().isValid()) {
             if(!((LiveReceptor) position.next().getOccupant()).isAlly(this)) {
 
                 ((LiveReceptor) position.next().getOccupant()).loseLifePoints(attackPoints);
@@ -136,16 +131,20 @@ public class Creature extends LiveReceptor {
         asleep = true;
     }
 
+    public void setAttackPoints(int newAP) {
+        attackPoints = newAP;
+    }
+
+    public void setMovementsPoints(int newMP) {
+        steps = newMP;
+    }
+
     @Override
     public void playTurn(int turn) {
         if (!asleep) {
             advance();
         }
         asleep = false;
-    }
-
-    public void setAttackPoints(int newAP) {
-        attackPoints = newAP;
     }
 
     public ImageView getImageView() {

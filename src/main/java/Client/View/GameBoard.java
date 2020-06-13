@@ -58,6 +58,8 @@ public class GameBoard extends Application {
 
   Player player1, player2;
   LinkedList<Card> deck1, deck2;
+  private Board board;
+
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
@@ -591,6 +593,7 @@ public class GameBoard extends Application {
       gridIslandsPanel.getRowConstraints().add(rc);
     }
     */
+
 
     // Répertoire contenant nos îles
     Board board = new Board(gridIslandsPanel, vbox, player1, player2);

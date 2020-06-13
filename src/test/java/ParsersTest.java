@@ -1,5 +1,5 @@
 import Server.Game.Game;
-import Server.Game.Utils.ParserLauncher;
+import Common.Network.JsonUtils.ParserLauncher;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

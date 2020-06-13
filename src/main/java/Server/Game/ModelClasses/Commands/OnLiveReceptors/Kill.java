@@ -17,14 +17,14 @@ public class Kill extends OnLiveReceptors {
         }
     }
 
+    public void setLifePoints(int[] lp) {
+        lifePoints = lp;
+    }
+
     @Override
     public void undo() {
         for (int i = 0; i < receptors.length; i++) {
             receptors[i].gainLifePoints(lifePoints[i]);
         }
-    }
-
-    public void setLifePoints(int[] lp) {
-        lifePoints = lp;
     }
 }

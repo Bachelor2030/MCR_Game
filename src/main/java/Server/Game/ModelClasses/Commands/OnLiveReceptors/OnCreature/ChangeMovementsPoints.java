@@ -3,9 +3,16 @@ package Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature;
 import Common.Receptors.Creature;
 import Server.Game.ModelClasses.Commands.CommandName;
 
-public class KnockOut extends OnCreature {
-    public KnockOut() {
-        super(CommandName.KNOCK_OUT);
+public class ChangeMovementsPoints extends OnCreature {
+    private int newMP;
+    private int oldMP;
+
+    public ChangeMovementsPoints() {
+        super(CommandName.CHANGE_MP);
+    }
+
+    public void setNewMP(int newMP) {
+        this.newMP = newMP;
     }
 
     @Override
@@ -13,7 +20,11 @@ public class KnockOut extends OnCreature {
         if (receptors == null)
             return;
         for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).knockOut();
+            ((Creature)receptors[i]).setMovementsPoints(newMP);
+    }
+
+    public void setMovementsPoints(int mp) {
+        oldMP = mp;
     }
 
     @Override

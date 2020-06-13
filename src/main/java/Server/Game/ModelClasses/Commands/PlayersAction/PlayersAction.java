@@ -1,10 +1,10 @@
-package Server.Game.ModelClasses;
+package Server.Game.ModelClasses.Commands.PlayersAction;
 
 import Common.Receptors.Player;
-import Server.Game.ModelClasses.Commands.PlayersAction.PlayCard;
 import Server.Game.Card.Card;
 import Server.Game.Card.CardType;
 import Server.Game.ModelClasses.Commands.CommandName;
+import Server.Game.ModelClasses.ConcreteCommand;
 
 import java.util.Scanner;
 
@@ -41,5 +41,10 @@ public abstract class PlayersAction extends ConcreteCommand {
         }
 
         return playersAction;
+    }
+
+    @Override
+    public String toJson() {
+        return "{\"type\" : \"Command\", \"name\"" + name + "\", \"player\" : " + player.getName() + "}";
     }
 }

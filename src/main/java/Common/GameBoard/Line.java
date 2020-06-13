@@ -87,6 +87,8 @@ public class Line {
   }
 
   public Spot getSpot(int index) {
+    if (spots == null)
+      return null;
     return spots.get(index);
   }
 
