@@ -1,6 +1,7 @@
 package Common.GameBoard;
 
 import Common.Receptors.Player;
+import Server.Game.ModelClasses.Receptor;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -36,6 +37,10 @@ public class Board {
         {
             lines.add(new Line(++lineCounter, gridPane, vbox, player1, player2));
         }
+    }
+
+    public void place(Receptor receptor, int lineCounter, int spot) {
+        lines.get(lineCounter).setReceptor(receptor, spot);
     }
 
     public Line getLine(int index) {

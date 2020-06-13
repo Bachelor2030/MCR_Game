@@ -1,3 +1,4 @@
+import Client.View.GameBoard;
 import Server.Game.Game;
 import Common.Network.JsonUtils.ParserLauncher;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,8 +12,9 @@ public class ParsersTest {
     @BeforeAll
     public static void init() {
         String file = "src/main/resources/json/game.json";
+        GameBoard gameBoard = new GameBoard();
 
-        game = ParserLauncher.parseJsonGame(file);
+        game = ParserLauncher.parseJsonGame(file, gameBoard.getBoard());
     }
 
     @Test

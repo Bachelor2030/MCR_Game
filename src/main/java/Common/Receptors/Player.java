@@ -57,8 +57,8 @@ public class Player extends Receptor {
         }
     }
 
-    public Player() {
-
+    public Player() throws FileNotFoundException {
+        super();
     }
 
     /**

@@ -1,5 +1,6 @@
 package Client.GuiCommands;
 
+import Client.View.GameBoard;
 import Server.Game.ModelClasses.Commands.CommandName;
 
 public class EndGame extends GuiCommand {
@@ -16,33 +17,25 @@ public class EndGame extends GuiCommand {
     @Override
     public String toJson() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"GUI Command\", \"name\"");
+        sb.append("{\"type\" : \"GUI Command\", \"name\" : \"");
         sb.append(name);
-        sb.append("\", \"player\" : ");
+        sb.append("\", \"player\" : \"");
         sb.append(playerName);
-        sb.append(", \"playerState\" : ");
+        sb.append("\", \"playerState\" : '");
         sb.append(playerState);
-        sb.append("}");
+        sb.append("'}");
 
         return sb.toString();
     }
 
     @Override
-    public void execute() {
-        // Todo : execution on the GUI
-        switch (playerState) {
-            // The player won
-            case 'W':
-
-            // The player lost
-            case 'L':
-
-            default: return;
-        }
+    public void execute(GameBoard gameBoard) {
+        // TODO trouver un moyen pour le faire sur le jeu lancé
+        gameBoard.exitGame();
     }
 
     @Override
-    public void undo() {
+    public void undo(GameBoard gameBoard) {
         // Todo : undo on the GUI
     }
 }

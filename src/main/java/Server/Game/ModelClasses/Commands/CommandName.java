@@ -23,6 +23,7 @@ public enum CommandName {
     ADD_CARD("Add_card"),
     REMOVE_CARD("Remove_card"),
     END_GAME("End_game"),
+    END_PLAYER_TURN("End_player_turn"),
 
     /* Needs one position */
     HIT("Hit"),
@@ -122,6 +123,8 @@ public enum CommandName {
                 return new RemoveCard();
             case END_GAME:
                 return new EndGame();
+            case END_PLAYER_TURN:
+                return new EndPlayerTurn();
 
             default: return null;
         }

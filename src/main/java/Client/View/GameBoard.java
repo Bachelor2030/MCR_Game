@@ -1,8 +1,12 @@
 package Client.View;
 
+import Client.GuiCommands.EndGame;
 import Common.GameBoard.Board;
+import Common.Receptors.Creature;
 import Common.Receptors.Player;
 import Server.Game.Card.Card;
+import Server.Game.ModelClasses.Commands.PlayersAction.EndTurn;
+import Server.Game.ModelClasses.Receptor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -57,9 +61,10 @@ public class GameBoard extends Application {
   BorderPane racine;
 
   Player player1, player2;
-  LinkedList<Card> deck1, deck2;
+  //LinkedList<Card> deck1, deck2;
   private Board board;
 
+  private Stage stage;
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
@@ -67,6 +72,8 @@ public class GameBoard extends Application {
     //On initialise les players
     player1 = new Player();
     player2 = new Player();
+
+    this.stage = stage;
 
     // Racine de scene
     racine = new BorderPane();
@@ -84,7 +91,7 @@ public class GameBoard extends Application {
     Scene scene = new Scene(racine, WIDTH_WINDOW, HEIGHT_WINDOW);
 
     // on définit le curseur comme croix
-    scene.setCursor(Cursor.CROSSHAIR);
+    //scene.setCursor(Cursor.CROSSHAIR);
 
     // on applique les styles de la feuille CSS
     scene.getStylesheets().add("/design/css/styleSheet.css");
@@ -97,6 +104,31 @@ public class GameBoard extends Application {
     stage.show();
   }
 
+  public void setPlayer1(Player player1) {
+    this.player1 = player1;
+  }
+
+  public void setPlayer2(Player player2) {
+    this.player2 = player2;
+  }
+
+  public Board getBoard() {
+    return board;
+  }
+
+  public void place(Receptor receptor, int line, int position) {
+    board.place(receptor, line, position);
+  }
+
+  public void exitGame() {
+    // TODO afficher la fenêtre de fin
+    isGaming = false;
+    try {
+      inMainGameMenu();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   /**
    * MENU PRINCIPAL DU JEU
@@ -596,10 +628,11 @@ public class GameBoard extends Application {
 
 
     // Répertoire contenant nos îles
-    Board board = new Board(gridIslandsPanel, vbox, player1, player2);
+    board = new Board(gridIslandsPanel, vbox, player1, player2);
     gridIslandsPanel.setAlignment(Pos.CENTER);
     return gridIslandsPanel;
   }
+
 
   /** @return la barre de navigation contenant les différents boutons gérant la partie. */
   private HBox navBar() {
@@ -623,18 +656,24 @@ public class GameBoard extends Application {
     validateTourButton.setOnAction(
         actionEvent -> {
           // blablabla définir ce que fait le bouton "valider tour" ici.
+          EndTurn endTurn = new EndTurn();
+          endTurn.setPlayer(player1);
+
+          // TODO send this to backend
+          System.out.println(endTurn.toJson());
+
           System.out.println("you hit the validate button...");
         });
 
     abandonTourButton.setOnAction(
         actionEvent -> {
           // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
-          isGaming = false;
-          try {
-            inMainGameMenu();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
+          EndGame endGame = new EndGame();
+          endGame.setPlayerName(player1.getName());
+          endGame.setplayerState('L');
+
+          //TODO send this to backend
+          System.out.println(endGame.toJson());
         });
 
     // ----------------------------------------------------

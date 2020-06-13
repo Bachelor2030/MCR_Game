@@ -3,8 +3,13 @@ package Common.GameBoard;
 import Common.Receptors.Chest;
 import Common.Receptors.Creature;
 import Common.Receptors.Player;
+import Server.Game.ModelClasses.Receptor;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -24,13 +29,16 @@ public class Line {
   private LinkedList<Spot> spots;
 
   //La liste de creatures
-  private LinkedList<Creature> creatures;
+  private LinkedList<Receptor> receptors;
 
   //La liste de trésors
   private LinkedList<Chest> chests;
 
   // le groupe d'îlots qu'on affichera par la suite
   Group root;
+
+  private static VBox vBox;
+  private static GridPane gridPane;
 
   public Line(int noLine) {
     this.noLine = noLine;
@@ -43,9 +51,12 @@ public class Line {
    */
   public Line(int noLine, GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
     this.noLine = noLine;
-    creatures = new LinkedList<>(); // on initialise la liste de créatures.
+    receptors = new LinkedList<>(); // on initialise la liste de créatures.
     spots = new LinkedList<>(); // on initialise la liste de spots.
     chests = new LinkedList<>(); //on initialise la liste de chess.
+
+    this.vBox = vbox;
+    this.gridPane = gridPane;
 
     int indexCreature = 0;
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
@@ -67,14 +78,41 @@ public class Line {
         gridPane.add(vbox, spot, noLine);
       }
       else {
-        creatures.add(new Creature("unknown", 0, 0, 0));
+        receptors.add(new Creature("unknown", 0, 0, 0));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((creatures.get(indexCreature++).getImageView()), (spots.get(spot).getImageView()));
+                .addAll((receptors.get(indexCreature++).getImageView()), (spots.get(spot).getImageView()));
         gridPane.add(vbox, spot, noLine);
       }
 
     }
+  }
+
+  public void setReceptor(Receptor receptor, int spot) {
+    // TODO demander à Elodie de remplacer la créature courante par la creature donnée
+    System.out.println(receptors.get(spot).getImageView().imageProperty().toString());
+    System.out.println(receptor.getImageView().imageProperty().toString());
+    receptors.get(spot).setTo(receptor);
+    System.out.println(receptor.getImageView().imageProperty().toString());
+
+    //vBox.getChildren().set(spot, receptor.getImageView());
+    //gridPane.getChildren().set(noLine, vBox);
+
+    ObservableList<Node> childrens = gridPane.getChildren();
+
+    for (Node node : childrens) {
+      if(gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
+        System.out.println("Avant");
+        System.out.println((((VBox)node).getChildren()));
+
+        ((VBox)node).getChildren().set(0, receptor.getImageView());
+
+        System.out.println("Apres");
+        System.out.println(((VBox)node).getChildren());
+        break;
+      }
+    }
+    //gridPane.getChildren().clear();
   }
 
   /**

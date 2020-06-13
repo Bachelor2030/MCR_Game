@@ -1,5 +1,7 @@
 package Common.Network.JsonUtils;
 
+import Client.View.GameBoard;
+import Common.GameBoard.Board;
 import Common.GameBoard.Line;
 import Common.Receptors.Creature;
 import Common.Receptors.Player;
@@ -26,9 +28,12 @@ import java.util.ArrayList;
 public class ParserLauncher {
     public static void main(String[] args) throws FileNotFoundException {
         String file = "src/main/resources/json/game.json";
+        GameBoard gameBoard = new GameBoard();
 
-        Game game = parseJsonGame(file);
-        //game.startGame();
+        Game game = parseJsonGame(file, gameBoard.getBoard());
+        game.startGame();
+
+        /*
         ArrayList<ConcreteCommand> commands = new ArrayList<>();
         Create create = new Create();
 
@@ -57,10 +62,10 @@ public class ParserLauncher {
         for (int i = 0; i < m.toJson().length; i++) {
             System.out.println("Command n°" + i);
             System.out.println(m.toJson()[i]);
-        }
+        }*/
     }
 
-    public static Game parseJsonGame(String file) {
+    public static Game parseJsonGame(String file, Board board) {
         Game game = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -77,7 +82,7 @@ public class ParserLauncher {
             ArrayList<Card> allCards = parseJsonCards(jsonUtil.getJsonContent("src/main/resources/json/cards.json"));
 
             System.out.println("Read " + file);
-            GameJsonParser gameJsonParser = new GameJsonParser(allCards, "src/main/resources/json/");
+            GameJsonParser gameJsonParser = new GameJsonParser(allCards, "src/main/resources/json/", board);
             game = gameJsonParser.parseJson(sb.toString());
 
             fileInputStream.close();

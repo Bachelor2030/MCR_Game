@@ -1,5 +1,6 @@
 package Server.Game;
 
+import Common.GameBoard.Board;
 import Common.Receptors.Player;
 
 /**
@@ -13,15 +14,17 @@ public class Game {
             player2;
     private int
             turn;
+    private Board board;
 
     /**
      * Constructeur de la classe Game
      * @param player1 : le joueur n°1
      * @param player2 : le joueur n°2
      */
-    public Game(Player player1, Player player2) {
+    public Game(Player player1, Player player2, Board board) {
         this.player1 = player1;
         this.player2 = player2;
+        this.board = board;
         turn = 0;
     }
 
