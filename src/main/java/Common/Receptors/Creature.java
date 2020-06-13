@@ -119,15 +119,19 @@ public class Creature extends LiveReceptor {
         asleep = true;
     }
 
+    public void setAttackPoints(int newAP) {
+        attackPoints = newAP;
+    }
+
+    public void setMovementsPoints(int newMP) {
+        steps = newMP;
+    }
+
     @Override
     public void playTurn(int turn) {
         if (!asleep) {
             advance();
         }
         asleep = false;
-    }
-
-    public void setAttackPoints(int newAP) {
-        attackPoints = newAP;
     }
 }

@@ -21,14 +21,7 @@ public enum CardType {
      * @return
      */
     public static CardType getType(String type) {
-        if(type.equals(SPELL.name)) {
-            return SPELL;
-        } else if(type.equals(TRAP.name)) {
-            return TRAP;
-        } else if(type.equals(CREATURE.name)) {
-            return CREATURE;
-        }
-        return null;
+        return CardType.valueOf(type.toUpperCase());
     }
 
     @Override

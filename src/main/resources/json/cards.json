@@ -9,7 +9,7 @@
       "name" : "Pier",
       "type" : "Creature",
       "cost" : 4,
-      "card commands" : ["KnockOut"],
+      "card commands" : ["Knock_out"],
       "creature" : 
       {
         "name" : "Pier",
@@ -74,7 +74,7 @@
       "id" : 5,
       "name" : "Coward",
       "type" : "Spell",
-      "card commands" : ["Retreat"],
+      "card commands" : ["Retreat_creature"],
       "cost" : 3,
       "effect point" : 4,
       "target" : "one"
