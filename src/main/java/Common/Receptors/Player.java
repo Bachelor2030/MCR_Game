@@ -5,6 +5,7 @@ import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction;
 import Server.Game.ModelClasses.Receptor;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -41,7 +42,7 @@ public class Player extends Receptor {
      * @param name the name of the player
      * @param deck the dock of cards the player has
      */
-    public Player(String name, List<Card> deck) {
+    public Player(String name, List<Card> deck) throws FileNotFoundException {
         super(name);
         actionPoints = 0;
         if(deck != null)
@@ -56,10 +57,14 @@ public class Player extends Receptor {
         }
     }
 
+    public Player() {
+
+    }
+
     /**
      * Initializes the player
      */
-    private void init() {
+    private void init() throws FileNotFoundException {
         abandoned = false;
         play = true;
         currentTurn = 0;

@@ -1,11 +1,12 @@
 package Client.View;
 
 import Common.GameBoard.Board;
+import Common.Receptors.Player;
+import Server.Game.Card.Card;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -13,11 +14,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.*;
+import java.util.LinkedList;
+
+// TODO : commande qui font des actions graphiques. (genre déplacer créature)
 
 /** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
@@ -39,7 +42,7 @@ public class GameBoard extends Application {
   private Button returnToMenu; // permet de retourner au menu principal
 
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
-  private StackPane sp;
+  private GridPane gridIslandsPanel;
 
   // Affiche les actions joueurs par le player 1
   private ListView<String> actionPlayer1Labels;
@@ -53,22 +56,25 @@ public class GameBoard extends Application {
 
   BorderPane racine;
 
+  Player player1, player2;
+  LinkedList<Card> deck1, deck2;
   private Board board;
 
 
-  /**
-   * Thread principal du GUI.
-   * Gère l'affichage général de la "scene".
-   */
+  /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
   public void start(Stage stage) throws Exception {
+    //On initialise les players
+    player1 = new Player();
+    player2 = new Player();
+
     // Racine de scene
     racine = new BorderPane();
 
     // fond de base
     racine.getStyleClass().add("general-borderPanel");
 
-    //Affichage du menu principal
+    // Affichage du menu principal
     inMainGameMenu();
 
     // ------------------------------------------------------------------
@@ -90,6 +96,7 @@ public class GameBoard extends Application {
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
   }
+
 
   /**
    * MENU PRINCIPAL DU JEU
@@ -173,30 +180,30 @@ public class GameBoard extends Application {
     Image imageMenu = new Image(imagePath);
     imageMenuView.setImage(imageMenu);
 
-    //INSTRUCTIONS BUTTON
+    // INSTRUCTIONS BUTTON
     instructionButton = new Button("Instructions");
     instructionButton.getStyleClass().add("bouton-menu-principal");
     instructionButton.setOnAction(
-            actionEvent -> {
-              try {
-                printInstructions();
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            });
+        actionEvent -> {
+          try {
+            printInstructions();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
 
-    //NEW GAME BUTTON
+    // NEW GAME BUTTON
     newGameButton = new Button("Nouvelle partie");
     newGameButton.getStyleClass().add("bouton-menu-principal");
     newGameButton.setOnAction(
-            actionEvent -> {
-              try {
-                isGaming = true;
-                inGame(racine);
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            });
+        actionEvent -> {
+          try {
+            isGaming = true;
+            inGame(racine);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
 
     buttons.getChildren().addAll(instructionButton, newGameButton);
     buttons.setSpacing(25);
@@ -257,13 +264,13 @@ public class GameBoard extends Application {
     barreNavigation.getStyleClass().add("header-hbox");
 
     returnToMenu.setOnAction(
-            actionEvent -> {
-              try {
-                inMainGameMenu();
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            });
+        actionEvent -> {
+          try {
+            inMainGameMenu();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
     barreNavigation.getChildren().add(returnToMenu);
 
     // SEPARATEUR - séparer les utility buttons sur la droite
@@ -312,11 +319,11 @@ public class GameBoard extends Application {
     VBox corpsInstruction = new VBox();
     corpsInstruction.getStyleClass().add("instructions-body");
 
-    String line, fullText ="";
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/main/resources/utils/instructions.txt")))) {
+    String line, fullText = "";
+    try (BufferedReader reader =
+        new BufferedReader(new FileReader(new File("src/main/resources/utils/instructions.txt")))) {
 
-      while ((line = reader.readLine()) != null)
-        fullText += line;
+      while ((line = reader.readLine()) != null) fullText += line;
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -569,16 +576,29 @@ public class GameBoard extends Application {
     return panneauVerticalGauche;
   }
 
-  private StackPane corpsLogiciel() throws IOException {
-    sp = new StackPane();
-    sp.getStyleClass().add("corps-gridPane");
+  private GridPane corpsLogiciel() throws IOException {
+
+    VBox corpsInstruction = new VBox();
+    corpsInstruction.getStyleClass().add("instructions-body");
+    gridIslandsPanel = new GridPane();
+    gridIslandsPanel.getStyleClass().add("corps-gridPane");
+    VBox vbox = new VBox();
+
+    /*
+    int numRows = 5;
+    for(int i = 0;i < numRows; i++)
+    {
+      RowConstraints rc = new RowConstraints();
+      rc.setPercentHeight(100 / numRows);
+      gridIslandsPanel.getRowConstraints().add(rc);
+    }
+    */
+
 
     // Répertoire contenant nos îles
-    Group islands = new Group();
-    board = new Board(islands);
-    sp.getChildren().add(islands);
-
-    return sp;
+    Board board = new Board(gridIslandsPanel, vbox, player1, player2);
+    gridIslandsPanel.setAlignment(Pos.CENTER);
+    return gridIslandsPanel;
   }
 
   /** @return la barre de navigation contenant les différents boutons gérant la partie. */
@@ -603,6 +623,7 @@ public class GameBoard extends Application {
     validateTourButton.setOnAction(
         actionEvent -> {
           // blablabla définir ce que fait le bouton "valider tour" ici.
+          System.out.println("you hit the validate button...");
         });
 
     abandonTourButton.setOnAction(
@@ -691,18 +712,25 @@ public class GameBoard extends Application {
    *
    * @return le footer
    */
-  private HBox footerBar() {
+  private HBox footerBar() throws FileNotFoundException {
 
     // On définit une boxe horizontale qui définira l'espace "footer" -> cartes du joueur
     HBox footerCardsPlayer = new HBox();
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
-    // À REMPLACER PAR LES CARTES-----------
-    Label blabla = new Label();
-    blabla.setText("Blablabla test");
-    // -------------------------------------
-    footerCardsPlayer.getChildren().add(blabla);
+    // À REFACTORER SA MERE DANS UNE AUTRE CLASSE -----------
+    for (int i = 0; i < 5; i++) {
+      FileInputStream imagePath =
+          new FileInputStream("src/main/resources/design/images/cards/cardSample.png");
+      Image image = new Image(imagePath);
+      ImageView imageView = new ImageView(image);
+      imageView.setFitWidth(image.getWidth() * 0.7);
+      imageView.setFitHeight(image.getHeight() * 0.7);
+      // -------------------------------------
+      footerCardsPlayer.getChildren().add(imageView);
+      footerCardsPlayer.getStyleClass().add("corps-gridPane");
+    }
 
     return footerCardsPlayer;
   }

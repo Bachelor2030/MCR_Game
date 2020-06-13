@@ -10,6 +10,7 @@ import Server.Game.Game;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class GameJsonParser {
@@ -21,7 +22,7 @@ public class GameJsonParser {
         this.path = path;
     }
 
-    public Game parseJson(String json) throws JSONException {
+    public Game parseJson(String json) throws JSONException, FileNotFoundException {
         JSONObject obj = new JSONObject(json);
 
         String player1 = obj.getJSONObject("playerNames").getString("player1");

@@ -24,7 +24,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ParserLauncher {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         String file = "src/main/resources/json/game.json";
 
         Game game = parseJsonGame(file);
@@ -87,7 +87,7 @@ public class ParserLauncher {
         return game;
     }
 
-    public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
+    public static ArrayList<Card> parseJsonCards(String json) throws JSONException, FileNotFoundException {
         ArrayList<Card> cards = new ArrayList<>();
 
         JSONObject obj = new JSONObject(json);
