@@ -6,32 +6,34 @@ import org.json.JSONObject;
 
 import java.io.PrintWriter;
 
-public abstract class Json {
+import static Common.Network.Utilities.Info.printMessage;
 
-    public static void sendJson(JSONObject jsonObject, PrintWriter outPrintWriter) {
-        //printMessage(servantName(), "-> " + jsonObject.toString());
+public abstract class JsonServer {
+
+    public static void sendJson(JSONObject jsonObject, PrintWriter outPrintWriter, String className) {
+        printMessage(className, "-> " + jsonObject.toString());
         outPrintWriter.println(jsonObject.toString());
         outPrintWriter.flush();
     }
 
-    public static void sendJsonType(String message, PrintWriter outPrintWriter) throws JSONException {
+    public static void sendJsonType(String message, PrintWriter outPrintWriter, String className) throws JSONException {
         JSONObject json = new JSONObject();
         json.put(Messages.JSON_TYPE, message);
 
-        sendJson(json, outPrintWriter);
+        sendJson(json, outPrintWriter, className);
     }
 
-    public static String readJson(String jsonMessage) {
-        //printMessage(servantName(), "<- " + jsonMessage);
+    public static String readJson(String jsonMessage, String className) {
+        printMessage(className, "<- " + jsonMessage);
         try {
             JSONObject obj = new JSONObject(jsonMessage);
             return obj.toString();
         } catch (JSONException e) {
-            return jsonError();
+            return jsonError(className);
         }
     }
 
-    public static String readJsonType(String jsonMessage) {
+    public static String readJsonType(String jsonMessage, String className) {
         String type;
 
         try {
@@ -41,11 +43,11 @@ public abstract class Json {
             return type;
 
         } catch (JSONException e) {
-            return jsonError();
+            return jsonError(className);
         }
     }
 
-    public static String readJsonPlayerName(String jsonMessage) {
+    public static String readJsonPlayerName(String jsonMessage, String className) {
         String name;
 
         try {
@@ -55,12 +57,12 @@ public abstract class Json {
             return name;
 
         } catch (JSONException e) {
-            return jsonError();
+            return jsonError(className);
         }
     }
 
-    public static String jsonError() {
-        //debugMessage("Answer was not Json!");
+    public static String jsonError(String className) {
+        printMessage(className, "Answer was not Json!");
 
         return "Error";
     }

@@ -1,8 +1,9 @@
 package Common.Network.Utilities;
 
 public abstract class Info {
-    public static final String receptionistName = "Receptionist";
-    public static final String servantWorkerName = "Servant";
+    private static final String receptionistClassName = "Receptionist";
+    private static final String servantClassName = "Servant";
+    private static final String clientClassName = "Client";
 
     public enum MessageLevel {
         Info, Error
@@ -20,7 +21,15 @@ public abstract class Info {
         printMessage("Debug", message);
     }
 
-    public static String servantNameForPlayer(int playerId) {
-        return servantWorkerName + playerId;
+    public static String receptionistClassName() {
+        return receptionistClassName;
+    }
+
+    public static String servantClassName(int playerId) {
+        return servantClassName + playerId;
+    }
+
+    public static String clientClassName() {
+        return clientClassName;
     }
 }
