@@ -15,11 +15,11 @@ import static Common.Network.Utilities.JsonServer.sendJsonType;
 
 public class NetworkWaiting {
 
-    public static void awaitClientHandshake(ServerAdapter serverAdapter, ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, String className) throws IOException, JSONException {
+    public static void awaitClientHandshake(ServerAdapter serverAdapter, ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
         String receivedMessage;
         printMessage(className, "Reading until client sends greetings to open the connection...");
 
-        while (serverState.getWorkerState() == WorkerState.CONNECTING
+        while (serverState.getWorkerState(playerId) == WorkerState.CONNECTING
                 && (receivedMessage = readJson(inBufferedReader.readLine(), className)) != null) {
 
             String type = readJsonType(receivedMessage, className);
@@ -27,26 +27,26 @@ public class NetworkWaiting {
 
                 if (serverAdapter.getPlayerCount() == 1) {
                     sendJsonType(Messages.JSON_TYPE_WAIT_PLAYER, outPrintWriter, className);
-                    serverState.setWorkerState(WorkerState.INIT_WAITING);
+                    serverState.setWorkerState(playerId, WorkerState.INIT_WAITING);
                 } else if (serverAdapter.getPlayerCount() == 2) {
                     sendJsonType(Messages.JSON_TYPE_GAME_START, outPrintWriter, className);
-                    serverState.setWorkerState(WorkerState.INIT);
+                    serverState.setWorkerState(playerId, WorkerState.INIT);
                 } else {
                     debugMessage("Weird. You have " + serverAdapter.getPlayerCount() + " players. This should not have happened");
-                    serverState.setWorkerState(WorkerState.CONNECTING);
+                    serverState.setWorkerState(playerId, WorkerState.CONNECTING);
                 }
             } else {
                 sendJsonType(Messages.JSON_TYPE_UNKNOWN, outPrintWriter, className);
-                serverState.setWorkerState(WorkerState.CONNECTING);
+                serverState.setWorkerState(playerId, WorkerState.CONNECTING);
             }
         }
     }
 
-    public static void awaitClientMessage(ServerAdapter serverAdapter, ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, String className) throws IOException, JSONException {
+    public static void awaitClientMessage(ServerAdapter serverAdapter, ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
         String receivedMessage;
         printMessage(className, "Reading until client sends messages or closes the connection...");
 
-        while (serverState.getWorkerState() != WorkerState.GAME_ENDED
+        while (serverState.getWorkerState(playerId) == WorkerState.SERVER_LISTENING
                 && (receivedMessage = readJson(inBufferedReader.readLine(), className)) != null) {
 
             String type = readJsonType(receivedMessage, className);
@@ -55,7 +55,7 @@ public class NetworkWaiting {
 
                     if (serverAdapter.getPlayingId() == 1) {
                         sendJsonType(Messages.JSON_TYPE_PLAY_OK, outPrintWriter, className);
-                        serverState.setWorkerState(WorkerState.CLIENT_LISTENING);
+                        serverState.setWorkerState(playerId, WorkerState.CLIENT_LISTENING);
                         serverAdapter.nextPlayer();
                         return;
                     } else {
@@ -64,7 +64,7 @@ public class NetworkWaiting {
                     }
 
                 case Messages.JSON_TYPE_GOODBYE:
-                    serverState.setWorkerState(WorkerState.GAME_ENDED);
+                    serverState.setWorkerState(playerId, WorkerState.GAME_ENDED);
                     sendJsonType(Messages.JSON_TYPE_GOODBYE_ANS, outPrintWriter, className);
                     return;
 

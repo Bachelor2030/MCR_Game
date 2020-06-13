@@ -53,6 +53,8 @@ public class ServerAdapter {
     public synchronized void decrementPlayerCount() {
         --players;
     }
+    ServerState serverState = new ServerState();
+
 
 
     /**
@@ -121,7 +123,6 @@ public class ServerAdapter {
             BufferedReader inBufferedReader = null;
             PrintWriter outPrintWriter = null;
 
-            ServerState serverState = new ServerState(WorkerState.CONNECTING);
             int playerId;
 
 
@@ -142,19 +143,19 @@ public class ServerAdapter {
             public void run() {
                 try {
                     // Awaiting client greetings
-                    awaitClientHandshake(ServerAdapter.this, serverState, inBufferedReader, outPrintWriter, servantClassName(playerId));
+                    awaitClientHandshake(ServerAdapter.this, serverState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
 
                     // Awaiting client messages
-                    while (serverState.getWorkerState() != WorkerState.GAME_ENDED) {
-                        switch (serverState.getWorkerState()) {
+                    while (serverState.getWorkerState(playerId) != WorkerState.GAME_ENDED) {
+                        switch (serverState.getWorkerState(playerId)) {
                             case INIT:
                                 JSONObject turn;
                                 if (playerId == getPlayingId()) {
                                     turn = new JSONObject().put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
-                                    serverState.setWorkerState(WorkerState.SERVER_LISTENING);
+                                    serverState.setWorkerState(playerId, WorkerState.SERVER_LISTENING);
                                 } else {
                                     turn = new JSONObject().put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
-                                    serverState.setWorkerState(WorkerState.CLIENT_LISTENING);
+                                    serverState.setWorkerState(playerId, WorkerState.CLIENT_LISTENING);
                                 }
 
                                 JSONObject gamestate = new JSONObject();
@@ -170,18 +171,18 @@ public class ServerAdapter {
                                     printMessage(servantClassName(playerId), "Waiting for player 2");
                                 }
                                 sendJsonType(Messages.JSON_TYPE_GAME_START, outPrintWriter, servantClassName(playerId));
-                                serverState.setWorkerState(INIT);
+                                serverState.setWorkerState(playerId, INIT);
                                 break;
 
                             case SERVER_LISTENING:
-                                awaitClientMessage(ServerAdapter.this, serverState, inBufferedReader, outPrintWriter, servantClassName(playerId));
+                                awaitClientMessage(ServerAdapter.this, serverState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
                                 break;
 
                             case CLIENT_LISTENING:
                                 while (getPlayingId() != playerId) {
                                 }
                                 sendJsonType(Messages.JSON_TYPE_YOUR_TURN, outPrintWriter, servantClassName(playerId));
-                                serverState.setWorkerState(WorkerState.SERVER_LISTENING);
+                                serverState.setWorkerState(playerId, WorkerState.SERVER_LISTENING);
                                 break;
 
                             case GAME_ENDED:
