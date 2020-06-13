@@ -2,7 +2,7 @@ package Common.Receptors;
 
 import Server.Game.Card.Card;
 import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
-import Server.Game.ModelClasses.PlayersAction;
+import Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction;
 import Server.Game.ModelClasses.Receptor;
 
 import java.util.*;
@@ -110,7 +110,7 @@ public class Player extends Receptor {
 
             ArrayList<Create> createCreatures = card.getCommand().getCreateCreature();
             for (Create create : createCreatures) {
-                creatures.addAll(Arrays.asList(create.getCreature()));
+                creatures.addAll(Arrays.asList(create.getCreatures()));
             }
 
             discard.get(currentTurn).add(card);

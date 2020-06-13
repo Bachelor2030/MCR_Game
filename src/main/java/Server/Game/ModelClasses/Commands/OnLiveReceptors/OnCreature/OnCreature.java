@@ -10,11 +10,11 @@ public abstract class OnCreature extends OnLiveReceptors {
         super(name);
     }
 
-    public void setCreature(Creature[] creatures) {
+    public void setCreatures(Creature[] creatures) {
         setReceptors(creatures);
     }
 
-    public Creature[] getCreature() {
+    public Creature[] getCreatures() {
         if(receptors != null) {
             return (Creature[])receptors;
         }

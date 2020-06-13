@@ -1,5 +1,6 @@
 package Server.Game.ModelClasses.Commands;
 
+import Client.GuiCommands.*;
 import Server.Game.ModelClasses.Commands.CardMovement.Discard;
 import Server.Game.ModelClasses.Commands.CardMovement.Draw;
 import Server.Game.ModelClasses.Commands.CardMovement.DrawTypeFromDiscard;
@@ -14,22 +15,36 @@ import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.*;
 import Server.Game.ModelClasses.ConcreteCommand;
 
 public enum CommandName {
+    /* GUI */
+    MOVE("Move"),
+    CHANGE_POINTS("Change_points"),
+    PLACE("Place"),
+    KNOCK_OUT_CREATURE("Knock_out_creature"),
+    ADD_CARD("Add_card"),
+    REMOVE_CARD("Remove_card"),
+    END_GAME("End_game"),
+
+    /* Needs one position */
     HIT("Hit"),
     HEAL("Heal"),
     KILL("Kill"),
     CHANGE_AP("Change_AP"),
     CHANGE_MP("Change_MP"),
+    CREATE_CREATURE("Create_creature"),
+    CREATE_TRAP("Create_trap"),
+    KNOCK_OUT("Knock_Out"),
+
+    /* Needs two positions */
+    ADVANCE_CREATURE("Advance_creature"),
+    RETREAT_CREATURE("Retreat_creature"),
+
+    /* Needs a card */
     DRAW_TYPE_FROM_DISCARD("Draw_type_from_discard"),
     DRAW("Draw"),
     DISCARD("Discard"),
-    CREATE_CREATURE("Create_creature"),
-    CREATE_TRAP("Create_trap"),
-    ADVANCE_CREATURE("Advance_creature"),
-    RETREAT_CREATURE("Retreat_creature"),
-    KNOCK_OUT("Knock_Out"),
+    PLAY_CARD("Play_card"),
 
     /* Player commands */
-    PLAY_CARD("Play_card"),
     UNDO("Undo"),
     END_TURN("End_turn"),
     ABANDON("Abandon");
@@ -91,6 +106,22 @@ public enum CommandName {
                 return new PlayCard();
             case UNDO:
                 return new Undo();
+
+            /* GUI */
+            case MOVE:
+                return new Move();
+            case PLACE:
+                return new Place();
+            case KNOCK_OUT_CREATURE:
+                return new KnockOutCreature();
+            case CHANGE_POINTS:
+                return new ChangePoints();
+            case ADD_CARD:
+                return new AddCard();
+            case REMOVE_CARD:
+                return new RemoveCard();
+            case END_GAME:
+                return new EndGame();
 
             default: return null;
         }

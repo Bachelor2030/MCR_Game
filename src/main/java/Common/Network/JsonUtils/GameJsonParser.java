@@ -50,7 +50,7 @@ public class GameJsonParser {
         for (Card card : cards) {
             for (ConcreteCommand command : card.getCommand().getCommands()) {
                 if (command.getName() == CommandName.CREATE_CREATURE) {
-                    for (Creature c : ((Create)command).getCreature()) {
+                    for (Creature c : ((Create)command).getCreatures()) {
                         c.setOwner(player);
                     }
                 }

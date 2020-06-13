@@ -27,6 +27,14 @@ public class Creature extends LiveReceptor {
         asleep = false;
     }
 
+    public void setOriginCard(Card originCard) {
+        this.originCard = originCard;
+    }
+
+    public Card getOriginCard() {
+        return originCard;
+    }
+
     /**
      * Moves the creature of it's number of steps and hits the first ennemy encountered
      */
@@ -46,7 +54,7 @@ public class Creature extends LiveReceptor {
                 break;
             }
         }
-        if (lifePoints > 0 && !position.next().isEmpty()) {
+        if (lifePoints > 0 && !position.next().isEmpty() && position.next().isValid()) {
             if(!((LiveReceptor) position.next().getOccupant()).isAlly(this)) {
 
                 ((LiveReceptor) position.next().getOccupant()).loseLifePoints(attackPoints);

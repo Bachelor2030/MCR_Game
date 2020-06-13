@@ -19,4 +19,12 @@ public abstract class MoveCreature extends OnCreature {
     public Position[] getTo() {
         return to;
     }
+
+    public void setFrom(Position[] from) {
+        this.from = from;
+    }
+
+    public void setTo(Position[] to) {
+        this.to = to;
+    }
 }
