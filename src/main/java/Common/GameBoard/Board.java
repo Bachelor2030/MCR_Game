@@ -39,7 +39,7 @@ public class Board {
     }
 
     public void place(Receptor receptor, int lineCounter, int spot) {
-        //boardLines.get(lineCounter).setReceptor(receptor, spot);
+        boardLines.get(lineCounter).setReceptor(receptor, spot);
     }
 
     public BoardLine getLine(int index) {
