@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ChestTest {
@@ -13,7 +15,7 @@ public class ChestTest {
     private static final String name = "Saphira";
 
     @BeforeAll
-    private static void init() {
+    private static void init() throws FileNotFoundException {
         chest = new Chest(name, null);
     }
 

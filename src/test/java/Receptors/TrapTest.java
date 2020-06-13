@@ -10,6 +10,7 @@ import Server.Game.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -22,7 +23,7 @@ public class TrapTest {
     private static int attackPoints = 12;
 
     @BeforeAll
-    public static void init() {
+    public static void init() throws FileNotFoundException {
         ArrayList<ConcreteCommand> concreteCommands = new ArrayList<>();
 
         creature1 = new Creature("Test creature", lp1, 23, 3);

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -23,7 +24,7 @@ public class CreatureTest {
     private static Player player1;
 
     @BeforeAll
-    public static void init() {
+    public static void init() throws FileNotFoundException {
         player    = new Player("Elodie", null);
         player1   = new Player("Michel", null);
 
@@ -39,7 +40,7 @@ public class CreatureTest {
     }
 
     @Test
-    public void CreaturesWithDifferentOwnersMustNotBeAllies() {
+    public void CreaturesWithDifferentOwnersMustNotBeAllies() throws FileNotFoundException {
         Creature c = new Creature("", 0, 0, 4);
         c.setOwner(player1);
         assertFalse(creature.isAlly(c));
