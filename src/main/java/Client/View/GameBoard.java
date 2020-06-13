@@ -122,57 +122,7 @@ public class GameBoard extends Application {
     // BARRE DE NAVIGATION DU MAIN MENU
     // ------------------------------------------------------------------
 
-    // On créé une boxe horizontale qui définira l'espace "navigation".
-    HBox navigation = new HBox(10);
-    minimizeButton = new Button();
-    minimizeButton.getStyleClass().add("header-quit-button");
-    quitButton = new Button();
-    quitButton.getStyleClass().add("header-quit-button");
-
-    // on règle l'écart du contenu intérieur avec les bords de la boxe
-    navigation.setPadding(new Insets(15, 15, 15, 15));
-    navigation.setPrefWidth(WIDTH_WINDOW);
-
-    // Espace entre les éléments
-    navigation.setSpacing(10);
-
-    // SEPARATEUR - séparer les utility buttons sur la droite
-    // utility buttons : minimize, quit.
-    final Pane spacer = new Pane();
-    HBox.setHgrow(spacer, Priority.ALWAYS);
-    navigation.getChildren().add(spacer);
-
-    // MINIMIZE BUTTON
-    Image minimizeIcon = new Image(getClass().getResourceAsStream("/design/images/minimize.png"));
-    ImageView minimizeIconView = new ImageView(minimizeIcon);
-    minimizeIconView.setFitHeight(21);
-    minimizeIconView.setFitWidth(21);
-    minimizeButton.setGraphic(minimizeIconView); // setting icon to button
-    minimizeButton.setAlignment(Pos.CENTER_RIGHT);
-
-    minimizeButton.setOnAction(
-        event -> {
-          Stage stage = (Stage) minimizeButton.getScene().getWindow();
-          stage.setIconified(true);
-        });
-
-    navigation.getChildren().add(minimizeButton);
-
-    // QUIT BUTTON
-    Image quitIcon = new Image(getClass().getResourceAsStream("/design/images/quit.png"));
-    ImageView quitIconView = new ImageView(quitIcon);
-    quitIconView.setFitHeight(21);
-    quitIconView.setFitWidth(21);
-    quitButton.setGraphic(quitIconView); // setting icon to button
-    quitButton.setAlignment(Pos.CENTER_RIGHT);
-
-    // On créé un event lié à la fermeture du logiciel.
-    quitButton.setOnAction(
-        event -> {
-          ((Stage) quitButton.getScene().getWindow()).close();
-          // sinon on affiche un message d'alerte -> redemande.
-        });
-    navigation.getChildren().add(quitButton);
+    HBox barreNavigation = defineHeader(false);
 
     // ------------------------------------------------------------------
     // CORPS MAIN MENU
@@ -233,7 +183,7 @@ public class GameBoard extends Application {
 
     // On met en place le corps de la fenêtre
     racine.setCenter(principalMenu);
-    racine.setTop(navigation);
+    racine.setTop(barreNavigation);
   }
 
   /**
@@ -249,73 +199,7 @@ public class GameBoard extends Application {
     // BARRE DE NAVIGATION DE LA PAGE SETTING MENU
     // ------------------------------------------------------------------
 
-    // On créé une boxe horizontale qui définira l'espace "navigation".
-    HBox barreNavigation = new HBox(10);
-    minimizeButton = new Button();
-    minimizeButton.getStyleClass().add("header-quit-button");
-    quitButton = new Button();
-    quitButton.getStyleClass().add("header-quit-button");
-
-    returnToMenu = new Button("Retourner au menu");
-    returnToMenu.getStyleClass().add("header-button");
-
-    // on règle l'écart du contenu intérieur avec les bords de la boxe
-    barreNavigation.setPadding(new Insets(15, 15, 15, 15));
-    barreNavigation.setPrefWidth(WIDTH_WINDOW);
-
-    // Espace entre les éléments
-    barreNavigation.setSpacing(10);
-
-    // On lui applique d'autres styles présents dans la feuille CSS
-    barreNavigation.getStyleClass().add("header-hbox");
-
-    returnToMenu.setOnAction(
-            actionEvent -> {
-              try {
-                inMainGameMenu();
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            });
-    barreNavigation.getChildren().add(returnToMenu);
-
-    // SEPARATEUR - séparer les utility buttons sur la droite
-    // utility buttons : minimize, quit.
-    final Pane spacer = new Pane();
-    HBox.setHgrow(spacer, Priority.ALWAYS);
-    barreNavigation.getChildren().add(spacer);
-
-    // MINIMIZE BUTTON
-    Image minimizeIcon = new Image(getClass().getResourceAsStream("/design/images/minimize.png"));
-    ImageView minimizeIconView = new ImageView(minimizeIcon);
-    minimizeIconView.setFitHeight(21);
-    minimizeIconView.setFitWidth(21);
-    minimizeButton.setGraphic(minimizeIconView); // setting icon to button
-    minimizeButton.setAlignment(Pos.CENTER_RIGHT);
-
-    minimizeButton.setOnAction(
-            event -> {
-              Stage stage = (Stage) minimizeButton.getScene().getWindow();
-              stage.setIconified(true);
-            });
-
-    barreNavigation.getChildren().add(minimizeButton);
-
-    // QUIT BUTTON
-    Image quitIcon = new Image(getClass().getResourceAsStream("/design/images/quit.png"));
-    ImageView quitIconView = new ImageView(quitIcon);
-    quitIconView.setFitHeight(21);
-    quitIconView.setFitWidth(21);
-    quitButton.setGraphic(quitIconView); // setting icon to button
-    quitButton.setAlignment(Pos.CENTER_RIGHT);
-
-    // On créé un event lié à la fermeture du logiciel.
-    quitButton.setOnAction(
-            event -> {
-              ((Stage) quitButton.getScene().getWindow()).close();
-              // sinon on affiche un message d'alerte -> redemande.
-            });
-    barreNavigation.getChildren().add(quitButton);
+    HBox barreNavigation = defineHeader(true);
 
     // ------------------------------------------------------------------
     // CORPS DE LA PAGE MENU SETTINGS
@@ -360,6 +244,7 @@ public class GameBoard extends Application {
             event -> {
               isGaming = true;
               try {
+                //TODO : check que les bonnes données soient rentrées ?
                 //On initialise les données
                 namePlayer1 = playerNameField.getText();
                 IpPlayer1 = playerIpField.getText();
@@ -389,18 +274,55 @@ public class GameBoard extends Application {
   }
 
   /**
-   * PAGE INSTRUCTIONS
-   *
-   * @throws IOException
+   * Permet de choisir le personnage qui représentera le player.
    */
-  private void displayInstructions() throws IOException {
+  private void chooseCharacter() {
+
+    HBox barreNavigation = defineHeader(true);
+
+    // ------------------------------------------------------------------
+    // CORPS DE LA PAGE MENU SETTINGS
+    // ------------------------------------------------------------------
+    VBox bodyParameters = new VBox(10); //contient les éléments de la page et les affiche verticalement.
+    bodyParameters.getStyleClass().add("parameters-body");
+
+    bodyParameters.prefWidthProperty().bind(currentStage.widthProperty().multiply(0.80));
+
+    //On crée un bouton qui va permettre de valider les paramètres et créer une nouvelle partie.
+    Button validateImageCharacter = new Button("Choisir");
+    validateImageCharacter.getStyleClass().add("header-button");
+    validateImageCharacter.setOnAction(
+            event -> {
+              isGaming = true;
+              try {
+
+                //On passe à la fenêtre d'attente d'adversaire
+                //TODO : remplacer par fenêtre de chargement d'adversaire.
+                inGame(racine);
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
+
+    bodyParameters.getChildren().addAll(validateImageCharacter);
+    bodyParameters.setAlignment(Pos.CENTER);
+    bodyParameters.setSpacing(50); //espace entre les éléments
+
+    // ------------------------------------------------------------------
+    // REGLAGES RACINE
+    // ------------------------------------------------------------------
+    racine.setTop(barreNavigation);
+    racine.setCenter(bodyParameters);
+  }
+
+  private HBox defineHeader(boolean isReturnMenu) {
     racine.setRight(null);
     racine.setLeft(null);
     racine.setTop(null);
     racine.setBottom(null);
 
     // ------------------------------------------------------------------
-    // BARRE DE NAVIGATION DE LA PAGE INSTRUCTIONS
+    // BARRE DE NAVIGATION DE LA PAGE SETTING MENU
     // ------------------------------------------------------------------
 
     // On créé une boxe horizontale qui définira l'espace "navigation".
@@ -409,9 +331,22 @@ public class GameBoard extends Application {
     minimizeButton.getStyleClass().add("header-quit-button");
     quitButton = new Button();
     quitButton.getStyleClass().add("header-quit-button");
+    if(isReturnMenu)
+    {
+      returnToMenu = new Button("Retourner au menu");
+      returnToMenu.getStyleClass().add("header-button");
 
-    returnToMenu = new Button("Retourner au menu");
-    returnToMenu.getStyleClass().add("header-button");
+      returnToMenu.setOnAction(
+              actionEvent -> {
+                try {
+                  inMainGameMenu();
+                } catch (IOException e) {
+                  e.printStackTrace();
+                }
+              });
+      barreNavigation.getChildren().add(returnToMenu);
+    }
+
 
     // on règle l'écart du contenu intérieur avec les bords de la boxe
     barreNavigation.setPadding(new Insets(15, 15, 15, 15));
@@ -422,16 +357,6 @@ public class GameBoard extends Application {
 
     // On lui applique d'autres styles présents dans la feuille CSS
     barreNavigation.getStyleClass().add("header-hbox");
-
-    returnToMenu.setOnAction(
-        actionEvent -> {
-          try {
-            inMainGameMenu();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
-    barreNavigation.getChildren().add(returnToMenu);
 
     // SEPARATEUR - séparer les utility buttons sur la droite
     // utility buttons : minimize, quit.
@@ -448,10 +373,10 @@ public class GameBoard extends Application {
     minimizeButton.setAlignment(Pos.CENTER_RIGHT);
 
     minimizeButton.setOnAction(
-        event -> {
-          Stage stage = (Stage) minimizeButton.getScene().getWindow();
-          stage.setIconified(true);
-        });
+            event -> {
+              Stage stage = (Stage) minimizeButton.getScene().getWindow();
+              stage.setIconified(true);
+            });
 
     barreNavigation.getChildren().add(minimizeButton);
 
@@ -465,11 +390,34 @@ public class GameBoard extends Application {
 
     // On créé un event lié à la fermeture du logiciel.
     quitButton.setOnAction(
-        event -> {
-          ((Stage) quitButton.getScene().getWindow()).close();
-          // sinon on affiche un message d'alerte -> redemande.
-        });
+            event -> {
+              ((Stage) quitButton.getScene().getWindow()).close();
+              // sinon on affiche un message d'alerte -> redemande.
+            });
     barreNavigation.getChildren().add(quitButton);
+
+    return barreNavigation;
+  }
+
+
+
+  /**
+   * PAGE INSTRUCTIONS
+   *
+   * @throws IOException
+   */
+  private void displayInstructions() throws IOException {
+    racine.setRight(null);
+    racine.setLeft(null);
+    racine.setTop(null);
+    racine.setBottom(null);
+
+    // ------------------------------------------------------------------
+    // BARRE DE NAVIGATION DE LA PAGE INSTRUCTIONS
+    // ------------------------------------------------------------------
+
+    // On créé une boxe horizontale qui définira l'espace "navigation".
+    HBox barreNavigation = defineHeader(true);
 
     // ------------------------------------------------------------------
     // CORPS DE LA PAGE INSTRUCTIONS
@@ -534,14 +482,14 @@ public class GameBoard extends Application {
     quitButton.getStyleClass().add("header-quit-button");
 
     // On crée une barre de navigation dans le BorderPane
-    racine.setTop(navBar());
+    racine.setTop(defineInGameHeader());
 
     // ------------------------------------------------------------------
     // CORPS LOGICIEL OÙ SE TROUVE LES ÎLES
     // ------------------------------------------------------------------
 
     // On met en place le corps du texte
-    racine.setCenter(corpsLogiciel());
+    racine.setCenter(displayInGameField());
 
     // ------------------------------------------------------------------
     // COLONNE GAUCHE - PLAYER 1
@@ -736,7 +684,12 @@ public class GameBoard extends Application {
     return panneauVerticalGauche;
   }
 
-  private GridPane corpsLogiciel() throws IOException {
+  /**
+   * Affiche le terrain où se déplace les créatures.
+   * @return le gridPane sur lequel se déplace les créatures.
+   * @throws IOException
+   */
+  private GridPane displayInGameField() throws IOException {
 
     VBox corpsInstruction = new VBox();
     corpsInstruction.getStyleClass().add("instructions-body");
@@ -753,16 +706,17 @@ public class GameBoard extends Application {
       gridIslandsPanel.getRowConstraints().add(rc);
     }
     */
-
-
+    
     // Répertoire contenant nos îles
     Board board = new Board(gridIslandsPanel, vbox, player1, player2);
     gridIslandsPanel.setAlignment(Pos.CENTER);
     return gridIslandsPanel;
   }
 
-  /** @return la barre de navigation contenant les différents boutons gérant la partie. */
-  private HBox navBar() {
+  /**
+   * @return la barre de navigation contenant les différents boutons gérant la partie.
+   */
+  private HBox defineInGameHeader() {
     // On créé une boxe horizontale qui définira l'espace "navigation".
     HBox navigation = new HBox(10);
 
