@@ -92,7 +92,26 @@
 
 .instructions-body {
     -fx-background-color: rgba(201, 201, 236, 0.47);
-    -fx-pref-height: 300;
+}
+
+/* ************************************************ */
+/* PAGE PARAMÈTRES */
+/* ************************************************ */
+
+.parameters-body {
+    -fx-background-color: rgba(201, 201, 236, 0.47);
+}
+
+
+.parameters-field {
+
+}
+
+.parameters-label{
+    -fx-font-size: 20;
+    -fx-text-fill: #d9d2f8;
+    -fx-font-family: Roboto;
+    -fx-text-alignment: justify;
 }
 
 /* ************************************************ */
