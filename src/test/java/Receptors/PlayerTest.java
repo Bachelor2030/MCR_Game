@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 //import org.junit.jupiter.params.ParameterizedTest;
 //import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,7 +21,7 @@ public class PlayerTest {
     private static String name;
 
     @BeforeAll
-    static void initialise() {
+    static void initialise() throws FileNotFoundException {
         name = "George";
         LinkedList<Card> cards = new LinkedList<>();
         cards.add(new Card(1, "Black Hole", CardType.SPELL,    0));

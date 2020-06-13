@@ -20,8 +20,8 @@ public class Creature extends LiveReceptor {
     private boolean asleep;
 
     private FileInputStream imagePath = new FileInputStream("src/main/resources/design/images/creatures/shark.gif");
-    Image image;
-    ImageView imageView;
+    private Image image;
+    private ImageView imageView;
 
     /**
      * Creates a creature with the given information

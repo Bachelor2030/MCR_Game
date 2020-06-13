@@ -1,6 +1,11 @@
 package Common.Receptors;
 
 import Server.Game.ModelClasses.LiveReceptor;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * Chest owned by a player. Said player must protect it by using creatures and spells
@@ -8,14 +13,25 @@ import Server.Game.ModelClasses.LiveReceptor;
 public class Chest extends LiveReceptor {
     // Max life points for a chest
     private static final int CHEST_LIFE_POINTS = 5;
+    private FileInputStream imagePath = new FileInputStream("src/main/resources/design/images/treasure.png");
+    private Image image;
+    private ImageView imageView;
 
     /**
      * Create a chest with the given name and owner
      * @param name the name of the current chest
      * @param owner the player that owns the current chest
      */
-    public Chest(String name, Player owner) {
+    public Chest(String name, Player owner) throws FileNotFoundException {
         super(name, CHEST_LIFE_POINTS, "Chest");
+        initDisplayChest();
+    }
+
+    private void initDisplayChest() {
+        image = new Image(imagePath);
+        imageView = new ImageView(image);
+        imageView.setFitWidth(image.getWidth() * 0.12);
+        imageView.setFitHeight(image.getHeight() * 0.12);
     }
 
     /**
@@ -29,4 +45,8 @@ public class Chest extends LiveReceptor {
 
     @Override
     public void playTurn(int turn) {}
+
+    public ImageView getImageView() {
+        return imageView;
+    }
 }

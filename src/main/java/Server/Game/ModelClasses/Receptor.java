@@ -7,6 +7,10 @@ public abstract class Receptor {
         this.name = name;
     }
 
+    public Receptor() {
+        this.name = "";
+    }
+
     public String getName() {
         return name;
     }

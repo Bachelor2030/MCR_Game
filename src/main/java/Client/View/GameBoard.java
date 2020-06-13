@@ -1,6 +1,8 @@
 package Client.View;
 
 import Common.GameBoard.Board;
+import Common.Receptors.Player;
+import Server.Game.Card.Card;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,9 +18,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.*;
+import java.util.LinkedList;
 
-
-//TODO : commande qui font des actions graphiques. (genre déplacer créature)
+// TODO : commande qui font des actions graphiques. (genre déplacer créature)
 
 /** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
@@ -54,20 +56,22 @@ public class GameBoard extends Application {
 
   BorderPane racine;
 
+  Player player1, player2;
+  LinkedList<Card> deck1, deck2;
 
-  /**
-   * Thread principal du GUI.
-   * Gère l'affichage général de la "scene".
-   */
+  /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
   public void start(Stage stage) throws Exception {
+    player1 = new Player();
+    player2 = new Player();
+
     // Racine de scene
     racine = new BorderPane();
 
     // fond de base
     racine.getStyleClass().add("general-borderPanel");
 
-    //Affichage du menu principal
+    // Affichage du menu principal
     inMainGameMenu();
 
     // ------------------------------------------------------------------
@@ -89,6 +93,7 @@ public class GameBoard extends Application {
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
   }
+
 
   /**
    * MENU PRINCIPAL DU JEU
@@ -172,30 +177,30 @@ public class GameBoard extends Application {
     Image imageMenu = new Image(imagePath);
     imageMenuView.setImage(imageMenu);
 
-    //INSTRUCTIONS BUTTON
+    // INSTRUCTIONS BUTTON
     instructionButton = new Button("Instructions");
     instructionButton.getStyleClass().add("bouton-menu-principal");
     instructionButton.setOnAction(
-            actionEvent -> {
-              try {
-                printInstructions();
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            });
+        actionEvent -> {
+          try {
+            printInstructions();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
 
-    //NEW GAME BUTTON
+    // NEW GAME BUTTON
     newGameButton = new Button("Nouvelle partie");
     newGameButton.getStyleClass().add("bouton-menu-principal");
     newGameButton.setOnAction(
-            actionEvent -> {
-              try {
-                isGaming = true;
-                inGame(racine);
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            });
+        actionEvent -> {
+          try {
+            isGaming = true;
+            inGame(racine);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
 
     buttons.getChildren().addAll(instructionButton, newGameButton);
     buttons.setSpacing(25);
@@ -256,13 +261,13 @@ public class GameBoard extends Application {
     barreNavigation.getStyleClass().add("header-hbox");
 
     returnToMenu.setOnAction(
-            actionEvent -> {
-              try {
-                inMainGameMenu();
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            });
+        actionEvent -> {
+          try {
+            inMainGameMenu();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
     barreNavigation.getChildren().add(returnToMenu);
 
     // SEPARATEUR - séparer les utility buttons sur la droite
@@ -311,11 +316,11 @@ public class GameBoard extends Application {
     VBox corpsInstruction = new VBox();
     corpsInstruction.getStyleClass().add("instructions-body");
 
-    String line, fullText ="";
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/main/resources/utils/instructions.txt")))) {
+    String line, fullText = "";
+    try (BufferedReader reader =
+        new BufferedReader(new FileReader(new File("src/main/resources/utils/instructions.txt")))) {
 
-      while ((line = reader.readLine()) != null)
-        fullText += line;
+      while ((line = reader.readLine()) != null) fullText += line;
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -570,6 +575,8 @@ public class GameBoard extends Application {
 
   private GridPane corpsLogiciel() throws IOException {
 
+    VBox corpsInstruction = new VBox();
+    corpsInstruction.getStyleClass().add("instructions-body");
     gridIslandsPanel = new GridPane();
     gridIslandsPanel.getStyleClass().add("corps-gridPane");
     VBox vbox = new VBox();
@@ -584,9 +591,8 @@ public class GameBoard extends Application {
     }
     */
 
-
     // Répertoire contenant nos îles
-    Board board = new Board(gridIslandsPanel, vbox);
+    Board board = new Board(gridIslandsPanel, vbox, player1, player2);
     gridIslandsPanel.setAlignment(Pos.CENTER);
     return gridIslandsPanel;
   }
@@ -710,9 +716,9 @@ public class GameBoard extends Application {
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
     // À REFACTORER SA MERE DANS UNE AUTRE CLASSE -----------
-    for(int i = 0; i < 5; i++)
-    {
-      FileInputStream imagePath = new FileInputStream("src/main/resources/design/images/cards/cardSample.png");
+    for (int i = 0; i < 5; i++) {
+      FileInputStream imagePath =
+          new FileInputStream("src/main/resources/design/images/cards/cardSample.png");
       Image image = new Image(imagePath);
       ImageView imageView = new ImageView(image);
       imageView.setFitWidth(image.getWidth() * 0.7);
@@ -721,7 +727,6 @@ public class GameBoard extends Application {
       footerCardsPlayer.getChildren().add(imageView);
       footerCardsPlayer.getStyleClass().add("corps-gridPane");
     }
-
 
     return footerCardsPlayer;
   }
