@@ -17,8 +17,10 @@ public class ChangeMovementsPoints extends OnCreature {
 
     @Override
     public void execute() {
-        if (receptors != null && receptors[0] != null)
-            ((Creature)receptors[0]).setMovementsPoints(newMP);
+        if (receptors == null)
+            return;
+        for (int i = 0; i < receptors.length; i++)
+            ((Creature)receptors[i]).setMovementsPoints(newMP);
     }
 
     public void setMovementsPoints(int mp) {
@@ -27,7 +29,9 @@ public class ChangeMovementsPoints extends OnCreature {
 
     @Override
     public void undo() {
-        if (receptors != null && receptors[0] != null)
-            ((Creature)receptors[0]).wakeUp();
+        if (receptors == null)
+            return;
+        for (int i = 0; i < receptors.length; i++)
+            ((Creature)receptors[i]).wakeUp();
     }
 }

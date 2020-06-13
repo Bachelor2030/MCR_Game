@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Client.GuiCommands.AddCard</OriginalElement>
+  <nodes>
+    <node x="1797.0" y="3030.0">Server.Game.Card.Card</node>
+    <node x="326.875" y="518.0">Common.Receptors.Trap</node>
+    <node x="1363.0" y="3745.0">Common.Network.JsonUtils.CommandParser</node>
+    <node x="1650.0000000000002" y="2309.0">Server.Game.ModelClasses.Commands.PlayersAction.Undo</node>
+    <node x="2933.0" y="1928.0">Server.Network.ServerAdapter.ReceptionistWorker</node>
+    <node x="1821.1286616161622" y="1980.0">Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction</node>
+    <node x="2025.0000000000002" y="2563.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.MoveCreature</node>
+    <node x="1938.0000000000002" y="2309.0">Server.Game.ModelClasses.Commands.PlayersAction.EndTurn</node>
+    <node x="523.875" y="210.0">Common.Receptors.Player</node>
+    <node x="345.0" y="0.0">Server.Game.ModelClasses.Receptor</node>
+    <node x="2054.0" y="2926.0">Server.Game.Position</node>
+    <node x="2988.0" y="1501.0">Server.Network.ServerAdapter</node>
+    <node x="220.0" y="2309.0">Server.Game.ModelClasses.Commands.CardMovement.Draw</node>
+    <node x="2082.0" y="2288.0">Server.Game.ModelClasses.Commands.PlayersAction.PlayCard</node>
+    <node x="0.0" y="2288.0">Server.Game.ModelClasses.Commands.CardMovement.DrawTypeFromDiscard</node>
+    <node x="2147.0" y="2763.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Advance</node>
+    <node x="1789.0000000000002" y="2531.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.ChangeMovementsPoints</node>
+    <node x="653.0000000000002" y="2277.0">Client.GuiCommands.AddCard</node>
+    <node x="997.0000000000002" y="2277.0">Client.GuiCommands.RemoveCard</node>
+    <node x="1113.0" y="3745.0">Common.Network.JsonUtils.JsonUtil</node>
+    <node x="1598.0" y="3745.0">Server.Network.ServerLauncher</node>
+    <node x="2413.0" y="2531.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.ChangeAttackPoints</node>
+    <node x="0.0" y="3745.0">Common.GameBoard.Board</node>
+    <node x="2625.0" y="2542.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create</node>
+    <node x="431.0" y="3745.0">Common.Network.JsonUtils.GameJsonParser</node>
+    <node x="364.0" y="2309.0">Server.Game.ModelClasses.Commands.CardMovement.Discard</node>
+    <node x="2226.0" y="2320.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.OnCreature</node>
+    <node x="1803.0" y="3745.0">Client.Network.ClientLauncher</node>
+    <node x="2247.0" y="2926.0">Server.Game.Card.CardType</node>
+    <node x="196.0" y="3745.0">Common.Network.ClientState</node>
+    <node x="2471.0" y="1981.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors</node>
+    <node x="216.0" y="1188.0">Common.Receptors.Chest</node>
+    <node x="1840.5" y="2926.0">Server.Game.ModelClasses.Invocator</node>
+    <node x="1290.0000000000002" y="2277.0">Client.GuiCommands.KnockOutCreature</node>
+    <node x="2600.0" y="2288.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.Heal</node>
+    <node x="622.0" y="2926.0">Client.Network.ClientAdapter</node>
+    <node x="1794.0000000000002" y="2309.0">Server.Game.ModelClasses.Commands.PlayersAction.Abandon</node>
+    <node x="2269.0" y="2563.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.KnockOut</node>
+    <node x="2744.0" y="2288.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.Hit</node>
+    <node x="746.0" y="3745.0">Common.Network.JsonUtils.CardJsonParser</node>
+    <node x="90.875" y="451.0">Server.Game.ModelClasses.LiveReceptor</node>
+    <node x="798.0000000000002" y="2266.0">Client.GuiCommands.EndGame</node>
+    <node x="2456.0" y="2288.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.Kill</node>
+    <node x="2729.0" y="2926.0">Client.Maths.Matrix</node>
+    <node x="2005.2500000000002" y="1501.0">Server.Game.ModelClasses.Command</node>
+    <node x="1145.0000000000002" y="2266.0">Client.GuiCommands.Move</node>
+    <node x="1486.0000000000002" y="2255.0">Client.GuiCommands.ChangePoints</node>
+    <node x="2913.0" y="2075.0">Server.Network.ServerAdapter.ReceptionistWorker.ServantWorker</node>
+    <node x="2075.0" y="1627.0">Server.Game.ModelClasses.Macro</node>
+    <node x="2475.0" y="2926.0">Server.Game.Game</node>
+    <node x="0.0" y="2926.0">Server.Game.ModelClasses.Commands.CommandName</node>
+    <node x="949.0000000000002" y="2023.0">Client.GuiCommands.GuiCommand</node>
+    <node x="0.0" y="1100.0">Common.Receptors.Creature</node>
+    <node x="1277.0" y="2926.0">Common.Network.Messages</node>
+    <node x="3206.0" y="2926.0">Common.Network.ServerState</node>
+    <node x="3145.0" y="1885.0">Server.Network.ServerAdapter.MessageLevel</node>
+    <node x="508.0" y="2266.0">Client.GuiCommands.Place</node>
+    <node x="1801.0000000000002" y="1660.0">Server.Game.ModelClasses.ConcreteCommand</node>
+    <node x="175.7782828282834" y="1970.0">Server.Game.ModelClasses.Commands.CardMovement.CardMovement</node>
+    <node x="1551.0" y="2926.0">Client.Maths.Vector2f</node>
+    <node x="927.0" y="2926.0">Common.GameBoard.Spot</node>
+    <node x="331.0" y="2926.0">Client.View.GameBoard</node>
+    <node x="3004.0" y="2926.0">Common.GameBoard.Line</node>
+    <node x="2187.3161616161624" y="1947.0">Server.Game.ModelClasses.Commands.CreateTrap</node>
+    <node x="2003.0000000000002" y="2763.0">Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Retreat</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Common.Receptors.Creature" target="Server.Game.ModelClasses.LiveReceptor">
+      <point x="0.0" y="-178.0" />
+      <point x="98.0" y="1075.0" />
+      <point x="144.875" y="1075.0" />
+      <point x="-54.0" y="179.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.CardMovement.Draw" target="Server.Game.ModelClasses.Commands.CardMovement.CardMovement">
+      <point x="0.0" y="-59.0" />
+      <point x="282.0" y="2235.0" />
+      <point x="291.7782828282834" y="2235.0" />
+      <point x="0.0" y="101.0" />
+    </edge>
+    <edge source="Common.Receptors.Chest" target="Server.Game.ModelClasses.LiveReceptor">
+      <point x="0.0" y="-90.0" />
+      <point x="302.0" y="1075.0" />
+      <point x="252.875" y="1075.0" />
+      <point x="54.0" y="179.0" />
+    </edge>
+    <edge source="Client.GuiCommands.EndGame" target="Client.GuiCommands.GuiCommand">
+      <point x="0.0" y="-102.0" />
+      <point x="887.5000000000002" y="2235.0" />
+      <point x="1029.0000000000002" y="2235.0" />
+      <point x="-32.0" y="48.0" />
+    </edge>
+    <edge source="Client.GuiCommands.KnockOutCreature" target="Client.GuiCommands.GuiCommand">
+      <point x="0.0" y="-91.0" />
+      <point x="1378.0000000000002" y="2225.0" />
+      <point x="1125.0000000000002" y="2225.0" />
+      <point x="64.0" y="48.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.KnockOut" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.OnCreature">
+      <point x="0.0" y="-59.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="Server.Game.Card.Card" target="Server.Game.ModelClasses.Invocator">
+      <point x="0.0" y="-157.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.OnCreature">
+      <point x="0.0" y="-80.0" />
+      <point x="2692.5" y="2501.0" />
+      <point x="2415.0" y="2501.0" />
+      <point x="84.0" y="48.0" />
+    </edge>
+    <edge source="Client.GuiCommands.Place" target="Client.GuiCommands.GuiCommand">
+      <point x="0.0" y="-102.0" />
+      <point x="570.5" y="2215.0" />
+      <point x="965.0000000000002" y="2215.0" />
+      <point x="-96.0" y="48.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.ChangeAttackPoints" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.OnCreature">
+      <point x="0.0" y="-91.0" />
+      <point x="2509.0" y="2511.0" />
+      <point x="2373.0" y="2511.0" />
+      <point x="42.0" y="48.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors" target="Server.Game.ModelClasses.ConcreteCommand">
+      <point x="0.0" y="-90.0" />
+      <point x="2590.0" y="1917.0" />
+      <point x="2029.6000000000001" y="1917.0" />
+      <point x="101.59999999999991" y="102.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.LiveReceptor" target="Server.Game.ModelClasses.Receptor">
+      <point x="0.0" y="-179.0" />
+      <point x="198.875" y="185.0" />
+      <point x="368.8333333333333" y="185.0" />
+      <point x="-47.666666666666686" y="80.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Advance" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.MoveCreature">
+      <point x="0.0" y="-59.0" />
+      <point x="2209.0" y="2738.0" />
+      <point x="2193.0" y="2738.0" />
+      <point x="56.0" y="59.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Retreat" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.MoveCreature">
+      <point x="0.0" y="-59.0" />
+      <point x="2065.0" y="2738.0" />
+      <point x="2081.0" y="2738.0" />
+      <point x="-56.0" y="59.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.PlayersAction.Abandon" target="Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction">
+      <point x="0.0" y="-59.0" />
+      <point x="1856.0000000000002" y="2235.0" />
+      <point x="1904.0036616161622" y="2235.0" />
+      <point x="-27.625" y="91.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.OnCreature" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors">
+      <point x="0.0" y="-48.0" />
+      <point x="2331.0" y="2235.0" />
+      <point x="2500.75" y="2235.0" />
+      <point x="-89.25" y="90.0" />
+    </edge>
+    <edge source="Server.Network.ServerAdapter.MessageLevel" target="Server.Network.ServerAdapter">
+      <point x="0.0" y="-70.0" />
+      <point x="3248.0" y="1860.0" />
+      <point x="3213.75" y="1860.0" />
+      <point x="75.25" y="167.0" />
+    </edge>
+    <edge source="Common.Receptors.Player" target="Server.Game.ModelClasses.Receptor">
+      <point x="0.0" y="-420.0" />
+      <point x="645.375" y="185.0" />
+      <point x="464.16666666666663" y="185.0" />
+      <point x="47.66666666666663" y="80.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.Heal" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors">
+      <point x="0.0" y="-80.0" />
+      <point x="2662.0" y="2235.0" />
+      <point x="2619.75" y="2235.0" />
+      <point x="29.75" y="90.0" />
+    </edge>
+    <edge source="Client.GuiCommands.RemoveCard" target="Client.GuiCommands.GuiCommand">
+      <point x="0.0" y="-91.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="Server.Network.ServerAdapter.ReceptionistWorker" target="Server.Network.ServerAdapter">
+      <point x="0.0" y="-27.0" />
+      <point x="3029.0" y="1860.0" />
+      <point x="3063.25" y="1860.0" />
+      <point x="-75.25" y="167.0" />
+    </edge>
+    <edge source="Server.Network.ServerAdapter.ReceptionistWorker.ServantWorker" target="Server.Network.ServerAdapter.ReceptionistWorker">
+      <point x="0.0" y="-223.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="Client.GuiCommands.AddCard" target="Client.GuiCommands.GuiCommand">
+      <point x="0.0" y="-91.0" />
+      <point x="715.5000000000002" y="2225.0" />
+      <point x="997.0000000000002" y="2225.0" />
+      <point x="-64.0" y="48.0" />
+    </edge>
+    <edge source="Common.Receptors.Trap" target="Server.Game.ModelClasses.Receptor">
+      <point x="0.0" y="-112.0" />
+      <point x="415.375" y="185.0" />
+      <point x="416.5" y="185.0" />
+      <point x="0.0" y="80.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Macro" target="Server.Game.ModelClasses.Command">
+      <point x="0.0" y="-135.0" />
+      <point x="2206.5" y="1602.0" />
+      <point x="2098.25" y="1602.0" />
+      <point x="31.0" y="38.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.CardMovement.Discard" target="Server.Game.ModelClasses.Commands.CardMovement.CardMovement">
+      <point x="0.0" y="-59.0" />
+      <point x="426.0" y="2235.0" />
+      <point x="369.1116161616169" y="2235.0" />
+      <point x="77.33333333333348" y="101.0" />
+    </edge>
+    <edge source="Client.GuiCommands.ChangePoints" target="Client.GuiCommands.GuiCommand">
+      <point x="0.0" y="-113.0" />
+      <point x="1558.0000000000002" y="2215.0" />
+      <point x="1157.0000000000002" y="2215.0" />
+      <point x="96.0" y="48.0" />
+    </edge>
+    <edge source="Client.GuiCommands.Move" target="Client.GuiCommands.GuiCommand">
+      <point x="0.0" y="-102.0" />
+      <point x="1207.5000000000002" y="2235.0" />
+      <point x="1093.0000000000002" y="2235.0" />
+      <point x="32.0" y="48.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.CardMovement.DrawTypeFromDiscard" target="Server.Game.ModelClasses.Commands.CardMovement.CardMovement">
+      <point x="0.0" y="-80.0" />
+      <point x="100.0" y="2235.0" />
+      <point x="214.44494949495015" y="2235.0" />
+      <point x="-77.33333333333326" y="101.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.PlayersAction.Undo" target="Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction">
+      <point x="0.0" y="-59.0" />
+      <point x="1712.0000000000002" y="2235.0" />
+      <point x="1848.7536616161622" y="2235.0" />
+      <point x="-82.875" y="91.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.Hit" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors">
+      <point x="0.0" y="-80.0" />
+      <point x="2806.0" y="2235.0" />
+      <point x="2679.25" y="2235.0" />
+      <point x="89.25" y="90.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.CardMovement.CardMovement" target="Server.Game.ModelClasses.ConcreteCommand">
+      <point x="0.0" y="-101.0" />
+      <point x="291.7782828282834" y="1917.0" />
+      <point x="1826.4000000000003" y="1917.0" />
+      <point x="-101.59999999999991" y="102.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.PlayersAction.PlayCard" target="Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction">
+      <point x="0.0" y="-80.0" />
+      <point x="2144.0" y="2235.0" />
+      <point x="2014.5036616161622" y="2235.0" />
+      <point x="82.875" y="91.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.MoveCreature" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.OnCreature">
+      <point x="0.0" y="-59.0" />
+      <point x="2137.0" y="2511.0" />
+      <point x="2289.0" y="2511.0" />
+      <point x="-42.0" y="48.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.ConcreteCommand" target="Server.Game.ModelClasses.Command">
+      <point x="0.0" y="-102.0" />
+      <point x="1928.0000000000002" y="1602.0" />
+      <point x="2036.2500000000002" y="1602.0" />
+      <point x="-31.0" y="38.0" />
+    </edge>
+    <edge source="Client.GuiCommands.GuiCommand" target="Server.Game.ModelClasses.ConcreteCommand">
+      <point x="0.0" y="-48.0" />
+      <point x="1061.0000000000002" y="1927.0" />
+      <point x="1877.2000000000003" y="1927.0" />
+      <point x="-50.799999999999955" y="102.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.ChangeMovementsPoints" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.OnCreature">
+      <point x="0.0" y="-91.0" />
+      <point x="1897.0000000000002" y="2501.0" />
+      <point x="2247.0" y="2501.0" />
+      <point x="-84.0" y="48.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.CreateTrap" target="Server.Game.ModelClasses.ConcreteCommand">
+      <point x="0.0" y="-124.0" />
+      <point x="2257.3161616161624" y="1927.0" />
+      <point x="1978.8000000000002" y="1927.0" />
+      <point x="50.799999999999955" y="102.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.OnLiveReceptors.Kill" target="Server.Game.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors">
+      <point x="0.0" y="-80.0" />
+      <point x="2518.0" y="2235.0" />
+      <point x="2560.25" y="2235.0" />
+      <point x="-29.75" y="90.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction" target="Server.Game.ModelClasses.ConcreteCommand">
+      <point x="0.0" y="-91.0" />
+      <point x="1931.6286616161622" y="1927.0" />
+      <point x="1928.0000000000002" y="1927.0" />
+      <point x="0.0" y="102.0" />
+    </edge>
+    <edge source="Server.Game.ModelClasses.Commands.PlayersAction.EndTurn" target="Server.Game.ModelClasses.Commands.PlayersAction.PlayersAction">
+      <point x="0.0" y="-59.0" />
+      <point x="2000.0000000000002" y="2235.0" />
+      <point x="1959.2536616161622" y="2235.0" />
+      <point x="27.625" y="91.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6009852216748769" x="1342.762295081967" y="3242.401639344262" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

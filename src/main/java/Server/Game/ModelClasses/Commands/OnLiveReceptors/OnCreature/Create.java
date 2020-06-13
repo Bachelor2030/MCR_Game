@@ -5,27 +5,29 @@ import Server.Game.Position;
 import Common.Receptors.Creature;
 
 public class Create extends OnCreature {
-    private Position position;
+    private Position[] positions;
 
     public Create(){
         super(CommandName.CREATE_CREATURE);
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setPositions(Position[] positions) {
+        this.positions = positions;
     }
 
     @Override
     public void execute() {
-        if(receptors != null && receptors[0] != null) {
-            ((Creature) receptors[0]).place(position);
-        }
+        if (receptors == null)
+            return;
+        for (int i = 0; i < receptors.length; i++)
+            receptors[i].place(positions[i]);
     }
 
     @Override
     public void undo() {
-        if(receptors != null && receptors[0] != null) {
-            ((Creature) receptors[0]).place(null);
-        }
+        if (receptors == null)
+            return;
+        for (int i = 0; i < receptors.length; i++)
+            receptors[i].place(null);
     }
 }

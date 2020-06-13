@@ -30,7 +30,8 @@ public class Trap extends Receptor {
     public void trigger(Creature creature) {
         setVictim(creature);
         effect.execute();
-        //TODO position.leave();
+        if (position != null)
+            position.leave();
         position = null;
     }
 
@@ -39,7 +40,8 @@ public class Trap extends Receptor {
      * @param position the position of the trap on the board
      */
     public void setPosition(Position position) {
-        //Todo position.setOccupant(this);
+        if (position != null)
+            position.setOccupant(this);
         this.position = position;
     }
 

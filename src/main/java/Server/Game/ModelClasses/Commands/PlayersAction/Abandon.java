@@ -1,6 +1,5 @@
 package Server.Game.ModelClasses.Commands.PlayersAction;
 
-import Server.Game.ModelClasses.PlayersAction;
 import Server.Game.ModelClasses.Commands.CommandName;
 
 public class Abandon extends PlayersAction {

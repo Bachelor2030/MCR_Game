@@ -53,6 +53,8 @@ public class GameBoard extends Application {
 
   BorderPane racine;
 
+  private Board board;
+
 
   /**
    * Thread principal du GUI.
@@ -573,7 +575,7 @@ public class GameBoard extends Application {
 
     // Répertoire contenant nos îles
     Group islands = new Group();
-    Board board = new Board(islands);
+    board = new Board(islands);
     sp.getChildren().add(islands);
 
     return sp;

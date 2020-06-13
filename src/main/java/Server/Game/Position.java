@@ -15,7 +15,7 @@ public class Position {
     }
 
     public boolean isEmpty() {
-        if(isValid()) {
+        if(isValid() && line.getSpot(position) != null) {
             return line.getSpot(position).isEmpty();
         }
         return false;
@@ -29,20 +29,20 @@ public class Position {
     }
 
     public Receptor getOccupant() {
-        if(isValid()) {
+        if(isValid() && line.getSpot(position) != null) {
             return line.getSpot(position).getOccupant();
         }
         return null;
     }
 
     public void setOccupant(Receptor occupant) {
-        if(isValid()) {
+        if(isValid() && line != null && line.getSpot(position) != null) {
             line.getSpot(position).setOccupant(occupant);
         }
     }
 
     public void leave() {
-        if(line != null) {
+        if(line != null && line.getSpot(position) != null) {
             line.getSpot(position).leave();
         }
     }
@@ -66,6 +66,6 @@ public class Position {
     }
 
     public boolean isValid() {
-        return position < line.getNB_SPOTS();
+        return position < line.getNB_SPOTS() && line.getSpot(position) != null;
     }
 }
