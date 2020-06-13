@@ -1,15 +1,21 @@
 package Common.Network.JsonUtils;
 
+import Common.GameBoard.Line;
 import Common.Receptors.Creature;
+import Common.Receptors.Player;
 import Common.Receptors.Trap;
 import Server.Game.Card.Card;
 import Server.Game.Card.CardType;
 import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.ModelClasses.Commands.CreateTrap;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Advance;
 import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.Game;
+import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.KnockOut;
 import Server.Game.ModelClasses.ConcreteCommand;
+import Server.Game.ModelClasses.LiveReceptor;
 import Server.Game.ModelClasses.Macro;
+import Server.Game.Position;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +28,36 @@ public class ParserLauncher {
         String file = "src/main/resources/json/game.json";
 
         Game game = parseJsonGame(file);
-        game.startGame();
+        //game.startGame();
+        ArrayList<ConcreteCommand> commands = new ArrayList<>();
+        Create create = new Create();
+
+        Creature pier = new Creature("pier", 1, 1, 1), seb = new Creature("Sebas-chan", 2, 2, 2);
+        pier.setOwner(new Player("Clarusso", null));
+        seb.setOwner(new Player("Clarusso", null));
+        pier.setOriginCard(new Card(1, "Pier", CardType.CREATURE, 12));
+        seb.setOriginCard(new Card(2, "Seb", CardType.CREATURE, 13));
+
+        create.setCreatures(new Creature[]{pier, seb});
+        create.setPositions(new Position[]{new Position(new Line(1), 1), new Position(new Line(2), 2)});
+        create.execute();
+        commands.add(create);
+
+        KnockOut ko = new KnockOut();
+        ko.setReceptors(new LiveReceptor[]{pier, seb});
+        ko.execute();
+        commands.add(ko);
+
+        Advance advance = new Advance();
+        advance.setCreatures(new Creature[]{pier});
+        advance.execute();
+        commands.add(advance);
+
+        Macro m = new Macro(commands);
+        for (int i = 0; i < m.toJson().length; i++) {
+            System.out.println("Command n°" + i);
+            System.out.println(m.toJson()[i]);
+        }
     }
 
     public static Game parseJsonGame(String file) {
@@ -77,7 +112,7 @@ public class ParserLauncher {
                         jsonCreature.getInt("life"),
                         jsonCreature.getInt("steps"),
                         jsonCreature.getInt("attack"));
-                create.setCreature(new Creature[]{creature});
+                create.setCreatures(new Creature[]{creature});
                 concreteCommands.add(create);
             }
             else if (cardType == CardType.TRAP) {

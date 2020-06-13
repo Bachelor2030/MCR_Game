@@ -110,7 +110,7 @@ public class Player extends Receptor {
 
             ArrayList<Create> createCreatures = card.getCommand().getCreateCreature();
             for (Create create : createCreatures) {
-                creatures.addAll(Arrays.asList(create.getCreature()));
+                creatures.addAll(Arrays.asList(create.getCreatures()));
             }
 
             discard.get(currentTurn).add(card);
