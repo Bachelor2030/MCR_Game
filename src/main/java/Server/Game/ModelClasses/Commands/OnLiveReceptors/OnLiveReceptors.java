@@ -50,19 +50,19 @@ public abstract class OnLiveReceptors extends ConcreteCommand {
                     sb.append(", \"cardID\" : " + ((Creature)receptor).getOriginCard().getID());
                 }
                 sb.append(", \"position\" : { \"line\" : " +
-                        receptor.getPosition().getLine().getNoLine() +
+                        receptor.getPosition().getBoardLine().getNoLine() +
                         ", \"spot\" : " +
                         receptor.getPosition().getPosition() +
                         "}}");
             } else {
                 sb.append(", \"positionTo\" : { \"line\" : " +
-                        receptor.getPosition().getLine().getNoLine() +
+                        receptor.getPosition().getBoardLine().getNoLine() +
                         ", \"spot\" : " +
                         receptor.getPosition().getPosition() +
                         "}");
 
                 sb.append(", \"positionFrom\" : { \"line\" : " +
-                        ((MoveCreature)this).getFrom()[i].getLine().getNoLine() +
+                        ((MoveCreature)this).getFrom()[i].getBoardLine().getNoLine() +
                         ", \"spot\" : " +
                         ((MoveCreature)this).getFrom()[i].getPosition() +
                         "}}");

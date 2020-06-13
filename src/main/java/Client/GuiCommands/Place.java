@@ -1,11 +1,14 @@
 package Client.GuiCommands;
 
+import Client.View.GameBoard;
+import Common.Receptors.Creature;
 import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.Position;
 
 public class Place extends GuiCommand {
     private Position position;
     private int cardID;
+    private Creature creature;
 
     public Place() {
         super(CommandName.PLACE);
@@ -13,6 +16,8 @@ public class Place extends GuiCommand {
 
     public void setCardID(int cardID) {
         this.cardID = cardID;
+        // TODO change that
+        creature = null;
     }
 
     public void setPosition(Position position) {
@@ -27,7 +32,7 @@ public class Place extends GuiCommand {
         sb.append(", \"cardID\" : " + cardID);
 
         sb.append(", \"position\" : { \"line\" : " +
-                position.getLine() +
+                position.getBoardLine() +
                 ", \"spot\" : " +
                 position.getPosition() +
                 "}}");
@@ -36,12 +41,12 @@ public class Place extends GuiCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute(GameBoard gameBoard) {
         // Todo : execution on the GUI
     }
 
     @Override
-    public void undo() {
+    public void undo(GameBoard gameBoard) {
         // Todo : undo on the GUI
     }
 }

@@ -1,5 +1,6 @@
 package Common.Network.JsonUtils;
 
+import Common.GameBoard.Board;
 import Common.Receptors.Creature;
 import Common.Receptors.Player;
 import Server.Game.Card.Card;
@@ -16,10 +17,12 @@ import java.util.ArrayList;
 public class GameJsonParser {
     private final String path;
     private final ArrayList<Card> allCards;
+    private final Board board;
 
-    public GameJsonParser(ArrayList<Card> allCards, String path) {
+    public GameJsonParser(ArrayList<Card> allCards, String path, Board board) {
         this.allCards = allCards;
         this.path = path;
+        this.board = board;
     }
 
     public Game parseJson(String json) throws JSONException, FileNotFoundException {
@@ -44,7 +47,7 @@ public class GameJsonParser {
         setOwner(cardsPlayer1, p1);
         setOwner(cardsPlayer2, p2);
 
-        return new Game(p1, p2);
+        return new Game(p1, p2, board);
     }
 
     private void setOwner(ArrayList<Card> cards, Player player) {

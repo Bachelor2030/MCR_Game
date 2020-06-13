@@ -1,21 +1,17 @@
 package Common.Network.JsonUtils;
 
-import Common.GameBoard.Line;
+import Client.View.GameBoard;
+import Common.GameBoard.Board;
 import Common.Receptors.Creature;
-import Common.Receptors.Player;
 import Common.Receptors.Trap;
 import Server.Game.Card.Card;
 import Server.Game.Card.CardType;
 import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.ModelClasses.Commands.CreateTrap;
-import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Advance;
 import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.Game;
-import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.KnockOut;
 import Server.Game.ModelClasses.ConcreteCommand;
-import Server.Game.ModelClasses.LiveReceptor;
 import Server.Game.ModelClasses.Macro;
-import Server.Game.Position;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,9 +22,12 @@ import java.util.ArrayList;
 public class ParserLauncher {
     public static void main(String[] args) throws FileNotFoundException {
         String file = "src/main/resources/json/game.json";
+        GameBoard gameBoard = new GameBoard();
 
-        Game game = parseJsonGame(file);
-        //game.startGame();
+        Game game = parseJsonGame(file, gameBoard.getBoard());
+        game.startGame();
+
+        /*
         ArrayList<ConcreteCommand> commands = new ArrayList<>();
         Create create = new Create();
 
@@ -39,7 +38,7 @@ public class ParserLauncher {
         seb.setOriginCard(new Card(2, "Seb", CardType.CREATURE, 13));
 
         create.setCreatures(new Creature[]{pier, seb});
-        create.setPositions(new Position[]{new Position(new Line(1), 1), new Position(new Line(2), 2)});
+        create.setPositions(new Position[]{new Position(new BoardLine(1), 1), new Position(new BoardLine(2), 2)});
         create.execute();
         commands.add(create);
 
@@ -57,10 +56,10 @@ public class ParserLauncher {
         for (int i = 0; i < m.toJson().length; i++) {
             System.out.println("Command n°" + i);
             System.out.println(m.toJson()[i]);
-        }
+        }*/
     }
 
-    public static Game parseJsonGame(String file) {
+    public static Game parseJsonGame(String file, Board board) {
         Game game = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -77,7 +76,7 @@ public class ParserLauncher {
             ArrayList<Card> allCards = parseJsonCards(jsonUtil.getJsonContent("src/main/resources/json/cards.json"));
 
             System.out.println("Read " + file);
-            GameJsonParser gameJsonParser = new GameJsonParser(allCards, "src/main/resources/json/");
+            GameJsonParser gameJsonParser = new GameJsonParser(allCards, "src/main/resources/json/", board);
             game = gameJsonParser.parseJson(sb.toString());
 
             fileInputStream.close();

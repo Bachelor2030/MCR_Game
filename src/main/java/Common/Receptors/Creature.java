@@ -1,7 +1,6 @@
 package Common.Receptors;
 
 import Server.Game.Card.Card;
-import Server.Game.Position;
 import Server.Game.ModelClasses.LiveReceptor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,10 +17,6 @@ public class Creature extends LiveReceptor {
     private Card originCard;         // The card that created the creature
     private boolean asleep;
 
-    private FileInputStream imagePath = new FileInputStream("src/main/resources/design/images/creatures/shark.gif");
-    private Image image;
-    private ImageView imageView;
-
     /**
      * Creates a creature with the given information
      * @param name the name of the creature
@@ -29,19 +24,11 @@ public class Creature extends LiveReceptor {
      * @param steps the number of steps the creature can do in one move
      * @param attackPoints the number of life points the creature removes form an ennemy
      */
-    public Creature(String name, int lifePoints, int steps, int attackPoints) throws FileNotFoundException {
+    public Creature(String name, int lifePoints, int steps, int attackPoints) {
         super(name, lifePoints, "Creature");
         this.steps = steps;
         this.attackPoints = attackPoints;
         asleep = false;
-        initDisplayCreature();
-    }
-
-    private void initDisplayCreature() {
-        image = new Image(imagePath);
-        imageView = new ImageView(image);
-        imageView.setFitWidth(image.getWidth() * 0.2);
-        imageView.setFitHeight(image.getHeight() * 0.2);
     }
 
     public void setOriginCard(Card originCard) {
@@ -145,13 +132,5 @@ public class Creature extends LiveReceptor {
             advance();
         }
         asleep = false;
-    }
-
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImagePath(FileInputStream imagePath) {
-        this.imagePath = imagePath;
     }
 }

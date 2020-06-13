@@ -1,6 +1,7 @@
 package Common.GameBoard;
 
 import Common.Receptors.Player;
+import Server.Game.ModelClasses.Receptor;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -22,7 +23,7 @@ public class Board {
     private static int lineCounter;
 
     //les lignes du board
-    private LinkedList<Line> lines;
+    private LinkedList<BoardLine> boardLines;
 
     Group root;
 
@@ -31,16 +32,19 @@ public class Board {
      */
     public Board(GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
         lineCounter = 0;
-        lines = new LinkedList<>();
-        for(int line = 0; line < NB_LINES; ++line)
-        {
-            lines.add(new Line(++lineCounter, gridPane, vbox, player1, player2));
+        boardLines = new LinkedList<BoardLine>();
+        for(int line = 0; line < NB_LINES; ++line) {
+            boardLines.add(new BoardLine(++lineCounter, gridPane, vbox, player1, player2));
         }
     }
 
-    public Line getLine(int index) {
-        if (index < lines.size()) {
-            return lines.get(index);
+    public void place(Receptor receptor, int lineCounter, int spot) {
+        boardLines.get(lineCounter).setReceptor(receptor, spot);
+    }
+
+    public BoardLine getLine(int index) {
+        if (index < boardLines.size()) {
+            return boardLines.get(index);
         }
         return null;
     }
@@ -49,8 +53,8 @@ public class Board {
      * Permet de récupérer la liste des lignes du board.
      * @return la liste des lignes du board.
      */
-    public LinkedList<Line> getLines() {
-        return lines;
+    public LinkedList<BoardLine> getBoardLines() {
+        return boardLines;
     }
 
     /**

@@ -3,15 +3,9 @@ package Client.GuiCommands;
 import Client.View.GameBoard;
 import Server.Game.ModelClasses.Commands.CommandName;
 
-public class RemoveCard extends GuiCommand {
-    private int cardID;
-
-    public RemoveCard() {
-        super(CommandName.REMOVE_CARD);
-    }
-
-    public void setCardID(int cardID) {
-        this.cardID = cardID;
+public class EndPlayerTurn extends GuiCommand {
+    public EndPlayerTurn() {
+        super(CommandName.END_PLAYER_TURN);
     }
 
     @Override
@@ -21,8 +15,6 @@ public class RemoveCard extends GuiCommand {
         sb.append(name);
         sb.append("\", \"player\" : ");
         sb.append(playerName);
-        sb.append(", \"cardID\" : ");
-        sb.append(cardID);
         sb.append("}");
 
         return sb.toString();
@@ -30,11 +22,11 @@ public class RemoveCard extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // Todo : execution on the GUI
+
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
-        // Todo : undo on the GUI
+
     }
 }

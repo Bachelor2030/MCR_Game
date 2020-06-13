@@ -3,8 +3,12 @@ package Common.GameBoard;
 import Common.Receptors.Chest;
 import Common.Receptors.Creature;
 import Common.Receptors.Player;
+import Common.Receptors.Trap;
+import Server.Game.ModelClasses.Receptor;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -12,7 +16,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /** Cette classe permet d'instancier les lignes composant le "plateau" de jeu. */
-public class Line {
+public class BoardLine {
 
   // Le nombre de cases dans une ligne
   private final int NB_SPOTS = 12;
@@ -24,28 +28,35 @@ public class Line {
   private LinkedList<Spot> spots;
 
   //La liste de creatures
-  private LinkedList<Creature> creatures;
+  private LinkedList<Receptor> receptors;
 
   //La liste de trésors
   private LinkedList<Chest> chests;
 
+  private VBox vBox;
+  private GridPane gridPane;
+
   // le groupe d'îlots qu'on affichera par la suite
   Group root;
 
-  public Line(int noLine) {
+
+  public BoardLine(int noLine) {
     this.noLine = noLine;
   }
 
   /**
-   * Constructeur de la classe Line
+   * Constructeur de la classe BoardLine
    *
    * @param noLine : le numéro de la ligne
    */
-  public Line(int noLine, GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
+  public BoardLine(int noLine, GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
     this.noLine = noLine;
-    creatures = new LinkedList<>(); // on initialise la liste de créatures.
+    receptors = new LinkedList<>(); // on initialise la liste de créatures.
     spots = new LinkedList<>(); // on initialise la liste de spots.
     chests = new LinkedList<>(); //on initialise la liste de chess.
+
+    this.vBox = vbox;
+    this.gridPane = gridPane;
 
     int indexCreature = 0;
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
@@ -67,13 +78,25 @@ public class Line {
         gridPane.add(vbox, spot, noLine);
       }
       else {
-        creatures.add(new Creature("unknown", 0, 0, 0));
+        receptors.add(new Creature("unknown", 0, 0, 0));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((creatures.get(indexCreature++).getImageView()), (spots.get(spot).getImageView()));
+                .addAll((receptors.get(indexCreature++).getImageView()), (spots.get(spot).getImageView()));
         gridPane.add(vbox, spot, noLine);
       }
 
+    }
+  }
+
+  public void setReceptor(Receptor receptor, int spot) {
+    receptors.get(spot).setTo(receptor);
+
+    ObservableList<Node> childrens = gridPane.getChildren();
+    for (Node node : childrens) {
+      if(gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
+        ((VBox)node).getChildren().set(0, receptors.get(spot).getImageView());
+        break;
+      }
     }
   }
 

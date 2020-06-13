@@ -497,9 +497,9 @@ ordinary General Public License).
   To apply these terms, attach the following notices to the library.  It is
 safest to attach them to the start of each source file to most effectively
 convey the exclusion of warranty; and each file should have at least the
-"copyright" line and a pointer to where the full notice is found.
+"copyright" boardLine and a pointer to where the full notice is found.
 
-    <one line to give the library's name and a brief idea of what it does.>
+    <one boardLine to give the library's name and a brief idea of what it does.>
     Copyright (C) <year>  <name of author>
 
     This library is free software; you can redistribute it and/or

@@ -1,12 +1,17 @@
 package Client.View;
 
+import Client.GuiCommands.EndGame;
+import Client.GuiCommands.Move;
 import Common.GameBoard.Board;
+import Common.Receptors.Creature;
 import Common.Receptors.Player;
 import Server.Game.Card.Card;
+import Server.Game.ModelClasses.Commands.PlayersAction.EndTurn;
+import Server.Game.ModelClasses.Receptor;
+import Server.Game.Position;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -77,6 +82,7 @@ public class GameBoard extends Application {
     player1 = new Player();
     player2 = new Player();
 
+
     // Racine de scene
     racine = new BorderPane();
 
@@ -93,7 +99,7 @@ public class GameBoard extends Application {
     Scene scene = new Scene(racine, WIDTH_WINDOW, HEIGHT_WINDOW);
 
     // on définit le curseur comme croix
-    scene.setCursor(Cursor.CROSSHAIR);
+    //scene.setCursor(Cursor.CROSSHAIR);
 
     // on applique les styles de la feuille CSS
     scene.getStylesheets().add("/design/css/styleSheet.css");
@@ -106,6 +112,32 @@ public class GameBoard extends Application {
     stage.show();
   }
 
+  public void setPlayer1(Player player1) {
+    this.player1 = player1;
+  }
+
+  public void setPlayer2(Player player2) {
+    this.player2 = player2;
+  }
+
+  public Board getBoard() {
+    return board;
+  }
+
+  public void place(Receptor receptor, int line, int position) {
+    board.place(receptor, line, position);
+    board.getLine(line).getSpot(position).setOccupant(receptor);
+  }
+
+  public void exitGame() {
+    // TODO afficher la fenêtre de fin
+    isGaming = false;
+    try {
+      inMainGameMenu();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   /**
    * MENU PRINCIPAL DU JEU
@@ -708,7 +740,7 @@ public class GameBoard extends Application {
     */
     
     // Répertoire contenant nos îles
-    Board board = new Board(gridIslandsPanel, vbox, player1, player2);
+    board = new Board(gridIslandsPanel, vbox, player1, player2);
     gridIslandsPanel.setAlignment(Pos.CENTER);
     return gridIslandsPanel;
   }
@@ -737,18 +769,38 @@ public class GameBoard extends Application {
     validateTourButton.setOnAction(
         actionEvent -> {
           // blablabla définir ce que fait le bouton "valider tour" ici.
+          EndTurn endTurn = new EndTurn();
+          endTurn.setPlayer(player1);
+
+          // TODO send this to backend
+          System.out.println(endTurn.toJson());
+
+          Creature c = new Creature("bluey", 1, 1, 1);
+          c.setImagePath("design/images/creatures/bluey.gif");
+          place(c, 1, 1);
+
+          Creature c1 = new Creature("shark", 1, 1, 1);
+          c1.setImagePath("design/images/creatures/shark.gif");
+          place(c1, 2, 2);
+
           System.out.println("you hit the validate button...");
         });
 
     abandonTourButton.setOnAction(
         actionEvent -> {
           // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
-          isGaming = false;
-          try {
-            inMainGameMenu();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
+          EndGame endGame = new EndGame();
+          endGame.setPlayerName(player1.getName());
+          endGame.setPlayerState('L');
+
+          Move m = new Move();
+          m.setFrom(new Position(board.getLine(1), 2));
+          m.setTo(new Position(board.getLine(1), 5));
+          m.execute(this);
+
+          //TODO send this to backend
+          System.out.println(m.toJson());
+          System.out.println(endGame.toJson());
         });
 
     // ----------------------------------------------------

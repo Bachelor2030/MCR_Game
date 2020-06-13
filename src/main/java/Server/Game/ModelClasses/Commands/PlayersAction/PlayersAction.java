@@ -16,7 +16,7 @@ public abstract class PlayersAction extends ConcreteCommand {
         super(name);
     }
 
-    private void setPlayer(Player player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
@@ -45,6 +45,6 @@ public abstract class PlayersAction extends ConcreteCommand {
 
     @Override
     public String toJson() {
-        return "{\"type\" : \"Command\", \"name\"" + name + "\", \"player\" : " + player.getName() + "}";
+        return "{\"type\" : \"Command\", \"name\" : \"" + name + "\", \"player\" : \"" + player.getName() + "\"}";
     }
 }
