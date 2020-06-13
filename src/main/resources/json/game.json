@@ -1,0 +1,16 @@
+{
+    "pageInfo" : {
+        "pageName" : "initial game state",
+        "pageContent" : ["playerNames", "cardsPlayer1", "cardsPlayer2"]
+    },
+    "playerNames" : {
+        "player1" : "Elodie",
+        "player2" : "Guillaume"
+    }, 
+    "cardsPlayer1" : {
+        "file" : "cards1.json"
+    }, 
+    "cardsPlayer2" : {
+        "file" : "cards2.json"
+    }
+}

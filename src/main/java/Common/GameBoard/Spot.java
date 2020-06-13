@@ -91,7 +91,9 @@ public class Spot extends Application {
     return 0;
   }
 
-
+  /**
+   * permet d'initialiser correctement la place d'un îlot
+   */
   private void initSpot() {
     pos.x = (this.number % 10 == 0 ? (int)STARTING_COORDINATE_X : pos.x);
     pos.x += HORIZONTAL_DISTANCE_BETWEEN_ISLANDS * (number % 10);

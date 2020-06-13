@@ -1,0 +1,150 @@
+/* ************************************************ */
+/* GENERAL */
+/* ************************************************ */
+.general-borderPanel {
+    -fx-background-image: url("/design/images/menu_bg.png");;
+}
+
+/* ************************************************ */
+/* HEADER */
+/* ************************************************ */
+
+.header-button {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
+    /* -fx-background-color: #E9DBFA; */
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #8c7fc9 0%, #8c7fc9 100%),
+    #8c7fc9,
+    #8c7fc9,
+    radial-gradient(center 50% 50%, radius 100%, #d9d2f8, #c7beee);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 4, 0, 0, 1);
+    -fx-text-fill: #32275a;
+    -fx-background-radius: 5;
+    -fx-alignment: center;
+    -fx-font-size: 15;
+}
+
+.header-button:pressed {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #8c7fc9 0%, #8c7fc9 100%),
+    #8c7fc9,
+    #8c7fc9,
+    radial-gradient(center 50% 50%, radius 100%, #d9d2f8, #d9d2f8);
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+
+.header-quit-button {
+    -fx-background-color: none;
+    -fx-background-radius: 15px;
+}
+
+.header-interieur-case {
+    -fx-text-fill: #7b7b8d;
+}
+
+
+/* ************************************************ */
+/* MENU PRINCIPAL */
+/* ************************************************ */
+
+.bouton-menu-principal {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #8c7fc9 0%, #8c7fc9 100%),
+    #8c7fc9,
+    #8c7fc9,
+    radial-gradient(center 50% 50%, radius 100%, #d9d2f8, #c7beee);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 4, 0, 0, 1);
+    -fx-text-fill: #32275a;
+    -fx-background-radius: 5;
+    -fx-alignment: center;
+    -fx-font-size: 20;
+    -fx-pref-width: 230;
+}
+
+.bouton-menu-principal:pressed {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #8c7fc9 0%, #8c7fc9 100%),
+    #8c7fc9,
+    #8c7fc9,
+    radial-gradient(center 50% 50%, radius 100%, #d9d2f8, #d9d2f8);
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+
+/* ************************************************ */
+/* INSTRUCTIONS */
+/* ************************************************ */
+.instructions-title {
+    -fx-font-size: 30;
+    -fx-font-weight: bolder;
+    -fx-text-fill: #d9d2f8;
+    -fx-font-family: Roboto;
+    -fx-text-alignment: center;
+}
+
+.instructions-text {
+    -fx-font-size: 20;
+    -fx-text-fill: #d9d2f8;
+    -fx-font-family: Roboto;
+    -fx-text-alignment: justify;
+}
+
+.instructions-body {
+    -fx-background-color: rgba(201, 201, 236, 0.47);
+    -fx-pref-height: 300;
+}
+
+/* ************************************************ */
+/* BODY */
+/* ************************************************ */
+
+.corps-gridPane {
+    -fx-pref-width: 800;
+    /*-fx-padding: 15,15,15,15;*/
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+/* ************************************************ */
+/* COLONNE GAUCHE */
+/* ************************************************ */
+.menuLabelsGauche-vbox {
+    -fx-padding: 15 15 15 15;
+}
+
+.titre-label {
+    -fx-font: 15 Impact;
+    -fx-text-fill: #636366;
+    -fx-padding: 0 0 0 15;
+}
+
+.actionPlayer {
+    -fx-min-width: 150;
+    -fx-pref-width: 150;
+    -fx-pref-height: 300;
+}
+
+
+/* ************************************************ */
+/* COLONNE DROITE */
+/* ************************************************ */
+.menuLabelsDroite-vbox {
+    -fx-padding: 15 15 15 15;
+}
+
+/* ************************************************ */
+/* FOOTER */
+/* ************************************************ */
+
+.footer-header-hbox {
+    -fx-alignment: center;
+    -fx-pref-height: 150;
+}
+
+/* ************************************************ */
+
+.alert.confirmation.dialog-pane {
+    -fx-graphic: url("/design/images/yUQuit.png");
+    -fx-alignment: center;
+    -fx-background-color: #CDAEF3;
+}

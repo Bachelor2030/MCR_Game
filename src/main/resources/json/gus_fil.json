@@ -1,0 +1,46 @@
+Communication player -> server:
+{
+"type": <type of communication>
+}
+
+Communications :
+init game :
+{
+"type": "init",
+"init": [
+"lines": <nb lines>,
+"linelength": <length of a line>,
+"ennemyname": <name of other player>,
+"turn": <Wait turn/Your turn>,
+"cards": [
+"id": <id card>,
+"name": <card name>,
+"type": <card type>,
+"cost": <card cost>,
+"card commands": [<array of commands>]
+"creature":[
+"name": <creature name>,
+"img": <creature picture>,
+"life": <health points>,
+"steps": <creature possible steps>,
+"attack": <attack points>
+]
+]
+]
+}
+
+update game :
+{
+"type": "update",
+"moves": [
+"create": ["line": <line x>, "pos": <pos y>, "creature":[
+"name": <creature name>,
+"img": <creature picture>,
+"life": <health points>,
+"steps": <creature possible steps>,
+"attack": <attack points>
+]],
+"move": ["line": <line x>, "pos": <pos y>],
+
+]
+}

@@ -1,51 +1,36 @@
 package Server.Game;
 
-import Common.GameBoard.Board;
-import Common.Receptors.Creature;
 import Common.Receptors.Player;
-
-import java.util.ArrayList;
 
 /**
  * Cette classe permet de modéliser le jeu.
  */
 public class Game {
-    private Player player1, player2;
-
-    private ArrayList<Creature> player1Creatures;
-    private ArrayList<Creature> player2Creatures;
-
-    private Board board;
-    private int turn;
+    private static final int
+            NBR_CHESTS_TO_DESTROY = 2;
+    private Player
+            player1,
+            player2;
+    private int
+            turn;
 
     /**
      * Constructeur de la classe Game
      * @param player1 : le joueur n°1
      * @param player2 : le joueur n°2
-     * @param board : le plateau sur lequel on joue.
      */
-    public Game(Player player1, Player player2, Board board) {
+    public Game(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        this.board = board;
         turn = 0;
     }
 
-    /**
-     * Permet de passer au tour suivant.
-     */
-    private void nextTurn() {
-        ++turn;
+    public Player getPlayer1() {
+        return player1;
+    }
 
-        player1.playTurn(turn);
-        for (Creature creature : player1Creatures) {
-            creature.playTurn(turn);
-        }
-
-        player2.playTurn(turn);
-        for (Creature creature : player2Creatures) {
-            creature.playTurn(turn);
-        }
+    public Player getPlayer2() {
+        return player2;
     }
 
     /**
@@ -53,7 +38,15 @@ public class Game {
      */
     public void startGame() {
         while (!finished()) {
-            nextTurn();
+            System.out.println("Turn " + (++turn));
+
+            //todo player1.sendyourturn
+            player1.playTurn(turn);
+
+            if(!finished()) {
+                //todo player2.sendyourturn
+                player2.playTurn(turn);
+            }
         }
     }
 
@@ -64,28 +57,32 @@ public class Game {
      */
     public void gameOver(Player winner, Player looser)
     {
-        System.out.println(winner.getName() + " a gagné.\nBouuuh t'es un looser, " + looser.getName() + " !");
+        System.out.println(winner.getName() + " a gagné en ouvrant " + looser.getNbChestsDestroyed() + " coffres !\nBouuuh t'es un looser, " + looser.getName() + " !");
         //exit(0);
     }
 
     /**
      * Permet de savoir si le jeu est terminé.
      * Le jeu est terminé si l'un des joueurs à épuiser ses points de vie, ou si l'un des deux joueurs à détruit
-     * au moins deux oeufs de l'adversaire.
+     * au moins deux coffres de l'adversaire.
      * Permet de savoir si le jeu est terminé.
      * @return true si le jeu est terminé, false sinon.
      */
     private boolean finished() {
-        if(player2.getNbEggDestroyed() >= 2)
-        {
-            gameOver(player2, player1);
-            return true;
-        }
-        else if(player1.getNbEggDestroyed() >= 2)
+        if(player2.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY || player2.hasAbandoned())
         {
             gameOver(player1, player2);
             return true;
         }
+        else if(player1.getNbChestsDestroyed() >= NBR_CHESTS_TO_DESTROY || player1.hasAbandoned())
+        {
+            gameOver(player2, player1);
+            return true;
+        }
         return false;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 }
