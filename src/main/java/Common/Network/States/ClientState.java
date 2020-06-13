@@ -1,4 +1,4 @@
-package Common.Network;
+package Common.Network.States;
 
 public enum ClientState {
     CLIENT_LISTENING,
