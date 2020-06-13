@@ -1,7 +1,14 @@
 package GameLogic.Invocator.Card;
 
+import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Commands.Macro;
+import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
 import GameLogic.Invocator.Invocator;
+import GameLogic.Receptors.Creature;
+import GameLogic.Receptors.Trap;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -110,5 +117,49 @@ public class Card implements Invocator {
     @Override
     public int hashCode() {
         return Objects.hash(ID, command, name, cost, type);
+    }
+
+    public JSONObject toJSON() {
+        JSONObject c = new JSONObject();
+        try {
+            c.put("id", ID);
+            c.put("name", name);
+            c.put("type", type);
+            c.put("cost", cost);
+            JSONArray commands = new JSONArray();
+            for (ConcreteCommand command :
+                    this.command.getCommands()) {
+                commands.put(command.getName());
+            }
+
+            if (type == CardType.CREATURE) {
+                JSONObject creature = new JSONObject();
+                Creature cre = this.command.getCreateCreature().get(0).getCreatures()[0];
+                creature.put("name", cre.getName());
+                creature.put("img", cre.getImagePath());
+                creature.put("life", cre.getLifePoints());
+                creature.put("steps", cre.getSteps());
+                creature.put("attack", cre.getAttackPoints());
+
+                c.put("creature", creature);
+            }
+            else if (type == CardType.TRAP) {
+                JSONObject trap = new JSONObject();
+                Trap tra = this.command.getCreateTrap().get(0).getTrap();
+                trap.put("name", tra.getName());
+                trap.put("img", tra.getImagePath());
+
+                JSONArray trapCommands = new JSONArray();
+                for (ConcreteCommand command : tra.getEffect().getCommands()) {
+                    trapCommands.put(command.getName());
+                }
+
+                c.put("trap", trap);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return c;
     }
 }

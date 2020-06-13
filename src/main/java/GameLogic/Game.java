@@ -1,7 +1,11 @@
 package GameLogic;
 
 import GameLogic.Board.Board;
+import GameLogic.Invocator.Card.Card;
 import GameLogic.Receptors.Player;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Cette classe permet de modéliser le jeu.
@@ -22,8 +26,13 @@ public class Game {
      * @param player2 : le joueur n°2
      */
     public Game(Player player1, Player player2, Board board) {
-        this.player1 = player1;
-        this.player2 = player2;
+        if (Math.random() < 0.5) {
+            this.player1 = player1;
+            this.player2 = player2;
+        } else {
+            this.player1 = player2;
+            this.player2 = player1;
+        }
         this.board = board;
         turn = 0;
     }
@@ -87,5 +96,53 @@ public class Game {
 
     public int getTurn() {
         return turn;
+    }
+
+    public JSONObject initStateP1() {
+        JSONObject gameJSON = new JSONObject();
+        try {
+            gameJSON.put("type","init");
+            JSONObject initJSON = new JSONObject();
+            initJSON.put("lines", board.getNB_LINES());
+            initJSON.put("linelength", board.getLine(0).getNB_SPOTS());
+            initJSON.put("enemyname", player2.getName());
+            initJSON.put("turn", "Your turn");
+
+            JSONArray cardsJSON = new JSONArray();
+            for (Card card : player1.getHand()) {
+                cardsJSON.put(card.toJSON());
+            }
+            initJSON.put("cards", cardsJSON);
+
+            gameJSON.put("init", initJSON);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return gameJSON;
+    }
+
+    public JSONObject initStateP2() {
+        JSONObject gameJSON = new JSONObject();
+        try {
+            gameJSON.put("type","init");
+            JSONObject initJSON = new JSONObject();
+            initJSON.put("lines", board.getNB_LINES());
+            initJSON.put("linelength", board.getLine(0).getNB_SPOTS());
+            initJSON.put("ennemyname", player1.getName());
+            initJSON.put("turn", "Wait turn");
+
+            JSONArray cardsJSON = new JSONArray();
+            for (Card card : player2.getHand()) {
+                cardsJSON.put(card.toJSON());
+            }
+            initJSON.put("cards", cardsJSON);
+
+            gameJSON.put("init", initJSON);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return gameJSON;
     }
 }

@@ -32,7 +32,7 @@ public class Board {
      */
     public Board(GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
         lineCounter = 0;
-        boardLines = new LinkedList<BoardLine>();
+        boardLines = new LinkedList<>();
         for(int line = 0; line < NB_LINES; ++line) {
             boardLines.add(new BoardLine(++lineCounter, gridPane, vbox, player1, player2));
         }

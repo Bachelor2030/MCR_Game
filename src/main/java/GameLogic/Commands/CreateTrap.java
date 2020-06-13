@@ -26,6 +26,10 @@ public class CreateTrap extends ConcreteCommand {
         this.trap = trap;
     }
 
+    public Trap getTrap() {
+        return trap;
+    }
+
     public void setPlayer(Player player) {
         this.player = player;
     }

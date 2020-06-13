@@ -76,6 +76,10 @@ public class Player extends Receptor {
         }
     }
 
+    public Deque<Card> getHand() {
+        return hand;
+    }
+
     /**
      * Returns the number of cards the player has in his/her hand
      * @return size of the hand list of cards

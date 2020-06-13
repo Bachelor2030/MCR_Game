@@ -9,7 +9,7 @@ import GameLogic.Commands.Macro;
  * Modelizes a trap in the game
  */
 public class Trap extends Receptor {
-    private Macro effect;           // the eggect the trap has on the first creature that lands on it
+    private Macro effect;           // the effect the trap has on the first creature that lands on it
     private Position position;      // the position at which the trap is
 
     /**
@@ -20,6 +20,10 @@ public class Trap extends Receptor {
     public Trap(String name, Macro effect) {
         super("Trap " + name);
         this.effect = effect;
+    }
+
+    public Macro getEffect() {
+        return effect;
     }
 
     /**

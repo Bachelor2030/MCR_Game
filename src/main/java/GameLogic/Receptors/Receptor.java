@@ -32,13 +32,17 @@ public abstract class Receptor {
     }
 
     private void initDisplay() {
-        image = new Image(imagePath);
-        imageView = new ImageView(image);
-        imageView.setFitWidth(image.getWidth() * 0.2);
-        imageView.setFitHeight(image.getHeight() * 0.2);
+        try {
+            image = new Image(imagePath);
+            imageView = new ImageView(image);
+            imageView.setFitWidth(image.getWidth() * 0.2);
+            imageView.setFitHeight(image.getHeight() * 0.2);
 
-        if(imagePath.equals("design/images/creatures/empty.jpg")) {
-            imageView.setImage(null);
+            if(imagePath.equals("design/images/creatures/empty.jpg")) {
+                imageView.setImage(null);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
@@ -65,5 +69,9 @@ public abstract class Receptor {
             image = receptor.image;
             imageView = receptor.imageView;
         }
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 }

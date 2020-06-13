@@ -3,6 +3,7 @@ package GameLogic.Commands;
 import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Macro implements Command {
@@ -21,6 +22,16 @@ public class Macro implements Command {
         for (ConcreteCommand concreteCommand : commands) {
             if(concreteCommand.getName() == CommandName.CREATE_CREATURE) {
                 concreteCommands.add((Create)concreteCommand);
+            }
+        }
+        return concreteCommands;
+    }
+
+    public ArrayList<CreateTrap> getCreateTrap() {
+        ArrayList<CreateTrap> concreteCommands = new ArrayList<>();
+        for (ConcreteCommand concreteCommand : commands) {
+            if(concreteCommand.getName() == CommandName.CREATE_TRAP) {
+                concreteCommands.add((CreateTrap)concreteCommand);
             }
         }
         return concreteCommands;
