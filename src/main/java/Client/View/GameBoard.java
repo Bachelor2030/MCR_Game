@@ -62,6 +62,7 @@ public class GameBoard extends Application {
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
   public void start(Stage stage) throws Exception {
+    //On initialise les players
     player1 = new Player();
     player2 = new Player();
 

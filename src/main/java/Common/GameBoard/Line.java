@@ -3,6 +3,7 @@ package Common.GameBoard;
 import Common.Receptors.Chest;
 import Common.Receptors.Creature;
 import Common.Receptors.Player;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -53,18 +54,21 @@ public class Line {
       if(spot == 0)
       {
         chests.add(new Chest("",player1));
+        vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
                 .addAll((chests.get(0).getImageView()), (spots.get(spot).getImageView()));
         gridPane.add(vbox, spot, noLine);
       }
       else if(spot == 11) {
         chests.add(new Chest("",player2));
+        vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
                 .addAll((chests.get(1).getImageView()), (spots.get(spot).getImageView()));
         gridPane.add(vbox, spot, noLine);
       }
       else {
         creatures.add(new Creature("unknown", 0, 0, 0));
+        vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
                 .addAll((creatures.get(indexCreature++).getImageView()), (spots.get(spot).getImageView()));
         gridPane.add(vbox, spot, noLine);
