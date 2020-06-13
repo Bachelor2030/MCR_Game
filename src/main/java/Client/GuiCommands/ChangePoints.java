@@ -39,7 +39,7 @@ public class ChangePoints extends GuiCommand {
         sb.append(newPointValue);
 
         sb.append(", \"position\" : { \"line\" : ");
-        sb.append(position.getLine());
+        sb.append(position.getBoardLine());
         sb.append(", \"spot\" : ");
         sb.append(position.getPosition());
         sb.append("}}");

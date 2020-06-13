@@ -1,16 +1,11 @@
 package Receptors.Creature;
 
-import Common.GameBoard.Line;
 import Common.Receptors.Creature;
 import Common.Receptors.Player;
-import Server.Game.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -54,18 +49,18 @@ public class CreatureTest {
     @Test
     public void CreatureMustMoveWhenItsTurnIsPlayed() {
         /*
-        Position p = new Position(new Line(1), 1);
-        Position f = new Position(p.getLine(), p.getPosition() + creature.getSteps());
+        Position p = new Position(new BoardLine(1), 1);
+        Position f = new Position(p.getBoardLine(), p.getPosition() + creature.getSteps());
 
         creature.place(p);
         creature.advance();
 
-        assertEquals(f.getLine(), creature.getPosition().getLine());
+        assertEquals(f.getBoardLine(), creature.getPosition().getBoardLine());
         assertEquals(f.getPosition(), creature.getPosition().getPosition());
 
         creature.retreat(creature.getSteps());
 
-        assertEquals(p.getLine(), creature.getPosition().getLine());
+        assertEquals(p.getBoardLine(), creature.getPosition().getBoardLine());
         assertEquals(p.getPosition(), creature.getPosition().getPosition());
         */
     }
@@ -74,7 +69,7 @@ public class CreatureTest {
     public void AdvancingToAnEnemyMustTriggerAHit() {
         /*
         Creature c = new Creature("", 20, 0, 4, player1);
-        Position p = new Position(new Line(1), 1);
+        Position p = new Position(new BoardLine(1), 1);
         Position p1 = p.next();
         creature.place(p);
         c.place(p1);

@@ -13,7 +13,7 @@ public class CommandTest {
         Group root = new Group();
         Board board = new Board(root);
         Creature pier = new Creature("Pier", 12, 12, 4,null);
-        Position position = new Position(board.getLines().get(0),0);
+        Position position = new Position(board.getBoardLines().get(0),0);
 
         CreateCreature createCreature = new CreateCreature(pier, position);
         assertNull(pier.getPosition());

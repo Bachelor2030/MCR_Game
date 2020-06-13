@@ -662,6 +662,14 @@ public class GameBoard extends Application {
           // TODO send this to backend
           System.out.println(endTurn.toJson());
 
+          Creature c = new Creature("bluey", 1, 1, 1);
+          c.setImagePath("design/images/creatures/bluey.gif");
+          place(c, 1, 1);
+
+          Creature c1 = new Creature("shark", 1, 1, 1);
+          c1.setImagePath("design/images/creatures/shark.gif");
+          place(c1, 2, 2);
+
           System.out.println("you hit the validate button...");
         });
 

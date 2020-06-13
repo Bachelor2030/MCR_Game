@@ -20,7 +20,7 @@ public class BoardTest {
     @Test
     public void aBoardShouldHaveTheCorrectNumberOfLines() throws IOException {
         Board testBoard = new Board(root);
-        assertEquals(testBoard.getLines().size(), testBoard.getNB_LINES());
+        assertEquals(testBoard.getBoardLines().size(), testBoard.getNB_LINES());
     }
 
     @Test
@@ -28,7 +28,7 @@ public class BoardTest {
         Board testBoard = new Board(root);
         for(int indexCheck = 0; indexCheck < testBoard.getNB_LINES(); ++indexCheck)
         {
-            assertEquals(testBoard.getLines().get(indexCheck).getNoLine(), indexCheck + 1);
+            assertEquals(testBoard.getBoardLines().get(indexCheck).getNoLine(), indexCheck + 1);
         }
     }
 

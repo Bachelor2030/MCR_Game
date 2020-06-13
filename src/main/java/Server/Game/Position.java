@@ -1,64 +1,62 @@
 package Server.Game;
 
-import Common.GameBoard.Line;
+import Common.GameBoard.BoardLine;
 import Server.Game.ModelClasses.Receptor;
 
-import java.io.IOException;
-
 public class Position {
-    private Line line;
+    private BoardLine boardLine;
     private int position;
 
-    public Position(Line line, int position) {
-        this.line = line;
+    public Position(BoardLine boardLine, int position) {
+        this.boardLine = boardLine;
         this.position = position;
     }
 
     public boolean isEmpty() {
-        if(isValid() && line.getSpot(position) != null) {
-            return line.getSpot(position).isEmpty();
+        if(isValid() && boardLine.getSpot(position) != null) {
+            return boardLine.getSpot(position).isEmpty();
         }
         return false;
     }
 
     public boolean isTrapped() {
         if(isValid()) {
-            return line.getSpot(position).isTrapped();
+            return boardLine.getSpot(position).isTrapped();
         }
         return false;
     }
 
     public Receptor getOccupant() {
-        if(isValid() && line.getSpot(position) != null) {
-            return line.getSpot(position).getOccupant();
+        if(isValid() && boardLine.getSpot(position) != null) {
+            return boardLine.getSpot(position).getOccupant();
         }
         return null;
     }
 
     public void setOccupant(Receptor occupant) {
-        if(isValid() && line != null && line.getSpot(position) != null) {
-            line.getSpot(position).setOccupant(occupant);
+        if(isValid() && boardLine != null && boardLine.getSpot(position) != null) {
+            boardLine.getSpot(position).setOccupant(occupant);
         }
     }
 
     public void leave() {
-        if(line != null && line.getSpot(position) != null) {
-            line.getSpot(position).leave();
+        if(boardLine != null && boardLine.getSpot(position) != null) {
+            boardLine.getSpot(position).leave();
         }
     }
 
     public Position next() {
-        return new Position(line, position + 1);
+        return new Position(boardLine, position + 1);
     }
 
     public Position previous() {
         if (position == 0)
             return this;
-        return new Position(line, position - 1);
+        return new Position(boardLine, position - 1);
     }
 
-    public Line getLine() {
-        return line;
+    public BoardLine getBoardLine() {
+        return boardLine;
     }
 
     public int getPosition() {
@@ -66,6 +64,6 @@ public class Position {
     }
 
     public boolean isValid() {
-        return position < line.getNB_SPOTS() && line.getSpot(position) != null;
+        return position < boardLine.getNB_SPOTS() && boardLine.getSpot(position) != null;
     }
 }

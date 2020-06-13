@@ -25,13 +25,13 @@ public class Move extends GuiCommand {
         sb.append("{\"type\" : \"GUI Command\", \"name\"" + name + "\", \"player\" : " + playerName);
 
         sb.append(", \"positionTo\" : { \"line\" : " +
-                to.getLine() +
+                to.getBoardLine() +
                 ", \"spot\" : " +
                 to.getPosition() +
                 "}");
 
         sb.append(", \"positionFrom\" : { \"line\" : " +
-                from.getLine() +
+                from.getBoardLine() +
                 ", \"spot\" : " +
                 from.getPosition() +
                 "}}");

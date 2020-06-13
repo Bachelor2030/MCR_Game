@@ -21,7 +21,7 @@ public class KnockOutCreature extends GuiCommand {
         sb.append("{\"type\" : \"GUI Command\", \"name\"" + name + "\", \"player\" : " + playerName);
 
         sb.append(", \"position\" : { \"line\" : " +
-                position.getLine() +
+                position.getBoardLine() +
                 ", \"spot\" : " +
                 position.getPosition() +
                 "}}");

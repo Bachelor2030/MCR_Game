@@ -3,13 +3,10 @@ package Server.Game.ModelClasses;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 public abstract class Receptor {
     protected String name;
 
-    private String imagePath = "design/images/creatures/shark.gif";
+    private String imagePath = "design/images/creatures/empty.jpg";
     private Image image;
     private ImageView imageView;
 
@@ -39,6 +36,10 @@ public abstract class Receptor {
         imageView = new ImageView(image);
         imageView.setFitWidth(image.getWidth() * 0.2);
         imageView.setFitHeight(image.getHeight() * 0.2);
+
+        if(imagePath.equals("design/images/creatures/empty.jpg")) {
+            imageView.setImage(null);
+        }
     }
 
     public ImageView getImageView() {

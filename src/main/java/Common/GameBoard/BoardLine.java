@@ -8,8 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -17,7 +15,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /** Cette classe permet d'instancier les lignes composant le "plateau" de jeu. */
-public class Line {
+public class BoardLine {
 
   // Le nombre de cases dans une ligne
   private final int NB_SPOTS = 12;
@@ -34,22 +32,23 @@ public class Line {
   //La liste de trésors
   private LinkedList<Chest> chests;
 
+  private VBox vBox;
+  private GridPane gridPane;
+
   // le groupe d'îlots qu'on affichera par la suite
   Group root;
 
-  private static VBox vBox;
-  private static GridPane gridPane;
 
-  public Line(int noLine) {
+  public BoardLine(int noLine) {
     this.noLine = noLine;
   }
 
   /**
-   * Constructeur de la classe Line
+   * Constructeur de la classe BoardLine
    *
    * @param noLine : le numéro de la ligne
    */
-  public Line(int noLine, GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
+  public BoardLine(int noLine, GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
     this.noLine = noLine;
     receptors = new LinkedList<>(); // on initialise la liste de créatures.
     spots = new LinkedList<>(); // on initialise la liste de spots.
@@ -89,30 +88,15 @@ public class Line {
   }
 
   public void setReceptor(Receptor receptor, int spot) {
-    // TODO demander à Elodie de remplacer la créature courante par la creature donnée
-    System.out.println(receptors.get(spot).getImageView().imageProperty().toString());
-    System.out.println(receptor.getImageView().imageProperty().toString());
     receptors.get(spot).setTo(receptor);
-    System.out.println(receptor.getImageView().imageProperty().toString());
-
-    //vBox.getChildren().set(spot, receptor.getImageView());
-    //gridPane.getChildren().set(noLine, vBox);
 
     ObservableList<Node> childrens = gridPane.getChildren();
-
     for (Node node : childrens) {
       if(gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
-        System.out.println("Avant");
-        System.out.println((((VBox)node).getChildren()));
-
         ((VBox)node).getChildren().set(0, receptor.getImageView());
-
-        System.out.println("Apres");
-        System.out.println(((VBox)node).getChildren());
         break;
       }
     }
-    //gridPane.getChildren().clear();
   }
 
   /**

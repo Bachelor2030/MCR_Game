@@ -1,6 +1,6 @@
 package Receptors;
 
-import Common.GameBoard.Line;
+import Common.GameBoard.BoardLine;
 import Common.Receptors.Creature;
 import Common.Receptors.Trap;
 import Server.Game.ModelClasses.ConcreteCommand;
@@ -42,7 +42,7 @@ public class TrapTest {
 
     @Test
     public void placingTheTrapShouldGiveItTheGivenPosition() {
-        Position pos = new Position(new Line(1), 1);
+        Position pos = new Position(new BoardLine(1), 1);
         trap.setPosition(pos);
         assertEquals(pos, trap.getPosition());
     }

@@ -2,22 +2,16 @@ package Common.Network.JsonUtils;
 
 import Client.View.GameBoard;
 import Common.GameBoard.Board;
-import Common.GameBoard.Line;
 import Common.Receptors.Creature;
-import Common.Receptors.Player;
 import Common.Receptors.Trap;
 import Server.Game.Card.Card;
 import Server.Game.Card.CardType;
 import Server.Game.ModelClasses.Commands.CommandName;
 import Server.Game.ModelClasses.Commands.CreateTrap;
-import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Advance;
 import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
 import Server.Game.Game;
-import Server.Game.ModelClasses.Commands.OnLiveReceptors.OnCreature.KnockOut;
 import Server.Game.ModelClasses.ConcreteCommand;
-import Server.Game.ModelClasses.LiveReceptor;
 import Server.Game.ModelClasses.Macro;
-import Server.Game.Position;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +38,7 @@ public class ParserLauncher {
         seb.setOriginCard(new Card(2, "Seb", CardType.CREATURE, 13));
 
         create.setCreatures(new Creature[]{pier, seb});
-        create.setPositions(new Position[]{new Position(new Line(1), 1), new Position(new Line(2), 2)});
+        create.setPositions(new Position[]{new Position(new BoardLine(1), 1), new Position(new BoardLine(2), 2)});
         create.execute();
         commands.add(create);
 
