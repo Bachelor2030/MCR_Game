@@ -1,6 +1,6 @@
-package Common.Network;
+package Common.Network.States;
 
-public enum ServerState {
+public enum WorkerState {
     CONNECTING,
     INIT,
     INIT_WAITING,
