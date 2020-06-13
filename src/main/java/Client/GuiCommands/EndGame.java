@@ -10,7 +10,7 @@ public class EndGame extends GuiCommand {
         super(CommandName.END_GAME);
     }
 
-    public void setplayerState(char playerState) {
+    public void setPlayerState(char playerState) {
         this.playerState = playerState;
     }
 

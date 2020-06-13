@@ -12,7 +12,6 @@ import Server.Game.Position;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -792,7 +791,7 @@ public class GameBoard extends Application {
           // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
           EndGame endGame = new EndGame();
           endGame.setPlayerName(player1.getName());
-          endGame.setplayerState('L');
+          endGame.setPlayerState('L');
 
           Move m = new Move();
           m.setFrom(new Position(board.getLine(1), 2));

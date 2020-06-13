@@ -47,7 +47,7 @@ public class CommandParser {
             else if (name == CommandName.ABANDON) {
                 concreteCommand = new EndGame();
                 // Todo s'assurer qu'on dit au bon joueur s'il a gagné ou perdu
-                ((EndGame)concreteCommand).setplayerState('L');
+                ((EndGame)concreteCommand).setPlayerState('L');
             }
             else if ( name == CommandName.DRAW ||
                     name == CommandName.DRAW_TYPE_FROM_DISCARD) {
