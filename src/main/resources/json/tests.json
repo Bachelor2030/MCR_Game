@@ -1,0 +1,68 @@
+{
+  "content": [
+    {
+      "type": "Command",
+      "name": "Advance_creature",
+      "player": "Clarusso",
+      "positionTo": {
+        "line": 1,
+        "spot": 1
+      },
+      "positionFrom": {
+        "line": 1,
+        "spot": 1
+      }
+    },
+    {
+      "type": "Command",
+      "name": "Advance_creature",
+      "player": "Clarusso",
+      "positionTo": {
+        "line": 1,
+        "spot": 1
+      },
+      "positionFrom": {
+        "line": 1,
+        "spot": 1
+      }
+    },
+    {
+      "type": "Command",
+      "name": "Knock_Out",
+      "player": "Clarusso",
+      "position": {
+        "line": 1,
+        "spot": 1
+      }
+    },
+    {
+      "type": "Command",
+      "name": "Knock_Out",
+      "player": "Clarusso",
+      "position": {
+        "line": 2,
+        "spot": 2
+      }
+    },
+    {
+      "type": "Command",
+      "name": "Create_creature",
+      "player": "Clarusso",
+      "cardID": 1,
+      "position": {
+        "line": 1,
+        "spot": 1
+      }
+    },
+    {
+      "type": "Command",
+      "name": "Create_creature",
+      "player": "Clarusso",
+      "cardID": 2,
+      "position": {
+        "line": 2,
+        "spot": 2
+      }
+    }
+  ]
+}
