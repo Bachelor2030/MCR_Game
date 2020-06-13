@@ -1,6 +1,6 @@
 package Client.Network;
 
-import Common.Network.ClientState;
+import Common.Network.States.ClientState;
 import Common.Network.Messages;
 import Common.Network.Utilities.Info;
 import org.json.JSONException;

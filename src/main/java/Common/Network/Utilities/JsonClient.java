@@ -1,6 +1,6 @@
 package Common.Network.Utilities;
 
-import Common.Network.ClientState;
+import Common.Network.States.ClientState;
 import Common.Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
