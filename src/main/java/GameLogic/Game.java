@@ -11,6 +11,7 @@ import org.json.JSONObject;
  * Cette classe permet de modéliser le jeu.
  */
 public class Game {
+    // TODO link to server
     private static final int
             NBR_CHESTS_TO_DESTROY = 2;
     private Player
