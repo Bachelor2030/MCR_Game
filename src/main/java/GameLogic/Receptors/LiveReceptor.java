@@ -87,7 +87,8 @@ public abstract class LiveReceptor extends Receptor {
     public JSONObject toJson() {
         JSONObject liveReceptor = super.toJson();
         try {
-            liveReceptor.put("position", position.toJson());
+            if(position != null)
+                liveReceptor.put("position", position.toJson());
             liveReceptor.put("lifepoints", lifePoints);
             liveReceptor.put("owner", owner.getName());
             liveReceptor.put("type", type);

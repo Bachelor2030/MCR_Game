@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 public class Chest extends LiveReceptor {
     // Max life points for a chest
     private static final int CHEST_LIFE_POINTS = 5;
-    private FileInputStream imagePath = new FileInputStream("src/main/resources/design/images/treasure.png");
+    private String imagePath = "resources/design/images/treasure.png";
     private Image image;
     private ImageView imageView;
 
@@ -21,9 +21,9 @@ public class Chest extends LiveReceptor {
      * @param name the name of the current chest
      * @param owner the player that owns the current chest
      */
-    public Chest(String name, Player owner) throws FileNotFoundException {
+    public Chest(String name, Player owner) {
         super(name, CHEST_LIFE_POINTS, "Chest");
-        initDisplayChest();
+        //TODO initDisplayChest();
     }
 
     private void initDisplayChest() {

@@ -3,6 +3,7 @@ package GameLogic;
 import GameLogic.Board.Board;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Receptors.Player;
+import Network.ServerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -104,8 +105,10 @@ public class Game {
         try {
             gameJSON.put("type","init");
             JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNB_LINES());
-            initJSON.put("linelength", board.getLine(0).getNB_SPOTS());
+            if(board != null) {
+                initJSON.put("lines", board.getNB_LINES());
+                initJSON.put("linelength", board.getLine(0).getNB_SPOTS());
+            }
             initJSON.put("enemyname", player2.getName());
             initJSON.put("turn", "Your turn");
 

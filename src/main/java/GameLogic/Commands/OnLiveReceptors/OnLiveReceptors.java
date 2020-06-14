@@ -40,7 +40,8 @@ public abstract class OnLiveReceptors extends ConcreteCommand {
 
         JSONArray liveReceptors = new JSONArray();
         for (LiveReceptor liveReceptor : receptors) {
-            liveReceptors.put(liveReceptor.toJson());
+            if(liveReceptor != null)
+                liveReceptors.put(liveReceptor.toJson());
         }
 
         try {

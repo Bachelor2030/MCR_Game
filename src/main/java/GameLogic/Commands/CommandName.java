@@ -60,7 +60,12 @@ public enum CommandName {
     }
 
     public static CommandName getCommandName(String type) {
-        return CommandName.valueOf(type.toUpperCase());
+        try {
+            return CommandName.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("The given command does not exist...");
+            return null;
+        }
     }
 
     @Override
@@ -128,5 +133,12 @@ public enum CommandName {
             default: return null;
         }
 
+    }
+
+    public boolean isPlayerAction() {
+        return (this == ABANDON ||
+                this == END_TURN ||
+                this == PLAY_CARD ||
+                this == UNDO);
     }
 }

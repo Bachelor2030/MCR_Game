@@ -50,7 +50,8 @@ public class CreateTrap extends ConcreteCommand {
     public JSONObject toJson() {
         JSONObject playTrap = super.toJson();
         try {
-            playTrap.put("player", player.getName());
+            if(player != null)
+                playTrap.put("player", player.getName());
             playTrap.put("trap", trap.toJson());
 
         } catch (JSONException e) {

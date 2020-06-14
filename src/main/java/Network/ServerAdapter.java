@@ -1,5 +1,6 @@
 package Network;
 
+import GameLogic.Game;
 import Network.States.ServerState;
 import Network.States.WorkerState;
 import org.json.JSONException;
@@ -26,6 +27,8 @@ public class ServerAdapter {
     private int port;
 
     ServerState serverState;
+
+    // TODO private Game game;
 
     /**
      * Constructor
@@ -80,6 +83,7 @@ public class ServerAdapter {
                 }
             }
             printMessage(receptionistClassName(), "Two players have connected to the server. Stop listening for new connexions.");
+            //Todo game = new Game();
         }
 
         /**

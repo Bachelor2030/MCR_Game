@@ -44,7 +44,7 @@ public abstract class Receptor {
                 imageView.setImage(null);
             }
         } catch (Exception e) {
-            System.out.println(e);
+            //System.out.println(e);
         }
     }
 

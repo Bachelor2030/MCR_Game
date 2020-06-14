@@ -41,7 +41,7 @@ public class Player extends Receptor {
      * @param name the name of the player
      * @param deck the dock of cards the player has
      */
-    public Player(String name, List<Card> deck) throws FileNotFoundException {
+    public Player(String name, List<Card> deck) {
         super(name);
         actionPoints = 0;
         if(deck != null)
@@ -56,14 +56,14 @@ public class Player extends Receptor {
         }
     }
 
-    public Player() throws FileNotFoundException {
+    public Player() {
         super();
     }
 
     /**
      * Initializes the player
      */
-    private void init() throws FileNotFoundException {
+    private void init() {
         abandoned = false;
         play = true;
         currentTurn = 0;

@@ -31,16 +31,21 @@ public abstract class PlayersAction extends ConcreteCommand {
         do {
             System.out.println(player.getName() + " what do you want to do ?");
             action = in.nextLine();
-        } while (CommandName.getCommandName(action) == null);
-        PlayersAction playersAction = (PlayersAction) CommandName.getCommandName(action).getCommand();
-        playersAction.setPlayer(player);
+        } while (CommandName.getCommandName(action) == null) ;
 
-        if (playersAction.getName() == CommandName.PLAY_CARD) {
-            System.out.println("What card do you want to play ?");
-            //action = in.nextLine();
-            // TODO change the following line to the chosen card
-            ((PlayCard)playersAction).setCardToPlay(new Card(1, "1", CardType.SPELL, 1));
+        PlayersAction playersAction = null;
+        if (CommandName.getCommandName(action).isPlayerAction()) {
+            playersAction = (PlayersAction) CommandName.getCommandName(action).getCommand();
+            playersAction.setPlayer(player);
+
+            if (playersAction.getName() == CommandName.PLAY_CARD) {
+                System.out.println("What card do you want to play ?");
+                //action = in.nextLine();
+                // TODO change the following line to the chosen card
+                ((PlayCard)playersAction).setCardToPlay(new Card(1, "1", CardType.SPELL, 1));
+            }
         }
+
 
         return playersAction;
     }

@@ -20,14 +20,14 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ParserLauncher {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         String file = "src/main/resources/json/game.json";
         GameBoard gameBoard = new GameBoard();
 
         Game game = parseJsonGame(file, gameBoard.getBoard());
-        //game.startGame();
-        System.out.println(game.initStateP1());
-        System.out.println(game.initStateP2());
+        game.startGame();
+        //System.out.println(game.initStateP1());
+        //System.out.println(game.initStateP2());
 
         /*
         ArrayList<ConcreteCommand> commands = new ArrayList<>();
