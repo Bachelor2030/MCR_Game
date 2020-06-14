@@ -40,7 +40,6 @@ public class Move extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // Todo : execution on the gui
         Creature creature = (Creature)gameBoard
                 .getGUIBoard()
                 .getLine(from.getLineNumber())
@@ -52,7 +51,6 @@ public class Move extends GuiCommand {
 
     @Override
     public void undo(GameBoard gameBoard) {
-        // Todo : undo on the gui
         Creature creature = (Creature)gameBoard
                 .getGUIBoard()
                 .getLine(to.getLineNumber())

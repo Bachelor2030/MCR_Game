@@ -28,8 +28,6 @@ public class GameJsonParser {
         String player1 = obj.getJSONObject("playerNames").getString("player1");
         String player2 = obj.getJSONObject("playerNames").getString("player2");
 
-        // TODO: je saurais ce qu'il faut faire
-
         String cards1 = obj.getJSONObject("cardsPlayer1").getString("file");
         String cards2 = obj.getJSONObject("cardsPlayer2").getString("file");
 
