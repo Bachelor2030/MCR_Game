@@ -38,6 +38,7 @@ public class Create extends OnCreature {
         JSONObject create = super.toJson();
         JSONArray jsonPositions = new JSONArray();
         try {
+
             if (positions != null) {
                 for (int i = 0; i < positions.length; ++i) {
                     jsonPositions.put(positions[i].toJson());
