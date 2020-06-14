@@ -103,7 +103,7 @@ public class ServerAdapter {
             CardJsonParser cardJsonParser = new CardJsonParser();
             List<Card> deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", allCards);
             List<Card> deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", allCards);
-            
+
             game.initGame(new Player(serverState.getPlayerName(1), deck1), new Player(serverState.getPlayerName(2), deck2));
         }
 
@@ -153,7 +153,7 @@ public class ServerAdapter {
                                 }
 
                                 JSONObject init;
-                                if (playerId == 1) {
+                                if (playerId == game.getFirstPlayerId()) {
                                     init = game.initStateP1();
                                 } else {
                                     init = game.initStateP2();
@@ -169,11 +169,11 @@ public class ServerAdapter {
                                 break;
 
                             case SERVER_LISTENING:
-                                awaitClientMessage(serverState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
+                                awaitClientMessage(game, serverState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
                                 break;
 
                             case CLIENT_LISTENING:
-                                while (serverState.intendToSendJson(playerId)) {
+                                while (serverState.getIntendToSendJson(playerId)) {
                                     while(!serverState.jsonToSendEmpty(playerId)) {
                                         JSONObject jsonObject = serverState.popJsonToSend(playerId);
                                         sendJson(jsonObject, outPrintWriter, servantClassName(playerId));

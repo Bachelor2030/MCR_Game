@@ -161,4 +161,14 @@ public class Game {
     public int getFirstPlayerId() {
         return firstPlayerId;
     }
+
+    public boolean player1Played(String receivedMessage) {
+        //TODO: If true, put json updates in serverAdapter.serverState.pushJsonToSend
+        return true;
+    }
+
+    public boolean player2Played(String receivedMessage) {
+        //TODO: If true, put json updates in serverAdapter.serverState.pushJsonToSend
+        return true;
+    }
 }

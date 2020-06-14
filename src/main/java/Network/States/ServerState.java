@@ -47,7 +47,11 @@ public class ServerState {
         this.finishedInit = true;
     }
 
-    public synchronized boolean intendToSendJson(int playerId) {
+    public synchronized void setIntendToSendJson(int playerId, boolean intent) {
+        intendToSendJson[workerId(playerId)] = intent;
+    }
+
+    public synchronized boolean getIntendToSendJson(int playerId) {
         return intendToSendJson[workerId(playerId)];
     }
 

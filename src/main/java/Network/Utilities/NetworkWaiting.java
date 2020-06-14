@@ -1,10 +1,11 @@
 package Network.Utilities;
 
+import GameLogic.Game;
 import Network.Messages;
-import Network.States.PlayState;
 import Network.States.ServerState;
 import Network.States.WorkerState;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class NetworkWaiting {
         }
     }
 
-    public static void awaitClientMessage(ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
+    public static void awaitClientMessage(Game game, ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
         String receivedMessage;
         printMessage(className, "Reading until client sends messages or closes the connection...");
 
@@ -55,31 +56,27 @@ public class NetworkWaiting {
             String type = readJsonType(receivedMessage, className);
             switch (type) {
                 case Messages.JSON_TYPE_PLAY:
-                    //TODO: HERE
-                    serverState.setPlayStates(playerId, PlayState.EVAL_PLAY);
-
-                    // TODO: Remove this (here only for testing purposes, failing at random)
-                    if (Math.random() < 0.5) {
-                        serverState.setPlayStates(playerId, PlayState.PLAY_OK);
+                    boolean goodPlay;
+                    if (playerId == game.getFirstPlayerId()) {
+                        goodPlay = game.player1Played(receivedMessage);
                     } else {
-                        serverState.setPlayStates(playerId, PlayState.PLAY_BAD);
+                        goodPlay = game.player2Played(receivedMessage);
                     }
 
-                    // Wait for the game logic to decide if the play was good or bad
-                    while (serverState.getPlayStates(playerId) == PlayState.EVAL_PLAY) {}
-
-                    switch (serverState.getPlayStates(playerId)) {
-                        case PLAY_OK:
-                            serverState.setWorkerState(playerId, WorkerState.CLIENT_LISTENING);
-                            serverState.setPlayStates(playerId, PlayState.WAIT_TURN);
-                            sendJsonType(Messages.JSON_TYPE_PLAY_OK, outPrintWriter, className);
-                            serverState.nextPlayer();
-                            return;
-
-                        case PLAY_BAD:
-                            serverState.setPlayStates(playerId, PlayState.WAIT_PLAY);
-                            sendJsonType(Messages.JSON_TYPE_PLAY_BAD, outPrintWriter, className);
-                            break; // wait for new play
+                    // wait for new play
+                    if (goodPlay) {
+                        serverState.setIntendToSendJson(playerId, true);
+                        sendJsonType(Messages.JSON_TYPE_PLAY_OK, outPrintWriter, className);
+                        // Sending all game updates
+                        if (serverState.getIntendToSendJson(playerId)) {
+                            while(!serverState.jsonToSendEmpty(playerId)) {
+                                JSONObject jsonObject = serverState.popJsonToSend(playerId);
+                                sendJson(jsonObject, outPrintWriter, servantClassName(playerId));
+                            }
+                        }
+                        serverState.setIntendToSendJson(playerId, false);
+                    } else {
+                        sendJsonType(Messages.JSON_TYPE_PLAY_BAD, outPrintWriter, className);
                     }
                     break;
 
