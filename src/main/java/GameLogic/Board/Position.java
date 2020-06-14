@@ -5,59 +5,59 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Position {
-    private BoardLine boardLine;
+    private Line line;
     private int position;
 
-    public Position(BoardLine boardLine, int position) {
-        this.boardLine = boardLine;
+    public Position(Line line, int position) {
+        this.line = line;
         this.position = position;
     }
 
     public boolean isEmpty() {
-        if(isValid() && boardLine.getSpot(position) != null) {
-            return boardLine.getSpot(position).isEmpty();
+        if(isValid() && line.getSpot(position) != null) {
+            return line.getSpot(position).isEmpty();
         }
         return false;
     }
 
     public boolean isTrapped() {
         if(isValid()) {
-            return boardLine.getSpot(position).isTrapped();
+            return line.getSpot(position).isTrapped();
         }
         return false;
     }
 
     public Receptor getOccupant() {
-        if(isValid() && boardLine.getSpot(position) != null) {
-            return boardLine.getSpot(position).getOccupant();
+        if(isValid() && line.getSpot(position) != null) {
+            return line.getSpot(position).getOccupant();
         }
         return null;
     }
 
     public void setOccupant(Receptor occupant) {
-        if(isValid() && boardLine != null && boardLine.getSpot(position) != null) {
-            boardLine.getSpot(position).setOccupant(occupant);
+        if(isValid() && line != null && line.getSpot(position) != null) {
+            line.getSpot(position).setOccupant(occupant);
         }
     }
 
     public void leave() {
-        if(boardLine != null && boardLine.getSpot(position) != null) {
-            boardLine.getSpot(position).leave();
+        if(line != null && line.getSpot(position) != null) {
+            line.getSpot(position).leave();
         }
     }
 
     public Position next() {
-        return new Position(boardLine, position + 1);
+        return new Position(line, position + 1);
     }
 
     public Position previous() {
         if (position == 0)
             return this;
-        return new Position(boardLine, position - 1);
+        return new Position(line, position - 1);
     }
 
-    public BoardLine getBoardLine() {
-        return boardLine;
+    public Line getLine() {
+        return line;
     }
 
     public int getPosition() {
@@ -65,13 +65,13 @@ public class Position {
     }
 
     public boolean isValid() {
-        return position < boardLine.getNB_SPOTS() && boardLine.getSpot(position) != null;
+        return position < line.getNbSpots() && line.getSpot(position) != null;
     }
 
     public JSONObject toJson() {
         JSONObject position = new JSONObject();
         try {
-            position.put("line", boardLine.getNoLine());
+            position.put("line", line.getLineNumber());
             position.put("spot", position);
         } catch (JSONException e) {
             e.printStackTrace();

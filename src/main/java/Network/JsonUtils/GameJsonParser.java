@@ -1,6 +1,6 @@
 package Network.JsonUtils;
 
-import GameLogic.Board.Board;
+import GUI.Board.GUIBoard;
 import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Player;
 import GameLogic.Invocator.Card.Card;
@@ -17,12 +17,12 @@ import java.util.ArrayList;
 public class GameJsonParser {
     private final String path;
     private final ArrayList<Card> allCards;
-    private final Board board;
+    private final GUIBoard GUIBoard;
 
-    public GameJsonParser(ArrayList<Card> allCards, String path, Board board) {
+    public GameJsonParser(ArrayList<Card> allCards, String path, GUIBoard GUIBoard) {
         this.allCards = allCards;
         this.path = path;
-        this.board = board;
+        this.GUIBoard = GUIBoard;
     }
 
     public Game parseJson(String json) throws JSONException, FileNotFoundException {
@@ -47,7 +47,7 @@ public class GameJsonParser {
         setOwner(cardsPlayer1, p1);
         setOwner(cardsPlayer2, p2);
 
-        return new Game(p1, p2, board);
+        return new Game(p1, p2, GUIBoard);
     }
 
     private void setOwner(ArrayList<Card> cards, Player player) {

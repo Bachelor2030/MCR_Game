@@ -1,7 +1,7 @@
 package Network.JsonUtils;
 
 import GameLogic.Commands.GuiCommands.*;
-import GameLogic.Board.Board;
+import GUI.Board.GUIBoard;
 import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Commands.Macro;
@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class CommandParser {
-    public Macro parse(String jsonContent, Board board) throws JSONException {
+    public Macro parse(String jsonContent, GUIBoard GUIBoard) throws JSONException {
         JSONObject obj = new JSONObject(jsonContent);
         ArrayList<ConcreteCommand> commands = new ArrayList<>();
         JSONArray jsonCommands = obj.getJSONArray("commands");
@@ -32,14 +32,14 @@ public class CommandParser {
                 ((Move)concreteCommand)
                         .setFrom(
                                 new Position(
-                                        board.getLine(command.getJSONObject("positionFrom").getInt("line")),
+                                        GUIBoard.getLine(command.getJSONObject("positionFrom").getInt("line")),
                                         command.getJSONObject("positionFrom").getInt("spot")
                                 )
                         );
 
                 ((Move)concreteCommand).setTo(
                         new Position(
-                                board.getLine(command.getJSONObject("positionTo").getInt("line")),
+                                GUIBoard.getLine(command.getJSONObject("positionTo").getInt("line")),
                                 command.getJSONObject("positionTo").getInt("spot")
                         )
                 );
@@ -62,7 +62,7 @@ public class CommandParser {
                 concreteCommand = new KnockOutCreature();
                 ((KnockOutCreature)concreteCommand).setPosition(
                         new Position(
-                                board.getLine(command.getJSONObject("position").getInt("line")),
+                                GUIBoard.getLine(command.getJSONObject("position").getInt("line")),
                                 command.getJSONObject("position").getInt("spot")
                         )
                 );
@@ -73,7 +73,7 @@ public class CommandParser {
                 concreteCommand = new ChangePoints();
                 ((ChangePoints)concreteCommand).setPosition(
                         new Position(
-                                board.getLine(command.getJSONObject("position").getInt("line")),
+                                GUIBoard.getLine(command.getJSONObject("position").getInt("line")),
                                 command.getJSONObject("position").getInt("spot")
                         )
                 );
@@ -84,7 +84,7 @@ public class CommandParser {
                 concreteCommand = new ChangePoints();
                 ((ChangePoints)concreteCommand).setPosition(
                         new Position(
-                                board.getLine(command.getJSONObject("position").getInt("line")),
+                                GUIBoard.getLine(command.getJSONObject("position").getInt("line")),
                                 command.getJSONObject("position").getInt("spot")
                         )
                 );
@@ -95,7 +95,7 @@ public class CommandParser {
                 concreteCommand = new ChangePoints();
                 ((ChangePoints)concreteCommand).setPosition(
                         new Position(
-                                board.getLine(command.getJSONObject("position").getInt("line")),
+                                GUIBoard.getLine(command.getJSONObject("position").getInt("line")),
                                 command.getJSONObject("position").getInt("spot")
                         )
                 );
@@ -107,7 +107,7 @@ public class CommandParser {
                 concreteCommand = new Place();
                 ((Place)concreteCommand).setPosition(
                         new Position(
-                                board.getLine(command.getJSONObject("position").getInt("line")),
+                                GUIBoard.getLine(command.getJSONObject("position").getInt("line")),
                                 command.getJSONObject("position").getInt("spot")
                         )
                 );

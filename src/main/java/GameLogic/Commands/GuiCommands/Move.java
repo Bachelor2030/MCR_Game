@@ -40,23 +40,23 @@ public class Move extends GuiCommand {
     public void execute(GameBoard gameBoard) {
         // Todo : execution on the GUI
         Creature creature = (Creature)gameBoard
-                .getBoard()
-                .getLine(from.getBoardLine().getNoLine())
+                .getGUIBoard()
+                .getLine(from.getLine().getNoLine())
                 .getSpot(from.getPosition())
                 .getOccupant();
-        gameBoard.place(new Creature("empty", 0, 0,0), from.getBoardLine().getNoLine(), from.getPosition());
-        gameBoard.place(creature, to.getBoardLine().getNoLine(), to.getPosition());
+        gameBoard.place(new Creature("empty", 0, 0,0), from.getLine().getNoLine(), from.getPosition());
+        gameBoard.place(creature, to.getLine().getNoLine(), to.getPosition());
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
         // Todo : undo on the GUI
         Creature creature = (Creature)gameBoard
-                .getBoard()
-                .getLine(to.getBoardLine().getNoLine())
+                .getGUIBoard()
+                .getLine(to.getLine().getNoLine())
                 .getSpot(to.getPosition())
                 .getOccupant();
-        gameBoard.place(new Creature("empty", 0, 0,0), to.getBoardLine().getNoLine(), to.getPosition());
-        gameBoard.place(creature, from.getBoardLine().getNoLine(), from.getPosition());
+        gameBoard.place(new Creature("empty", 0, 0,0), to.getLine().getNoLine(), to.getPosition());
+        gameBoard.place(creature, from.getLine().getNoLine(), from.getPosition());
     }
 }

@@ -35,8 +35,8 @@ public class KnockOutCreature extends GuiCommand {
     public void execute(GameBoard gameBoard) {
         // Todo : execution on the GUI
         LiveReceptor receptor = (LiveReceptor)gameBoard
-                .getBoard()
-                .getLine(position.getBoardLine().getNoLine())
+                .getGUIBoard()
+                .getLine(position.getLine().getNoLine())
                 .getSpot(position.getPosition())
                 .getOccupant();
     }
@@ -45,8 +45,8 @@ public class KnockOutCreature extends GuiCommand {
     public void undo(GameBoard gameBoard) {
         // Todo : undo on the GUI
         LiveReceptor receptor = (LiveReceptor)gameBoard
-                .getBoard()
-                .getLine(position.getBoardLine().getNoLine())
+                .getGUIBoard()
+                .getLine(position.getLine().getNoLine())
                 .getSpot(position.getPosition())
                 .getOccupant();
     }

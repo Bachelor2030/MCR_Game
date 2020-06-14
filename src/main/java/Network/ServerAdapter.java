@@ -80,6 +80,7 @@ public class ServerAdapter {
                 }
             }
             printMessage(receptionistClassName(), "Two players have connected to the server. Stop listening for new connexions.");
+
         }
 
         /**

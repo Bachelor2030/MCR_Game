@@ -1,4 +1,4 @@
-package GameLogic.Board;
+package GUI.Board;
 
 import GameLogic.Receptors.Chest;
 import GameLogic.Receptors.Creature;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /** Cette classe permet d'instancier les lignes composant le "plateau" de jeu. */
-public class BoardLine {
+public class GUILine {
 
   // Le nombre de cases dans une ligne
   private final int NB_SPOTS = 12;
@@ -24,7 +24,7 @@ public class BoardLine {
   private int noLine;
 
   //Les cases composant la ligne
-  private LinkedList<Spot> spots;
+  private LinkedList<GUISpot> GUISpots;
 
   //La liste de creatures
   private LinkedList<Receptor> receptors;
@@ -39,19 +39,19 @@ public class BoardLine {
   Group root;
 
 
-  public BoardLine(int noLine) {
+  public GUILine(int noLine) {
     this.noLine = noLine;
   }
 
   /**
-   * Constructeur de la classe BoardLine
+   * Constructeur de la classe GUILine
    *
    * @param noLine : le numéro de la ligne
    */
-  public BoardLine(int noLine, GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
+  public GUILine(int noLine, GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
     this.noLine = noLine;
     receptors = new LinkedList<>(); // on initialise la liste de créatures.
-    spots = new LinkedList<>(); // on initialise la liste de spots.
+    GUISpots = new LinkedList<>(); // on initialise la liste de GUISpots.
     chests = new LinkedList<>(); //on initialise la liste de chess.
 
     this.vBox = vbox;
@@ -60,27 +60,27 @@ public class BoardLine {
     int indexCreature = 0;
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
       vbox = new VBox(); // On créé une box verticale pour aligne la créature à l'île.
-      spots.add(new Spot());
+      GUISpots.add(new GUISpot());
       if(spot == 0)
       {
         chests.add(new Chest("",player1));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((chests.get(0).getImageView()), (spots.get(spot).getImageView()));
+                .addAll((chests.get(0).getImageView()), (GUISpots.get(spot).getImageView()));
         gridPane.add(vbox, spot, noLine);
       }
       else if(spot == 11) {
         chests.add(new Chest("",player2));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((chests.get(1).getImageView()), (spots.get(spot).getImageView()));
+                .addAll((chests.get(1).getImageView()), (GUISpots.get(spot).getImageView()));
         gridPane.add(vbox, spot, noLine);
       }
       else {
         receptors.add(new Creature("unknown", 0, 0, 0));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((receptors.get(indexCreature++).getImageView()), (spots.get(spot).getImageView()));
+                .addAll((receptors.get(indexCreature++).getImageView()), (GUISpots.get(spot).getImageView()));
         gridPane.add(vbox, spot, noLine);
       }
 
@@ -108,10 +108,10 @@ public class BoardLine {
     return NB_SPOTS;
   }
 
-  public Spot getSpot(int index) {
-    if (spots == null)
+  public GUISpot getSpot(int index) {
+    if (GUISpots == null)
       return null;
-    return spots.get(index);
+    return GUISpots.get(index);
   }
 
   /**
@@ -119,8 +119,8 @@ public class BoardLine {
    *
    * @return la liste des cases de la ligne.
    */
-  public LinkedList<Spot> getSpots() {
-    return spots;
+  public LinkedList<GUISpot> getGUISpots() {
+    return GUISpots;
   }
 
   /**

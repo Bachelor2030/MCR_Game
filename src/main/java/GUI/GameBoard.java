@@ -1,14 +1,11 @@
 package GUI;
 
+import GUI.Board.GUIBoard;
 import GameLogic.Commands.GuiCommands.EndGame;
-import GameLogic.Commands.GuiCommands.Move;
-import GameLogic.Board.Board;
-import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Player;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Commands.PlayersAction.EndTurn;
 import GameLogic.Receptors.Receptor;
-import GameLogic.Board.Position;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -70,7 +67,7 @@ public class GameBoard extends Application {
           IpPlayer1, IpPlayer2,
           portPlayer1, portPlayer2;
 
-  private Board board;
+  private GUIBoard GUIBoard;
 
   private Stage currentStage;
 
@@ -120,13 +117,13 @@ public class GameBoard extends Application {
     this.player2 = player2;
   }
 
-  public Board getBoard() {
-    return board;
+  public GUIBoard getGUIBoard() {
+    return GUIBoard;
   }
 
   public void place(Receptor receptor, int line, int position) {
-    board.place(receptor, line, position);
-    board.getLine(line).getSpot(position).setOccupant(receptor);
+    GUIBoard.place(receptor, line, position);
+    GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
   }
 
   public void exitGame() {
@@ -740,7 +737,7 @@ public class GameBoard extends Application {
     */
     
     // Répertoire contenant nos îles
-    board = new Board(gridIslandsPanel, vbox, player1, player2);
+    GUIBoard = new GUIBoard(gridIslandsPanel, vbox, player1, player2);
     gridIslandsPanel.setAlignment(Pos.CENTER);
     return gridIslandsPanel;
   }

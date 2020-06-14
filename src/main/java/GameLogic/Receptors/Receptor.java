@@ -5,10 +5,22 @@ import javafx.scene.image.ImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public abstract class Receptor {
     protected String name;
 
-    private String imagePath = "design/images/creatures/empty.jpg";
+    private FileInputStream imagePath;
+
+    {
+        try {
+            imagePath = new FileInputStream("src/main/resources/design/images/creatures/empty.jpg");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Image image;
     private ImageView imageView;
 
@@ -56,7 +68,7 @@ public abstract class Receptor {
         return image;
     }
 
-    public void setImagePath(String imagePath) {
+    public void setImagePath(FileInputStream imagePath) {
         this.imagePath = imagePath;
         initDisplay();
     }
@@ -64,7 +76,11 @@ public abstract class Receptor {
     public void setTo(Receptor receptor) {
         System.out.println("I am a new receptor");
         if(receptor == null) {
-            imagePath = "design/images/creatures/empty.jpg";
+            try {
+                imagePath = new FileInputStream("src/main/resources/design/images/creatures/empty.jpg");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             initDisplay();
         } else {
             imagePath = receptor.imagePath;
@@ -73,7 +89,7 @@ public abstract class Receptor {
         }
     }
 
-    public String getImagePath() {
+    public FileInputStream getImagePath() {
         return imagePath;
     }
 

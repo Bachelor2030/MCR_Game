@@ -1,6 +1,6 @@
 package GameLogic;
 
-import GameLogic.Board.Board;
+import GUI.Board.GUIBoard;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Receptors.Player;
 import org.json.JSONArray;
@@ -18,14 +18,14 @@ public class Game {
             player2;
     private int
             turn;
-    private Board board;
+    private GUIBoard GUIBoard;
 
     /**
      * Constructeur de la classe Game
      * @param player1 : le joueur n°1
      * @param player2 : le joueur n°2
      */
-    public Game(Player player1, Player player2, Board board) {
+    public Game(Player player1, Player player2, GUIBoard GUIBoard) {
         if (Math.random() < 0.5) {
             this.player1 = player1;
             this.player2 = player2;
@@ -33,7 +33,7 @@ public class Game {
             this.player1 = player2;
             this.player2 = player1;
         }
-        this.board = board;
+        this.GUIBoard = GUIBoard;
         turn = 0;
     }
 
@@ -103,8 +103,8 @@ public class Game {
         try {
             gameJSON.put("type","init");
             JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNB_LINES());
-            initJSON.put("linelength", board.getLine(0).getNB_SPOTS());
+            initJSON.put("lines", GUIBoard.getNB_LINES());
+            initJSON.put("linelength", GUIBoard.getLine(0).getNB_SPOTS());
             initJSON.put("enemyname", player2.getName());
             initJSON.put("turn", "Your turn");
 
@@ -127,8 +127,8 @@ public class Game {
         try {
             gameJSON.put("type","init");
             JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNB_LINES());
-            initJSON.put("linelength", board.getLine(0).getNB_SPOTS());
+            initJSON.put("lines", GUIBoard.getNB_LINES());
+            initJSON.put("linelength", GUIBoard.getLine(0).getNB_SPOTS());
             initJSON.put("ennemyname", player1.getName());
             initJSON.put("turn", "Wait turn");
 

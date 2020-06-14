@@ -1,7 +1,7 @@
 package Network.JsonUtils;
 
 import GUI.GameBoard;
-import GameLogic.Board.Board;
+import GUI.Board.GUIBoard;
 import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Trap;
 import GameLogic.Invocator.Card.Card;
@@ -24,7 +24,7 @@ public class ParserLauncher {
         String file = "src/main/resources/json/game.json";
         GameBoard gameBoard = new GameBoard();
 
-        Game game = parseJsonGame(file, gameBoard.getBoard());
+        Game game = parseJsonGame(file, gameBoard.getGUIBoard());
         //game.startGame();
         System.out.println(game.initStateP1());
         System.out.println(game.initStateP2());
@@ -40,7 +40,7 @@ public class ParserLauncher {
         seb.setOriginCard(new Card(2, "Seb", CardType.CREATURE, 13));
 
         create.setCreatures(new Creature[]{pier, seb});
-        create.setPositions(new Position[]{new Position(new BoardLine(1), 1), new Position(new BoardLine(2), 2)});
+        create.setPositions(new Position[]{new Position(new GUILine(1), 1), new Position(new GUILine(2), 2)});
         create.execute();
         commands.add(create);
 
@@ -61,7 +61,7 @@ public class ParserLauncher {
         }*/
     }
 
-    public static Game parseJsonGame(String file, Board board) {
+    public static Game parseJsonGame(String file, GUIBoard GUIBoard) {
         Game game = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -78,7 +78,7 @@ public class ParserLauncher {
             ArrayList<Card> allCards = parseJsonCards(jsonUtil.getJsonContent("src/main/resources/json/cards.json"));
 
             System.out.println("Read " + file);
-            GameJsonParser gameJsonParser = new GameJsonParser(allCards, "src/main/resources/json/", board);
+            GameJsonParser gameJsonParser = new GameJsonParser(allCards, "src/main/resources/json/", GUIBoard);
             game = gameJsonParser.parseJson(sb.toString());
 
             fileInputStream.close();
