@@ -88,4 +88,8 @@ public abstract class Receptor {
         }
         return receptor;
     }
+
+    public String getImgPath() {
+        return imgPath;
+    }
 }

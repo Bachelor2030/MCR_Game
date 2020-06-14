@@ -1,22 +1,21 @@
 package gui;
 
+import gameLogic.Commands.GuiCommands.EndGame;
+import gameLogic.Commands.PlayersAction.EndTurn;
+import gameLogic.Invocator.Card.Card;
+import gameLogic.Receptors.Player;
+import gameLogic.Receptors.Receptor;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
 import gui.gameWindows.CharacterWindow;
 import gui.gameWindows.InGameWindow;
 import gui.gameWindows.InstructionWindow;
 import gui.gameWindows.ParameterWindow;
-import gameLogic.Commands.GuiCommands.EndGame;
-import gameLogic.Commands.PlayersAction.EndTurn;
-import gameLogic.Invocator.Card.Card;
-import gameLogic.Receptors.Player;
-import gameLogic.Receptors.Receptor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -25,8 +24,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 
@@ -51,17 +51,14 @@ public class GameBoard extends Application {
   private BorderPane racine;
 
   private Player player1, player2;
-  private String imgPathPlayer;
   private LinkedList<Card> deck1, deck2;
-  private String namePlayer1, namePlayer2, IpPlayer1, IpPlayer2, portPlayer1, portPlayer2;
+  private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
 
   private GUIBoard GUIBoard;
 
   private Stage currentStage;
 
-  /**
-   * Thread principal du GUI. Gère l'affichage général de la "scene".
-   */
+  /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
   public void start(Stage stage) throws Exception {
     currentStage = stage;
@@ -96,15 +93,6 @@ public class GameBoard extends Application {
     stage.setTitle("MCR - JEU DE LA MUERTA");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
-  }
-
-  public GUIBoard getGUIBoard() {
-    return GUIBoard;
-  }
-
-  public void place(Receptor receptor, int line, int position) {
-    GUIBoard.place(receptor, line, position);
-    GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
   }
 
   public void exitGame() {
@@ -157,11 +145,7 @@ public class GameBoard extends Application {
         .getButton()
         .setOnAction(
             actionEvent -> {
-              try {
-                displayInstructions();
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
+              displayInstructions();
             });
 
     // NEW GAME BUTTON
@@ -170,14 +154,11 @@ public class GameBoard extends Application {
         .getButton()
         .setOnAction(
             actionEvent -> {
-              try {
-                displaySettingsMenu();
-              } catch (UnknownHostException e) {
-                e.printStackTrace();
-              }
+              displaySettingsMenu();
             });
 
-    buttons.getChildren().addAll(instructionButton.getButton(), newGameButton.getButton());
+    buttons.getChildren()
+            .addAll(instructionButton.getButton(), newGameButton.getButton());
     buttons.setSpacing(25);
     buttons.setAlignment(Pos.CENTER);
 
@@ -201,19 +182,19 @@ public class GameBoard extends Application {
   }
 
   /** PAGE DU MENU DE SETTINGS (nom player, adresse IP, port) */
-  private void displaySettingsMenu() throws UnknownHostException {
+  private void displaySettingsMenu() {
 
     ParameterWindow parameterWindow =
-            new ParameterWindow(racine, defineHeader(true), currentStage, isGaming);
-
+        new ParameterWindow(racine, defineHeader(true), currentStage, isGaming);
 
     // On crée un bouton qui va permettre de valider les paramètres et créer une nouvelle partie.
     GameButton validateParameters = new GameButton("Valider", "header-button");
-    validateParameters.getButton().setOnAction(
+    validateParameters
+        .getButton()
+        .setOnAction(
             event -> {
               isGaming = false;
               try {
-                // TODO : check que les bonnes données soient rentrées ?
                 // On initialise les données
                 namePlayer1 = parameterWindow.getPlayerNameField().getText();
                 IpPlayer1 = parameterWindow.getPlayerIpField().getText();
@@ -231,13 +212,10 @@ public class GameBoard extends Application {
     racine.setCenter(parameterWindow.getBody());
   }
 
-  /**
-   * Permet de choisir le personnage qui représentera le player.
-   */
-  //TODO refactor
+  /** Permet de choisir le personnage qui représentera le player. */
   private void chooseCharacter() throws FileNotFoundException {
     CharacterWindow characterWindow =
-            new CharacterWindow(racine, defineHeader(true), currentStage, WIDTH_WINDOW, player1);
+        new CharacterWindow(racine, defineHeader(true), currentStage, WIDTH_WINDOW, player1);
 
     // On crée un bouton qui va permettre de valider les paramètres et créer une nouvelle partie.
     GameButton validateImageCharacter = new GameButton("Choisir", "header-button");
@@ -247,8 +225,8 @@ public class GameBoard extends Application {
             event -> {
               isGaming = true;
               try {
-                // on récupère la sélection du joueur
-                imgPathPlayer = characterWindow.defineSelectedUrl();
+                //On récupère la sélection du joueur
+                ((Receptor)player1).setImgPath(characterWindow.defineSelectedUrl());
 
                 // On passe à la fenêtre d'attente d'adversaire
                 // TODO : remplacer par fenêtre de chargement d'adversaire.
@@ -262,8 +240,12 @@ public class GameBoard extends Application {
     racine.setCenter(characterWindow.getCorps());
   }
 
-
-
+  /**
+   * Définit les différents header de chaque page
+   *
+   * @param isReturnMenu : y a-t-il un bouton "retour menu" ?
+   * @return la barre de navigation sous forme de HBox.
+   */
   private HBox defineHeader(boolean isReturnMenu) {
     LinkedList<GameButton> buttons = new LinkedList<>();
 
@@ -314,7 +296,6 @@ public class GameBoard extends Application {
                 // TODO send this to backend
                 System.out.println(endGame.toJson());
               });
-
       buttons.add(validateTourButton);
       buttons.add(abandonTourButton);
     }
@@ -328,11 +309,10 @@ public class GameBoard extends Application {
   /**
    * PAGE INSTRUCTIONS
    *
-   * @throws IOException
    */
-  private void displayInstructions() throws IOException {
+  private void displayInstructions() {
     InstructionWindow instructionWindow =
-            new InstructionWindow(racine, defineHeader(true), isGaming, currentStage);
+        new InstructionWindow(racine, defineHeader(true), isGaming, currentStage);
   }
 
   /**
@@ -344,7 +324,23 @@ public class GameBoard extends Application {
   public void inGame(BorderPane racine) throws IOException {
     isGaming = true;
     InGameWindow inGameWindow =
-            new InGameWindow(racine,defineHeader(false),
-                    gridIslandsPanel, GUIBoard, player1, player2, isGaming, currentStage);
+        new InGameWindow(
+            racine,
+            defineHeader(false),
+            gridIslandsPanel,
+            GUIBoard,
+            player1,
+            player2,
+            isGaming,
+            currentStage);
+  }
+
+  public GUIBoard getGUIBoard() {
+    return GUIBoard;
+  }
+
+  public void place(Receptor receptor, int line, int position) {
+    GUIBoard.place(receptor, line, position);
+    GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
   }
 }

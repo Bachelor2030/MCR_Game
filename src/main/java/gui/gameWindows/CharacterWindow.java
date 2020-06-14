@@ -18,8 +18,8 @@ import java.io.FileNotFoundException;
 public class CharacterWindow extends GameWindow
 {
   private String  DARK_ASCII_PATH = "src/main/resources/design/images/characters/character.png",
-                  ELODIE_PATH = "src/main/resources/design/images/characters/character.png",
-                  CLARUSSO_PATH = "src/main/resources/design/images/characters/character.png";
+                  ELODIE_PATH = "src/main/resources/design/images/characters/elodie.png",
+                  CLARUSSO_PATH = "src/main/resources/design/images/characters/clarisse.png";
   private VBox corps;
 
   private ToggleGroup radioButtonGroup;

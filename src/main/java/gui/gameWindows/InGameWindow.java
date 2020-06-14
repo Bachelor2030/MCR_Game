@@ -37,7 +37,7 @@ public class InGameWindow extends GameWindow {
     this.GUIBoard = GUIBoard;
     this.player1 = player1;
     this.player2 = player2;
-    this.generateBody();
+    generateBody();
   }
 
   private void generateBody() throws IOException {
@@ -70,7 +70,7 @@ public class InGameWindow extends GameWindow {
 
     /*
     int numRows = 5;
-    for(int i = 0;i < numRows; i++)
+    for(int i = 0;i < numRows; ++i)
     {
       RowConstraints rc = new RowConstraints();
       rc.setPercentHeight(100 / numRows);
@@ -84,18 +84,33 @@ public class InGameWindow extends GameWindow {
     return gridIslandsPanel;
   }
 
-  /** @return les informations du player */
-  private VBox getPlayerInformations(String labelTitle) {
+  /**
+   * @return les informations du player
+   */
+  private VBox getPlayerInformations(String labelTitle) throws FileNotFoundException {
     VBox informationPannelUser = new VBox();
+    if(labelTitle.equals("Player 1")) {
+      ImageView imageView = new ImageView(player1.getImage());
+      imageView.setFitWidth(player1.getImage().getWidth()/2);
+      imageView.setFitHeight(player1.getImage().getHeight()/2);
+      informationPannelUser.getChildren().add(imageView);
+    }
+    else if(!(player2.getImage().equals("src/main/resources/design/images/creatures/empty.jpg"))) {
+      ImageView imageView = new ImageView(new Image(new FileInputStream("src/main/resources/design/images/characters/character.png")));
+      imageView.setFitWidth(player1.getImage().getWidth()/2.5);
+      imageView.setFitHeight(player1.getImage().getHeight()/2.5);
+      informationPannelUser.getChildren().add(imageView);
+    }
 
     // On l'affiche
     informationPannelUser.getStyleClass().add("menuLabelsGauche-vbox");
+    informationPannelUser.setAlignment(Pos.CENTER);
 
     // On créé le titre "Actions"
-    Label informationPannelUserTitle = new Label("Joueur 1");
+    Label informationPannelUserTitle = new Label(labelTitle);
     informationPannelUserTitle.getStyleClass().add("titre-label");
 
-    informationPannelUser.getChildren().add(informationPannelUserTitle);
+    informationPannelUser.getChildren().addAll(informationPannelUserTitle);
     return informationPannelUser;
   }
   /**
