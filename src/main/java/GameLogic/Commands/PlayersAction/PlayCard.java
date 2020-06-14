@@ -4,6 +4,7 @@ import GameLogic.Invocator.Card.Card;
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.Player;
 import GameLogic.Receptors.Receptor;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +23,7 @@ public class PlayCard extends PlayersAction {
     public JSONObject toJson() {
         JSONObject playCard = super.toJson();
         try {
-            playCard.put("cardid", cardToPlay.getID());
+            playCard.put(Messages.JSON_TYPE_CARD_ID, cardToPlay.getID());
         } catch (JSONException e) {
             e.printStackTrace();
         }

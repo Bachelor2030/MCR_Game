@@ -2,6 +2,7 @@ package GameLogic.Commands.OnLiveReceptors;
 
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.LiveReceptor;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +31,7 @@ public class Heal extends OnLiveReceptor {
     public JSONObject toJson() {
         JSONObject heal = super.toJson();
         try {
-            heal.put("lifepoints", lifePoints);
+            heal.put(Messages.JSON_TYPE_LP, lifePoints);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Receptors.LiveReceptor;
 import GameLogic.Receptors.Receptor;
+import Network.Messages;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +47,7 @@ public abstract class OnLiveReceptor extends ConcreteCommand {
         }
 
         try {
-            onLiveReceptors.put("livereceptor", liveReceptors);
+            onLiveReceptors.put(Messages.JSON_TYPE_RECEPTOR, liveReceptors);
         } catch (JSONException e) {
             e.printStackTrace();
         }

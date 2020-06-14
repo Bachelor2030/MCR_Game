@@ -2,6 +2,7 @@ package GameLogic.Receptors;
 
 import GameLogic.Commands.PlayersAction.PlayersAction;
 import GameLogic.Invocator.Card.Card;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -136,10 +137,10 @@ public class Creature extends LiveReceptor {
         JSONObject creature =  super.toJson();
 
         try {
-            creature.put("steps", steps);
-            creature.put("attackpoints", attackPoints);
+            creature.put(Messages.JSON_TYPE_MP, steps);
+            creature.put(Messages.JSON_TYPE_AP, attackPoints);
             if(originCard != null)
-                creature.put("cardid", originCard.getID());
+                creature.put(Messages.JSON_TYPE_CARD_ID, originCard.getID());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package GameLogic.Commands.OnLiveReceptors.OnCreature;
 
 import GameLogic.Board.Spot;
 import GameLogic.Commands.CommandName;
+import Network.Messages;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,13 +39,13 @@ public abstract class MoveCreature extends OnCreature {
         try {
             JSONObject position = new JSONObject();
             if(from != null) {
-                position.put("positionFrom", from.toJson());
+                position.put(Messages.JSON_TYPE_POSITION_FROM, from.toJson());
             }
             if(to != null) {
-                position.put("positionTo", to.toJson());
+                position.put(Messages.JSON_TYPE_POSITION_TO, to.toJson());
             }
             positions.put(position);
-            moveCreature.put("positions", positions);
+            moveCreature.put(Messages.JSON_TYPE_POSITION, positions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

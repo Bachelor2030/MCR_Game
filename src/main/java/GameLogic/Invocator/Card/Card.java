@@ -2,6 +2,7 @@ package GameLogic.Invocator.Card;
 
 import GameLogic.Commands.Macro;
 import GameLogic.Invocator.Invocator;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -117,11 +118,11 @@ public class Card implements Invocator {
     public JSONObject toJSON() {
         JSONObject c = new JSONObject();
         try {
-            c.put("id", ID);
-            c.put("name", name);
-            c.put("type", type);
-            c.put("cost", cost);
-            c.put("commands", command.toJson());
+            c.put(Messages.JSON_TYPE_ID, ID);
+            c.put(Messages.JSON_TYPE_NAME, name);
+            c.put(Messages.JSON_TYPE, type);
+            c.put(Messages.JSON_TYPE_COST, cost);
+            c.put(Messages.JSON_TYPE_COMMANDS, command.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }

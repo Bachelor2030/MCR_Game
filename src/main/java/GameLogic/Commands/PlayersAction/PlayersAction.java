@@ -6,6 +6,7 @@ import GameLogic.Invocator.Card.CardType;
 import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Receptors.Receptor;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,7 +43,7 @@ public abstract class PlayersAction extends ConcreteCommand {
     public JSONObject toJson() {
         JSONObject playersAction = super.toJson();
         try {
-            playersAction.put("player", player.getName());
+            playersAction.put(Messages.JSON_TYPE_PLAYER, player.getName());
         } catch (JSONException e) {
             e.printStackTrace();
         }

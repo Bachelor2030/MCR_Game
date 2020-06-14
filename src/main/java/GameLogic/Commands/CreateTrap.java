@@ -5,6 +5,7 @@ import GameLogic.Receptors.Player;
 import GameLogic.Board.Spot;
 import GameLogic.Receptors.Receptor;
 import GameLogic.Receptors.Trap;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,7 +59,7 @@ public class CreateTrap extends ConcreteCommand {
         JSONObject playTrap = super.toJson();
         try {
             if(player != null)
-                playTrap.put("player", player.getName());
+                playTrap.put(Messages.JSON_TYPE_PLAYER, player.getName());
             playTrap.put("trap", trap.toJson());
 
         } catch (JSONException e) {

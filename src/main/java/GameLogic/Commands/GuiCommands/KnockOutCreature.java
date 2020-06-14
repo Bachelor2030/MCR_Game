@@ -4,6 +4,7 @@ import GUI.GameBoard;
 import GameLogic.Board.Spot;
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.LiveReceptor;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +24,7 @@ public class KnockOutCreature extends GuiCommand {
         JSONObject knockout = super.toJson();
 
         try {
-            knockout.put("position", position.toJson());
+            knockout.put(Messages.JSON_TYPE_POSITION, position.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }

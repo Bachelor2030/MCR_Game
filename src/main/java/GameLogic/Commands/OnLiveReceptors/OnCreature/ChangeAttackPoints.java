@@ -2,6 +2,7 @@ package GameLogic.Commands.OnLiveReceptors.OnCreature;
 
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +33,7 @@ public class ChangeAttackPoints extends OnCreature {
     public JSONObject toJson() {
         JSONObject changeAP = super.toJson();
         try {
-            changeAP.put("newattackpoints", newAP);
+            changeAP.put(Messages.JSON_TYPE_AP, newAP);
         } catch (JSONException e) {
             e.printStackTrace();
         }

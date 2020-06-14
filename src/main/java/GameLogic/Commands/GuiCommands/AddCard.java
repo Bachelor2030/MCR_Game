@@ -2,6 +2,7 @@ package GameLogic.Commands.GuiCommands;
 
 import GUI.GameBoard;
 import GameLogic.Commands.CommandName;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +22,7 @@ public class AddCard extends GuiCommand {
         JSONObject addCard = super.toJson();
 
         try {
-            addCard.put("cardid", cardID);
+            addCard.put(Messages.JSON_TYPE_CARD_ID, cardID);
         } catch (JSONException e) {
             e.printStackTrace();
         }

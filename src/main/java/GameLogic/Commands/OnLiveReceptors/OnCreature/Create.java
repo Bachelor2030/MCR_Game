@@ -3,6 +3,7 @@ package GameLogic.Commands.OnLiveReceptors.OnCreature;
 import GameLogic.Board.Spot;
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.Creature;
+import Network.Messages;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +41,7 @@ public class Create extends OnCreature {
         try {
             if(position != null) {
                 jsonPositions.put(position.toJson());
-                create.put("position", jsonPositions);
+                create.put(Messages.JSON_TYPE_POSITION, jsonPositions);
             }
         } catch (JSONException e) {
             e.printStackTrace();

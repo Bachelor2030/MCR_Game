@@ -4,6 +4,7 @@ import GUI.GameBoard;
 import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Receptors.Receptor;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ public abstract class GuiCommand extends ConcreteCommand {
         JSONObject guiCommand = super.toJson();
 
         try {
-            guiCommand.put("player", playerName);
+            guiCommand.put(Messages.JSON_TYPE_PLAYER, playerName);
         } catch (JSONException e) {
             e.printStackTrace();
         }

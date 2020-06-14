@@ -4,6 +4,7 @@ import GUI.GameBoard;
 import GameLogic.Board.Spot;
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,8 +28,8 @@ public class Move extends GuiCommand {
         JSONObject move = super.toJson();
 
         try {
-            move.put("positionFrom", from.toJson());
-            move.put("positionTo", to.toJson());
+            move.put(Messages.JSON_TYPE_POSITION_FROM, from.toJson());
+            move.put(Messages.JSON_TYPE_POSITION_TO, to.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }

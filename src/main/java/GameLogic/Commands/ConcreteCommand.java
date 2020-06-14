@@ -1,6 +1,7 @@
 package GameLogic.Commands;
 
 import GameLogic.Receptors.Receptor;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,8 +23,8 @@ public abstract class ConcreteCommand implements Command {
     public JSONObject toJson() {
         JSONObject command = new JSONObject();
         try {
-            command.put("type", "play");
-            command.put("name", name.toString());
+            command.put(Messages.JSON_TYPE, Messages.JSON_TYPE_PLAY);
+            command.put(Messages.JSON_TYPE_NAME, name.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

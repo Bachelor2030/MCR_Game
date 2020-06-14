@@ -3,6 +3,7 @@ package GameLogic.Receptors;
 import GameLogic.Commands.Command;
 import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Commands.PlayersAction.PlayersAction;
+import Network.Messages;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.JSONException;
@@ -93,8 +94,8 @@ public abstract class Receptor {
     public JSONObject toJson() {
         JSONObject receptor = new JSONObject();
         try {
-            receptor.put("name", name);
-            receptor.put("image", imgPath);
+            receptor.put(Messages.JSON_TYPE_NAME, name);
+            receptor.put(Messages.JSON_TYPE_IMAGE, imgPath);
         } catch (JSONException e) {
             e.printStackTrace();
         }

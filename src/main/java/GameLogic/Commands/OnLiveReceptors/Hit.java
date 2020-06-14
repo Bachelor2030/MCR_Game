@@ -2,6 +2,7 @@ package GameLogic.Commands.OnLiveReceptors;
 
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.LiveReceptor;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +31,7 @@ public class Hit extends OnLiveReceptor {
     public JSONObject toJson() {
         JSONObject hit = super.toJson();
         try {
-            hit.put("attackpoints", attackPoints);
+            hit.put(Messages.JSON_TYPE_AP, attackPoints);
         } catch (JSONException e) {
             e.printStackTrace();
         }

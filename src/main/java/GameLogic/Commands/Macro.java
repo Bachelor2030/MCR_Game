@@ -3,6 +3,7 @@ package GameLogic.Commands;
 import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
 import GameLogic.Game;
 import GameLogic.Receptors.Receptor;
+import Network.Messages;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +52,7 @@ public class Macro implements Command {
             for (ConcreteCommand command : commands) {
                 cmds.put(command.toJson());
             }
-            macro.put("commands", cmds);
+            macro.put(Messages.JSON_TYPE_COMMANDS, cmds);
         } catch (JSONException e) {
             e.printStackTrace();
         }

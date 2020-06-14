@@ -3,6 +3,7 @@ package GameLogic.Receptors;
 import GameLogic.Board.Spot;
 import GameLogic.Commands.Macro;
 import GameLogic.Commands.PlayersAction.PlayersAction;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,9 +59,9 @@ public class Trap extends Receptor {
     public JSONObject toJson() {
         JSONObject trap = super.toJson();
         try {
-            trap.put("effect", effect.toJson());
+            trap.put(Messages.JSON_TYPE_EFFECT, effect.toJson());
             if (position != null) {
-                trap.put("position", position.toJson());
+                trap.put(Messages.JSON_TYPE_POSITION, position.toJson());
             }
         } catch (JSONException e) {
             e.printStackTrace();

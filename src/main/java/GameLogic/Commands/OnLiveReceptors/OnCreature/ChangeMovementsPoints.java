@@ -2,6 +2,7 @@ package GameLogic.Commands.OnLiveReceptors.OnCreature;
 
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +33,7 @@ public class ChangeMovementsPoints extends OnCreature {
     public JSONObject toJson() {
         JSONObject changeMP = super.toJson();
         try {
-            changeMP.put("newsteps", newMP);
+            changeMP.put(Messages.JSON_TYPE_MP, newMP);
         } catch (JSONException e) {
             e.printStackTrace();
         }

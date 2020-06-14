@@ -5,6 +5,7 @@ import GameLogic.Board.Spot;
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.Receptor;
+import Network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,8 +33,8 @@ public class Place extends GuiCommand {
         JSONObject place = super.toJson();
 
         try {
-            place.put("cardid", cardID);
-            place.put("position", position.toJson());
+            place.put(Messages.JSON_TYPE_CARD_ID, cardID);
+            place.put(Messages.JSON_TYPE_POSITION, position.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }
