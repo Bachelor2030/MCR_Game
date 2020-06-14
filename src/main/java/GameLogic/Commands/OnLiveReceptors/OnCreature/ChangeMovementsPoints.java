@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class ChangeMovementsPoints extends OnCreature {
     private int newMP;
-    private int[] oldMP;
+    private int oldMP;
 
     public ChangeMovementsPoints() {
         super(CommandName.CHANGE_MP);
@@ -18,22 +18,14 @@ public class ChangeMovementsPoints extends OnCreature {
     }
 
     @Override
-    public void execute() {
-        if (receptors == null)
-            return;
-        oldMP = new int[receptors.length];
-        for (int i = 0; i < receptors.length; i++) {
-            oldMP[i] = ((Creature) receptors[i]).getSteps();
-            ((Creature) receptors[i]).setAttackPoints(newMP);
-        }
+    public void execute(Creature creature) {
+        oldMP = creature.getSteps();
+        creature.setMovementsPoints(newMP);
     }
 
     @Override
-    public void undo() {
-        if (receptors == null)
-            return;
-        for (int i = 0; i < receptors.length; i++)
-            ((Creature) receptors[i]).setMovementsPoints(oldMP[i]);
+    public void undo(Creature creature) {
+        creature.setMovementsPoints(oldMP);
     }
 
     @Override

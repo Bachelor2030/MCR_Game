@@ -766,11 +766,9 @@ public class GameBoard extends Application {
     validateTourButton.setOnAction(
         actionEvent -> {
           // blablabla définir ce que fait le bouton "valider tour" ici.
-          EndTurn endTurn = new EndTurn();
-          endTurn.setPlayer(player1);
 
           // TODO send this to backend
-          System.out.println(endTurn.toJson());
+          System.out.println(new EndTurn().toJson());
 
           System.out.println("you hit the validate button...");
         });

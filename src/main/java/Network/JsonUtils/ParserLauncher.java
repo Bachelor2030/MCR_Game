@@ -1,10 +1,6 @@
 package Network.JsonUtils;
 
-import GUI.GameBoard;
-import GUI.Board.GUIBoard;
-import GameLogic.Board.Board;
 import GameLogic.Receptors.Creature;
-import GameLogic.Receptors.Receptor;
 import GameLogic.Receptors.Trap;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Invocator.Card.CardType;
@@ -26,9 +22,6 @@ public class ParserLauncher {
         String file = "src/main/resources/json/game.json";
 
         Game game = parseJsonGame(file, 5, 10);
-        //game.startGame();
-        System.out.println(game.initStateP1());
-        System.out.println(game.initStateP2());
 
         /*
         ArrayList<ConcreteCommand> commands = new ArrayList<>();
@@ -114,7 +107,7 @@ public class ParserLauncher {
                         jsonCreature.getInt("life"),
                         jsonCreature.getInt("steps"),
                         jsonCreature.getInt("attack"));
-                create.setCreatures(new Creature[]{creature});
+                create.setCreature(creature);
                 concreteCommands.add(create);
             }
             else if (cardType == CardType.TRAP) {
@@ -143,9 +136,7 @@ public class ParserLauncher {
             for (Create concreteCommand : c.getCommand().getCreateCreature()) {
                 if (concreteCommand == null)
                     break;
-                for (Creature creature : concreteCommand.getCreatures()) {
-                    creature.setOriginCard(c);
-                }
+                concreteCommand.getCreature().setOriginCard(c);
             }
             cards.add(c);
         }

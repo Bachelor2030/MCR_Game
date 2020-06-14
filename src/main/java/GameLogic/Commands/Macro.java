@@ -1,6 +1,8 @@
 package GameLogic.Commands;
 
 import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
+import GameLogic.Game;
+import GameLogic.Receptors.Receptor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Macro implements Command {
+    private Receptor receptor;
     private ArrayList<ConcreteCommand> commands;
 
     public Macro(ArrayList<ConcreteCommand> commands) {
@@ -56,17 +59,23 @@ public class Macro implements Command {
         return macro;
     }
 
+    public Receptor getReceptor() {
+        return receptor;
+    }
+
     @Override
-    public void execute() {
+    public void execute(Receptor receptor) {
+        this.receptor = receptor;
         for (Command command : commands) {
-            command.execute();
+            command.execute(receptor);
         }
     }
 
     @Override
-    public void undo() {
+    public void undo(Receptor receptor) {
+        this.receptor = receptor;
         for(Command command : commands) {
-            command.undo();
+            command.undo(receptor);
         }
     }
 

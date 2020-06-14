@@ -1,6 +1,7 @@
 package GameLogic.Commands.PlayersAction;
 
 import GameLogic.Commands.CommandName;
+import GameLogic.Receptors.Player;
 
 public class EndTurn extends PlayersAction {
     public EndTurn() {
@@ -8,12 +9,12 @@ public class EndTurn extends PlayersAction {
     }
 
     @Override
-    public void execute() {
+    public void execute(Player player) {
         player.endTurn();
     }
 
     @Override
-    public void undo() {
+    public void undo(Player player) {
         player.continueTurn();
     }
 }

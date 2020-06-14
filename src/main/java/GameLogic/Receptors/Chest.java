@@ -1,5 +1,6 @@
 package GameLogic.Receptors;
 
+import GameLogic.Commands.PlayersAction.PlayersAction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -47,8 +48,9 @@ public class Chest extends LiveReceptor {
         return isAlive();
     }
 
+
     @Override
-    public void playTurn(int turn) {}
+    public void playTurn(int turn, PlayersAction action) {}
 
     public ImageView getImageView() {
         return imageView;

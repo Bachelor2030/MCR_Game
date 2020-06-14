@@ -1,8 +1,6 @@
 package Network.JsonUtils;
 
-import GameLogic.Board.Board;
 import GameLogic.Commands.CreateTrap;
-import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Player;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Commands.CommandName;
@@ -29,7 +27,7 @@ public class GameJsonParser {
 
     public Game parseJson(String json) throws JSONException, FileNotFoundException {
         JSONObject obj = new JSONObject(json);
-        Game game = new Game(nbr_lines, nbr_spots);
+        Game game = null;
 
         String player1 = obj.getJSONObject("playerNames").getString("player1");
         String player2 = obj.getJSONObject("playerNames").getString("player2");
@@ -46,8 +44,8 @@ public class GameJsonParser {
         cardsPlayer1 = cardJsonParser.parseJson(path + cards1, allCards);
         cardsPlayer2 = cardJsonParser.parseJson(path + cards2, allCards);
 
-        Player p1 = new Player(player1, cardsPlayer1);
-        Player p2 = new Player(player2, cardsPlayer2);
+        Player p1 = new Player(player1, cardsPlayer1, game);
+        Player p2 = new Player(player2, cardsPlayer2, game);
 
         setOwner(cardsPlayer1, p1);
         setOwner(cardsPlayer2, p2);
@@ -63,9 +61,7 @@ public class GameJsonParser {
                     ((CreateTrap)command).setPlayer(player);
                 }
                 if (command.getName() == CommandName.CREATE_CREATURE) {
-                    for (Creature c : ((Create)command).getCreatures()) {
-                        c.setOwner(player);
-                    }
+                    ((Create)command).getCreatures().setOwner(player);
                 }
             }
         }

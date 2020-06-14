@@ -1,7 +1,9 @@
 package GameLogic.Commands;
 
+import GameLogic.Game;
 import GameLogic.Receptors.Player;
 import GameLogic.Board.Spot;
+import GameLogic.Receptors.Receptor;
 import GameLogic.Receptors.Trap;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,13 +39,18 @@ public class CreateTrap extends ConcreteCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute(Receptor receptor) {
         trap.setPosition(position);
     }
 
     @Override
-    public void undo() {
+    public void undo(Receptor receptor) {
         trap.setPosition(null);
+    }
+
+    @Override
+    public Receptor getReceptor() {
+        return null;
     }
 
     @Override

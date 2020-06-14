@@ -3,6 +3,7 @@ package GameLogic.Commands.GuiCommands;
 import GUI.GameBoard;
 import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Receptors.Receptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,10 +23,15 @@ public abstract class GuiCommand extends ConcreteCommand {
     public abstract void undo(GameBoard gameBoard);
 
     @Override
-    public void execute() {}
+    public Receptor getReceptor() {
+        return null;
+    }
 
     @Override
-    public void undo() {}
+    public void execute(Receptor receptor) {}
+
+    @Override
+    public void undo(Receptor receptor) {}
 
     @Override
     public JSONObject toJson() {

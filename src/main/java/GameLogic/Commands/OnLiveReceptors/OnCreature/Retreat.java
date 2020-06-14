@@ -9,18 +9,12 @@ public class Retreat extends MoveCreature {
     }
 
     @Override
-    public void execute() {
-        if (receptors == null)
-            return;
-        for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).retreat(((Creature)receptors[i]).getSteps());
+    public void execute(Creature creature) {
+        creature.retreat(creature.getSteps());
     }
 
     @Override
-    public void undo() {
-        if (receptors == null)
-            return;
-        for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).advance();
+    public void undo(Creature creature) {
+        creature.advance();
     }
 }

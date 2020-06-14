@@ -1,5 +1,6 @@
 package GameLogic.Receptors;
 
+import GameLogic.Commands.PlayersAction.PlayersAction;
 import GameLogic.Invocator.Card.Card;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -123,7 +124,7 @@ public class Creature extends LiveReceptor {
     }
 
     @Override
-    public void playTurn(int turn) {
+    public void playTurn(int turn, PlayersAction action) {
         if (!asleep) {
             advance();
         }

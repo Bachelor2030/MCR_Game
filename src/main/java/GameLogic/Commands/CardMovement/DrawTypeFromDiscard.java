@@ -3,6 +3,7 @@ package GameLogic.Commands.CardMovement;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Invocator.Card.CardType;
 import GameLogic.Commands.CommandName;
+import GameLogic.Receptors.Player;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ public class DrawTypeFromDiscard extends CardMovement {
     }
 
     @Override
-    public void execute() {
+    public void execute(Player player) {
         HashMap<Integer, List<Card>> discard = player.getDiscard();
         for (int i = 1; i <= discard.size(); ++i) {
             for (Card c: discard.get(i)) {
@@ -35,7 +36,7 @@ public class DrawTypeFromDiscard extends CardMovement {
     }
 
     @Override
-    public void undo() {
+    public void undo(Player player) {
         if(card != null) {
             player.discardCard(card);
         }

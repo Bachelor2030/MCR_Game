@@ -1,6 +1,7 @@
 package GameLogic.Commands.CardMovement;
 
 import GameLogic.Commands.CommandName;
+import GameLogic.Receptors.Player;
 
 public class Draw extends CardMovement {
     public Draw() {
@@ -8,13 +9,13 @@ public class Draw extends CardMovement {
     }
 
     @Override
-    public void execute() {
+    public void execute(Player player) {
         card = player.drawCard();
         setCard(card);
     }
 
     @Override
-    public void undo() {
+    public void undo(Player player) {
         player.removeFromHand(card);
         player.addToTopDeck(card);
     }

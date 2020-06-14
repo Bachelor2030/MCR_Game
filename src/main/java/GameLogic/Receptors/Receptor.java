@@ -1,5 +1,8 @@
 package GameLogic.Receptors;
 
+import GameLogic.Commands.Command;
+import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Commands.PlayersAction.PlayersAction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.JSONException;
@@ -9,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public abstract class Receptor {
+    protected Command lastMove;
     protected String name;
 
     private String imgPath = "src/main/resources/design/images/creatures/empty.jpg";
@@ -31,7 +35,15 @@ public abstract class Receptor {
         return name;
     }
 
-    public abstract void playTurn(int turn);
+    public abstract void playTurn(int turn, PlayersAction action);
+
+    public void undoLastMove() {
+        lastMove.undo(((ConcreteCommand)lastMove).getReceptor());
+    }
+
+    public void redoLastMove(){
+        lastMove.execute(((ConcreteCommand)lastMove).getReceptor());
+    }
 
     @Override
     public String toString() {

@@ -17,6 +17,8 @@ public abstract class ConcreteCommand implements Command {
         return name;
     }
 
+    public abstract Receptor getReceptor();
+
     public JSONObject toJson() {
         JSONObject command = new JSONObject();
         try {

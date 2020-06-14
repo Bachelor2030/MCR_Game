@@ -1,12 +1,7 @@
 package GameLogic.Invocator.Card;
 
-import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Commands.Macro;
-import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
 import GameLogic.Invocator.Invocator;
-import GameLogic.Receptors.Creature;
-import GameLogic.Receptors.Trap;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,11 +11,11 @@ import java.util.Objects;
  * Modelizes a card for the game
  */
 public class Card implements Invocator {
-    private final int ID;                   // the id of the card
-    private Macro command;                  // the command that it executes
-    private String name;                    // the name of the card
-    private int cost;                       // the cost (in action points)
-    private CardType type;                  // the type of the card
+    protected final int ID;                   // the id of the card
+    protected Macro command;                  // the command that it executes
+    protected String name;                    // the name of the card
+    protected int cost;                       // the cost (in action points)
+    protected CardType type;                  // the type of the card
 
     /**
      * Creates a card with the given information
@@ -38,7 +33,7 @@ public class Card implements Invocator {
 
     public void undo() {
         if(command != null) {
-            command.undo();
+            command.undo(command.getReceptor());
         }
     }
 
@@ -48,7 +43,7 @@ public class Card implements Invocator {
     public void play() {
         if(command != null) {
             System.out.println("Playing : " + this);
-            command.execute();
+            command.execute(command.getReceptor());
         }
     }
 

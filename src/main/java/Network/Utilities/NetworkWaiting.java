@@ -57,11 +57,7 @@ public class NetworkWaiting {
             switch (type) {
                 case Messages.JSON_TYPE_PLAY:
                     boolean goodPlay;
-                    if (playerId == game.getFirstPlayerId()) {
-                        goodPlay = game.player1Played(receivedMessage);
-                    } else {
-                        goodPlay = game.player2Played(receivedMessage);
-                    }
+                    goodPlay = game.playerSentMessage(playerId, receivedMessage);
 
                     // wait for new play
                     if (goodPlay) {

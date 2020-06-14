@@ -1,9 +1,8 @@
 package GameLogic.Receptors;
 
 import GameLogic.Board.Spot;
-import GameLogic.Commands.ConcreteCommand;
-import GameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
 import GameLogic.Commands.Macro;
+import GameLogic.Commands.PlayersAction.PlayersAction;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,8 +31,7 @@ public class Trap extends Receptor {
      * Triggers the trap on the given victim
      */
     public void trigger(Creature creature) {
-        setVictim(creature);
-        effect.execute();
+        effect.execute(creature);
         if (position != null)
             position.leave();
         position = null;
@@ -49,19 +47,12 @@ public class Trap extends Receptor {
         this.position = position;
     }
 
-    @Override
-    public void playTurn(int turn) {}
-
     public Spot getPosition() {
         return position;
     }
 
-    private void setVictim(Creature creature) {
-        for (ConcreteCommand c :
-                effect.getCommands()) {
-            ((OnLiveReceptors)c).setReceptors(new LiveReceptor[]{creature});
-        }
-    }
+    @Override
+    public void playTurn(int turn, PlayersAction action) {}
 
     @Override
     public JSONObject toJson() {

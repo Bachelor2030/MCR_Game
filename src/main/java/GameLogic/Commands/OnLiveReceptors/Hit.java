@@ -2,11 +2,10 @@ package GameLogic.Commands.OnLiveReceptors;
 
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.LiveReceptor;
-import Network.Utilities.JsonClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Hit extends OnLiveReceptors {
+public class Hit extends OnLiveReceptor {
     private int attackPoints;
 
     public Hit() {
@@ -18,21 +17,13 @@ public class Hit extends OnLiveReceptors {
     }
 
     @Override
-    public void execute() {
-        if (receptors == null)
-            return;
-
-        for (LiveReceptor receptor : receptors) {
-            if(receptor != null)
-                receptor.loseLifePoints(attackPoints);
-        }
+    public void execute(LiveReceptor liveReceptor) {
+        liveReceptor.loseLifePoints(attackPoints);
     }
 
     @Override
-    public void undo() {
-        for (LiveReceptor receptor : receptors) {
-            receptor.gainLifePoints(attackPoints);
-        }
+    public void undo(LiveReceptor liveReceptor) {
+        liveReceptor.gainLifePoints(attackPoints);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package GameLogic.Receptors;
 
+import GameLogic.Game;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
 import GameLogic.Commands.PlayersAction.PlayersAction;
 
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -36,13 +36,16 @@ public class Player extends Receptor {
             abandoned,      // True if the player abandons the game
             play;           // False when the player ends his/her turn
 
+    private Game game;
+
     /**
      * Creates a player with the given name and deck
      * @param name the name of the player
      * @param deck the dock of cards the player has
      */
-    public Player(String name, List<Card> deck) {
+    public Player(String name, List<Card> deck, Game game) {
         super(name);
+        this.game = game;
         actionPoints = 0;
         if(deck != null)
         {
@@ -206,10 +209,6 @@ public class Player extends Receptor {
         abandoned = false;
     }
 
-    public void endTurn() {
-        play = false;
-    }
-
     public void continueTurn() {
         play = true;
     }
@@ -234,10 +233,36 @@ public class Player extends Receptor {
         }
     }
 
+
+    public void endTurn() {
+        play = false;
+        for (Creature creature : creatures) {
+            creature.playTurn(currentTurn, null);
+            if (!creature.isAlive()) {
+                creatures.remove(creature);
+            }
+        }
+
+        System.out.println(name + " finished his/her turn.");
+    }
+
     @Override
-    public void playTurn(int turn) {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return  name.equals(player.name) &&
+                actionPoints == player.actionPoints &&
+                Objects.equals(deck, player.deck) &&
+                Objects.equals(hand, player.hand) &&
+                Objects.equals(discard, player.discard) &&
+                Objects.equals(chests, player.chests);
+    }
+
+    private void setTurn(int turn) {
         play = true;
         currentTurn = turn;
+
         // Takes a card if possible otherwise
         // one card of the deck is thrown away
         if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
@@ -260,32 +285,23 @@ public class Player extends Receptor {
         } else {
             actionPoints = NBR_ACTION_POINTS_MAX;
         }
-
-        while (play && !abandoned) {
-            System.out.println(name + " is playing...");
-            PlayersAction.askAction(this).execute();
-        }
-
-        for (Creature creature : creatures) {
-            creature.playTurn(turn);
-            if (!creature.isAlive()) {
-                creatures.remove(creature);
-            }
-        }
-
-        System.out.println(name + " finished his/her turn.");
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return  name.equals(player.name) &&
-                actionPoints == player.actionPoints &&
-                Objects.equals(deck, player.deck) &&
-                Objects.equals(hand, player.hand) &&
-                Objects.equals(discard, player.discard) &&
-                Objects.equals(chests, player.chests);
+    public void playTurn(int turn, PlayersAction action) {
+        if (currentTurn != turn) {
+            setTurn(turn);
+        }
+        action.execute(this);
+    }
+
+    @Override
+    public void undoLastMove() {
+
+    }
+
+    @Override
+    public void redoLastMove() {
+
     }
 }

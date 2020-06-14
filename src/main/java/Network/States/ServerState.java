@@ -1,5 +1,6 @@
 package Network.States;
 
+import GameLogic.Game;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
@@ -14,9 +15,11 @@ public class ServerState {
 
     private boolean finishedInit;
     private int playingNowId;
+    private final int playingFirstId;
     private int playerCount = 0;
+    private Game game;
 
-    public ServerState(int playingFirstId) {
+    public ServerState(int playingFirstId, Game game) {
         workerStates = new WorkerState[2];
         workerStates[0] = WorkerState.CONNECTING;
         workerStates[1] = WorkerState.CONNECTING;
@@ -37,6 +40,8 @@ public class ServerState {
 
         finishedInit = false;
         playingNowId = playingFirstId;
+        this.playingFirstId = playingFirstId;
+        this.game = game;
     }
 
     public synchronized boolean finishedInit() {
@@ -93,6 +98,9 @@ public class ServerState {
 
     public synchronized void nextPlayer() {
         playingNowId = playingNowId % 2 + 1;
+        if (playingNowId == playingFirstId) {
+            game.nextTurn();
+        }
     }
 
     public synchronized void incrementPlayerCount() {

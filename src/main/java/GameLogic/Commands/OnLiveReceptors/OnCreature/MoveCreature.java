@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public abstract class MoveCreature extends OnCreature {
-    protected Spot[]
+    protected Spot
             from,
             to;
 
@@ -15,19 +15,19 @@ public abstract class MoveCreature extends OnCreature {
         super(name);
     }
 
-    public Spot[] getFrom() {
+    public Spot getFrom() {
         return from;
     }
 
-    public Spot[] getTo() {
+    public Spot getTo() {
         return to;
     }
 
-    public void setFrom(Spot[] from) {
+    public void setFrom(Spot from) {
         this.from = from;
     }
 
-    public void setTo(Spot[] to) {
+    public void setTo(Spot to) {
         this.to = to;
     }
 
@@ -36,13 +36,11 @@ public abstract class MoveCreature extends OnCreature {
         JSONObject moveCreature = super.toJson();
         JSONArray positions = new JSONArray();
         try {
-            for (int i = 0; i < from.length; ++i) {
-                JSONObject position = new JSONObject();
-                position.put("positionFrom", from[i].toJson());
-                position.put("positionTo", to[i].toJson());
-                positions.put(position);
-            }
-            moveCreature.put("positions", positions);
+            JSONObject position = new JSONObject();
+            position.put("positionFrom", from.toJson());
+            position.put("positionTo", to.toJson());
+            positions.put(position);
+            moveCreature.put("position", positions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

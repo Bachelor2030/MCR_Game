@@ -43,7 +43,7 @@ public class ServerAdapter {
     public ServerAdapter(int port, int nbrLines, int lineLength) {
         this.port = port;
         this.game = new Game(this, nbrLines, lineLength);
-        serverState = new ServerState(game.getFirstPlayerId());
+        serverState = new ServerState(game.getFirstPlayerId(), game);
 
         try {
             allCards = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
@@ -104,7 +104,7 @@ public class ServerAdapter {
             List<Card> deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", allCards);
             List<Card> deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", allCards);
 
-            game.initGame(new Player(serverState.getPlayerName(1), deck1), new Player(serverState.getPlayerName(2), deck2));
+            game.initGame(new Player(serverState.getPlayerName(1), deck1, game), new Player(serverState.getPlayerName(2), deck2, game));
         }
 
         /**
@@ -153,11 +153,7 @@ public class ServerAdapter {
                                 }
 
                                 JSONObject init;
-                                if (playerId == game.getFirstPlayerId()) {
-                                    init = game.initStateP1();
-                                } else {
-                                    init = game.initStateP2();
-                                }
+                                init = game.initState(playerId);
                                 sendJson(init, outPrintWriter, servantClassName(playerId));
                                 break;
 

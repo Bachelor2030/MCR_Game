@@ -4,6 +4,7 @@ import GameLogic.Invocator.Card.Card;
 import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Receptors.Player;
+import GameLogic.Receptors.Receptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +22,26 @@ public abstract class CardMovement extends ConcreteCommand {
 
     protected void setCard(Card card) {
         this.card = card;
+    }
+
+    public abstract void execute(Player player);
+    public abstract void undo(Player player);
+
+    @Override
+    public Receptor getReceptor() {
+        return player;
+    }
+
+    @Override
+    public void execute(Receptor receptor) {
+        player = (Player) receptor;
+        execute((Player)receptor);
+    }
+
+    @Override
+    public void undo(Receptor receptor) {
+        player = (Player) receptor;
+        undo((Player)receptor);
     }
 
     @Override

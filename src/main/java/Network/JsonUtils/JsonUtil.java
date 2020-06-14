@@ -1,5 +1,7 @@
 package Network.JsonUtils;
 
+import GameLogic.Commands.PlayersAction.PlayersAction;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,4 +27,8 @@ public class JsonUtil {
         return sb.toString();
     }
 
+    public PlayersAction getPlayerAction(String receivedMessage) {
+        // TODO parse message to playerAction
+        return null;
+    }
 }

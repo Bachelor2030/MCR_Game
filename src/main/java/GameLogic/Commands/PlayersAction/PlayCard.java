@@ -2,6 +2,8 @@ package GameLogic.Commands.PlayersAction;
 
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Commands.CommandName;
+import GameLogic.Receptors.Player;
+import GameLogic.Receptors.Receptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,12 +30,12 @@ public class PlayCard extends PlayersAction {
     }
 
     @Override
-    public void execute() {
+    public void execute(Player player) {
         player.playCard(cardToPlay);
     }
 
     @Override
-    public void undo() {
+    public void undo(Player player) {
         player.undoCard(cardToPlay);
     }
 }

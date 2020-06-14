@@ -1,6 +1,7 @@
 package GameLogic.Commands.PlayersAction;
 
 import GameLogic.Commands.CommandName;
+import GameLogic.Receptors.Player;
 
 public class Abandon extends PlayersAction {
     public Abandon() {
@@ -8,12 +9,12 @@ public class Abandon extends PlayersAction {
     }
 
     @Override
-    public void execute() {
+    public void execute(Player player) {
         player.abandon();
     }
 
     @Override
-    public void undo() {
+    public void undo(Player player) {
         player.undoAbandon();
     }
 }

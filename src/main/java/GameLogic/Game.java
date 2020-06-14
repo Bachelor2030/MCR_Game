@@ -1,8 +1,11 @@
 package GameLogic;
 
 import GameLogic.Board.Board;
+import GameLogic.Commands.PlayersAction.PlayersAction;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Receptors.Player;
+import GameLogic.Receptors.Receptor;
+import Network.JsonUtils.JsonUtil;
 import Network.ServerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +14,7 @@ import org.json.JSONObject;
 /**
  * Cette classe permet de modéliser le jeu.
  */
-public class Game {
+public class Game extends Receptor {
     // TODO link to server
     private static final int
             NBR_CHESTS_TO_DESTROY = 2;
@@ -45,33 +48,8 @@ public class Game {
         }
     }
 
-    /**
-     * Permet de commencer le jeu.
-     */
-    public void startGame() {
-        while (!finished()) {
-            System.out.println("Turn " + (++turn));
-
-            //todo player1.sendyourturn
-            player1.playTurn(turn);
-
-            if(!finished()) {
-                //todo player2.sendyourturn
-                player2.playTurn(turn);
-            }
-        }
-    }
-
     public void nextTurn() {
         System.out.println("Turn " + (++turn));
-
-        //todo player1.sendyourturn
-        player1.playTurn(turn);
-
-        if(!finished()) {
-            //todo player2.sendyourturn
-            player2.playTurn(turn);
-        }
     }
 
     /**
@@ -110,42 +88,27 @@ public class Game {
         return turn;
     }
 
-    public JSONObject initStateP1() {
+
+    public JSONObject initState(int playerId) {
         JSONObject gameJSON = new JSONObject();
         try {
+            Player player = (playerId == firstPlayerId ? player1 : player2);
+
             gameJSON.put("type","init");
             JSONObject initJSON = new JSONObject();
             initJSON.put("lines", board.getNbLines());
             initJSON.put("linelength", board.getLine(0).getNbSpots());
-            initJSON.put("enemyname", player2.getName());
-            initJSON.put("turn", "Your turn");
 
-            JSONArray cardsJSON = new JSONArray();
-            for (Card card : player1.getHand()) {
-                cardsJSON.put(card.toJSON());
+            if (playerId == firstPlayerId) {
+                initJSON.put("enemyname", player2.getName());
+                initJSON.put("turn", "Your turn");
+            } else {
+                initJSON.put("enemyname", player1.getName());
+                initJSON.put("turn", "Wait turn");
             }
-            initJSON.put("cards", cardsJSON);
-
-            gameJSON.put("init", initJSON);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return gameJSON;
-    }
-
-    public JSONObject initStateP2() {
-        JSONObject gameJSON = new JSONObject();
-        try {
-            gameJSON.put("type","init");
-            JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNbLines());
-            initJSON.put("linelength", board.getLine(0).getNbSpots());
-            initJSON.put("ennemyname", player1.getName());
-            initJSON.put("turn", "Wait turn");
 
             JSONArray cardsJSON = new JSONArray();
-            for (Card card : player2.getHand()) {
+            for (Card card : player.getHand()) {
                 cardsJSON.put(card.toJSON());
             }
             initJSON.put("cards", cardsJSON);
@@ -162,13 +125,16 @@ public class Game {
         return firstPlayerId;
     }
 
-    public boolean player1Played(String receivedMessage) {
+    public boolean playerSentMessage(int playerId, String receivedMessage) {
         //TODO: If true, put json updates in serverAdapter.serverState.pushJsonToSend
+        Player player = (playerId == firstPlayerId ? player1 : player2);
+
+        PlayersAction action = new JsonUtil().getPlayerAction(receivedMessage);
+        player.playTurn(turn, action);
+
         return true;
     }
 
-    public boolean player2Played(String receivedMessage) {
-        //TODO: If true, put json updates in serverAdapter.serverState.pushJsonToSend
-        return true;
-    }
+    @Override
+    public void playTurn(int turn, PlayersAction action) {}
 }

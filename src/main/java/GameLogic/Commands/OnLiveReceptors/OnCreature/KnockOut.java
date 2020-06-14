@@ -9,18 +9,12 @@ public class KnockOut extends OnCreature {
     }
 
     @Override
-    public void execute() {
-        if (receptors == null)
-            return;
-        for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).knockOut();
+    public void execute(Creature creature) {
+        creature.knockOut();
     }
 
     @Override
-    public void undo() {
-        if (receptors == null)
-            return;
-        for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).wakeUp();
+    public void undo(Creature creature) {
+        creature.wakeUp();
     }
 }

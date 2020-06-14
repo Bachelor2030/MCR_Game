@@ -5,49 +5,38 @@ import GameLogic.Invocator.Card.Card;
 import GameLogic.Invocator.Card.CardType;
 import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Receptors.Receptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Scanner;
 
 public abstract class PlayersAction extends ConcreteCommand {
+    private Player player;
     // TODO : utiliser un servant worker plutôt qu'un player --> demander une action au bon client
-    protected Player player;
 
     public PlayersAction(CommandName name) {
         super(name);
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public abstract void execute(Player player);
+    public abstract void undo(Player player);
+
+    @Override
+    public Receptor getReceptor() {
+        return player;
     }
 
-    public static PlayersAction askAction(Player player) {
+    @Override
+    public void execute(Receptor receptor) {
+        player = (Player) receptor;
+        execute((Player)receptor);
+    }
 
-        Scanner in = new Scanner(System.in);
-        String action;
-
-        // Todo changer les system.in en lecture de JSON
-        do {
-            System.out.println(player.getName() + " what do you want to do ?");
-            action = in.nextLine();
-        } while (CommandName.getCommandName(action) == null) ;
-
-        PlayersAction playersAction = null;
-        if (CommandName.getCommandName(action).isPlayerAction()) {
-            playersAction = (PlayersAction) CommandName.getCommandName(action).getCommand();
-            playersAction.setPlayer(player);
-
-            if (playersAction.getName() == CommandName.PLAY_CARD) {
-                System.out.println("What card do you want to play ?");
-                //action = in.nextLine();
-                // TODO change the following line to the chosen card
-                ((PlayCard)playersAction).setCardToPlay(new Card(1, "1", CardType.SPELL, 1));
-            }
-        }
-
-
-        return playersAction;
+    @Override
+    public void undo(Receptor receptor) {
+        player = (Player) receptor;
+        undo((Player)receptor);
     }
 
     @Override

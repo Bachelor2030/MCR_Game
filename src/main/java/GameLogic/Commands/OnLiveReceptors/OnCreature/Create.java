@@ -2,35 +2,35 @@ package GameLogic.Commands.OnLiveReceptors.OnCreature;
 
 import GameLogic.Board.Spot;
 import GameLogic.Commands.CommandName;
+import GameLogic.Receptors.Creature;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Create extends OnCreature {
-    private Spot[] positions;
+    private Creature creature;
+    private Spot position;
 
     public Create(){
         super(CommandName.CREATE_CREATURE);
     }
 
-    public void setPositions(Spot[] positions) {
-        this.positions = positions;
+    public void setPosition(Spot positions) {
+        this.position = position;
+    }
+
+    public void setCreature(Creature creature) {
+        this.creature = creature;
     }
 
     @Override
-    public void execute() {
-        if (receptors == null)
-            return;
-        for (int i = 0; i < receptors.length; i++)
-            receptors[i].place(positions[i]);
+    public void execute(Creature creature) {
+        this.creature.place(position);
     }
 
     @Override
-    public void undo() {
-        if (receptors == null)
-            return;
-        for (int i = 0; i < receptors.length; i++)
-            receptors[i].place(null);
+    public void undo(Creature creature) {
+        this.creature.place(null);
     }
 
     @Override
@@ -38,16 +38,15 @@ public class Create extends OnCreature {
         JSONObject create = super.toJson();
         JSONArray jsonPositions = new JSONArray();
         try {
-
-            if (positions != null) {
-                for (int i = 0; i < positions.length; ++i) {
-                    jsonPositions.put(positions[i].toJson());
-                }
-                create.put("positions", jsonPositions);
-            }
+            jsonPositions.put(position.toJson());
+            create.put("position", jsonPositions);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return create;
+    }
+
+    public Creature getCreature() {
+        return creature;
     }
 }
