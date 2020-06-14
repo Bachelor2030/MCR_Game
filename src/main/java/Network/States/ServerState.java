@@ -10,8 +10,7 @@ public class ServerState {
     private String[] playerNames;
     private PlayState[] playStates;
     private LinkedList<JSONObject>[] jsonToSend;
-
-    private boolean moreJsonToSend = true;
+    private boolean[] intendToSendJson;
 
     private int playingNowId;
     private int playerCount = 0;
@@ -33,16 +32,34 @@ public class ServerState {
         jsonToSend[0] = new LinkedList<>();
         jsonToSend[1] = new LinkedList<>();
 
+        intendToSendJson = new boolean[2];
+
+
         playingNowId = playingFirstId;
+    }
+
+    public synchronized boolean intendToSendJson(int playerId) {
+        return intendToSendJson[workerId(playerId)];
+    }
+
+    public synchronized boolean jsonToSendEmpty(int playerId) {
+        return jsonToSend[workerId(playerId)].size() == 0;
+    }
+
+    public synchronized void pushJsonToSend(JSONObject json, int playerId) {
+        jsonToSend[workerId(playerId)].push(json);
+    }
+
+    public synchronized JSONObject popJsonToSend(int playerId) {
+        return jsonToSend[workerId(playerId)].pop();
     }
 
     public synchronized WorkerState getWorkerState(int playerId) {
         return workerStates[workerId(playerId)];
     }
 
-    public synchronized LinkedList<JSONObject> getJsonToSend(int playerId) {
-        //TODO: HERE HELP ME
-        return null;
+    public synchronized void setWorkerState(int playerId, WorkerState workerState) {
+        this.workerStates[workerId(playerId)] = workerState;
     }
 
     public synchronized void setPlayStates(int playerId, PlayState playState) {
@@ -51,10 +68,6 @@ public class ServerState {
 
     public synchronized PlayState getPlayStates(int playerId) {
         return playStates[workerId(playerId)];
-    }
-
-    public synchronized void setWorkerState(int playerId, WorkerState workerState) {
-        this.workerStates[workerId(playerId)] = workerState;
     }
 
     public synchronized int getPlayerCount() {

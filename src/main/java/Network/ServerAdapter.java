@@ -25,6 +25,7 @@ public class ServerAdapter {
 
     private int port;
 
+    
     ServerState serverState;
 
     /**
@@ -155,9 +156,14 @@ public class ServerAdapter {
                                 break;
 
                             case CLIENT_LISTENING:
-                                //TODO: HERE HELP ME
-                                //while (serverState.)
+                                while (serverState.intendToSendJson(playerId)) {
+                                    while(!serverState.jsonToSendEmpty(playerId)) {
+                                        JSONObject jsonObject = serverState.popJsonToSend(playerId);
+                                        sendJson(jsonObject, outPrintWriter, servantClassName(playerId));
+                                    }
+                                }
 
+                                // Wait for backend to signify it's next player's turn
                                 while (serverState.getPlayingId() != playerId) {}
 
                                 // TODO: Send "your turn" from logic class?
