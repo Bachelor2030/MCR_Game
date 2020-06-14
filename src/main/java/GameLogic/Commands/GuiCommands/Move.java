@@ -1,24 +1,24 @@
 package GameLogic.Commands.GuiCommands;
 
 import GUI.GameBoard;
+import GameLogic.Board.Spot;
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
-import GameLogic.Board.Position;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Move extends GuiCommand {
-    private Position from, to;
+    private Spot from, to;
 
     public Move() {
         super(CommandName.MOVE);
     }
 
-    public void setTo(Position to) {
+    public void setTo(Spot to) {
         this.to = to;
     }
 
-    public void setFrom(Position from) {
+    public void setFrom(Spot from) {
         this.from = from;
     }
 
@@ -41,11 +41,11 @@ public class Move extends GuiCommand {
         // Todo : execution on the GUI
         Creature creature = (Creature)gameBoard
                 .getGUIBoard()
-                .getLine(from.getLine().getNoLine())
-                .getSpot(from.getPosition())
+                .getLine(from.getLineNumber())
+                .getSpot(from.getSpotNumber())
                 .getOccupant();
-        gameBoard.place(new Creature("empty", 0, 0,0), from.getLine().getNoLine(), from.getPosition());
-        gameBoard.place(creature, to.getLine().getNoLine(), to.getPosition());
+        gameBoard.place(new Creature("empty", 0, 0,0), from.getLineNumber(), from.getSpotNumber());
+        gameBoard.place(creature, to.getLineNumber(), to.getSpotNumber());
     }
 
     @Override
@@ -53,10 +53,10 @@ public class Move extends GuiCommand {
         // Todo : undo on the GUI
         Creature creature = (Creature)gameBoard
                 .getGUIBoard()
-                .getLine(to.getLine().getNoLine())
-                .getSpot(to.getPosition())
+                .getLine(to.getLineNumber())
+                .getSpot(to.getSpotNumber())
                 .getOccupant();
-        gameBoard.place(new Creature("empty", 0, 0,0), to.getLine().getNoLine(), to.getPosition());
-        gameBoard.place(creature, from.getLine().getNoLine(), from.getPosition());
+        gameBoard.place(new Creature("empty", 0, 0,0), to.getLineNumber(), to.getSpotNumber());
+        gameBoard.place(creature, from.getLineNumber(), from.getSpotNumber());
     }
 }

@@ -1,5 +1,6 @@
 package GameLogic.Commands;
 
+import GameLogic.Receptors.Receptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,4 +47,5 @@ public abstract class ConcreteCommand implements Command {
     public int hashCode() {
         return Objects.hash(name);
     }
+
 }

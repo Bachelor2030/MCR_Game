@@ -2,13 +2,17 @@ package GameLogic.Board;
 
 import GameLogic.Receptors.Receptor;
 import GameLogic.Receptors.Trap;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Spot {
     private int spotNumber;
+    private Line line;
     private Receptor occupant;
 
-    public Spot(int spotNumber) {
+    public Spot(Line line, int spotNumber) {
         this.spotNumber = spotNumber;
+        this.line = line;
     }
 
     public boolean isEmpty() {
@@ -37,4 +41,34 @@ public class Spot {
         this.occupant = null;
     }
 
+    public JSONObject toJson() {
+        JSONObject position = new JSONObject();
+        try {
+            position.put("line", getLineNumber());
+            position.put("spot", spotNumber);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return position;
+    }
+
+    public int getLineNumber() {
+        return line.getLineNumber();
+    }
+
+    public int getSpotNumber() {
+        return spotNumber;
+    }
+
+    public Spot next() {
+        if (spotNumber + 1 < line.getNbSpots())
+            return line.getSpot(spotNumber + 1);
+        return null;
+    }
+
+    public Spot previous() {
+        if (spotNumber - 1 > 0)
+            return line.getSpot(spotNumber - 1);
+        return null;
+    }
 }

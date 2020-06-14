@@ -1,8 +1,8 @@
 package GameLogic.Commands.OnLiveReceptors.OnCreature;
 
+import GameLogic.Board.Spot;
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
-import GameLogic.Board.Position;
 
 public class Advance extends MoveCreature {
     public Advance() {
@@ -14,8 +14,8 @@ public class Advance extends MoveCreature {
         if (receptors == null)
             return;
 
-        from = new Position[receptors.length];
-        to   = new Position[receptors.length];
+        from = new Spot[receptors.length];
+        to   = new Spot[receptors.length];
         for (int i = 0; i < receptors.length; i++) {
             from[i] = receptors[i].getPosition();
             ((Creature) receptors[i]).advance();
@@ -28,8 +28,8 @@ public class Advance extends MoveCreature {
         if (receptors == null)
             return;
 
-        from = new Position[receptors.length];
-        to   = new Position[receptors.length];
+        from = new Spot[receptors.length];
+        to   = new Spot[receptors.length];
         for (int i = 0; i < receptors.length; i++) {
             from[i] = receptors[i].getPosition();
             ((Creature) receptors[i]).retreat(((Creature) receptors[i]).getSteps());

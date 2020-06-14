@@ -1,5 +1,7 @@
 package GameLogic.Board;
 
+import javafx.geometry.Pos;
+
 import java.util.LinkedList;
 
 public class Board {
@@ -19,5 +21,17 @@ public class Board {
         for(int line = 0; line < NB_LINES; ++line) {
             lines.add(new Line(line, nbr_spots));
         }
+    }
+
+    public Line getLine(int index) {
+        return lines.get(index);
+    }
+
+    public int getNbLines() {
+        return lines.size();
+    }
+
+    public Spot getPosition(int line, int spot) {
+        return lines.get(line).getSpot(spot);
     }
 }

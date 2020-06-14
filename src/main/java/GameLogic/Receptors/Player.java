@@ -18,9 +18,9 @@ public class Player extends Receptor {
     private static final int NBR_ACTION_POINTS_MAX = 15;
 
     // Players deck of cards
-    private Deque<Card> deck = new ArrayDeque<>(NBR_CARDS_PER_DECK);
+    private ArrayList<Card> deck = new ArrayList<>(NBR_CARDS_PER_DECK);
     // Players hand (cards he/she can play in the current turn)
-    private Deque<Card> hand = new ArrayDeque<>(NBR_CARDS_MAX_IN_HAND);
+    private ArrayList<Card> hand = new ArrayList<>(NBR_CARDS_MAX_IN_HAND);
 
     // Historic of the player
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
@@ -68,7 +68,7 @@ public class Player extends Receptor {
         play = true;
         currentTurn = 0;
         for (int i = 0; i < NBR_INIT_CARDS; ++i) {
-            hand.add(deck.remove());
+            hand.add(deck.remove(deck.size()-1));
         }
 
         for (int i = 0; i < NBR_CHESTS; ++i) {
@@ -76,7 +76,7 @@ public class Player extends Receptor {
         }
     }
 
-    public Deque<Card> getHand() {
+    public ArrayList<Card> getHand() {
         return hand;
     }
 
@@ -160,7 +160,7 @@ public class Player extends Receptor {
      * @param card the card to add to the players deck
      */
     public void addToTopDeck(Card card) {
-        deck.addFirst(card);
+        deck.add(0, card);
     }
 
     /**
@@ -168,7 +168,7 @@ public class Player extends Receptor {
      * @return the card that went from the players deck to his/her hand
      */
     public Card drawCard() {
-        Card card = deck.removeFirst();
+        Card card = deck.remove(0);
         hand.add(card);
         return card;
     }
@@ -186,7 +186,7 @@ public class Player extends Receptor {
      * @param card the card to add in the deck at a random position
      */
     public void addToDeck(Card card) {
-        deck.addLast(card);
+        deck.add(deck.size()-1, card);
         ArrayList<Card> d = new ArrayList<>();
         d.addAll(deck);
         Collections.shuffle(d);
@@ -241,10 +241,10 @@ public class Player extends Receptor {
         // Takes a card if possible otherwise
         // one card of the deck is thrown away
         if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
-            hand.add(deck.remove());
+            hand.add(deck.remove(deck.size()-1));
         } else {
             if(!deck.isEmpty()) {
-                deck.remove();
+                deck.remove(deck.size()-1);
             } else {
                 System.out.println("Chests to lose a life : ");
                 for (Chest chest : chests) {

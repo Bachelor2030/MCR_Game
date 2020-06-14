@@ -1,15 +1,17 @@
 package GameLogic.Commands.GuiCommands;
 
 import GUI.GameBoard;
+import GameLogic.Board.Spot;
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.LiveReceptor;
-import GameLogic.Board.Position;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.swing.text.Position;
+
 public class ChangePoints extends GuiCommand {
-    private Position position;
+    private Spot position;
     private int newPointValue;
     private int oldPointValue;
     private char pointsType;
@@ -18,7 +20,7 @@ public class ChangePoints extends GuiCommand {
         super(CommandName.CHANGE_POINTS);
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Spot position) {
         this.position = position;
     }
 
@@ -63,8 +65,8 @@ public class ChangePoints extends GuiCommand {
     public void execute(GameBoard gameBoard) {
         LiveReceptor receptor = (LiveReceptor)gameBoard
                 .getGUIBoard()
-                .getLine(position.getLine().getLineNumber())
-                .getSpot(position.getPosition())
+                .getLine(position.getLineNumber())
+                .getSpot(position.getSpotNumber())
                 .getOccupant();
 
         switch (pointsType) {
@@ -91,8 +93,8 @@ public class ChangePoints extends GuiCommand {
     public void undo(GameBoard gameBoard) {
         LiveReceptor receptor = (LiveReceptor)gameBoard
                 .getGUIBoard()
-                .getLine(position.getLine().getLineNumber())
-                .getSpot(position.getPosition())
+                .getLine(position.getLineNumber())
+                .getSpot(position.getSpotNumber())
                 .getOccupant();
 
         switch (pointsType) {

@@ -10,7 +10,7 @@ public class Line {
         this.lineNumber = lineNumber;
         spots = new LinkedList<>();
         for (int i = 0; i < nbr_spots; i++) {
-            spots.add(new Spot(i));
+            spots.add(new Spot(this, i));
         }
     }
 
