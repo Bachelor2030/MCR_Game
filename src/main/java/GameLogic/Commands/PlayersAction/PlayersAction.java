@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public abstract class PlayersAction extends ConcreteCommand {
     private Player player;
-    // TODO : utiliser un servant worker plutôt qu'un player --> demander une action au bon client
 
     public PlayersAction(CommandName name) {
         super(name);

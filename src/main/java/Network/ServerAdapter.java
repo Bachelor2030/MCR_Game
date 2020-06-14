@@ -64,6 +64,10 @@ public class ServerAdapter {
         new Thread(new ReceptionistWorker()).start();
     }
 
+    public ServerState getServerState() {
+        return serverState;
+    }
+
     /**
      * This inner class implements the behavior of the "receptionist", whose
      * responsibility is to listen for incoming connection requests. As soon as a
@@ -145,7 +149,6 @@ public class ServerAdapter {
                             case INIT:
                                 // Wait for game to finish init, parsing, etc...
                                 while (!serverState.finishedInit()) {}
-
                                 if (playerId == serverState.getPlayingId()) {
                                     serverState.setWorkerState(playerId, WorkerState.SERVER_LISTENING);
                                 } else {

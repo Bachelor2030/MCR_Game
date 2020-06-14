@@ -37,8 +37,12 @@ public abstract class MoveCreature extends OnCreature {
         JSONArray positions = new JSONArray();
         try {
             JSONObject position = new JSONObject();
-            position.put("positionFrom", from.toJson());
-            position.put("positionTo", to.toJson());
+            if(from != null) {
+                position.put("positionFrom", from.toJson());
+            }
+            if(to != null) {
+                position.put("positionTo", to.toJson());
+            }
             positions.put(position);
             moveCreature.put("position", positions);
         } catch (JSONException e) {

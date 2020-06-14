@@ -1,5 +1,8 @@
 package GameLogic.Receptors;
 
+import GameLogic.Commands.CommandName;
+import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Commands.CreateTrap;
 import GameLogic.Game;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
@@ -70,6 +73,18 @@ public class Player extends Receptor {
         abandoned = false;
         play = true;
         currentTurn = 0;
+
+        for (Card card : deck) {
+            for (ConcreteCommand command : card.getCommand().getCommands()) {
+                if (command.getClass() == CreateTrap.class) {
+                    ((CreateTrap)command).setPlayer(this);
+                }
+                if (command.getName() == CommandName.CREATE_CREATURE) {
+                    ((Create)command).getCreature().setOwner(this);
+                }
+            }
+        }
+
         for (int i = 0; i < NBR_INIT_CARDS; ++i) {
             hand.add(deck.remove(deck.size()-1));
         }
@@ -293,15 +308,5 @@ public class Player extends Receptor {
             setTurn(turn);
         }
         action.execute(this);
-    }
-
-    @Override
-    public void undoLastMove() {
-
-    }
-
-    @Override
-    public void redoLastMove() {
-
     }
 }

@@ -7,6 +7,8 @@ import GameLogic.Receptors.Player;
 import GameLogic.Receptors.Receptor;
 import Network.JsonUtils.JsonUtil;
 import Network.ServerAdapter;
+import Network.States.ServerState;
+import javafx.concurrent.WorkerStateEvent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,17 +17,16 @@ import org.json.JSONObject;
  * Cette classe permet de modéliser le jeu.
  */
 public class Game extends Receptor {
-    // TODO link to server
     private static final int
             NBR_CHESTS_TO_DESTROY = 2;
     private Player
             player1,
             player2;
     private int
-            turn;
+            turn,
+            firstPlayerId;
     private Board board;
     private ServerAdapter serverAdapter;
-    private int firstPlayerId;
 
     public Game(ServerAdapter serverAdapter, int nbr_lines, int nbr_spots) {
         this.serverAdapter = serverAdapter;
@@ -46,6 +47,7 @@ public class Game extends Receptor {
             this.player1 = player2;
             this.player2 = player1;
         }
+        serverAdapter.getServerState().setFinishedInit();
     }
 
     public void nextTurn() {

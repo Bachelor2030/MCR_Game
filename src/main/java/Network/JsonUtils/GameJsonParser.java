@@ -47,23 +47,9 @@ public class GameJsonParser {
         Player p1 = new Player(player1, cardsPlayer1, game);
         Player p2 = new Player(player2, cardsPlayer2, game);
 
-        setOwner(cardsPlayer1, p1);
-        setOwner(cardsPlayer2, p2);
         game.initGame(p1, p2);
 
         return game;
     }
 
-    private void setOwner(ArrayList<Card> cards, Player player) {
-        for (Card card : cards) {
-            for (ConcreteCommand command : card.getCommand().getCommands()) {
-                if (command.getClass() == CreateTrap.class) {
-                    ((CreateTrap)command).setPlayer(player);
-                }
-                if (command.getName() == CommandName.CREATE_CREATURE) {
-                    ((Create)command).getCreatures().setOwner(player);
-                }
-            }
-        }
-    }
 }

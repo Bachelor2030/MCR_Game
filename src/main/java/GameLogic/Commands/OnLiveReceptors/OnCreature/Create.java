@@ -38,8 +38,10 @@ public class Create extends OnCreature {
         JSONObject create = super.toJson();
         JSONArray jsonPositions = new JSONArray();
         try {
-            jsonPositions.put(position.toJson());
-            create.put("position", jsonPositions);
+            if(position != null) {
+                jsonPositions.put(position.toJson());
+                create.put("position", jsonPositions);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
