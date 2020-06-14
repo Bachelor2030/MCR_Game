@@ -137,7 +137,8 @@ public class Creature extends LiveReceptor {
         try {
             creature.put("steps", steps);
             creature.put("attackpoints", attackPoints);
-            creature.put("cardid", originCard.getID());
+            if(originCard != null)
+                creature.put("cardid", originCard.getID());
         } catch (JSONException e) {
             e.printStackTrace();
         }

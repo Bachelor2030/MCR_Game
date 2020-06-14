@@ -45,7 +45,7 @@ public abstract class Receptor {
             imageView.setFitWidth(image.getWidth() * 0.2);
             imageView.setFitHeight(image.getHeight() * 0.2);
         } catch (Exception e) {
-            System.out.println(e);
+            //System.out.println(e);
         }
     }
 

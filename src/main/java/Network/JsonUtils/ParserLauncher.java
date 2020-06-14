@@ -22,7 +22,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ParserLauncher {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         String file = "src/main/resources/json/game.json";
 
         Game game = parseJsonGame(file, 5, 10);

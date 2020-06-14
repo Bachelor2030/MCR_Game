@@ -3,6 +3,7 @@ package GameLogic;
 import GameLogic.Board.Board;
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Receptors.Player;
+import Network.ServerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
  * Cette classe permet de modéliser le jeu.
  */
 public class Game {
+    // TODO link to server
     private static final int
             NBR_CHESTS_TO_DESTROY = 2;
     private Player
