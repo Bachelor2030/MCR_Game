@@ -13,7 +13,7 @@ public class Retreat extends MoveCreature {
         if (receptors == null)
             return;
         for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).retreat(((Creature)receptors[0]).getSteps());
+            ((Creature)receptors[i]).retreat(((Creature)receptors[i]).getSteps());
     }
 
     @Override

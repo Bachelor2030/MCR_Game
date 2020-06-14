@@ -1,13 +1,13 @@
 package GameLogic.Commands.OnLiveReceptors.OnCreature;
 
+import GameLogic.Board.Spot;
 import GameLogic.Commands.CommandName;
-import GameLogic.Board.Position;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public abstract class MoveCreature extends OnCreature {
-    protected Position[]
+    protected Spot[]
             from,
             to;
 
@@ -15,19 +15,19 @@ public abstract class MoveCreature extends OnCreature {
         super(name);
     }
 
-    public Position[] getFrom() {
+    public Spot[] getFrom() {
         return from;
     }
 
-    public Position[] getTo() {
+    public Spot[] getTo() {
         return to;
     }
 
-    public void setFrom(Position[] from) {
+    public void setFrom(Spot[] from) {
         this.from = from;
     }
 
-    public void setTo(Position[] to) {
+    public void setTo(Spot[] to) {
         this.to = to;
     }
 

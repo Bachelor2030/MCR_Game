@@ -12,7 +12,10 @@ public class Kill extends OnLiveReceptors {
 
     @Override
     public void execute() {
+        int i = 0;
+        lifePoints = new int[receptors.length];
         for (LiveReceptor receptor : receptors) {
+            lifePoints[i++] = receptor.getLifePoints();
             receptor.loseLifePoints(receptor.getLifePoints());
         }
     }
