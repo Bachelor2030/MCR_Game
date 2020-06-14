@@ -1,4 +1,4 @@
-package GUI.Maths;
+package gui.Maths;
 
 public class Matrix {
 

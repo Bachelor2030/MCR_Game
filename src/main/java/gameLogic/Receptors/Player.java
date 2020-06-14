@@ -1,8 +1,8 @@
-package GameLogic.Receptors;
+package gameLogic.Receptors;
 
-import GameLogic.Invocator.Card.Card;
-import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
-import GameLogic.Commands.PlayersAction.PlayersAction;
+import gameLogic.Invocator.Card.Card;
+import gameLogic.Commands.OnLiveReceptors.OnCreature.Create;
+import gameLogic.Commands.PlayersAction.PlayersAction;
 
 import java.io.FileNotFoundException;
 import java.util.*;

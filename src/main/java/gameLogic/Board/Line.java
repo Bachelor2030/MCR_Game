@@ -1,4 +1,4 @@
-package GameLogic.Board;
+package gameLogic.Board;
 
 import java.util.LinkedList;
 

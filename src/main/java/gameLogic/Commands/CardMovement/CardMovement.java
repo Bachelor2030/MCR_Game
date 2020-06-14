@@ -1,9 +1,9 @@
-package GameLogic.Commands.CardMovement;
+package gameLogic.Commands.CardMovement;
 
-import GameLogic.Invocator.Card.Card;
-import GameLogic.Commands.CommandName;
-import GameLogic.Commands.ConcreteCommand;
-import GameLogic.Receptors.Player;
+import gameLogic.Invocator.Card.Card;
+import gameLogic.Commands.CommandName;
+import gameLogic.Commands.ConcreteCommand;
+import gameLogic.Receptors.Player;
 import org.json.JSONException;
 import org.json.JSONObject;
 

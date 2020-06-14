@@ -1,4 +1,4 @@
-package Network.Utilities;
+package network.Utilities;
 
 public abstract class Info {
     private static final String receptionistClassName = "Receptionist";

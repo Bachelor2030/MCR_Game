@@ -1,6 +1,6 @@
-package GameLogic.Commands.PlayersAction;
+package gameLogic.Commands.PlayersAction;
 
-import GameLogic.Commands.CommandName;
+import gameLogic.Commands.CommandName;
 
 public class Abandon extends PlayersAction {
     public Abandon() {

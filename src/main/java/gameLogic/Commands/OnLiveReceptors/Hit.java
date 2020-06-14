@@ -1,8 +1,7 @@
-package GameLogic.Commands.OnLiveReceptors;
+package gameLogic.Commands.OnLiveReceptors;
 
-import GameLogic.Commands.CommandName;
-import GameLogic.Receptors.LiveReceptor;
-import Network.Utilities.JsonClient;
+import gameLogic.Commands.CommandName;
+import gameLogic.Receptors.LiveReceptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 

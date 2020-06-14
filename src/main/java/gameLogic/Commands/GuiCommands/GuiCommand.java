@@ -1,8 +1,8 @@
-package GameLogic.Commands.GuiCommands;
+package gameLogic.Commands.GuiCommands;
 
-import GUI.GameBoard;
-import GameLogic.Commands.CommandName;
-import GameLogic.Commands.ConcreteCommand;
+import gui.GameBoard;
+import gameLogic.Commands.CommandName;
+import gameLogic.Commands.ConcreteCommand;
 import org.json.JSONException;
 import org.json.JSONObject;
 

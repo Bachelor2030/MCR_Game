@@ -1,8 +1,8 @@
-package GameLogic.Commands.CardMovement;
+package gameLogic.Commands.CardMovement;
 
-import GameLogic.Invocator.Card.Card;
-import GameLogic.Invocator.Card.CardType;
-import GameLogic.Commands.CommandName;
+import gameLogic.Invocator.Card.Card;
+import gameLogic.Invocator.Card.CardType;
+import gameLogic.Commands.CommandName;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package Network;
+package network;
 
 public class ServerLauncher {
     public static void main(String[] args) {

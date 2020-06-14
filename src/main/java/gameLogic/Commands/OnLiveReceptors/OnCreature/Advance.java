@@ -1,8 +1,8 @@
-package GameLogic.Commands.OnLiveReceptors.OnCreature;
+package gameLogic.Commands.OnLiveReceptors.OnCreature;
 
-import GameLogic.Board.Spot;
-import GameLogic.Receptors.Creature;
-import GameLogic.Commands.CommandName;
+import gameLogic.Board.Spot;
+import gameLogic.Receptors.Creature;
+import gameLogic.Commands.CommandName;
 
 public class Advance extends MoveCreature {
     public Advance() {

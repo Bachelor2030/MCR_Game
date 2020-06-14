@@ -1,17 +1,16 @@
-package GUI;
+package gui.buttons;
 
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 public class GameButton {
-    private Button button;
+  private Button button;
 
-    public GameButton(String name, String styleClass){
-        button = new Button(name);
-        button.getStyleClass().add(styleClass);
-    }
+  public GameButton(String name, String styleClass) {
+    button = new Button(name);
+    button.getStyleClass().add(styleClass);
+  }
 
-    public Button getButton() {
-        return button;
-    }
+  public Button getButton() {
+    return button;
+  }
 }

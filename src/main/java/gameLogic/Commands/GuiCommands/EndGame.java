@@ -1,7 +1,7 @@
-package GameLogic.Commands.GuiCommands;
+package gameLogic.Commands.GuiCommands;
 
-import GUI.GameBoard;
-import GameLogic.Commands.CommandName;
+import gui.GameBoard;
+import gameLogic.Commands.CommandName;
 
 public class EndGame extends GuiCommand {
     private char playerState;

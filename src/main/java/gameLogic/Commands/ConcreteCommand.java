@@ -1,6 +1,5 @@
-package GameLogic.Commands;
+package gameLogic.Commands;
 
-import GameLogic.Receptors.Receptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 

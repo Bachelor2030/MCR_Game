@@ -1,12 +1,12 @@
-package Network.Utilities;
+package network.Utilities;
 
-import Network.Messages;
+import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.PrintWriter;
 
-import static Network.Utilities.Info.printMessage;
+import static network.Utilities.Info.printMessage;
 
 public abstract class JsonServer {
 

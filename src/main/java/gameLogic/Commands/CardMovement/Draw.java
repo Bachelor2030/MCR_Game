@@ -1,6 +1,6 @@
-package GameLogic.Commands.CardMovement;
+package gameLogic.Commands.CardMovement;
 
-import GameLogic.Commands.CommandName;
+import gameLogic.Commands.CommandName;
 
 public class Draw extends CardMovement {
     public Draw() {

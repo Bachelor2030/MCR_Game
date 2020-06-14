@@ -1,9 +1,9 @@
-package GUI.Board;
+package gui.board;
 
-import GameLogic.Receptors.Chest;
-import GameLogic.Receptors.Creature;
-import GameLogic.Receptors.Player;
-import GameLogic.Receptors.Receptor;
+import gameLogic.Receptors.Chest;
+import gameLogic.Receptors.Creature;
+import gameLogic.Receptors.Player;
+import gameLogic.Receptors.Receptor;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;

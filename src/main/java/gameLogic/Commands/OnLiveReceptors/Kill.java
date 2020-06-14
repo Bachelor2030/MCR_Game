@@ -1,7 +1,7 @@
-package GameLogic.Commands.OnLiveReceptors;
+package gameLogic.Commands.OnLiveReceptors;
 
-import GameLogic.Commands.CommandName;
-import GameLogic.Receptors.LiveReceptor;
+import gameLogic.Commands.CommandName;
+import gameLogic.Receptors.LiveReceptor;
 
 public class Kill extends OnLiveReceptors {
     private int[] lifePoints;

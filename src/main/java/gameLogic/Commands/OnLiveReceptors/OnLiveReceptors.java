@@ -1,13 +1,11 @@
-package GameLogic.Commands.OnLiveReceptors;
+package gameLogic.Commands.OnLiveReceptors;
 
-import GameLogic.Receptors.Creature;
-import GameLogic.Commands.CommandName;
-import GameLogic.Commands.OnLiveReceptors.OnCreature.ChangeMovementsPoints;
-import GameLogic.Commands.OnLiveReceptors.OnCreature.MoveCreature;
-import GameLogic.Commands.ConcreteCommand;
-import GameLogic.Commands.OnLiveReceptors.OnCreature.ChangeAttackPoints;
-import GameLogic.Receptors.LiveReceptor;
-import GameLogic.Receptors.Receptor;
+import gameLogic.Receptors.Creature;
+import gameLogic.Commands.CommandName;
+import gameLogic.Commands.OnLiveReceptors.OnCreature.ChangeMovementsPoints;
+import gameLogic.Commands.ConcreteCommand;
+import gameLogic.Commands.OnLiveReceptors.OnCreature.ChangeAttackPoints;
+import gameLogic.Receptors.LiveReceptor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

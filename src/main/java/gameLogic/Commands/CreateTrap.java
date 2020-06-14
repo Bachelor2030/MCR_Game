@@ -1,8 +1,8 @@
-package GameLogic.Commands;
+package gameLogic.Commands;
 
-import GameLogic.Receptors.Player;
-import GameLogic.Board.Spot;
-import GameLogic.Receptors.Trap;
+import gameLogic.Receptors.Player;
+import gameLogic.Board.Spot;
+import gameLogic.Receptors.Trap;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -1,8 +1,8 @@
-package GameLogic.Commands.OnLiveReceptors.OnCreature;
+package gameLogic.Commands.OnLiveReceptors.OnCreature;
 
-import GameLogic.Receptors.Creature;
-import GameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
-import GameLogic.Commands.CommandName;
+import gameLogic.Receptors.Creature;
+import gameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
+import gameLogic.Commands.CommandName;
 
 public abstract class OnCreature extends OnLiveReceptors {
     public OnCreature(CommandName name) {

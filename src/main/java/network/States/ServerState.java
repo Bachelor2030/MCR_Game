@@ -1,4 +1,4 @@
-package Network.States;
+package network.States;
 
 import org.json.JSONObject;
 

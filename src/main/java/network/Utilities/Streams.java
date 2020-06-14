@@ -1,11 +1,11 @@
-package Network.Utilities;
+package network.Utilities;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import static Network.Utilities.Info.printMessage;
+import static network.Utilities.Info.printMessage;
 
 
 public abstract class Streams {

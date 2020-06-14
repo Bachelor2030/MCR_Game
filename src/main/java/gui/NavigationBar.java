@@ -1,8 +1,9 @@
-package GUI;
+package gui;
 
+import gui.buttons.GameButton;
+import gui.buttons.UtilButton;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.HBox;
@@ -13,7 +14,7 @@ import javafx.stage.StageStyle;
 
 import java.util.LinkedList;
 
-import static GUI.GameBoard.WIDTH_WINDOW;
+import static gui.GameBoard.WIDTH_WINDOW;
 
 public class NavigationBar {
     //les boutons à rajouter.

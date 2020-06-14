@@ -1,7 +1,7 @@
-package GameLogic.Board;
+package gameLogic.Board;
 
-import GameLogic.Receptors.Receptor;
-import GameLogic.Receptors.Trap;
+import gameLogic.Receptors.Receptor;
+import gameLogic.Receptors.Trap;
 import org.json.JSONException;
 import org.json.JSONObject;
 

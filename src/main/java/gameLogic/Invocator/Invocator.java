@@ -1,7 +1,7 @@
-package GameLogic.Invocator;
+package gameLogic.Invocator;
 
 
-import GameLogic.Commands.Macro;
+import gameLogic.Commands.Macro;
 
 public interface Invocator {
     void setCommand(Macro command);

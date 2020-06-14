@@ -1,4 +1,4 @@
-package GameLogic.Invocator.Card;
+package gameLogic.Invocator.Card;
 
 /**
  * All the types of card that exist in the game

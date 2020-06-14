@@ -1,33 +1,32 @@
-package GUI;
+package gui;
 
-import GUI.Board.GUIBoard;
-import GameLogic.Commands.GuiCommands.EndGame;
-import GameLogic.Commands.PlayersAction.EndTurn;
-import GameLogic.Invocator.Card.Card;
-import GameLogic.Receptors.Player;
-import GameLogic.Receptors.Receptor;
+import gui.board.GUIBoard;
+import gui.buttons.GameButton;
+import gui.gameWindows.CharacterWindow;
+import gui.gameWindows.InGameWindow;
+import gui.gameWindows.InstructionWindow;
+import gui.gameWindows.ParameterWindow;
+import gameLogic.Commands.GuiCommands.EndGame;
+import gameLogic.Commands.PlayersAction.EndTurn;
+import gameLogic.Invocator.Card.Card;
+import gameLogic.Receptors.Player;
+import gameLogic.Receptors.Receptor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 
@@ -35,6 +34,7 @@ import java.util.LinkedList;
 
 /** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
+
   // ******************************************************************
   // ATTRIBUTS DE LA CLASSE
   // ******************************************************************
@@ -46,19 +46,12 @@ public class GameBoard extends Application {
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
   private GridPane gridIslandsPanel;
 
-  // Affiche les actions joueurs par le player 1
-  private ListView<String> actionPlayer1Labels;
-  private Label deleteActionLabelP1;
-
-  // Affiche les actions joueurs par le player 1
-  private ListView<String> actionPlayer2Labels;
-  private Label deleteActionLabelP2;
-
   private static boolean isGaming;
 
   private BorderPane racine;
 
   private Player player1, player2;
+  private String imgPathPlayer;
   private LinkedList<Card> deck1, deck2;
   private String namePlayer1, namePlayer2, IpPlayer1, IpPlayer2, portPlayer1, portPlayer2;
 
@@ -66,7 +59,9 @@ public class GameBoard extends Application {
 
   private Stage currentStage;
 
-  /** Thread principal du GUI. Gère l'affichage général de la "scene". */
+  /**
+   * Thread principal du GUI. Gère l'affichage général de la "scene".
+   */
   @Override
   public void start(Stage stage) throws Exception {
     currentStage = stage;
@@ -158,25 +153,29 @@ public class GameBoard extends Application {
 
     // INSTRUCTIONS BUTTON
     GameButton instructionButton = new GameButton("Instructions", "bouton-menu-principal");
-    instructionButton.getButton().setOnAction(
-        actionEvent -> {
-          try {
-            displayInstructions();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
+    instructionButton
+        .getButton()
+        .setOnAction(
+            actionEvent -> {
+              try {
+                displayInstructions();
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
 
     // NEW GAME BUTTON
     GameButton newGameButton = new GameButton("Nouvelle partie", "bouton-menu-principal");
-    newGameButton.getButton().setOnAction(
-        actionEvent -> {
-          try {
-            displaySettingsMenu();
-          } catch (UnknownHostException e) {
-            e.printStackTrace();
-          }
-        });
+    newGameButton
+        .getButton()
+        .setOnAction(
+            actionEvent -> {
+              try {
+                displaySettingsMenu();
+              } catch (UnknownHostException e) {
+                e.printStackTrace();
+              }
+            });
 
     buttons.getChildren().addAll(instructionButton.getButton(), newGameButton.getButton());
     buttons.setSpacing(25);
@@ -203,144 +202,69 @@ public class GameBoard extends Application {
 
   /** PAGE DU MENU DE SETTINGS (nom player, adresse IP, port) */
   private void displaySettingsMenu() throws UnknownHostException {
-    racine.setRight(null);
-    racine.setLeft(null);
-    racine.setTop(null);
-    racine.setBottom(null);
 
-    // ------------------------------------------------------------------
-    // BARRE DE NAVIGATION DE LA PAGE SETTING MENU
-    // ------------------------------------------------------------------
+    ParameterWindow parameterWindow =
+            new ParameterWindow(racine, defineHeader(true), currentStage, isGaming);
 
-    HBox barreNavigation = defineHeader(true);
-
-    // ------------------------------------------------------------------
-    // CORPS DE LA PAGE MENU SETTINGS
-    // ------------------------------------------------------------------
-    VBox bodyParameters =
-        new VBox(10); // contient les éléments de la page et les affiche verticalement.
-    bodyParameters.getStyleClass().add("parameters-body");
-
-    bodyParameters.prefWidthProperty().bind(currentStage.widthProperty().multiply(0.80));
-
-    // Titre : Settings
-    Label settingsTitle = new Label("Settings");
-    settingsTitle.getStyleClass().add("instructions-title");
-
-    // Nom du joueur (Bouffon n°1 si pas changé :D)
-    Label playerName = new Label("Nom");
-    playerName.getStyleClass().add("parameters-label");
-
-    TextField playerNameField = new TextField();
-    playerNameField.setText("Bouffon n°1");
-    playerNameField.getStyleClass().add("parameters-field");
-
-    // Adresse IP du joueur
-    Label playerIP = new Label("Adresse IP");
-    playerIP.getStyleClass().add("parameters-label");
-
-    TextField playerIpField = new TextField();
-    playerIpField.setText(
-        String.valueOf(InetAddress.getLoopbackAddress())); // récupère l'adresse IP
-    playerIpField.getStyleClass().add("parameters-field");
-
-    // Port du joueur
-    Label playerPort = new Label("Port");
-    playerPort.getStyleClass().add("parameters-label");
-
-    TextField playerPortField = new TextField();
-    playerPortField.setText("8080"); // récupère l'adresse IP
-    playerPortField.getStyleClass().add("parameters-field");
 
     // On crée un bouton qui va permettre de valider les paramètres et créer une nouvelle partie.
-    Button validateParameters = new Button("Valider");
-    validateParameters.getStyleClass().add("header-button");
-    validateParameters.setOnAction(
-        event -> {
-          isGaming = true;
-          try {
-            // TODO : check que les bonnes données soient rentrées ?
-            // On initialise les données
-            namePlayer1 = playerNameField.getText();
-            IpPlayer1 = playerIpField.getText();
-            portPlayer1 = playerPortField.getText();
+    GameButton validateParameters = new GameButton("Valider", "header-button");
+    validateParameters.getButton().setOnAction(
+            event -> {
+              isGaming = false;
+              try {
+                // TODO : check que les bonnes données soient rentrées ?
+                // On initialise les données
+                namePlayer1 = parameterWindow.getPlayerNameField().getText();
+                IpPlayer1 = parameterWindow.getPlayerIpField().getText();
+                portPlayer1 = parameterWindow.getPlayerPortField().getText();
 
-            // On passe à la fenêtre d'attente d'adversaire
-            // TODO : remplacer par fenêtre de chargement d'adversaire.
-            inGame(racine);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
+                // On passe à la fenêtre de choix de character
+                chooseCharacter();
 
-    bodyParameters
-        .getChildren()
-        .addAll(
-            settingsTitle,
-            playerName,
-            playerNameField,
-            playerIP,
-            playerIpField,
-            playerPort,
-            playerPortField,
-            validateParameters);
-    bodyParameters.setAlignment(Pos.CENTER);
-    bodyParameters.setSpacing(50); // espace entre les éléments
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
 
-    // ------------------------------------------------------------------
-    // REGLAGES RACINE
-    // ------------------------------------------------------------------
-    racine.setTop(barreNavigation);
-    racine.setCenter(bodyParameters);
+    parameterWindow.addGameButton(validateParameters);
+    racine.setCenter(parameterWindow.getBody());
   }
 
-  /** Permet de choisir le personnage qui représentera le player. */
-  private void chooseCharacter() {
-
-    HBox barreNavigation = defineHeader(true);
-
-    // ------------------------------------------------------------------
-    // CORPS DE LA PAGE MENU SETTINGS
-    // ------------------------------------------------------------------
-    VBox bodyParameters =
-        new VBox(10); // contient les éléments de la page et les affiche verticalement.
-    bodyParameters.getStyleClass().add("parameters-body");
-
-    bodyParameters.prefWidthProperty().bind(currentStage.widthProperty().multiply(0.80));
+  /**
+   * Permet de choisir le personnage qui représentera le player.
+   */
+  //TODO refactor
+  private void chooseCharacter() throws FileNotFoundException {
+    CharacterWindow characterWindow =
+            new CharacterWindow(racine, defineHeader(true), currentStage, WIDTH_WINDOW, player1);
 
     // On crée un bouton qui va permettre de valider les paramètres et créer une nouvelle partie.
-    Button validateImageCharacter = new Button("Choisir");
-    validateImageCharacter.getStyleClass().add("header-button");
-    validateImageCharacter.setOnAction(
-        event -> {
-          isGaming = true;
-          try {
+    GameButton validateImageCharacter = new GameButton("Choisir", "header-button");
+    validateImageCharacter
+        .getButton()
+        .setOnAction(
+            event -> {
+              isGaming = true;
+              try {
+                // on récupère la sélection du joueur
+                imgPathPlayer = characterWindow.defineSelectedUrl();
 
-            // On passe à la fenêtre d'attente d'adversaire
-            // TODO : remplacer par fenêtre de chargement d'adversaire.
-            inGame(racine);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
+                // On passe à la fenêtre d'attente d'adversaire
+                // TODO : remplacer par fenêtre de chargement d'adversaire.
+                inGame(racine);
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
 
-    bodyParameters.getChildren().addAll(validateImageCharacter);
-    bodyParameters.setAlignment(Pos.CENTER);
-    bodyParameters.setSpacing(50); // espace entre les éléments
-
-    // ------------------------------------------------------------------
-    // REGLAGES RACINE
-    // ------------------------------------------------------------------
-    racine.setTop(barreNavigation);
-    racine.setCenter(bodyParameters);
+    characterWindow.getCorps().getChildren().add(validateImageCharacter.getButton());
+    racine.setCenter(characterWindow.getCorps());
   }
+
+
 
   private HBox defineHeader(boolean isReturnMenu) {
-    racine.setRight(null);
-    racine.setLeft(null);
-    racine.setTop(null);
-    racine.setBottom(null);
-
     LinkedList<GameButton> buttons = new LinkedList<>();
 
     if (isReturnMenu) {
@@ -358,40 +282,38 @@ public class GameBoard extends Application {
               });
 
       buttons.add(returnToMenu);
-    }
-    else if(isGaming)
-    {
+    } else if (isGaming) {
       // valide le tour
       GameButton validateTourButton = new GameButton("Valider tour", "header-button");
       // On définit le bouton validerTour
       validateTourButton
-              .getButton()
-              .setOnAction(
-                      actionEvent -> {
-                        // blablabla définir ce que fait le bouton "valider tour" ici.
-                        EndTurn endTurn = new EndTurn();
-                        endTurn.setPlayer(player1);
+          .getButton()
+          .setOnAction(
+              actionEvent -> {
+                // blablabla définir ce que fait le bouton "valider tour" ici.
+                EndTurn endTurn = new EndTurn();
+                endTurn.setPlayer(player1);
 
-                        // TODO send this to backend
-                        System.out.println(endTurn.toJson());
+                // TODO send this to backend
+                System.out.println(endTurn.toJson());
 
-                        System.out.println("you hit the validate button...");
-                      });
+                System.out.println("you hit the validate button...");
+              });
 
       // abandonne la partie
       GameButton abandonTourButton = new GameButton("Abandonner", "header-button");
       abandonTourButton
-              .getButton()
-              .setOnAction(
-                      actionEvent -> {
-                        // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
-                        EndGame endGame = new EndGame();
-                        endGame.setPlayerName(player1.getName());
-                        endGame.setPlayerState('L');
+          .getButton()
+          .setOnAction(
+              actionEvent -> {
+                // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
+                EndGame endGame = new EndGame();
+                endGame.setPlayerName(player1.getName());
+                endGame.setPlayerState('L');
 
-                        // TODO send this to backend
-                        System.out.println(endGame.toJson());
-                      });
+                // TODO send this to backend
+                System.out.println(endGame.toJson());
+              });
 
       buttons.add(validateTourButton);
       buttons.add(abandonTourButton);
@@ -409,54 +331,8 @@ public class GameBoard extends Application {
    * @throws IOException
    */
   private void displayInstructions() throws IOException {
-    racine.setRight(null);
-    racine.setLeft(null);
-    racine.setTop(null);
-    racine.setBottom(null);
-
-    // ------------------------------------------------------------------
-    // BARRE DE NAVIGATION DE LA PAGE INSTRUCTIONS
-    // ------------------------------------------------------------------
-
-    // On créé une boxe horizontale qui définira l'espace "navigation".
-    HBox barreNavigation = defineHeader(true);
-
-    // ------------------------------------------------------------------
-    // CORPS DE LA PAGE INSTRUCTIONS
-    // ------------------------------------------------------------------
-    Label instructionsTitle = new Label("Instructions");
-    instructionsTitle.getStyleClass().add("instructions-title");
-    VBox corpsInstruction = new VBox();
-    corpsInstruction.getStyleClass().add("instructions-body");
-
-    String line, fullText = "";
-    try (BufferedReader reader =
-        new BufferedReader(new FileReader(new File("src/main/resources/utils/instructions.txt")))) {
-
-      while ((line = reader.readLine()) != null) fullText += line;
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    Text gameInstructions = new Text(fullText);
-    gameInstructions.getStyleClass().add("instructions-text");
-    gameInstructions.setWrappingWidth(900);
-
-    VBox textBox = new VBox();
-    textBox.setAlignment(Pos.CENTER);
-    textBox.getChildren().add(gameInstructions);
-
-    corpsInstruction.getChildren().addAll(instructionsTitle, textBox);
-    corpsInstruction.setAlignment(Pos.CENTER);
-    corpsInstruction.setSpacing(50);
-
-    // ------------------------------------------------------------------
-    // REGLAGES RACINE
-    // ------------------------------------------------------------------
-
-    racine.setTop(barreNavigation);
-    racine.setCenter(corpsInstruction);
+    InstructionWindow instructionWindow =
+            new InstructionWindow(racine, defineHeader(true), isGaming, currentStage);
   }
 
   /**
@@ -465,117 +341,10 @@ public class GameBoard extends Application {
    * @param racine : le borderpane sur lequel est affiché la page
    * @throws IOException
    */
-  private void inGame(BorderPane racine) throws IOException {
-
+  public void inGame(BorderPane racine) throws IOException {
     isGaming = true;
-
-    // On crée une barre de navigation dans le BorderPane
-    racine.setTop(defineHeader(false));
-
-    // On met en place le corps du texte
-    racine.setCenter(displayInGameField());
-
-    // On créé l'espace d'infos du joueur 1
-    racine.setLeft(getPlayerInformations(actionPlayer1Labels));
-
-    // On créé l'espace d'infos du joueur 1
-    racine.setRight(getPlayerInformations(actionPlayer2Labels));
-
-    // On crée un footer dans le BorderPane
-    racine.setBottom(footerBar());
-  }
-
-  /** @return les informations du player 1 (gauche) */
-  private VBox getPlayerInformations(ListView actionPlayerLabel) {
-    VBox informationPannelUser = new VBox();
-
-    // On l'affiche
-    informationPannelUser.getStyleClass().add("menuLabelsGauche-vbox");
-
-    // On créé le titre "Actions"
-    Label informationPannelUserTitle = new Label("Joueur 1");
-
-    // On le stylise grâce à la feuille CSS
-    informationPannelUserTitle.getStyleClass().add("titre-label");
-
-    // On l'affiche
-    informationPannelUser.getChildren().add(informationPannelUserTitle);
-
-    // On initialise la liste d'actions liées au tour du joueur
-    actionPlayerLabel = new ListView();
-    actionPlayerLabel.getStyleClass().add("actionPlayer");
-
-    // On fait en sorte qu'ils soient cliquables
-    actionPlayerLabel.setCellFactory(TextFieldListCell.forListView());
-    actionPlayerLabel.setEditable(true);
-
-    informationPannelUser.getChildren().add(actionPlayerLabel);
-    return informationPannelUser;
-  }
-
-  /**
-   * Affiche le terrain où se déplace les créatures.
-   *
-   * @return le gridPane sur lequel se déplace les créatures.
-   * @throws IOException
-   */
-  private GridPane displayInGameField() throws IOException {
-    VBox corpsInstruction = new VBox(); // contient les lignes du board.
-    corpsInstruction.getStyleClass().add("instructions-body");
-    gridIslandsPanel = new GridPane(); // représente le board du jeu.
-    gridIslandsPanel.getStyleClass().add("corps-gridPane");
-    VBox vbox = new VBox(); // contient une créature et un emplacement.
-
-    /*
-    int numRows = 5;
-    for(int i = 0;i < numRows; i++)
-    {
-      RowConstraints rc = new RowConstraints();
-      rc.setPercentHeight(100 / numRows);
-      gridIslandsPanel.getRowConstraints().add(rc);
-    }
-    */
-
-    // Répertoire contenant nos îles
-    GUIBoard = new GUIBoard(gridIslandsPanel, vbox, player1, player2);
-    gridIslandsPanel.setAlignment(Pos.CENTER);
-    return gridIslandsPanel;
-  }
-
-  /**
-   * Footer Il s'agit de la fonction initialisant tout ce qui est inhérent au footer. Dans ce
-   * footer, nous affichons les cartes du joueur.
-   *
-   * @return le footer
-   */
-  private HBox footerBar() throws FileNotFoundException {
-
-    // On définit une boxe horizontale qui définira l'espace "footer" -> cartes du joueur
-    HBox footerCardsPlayer = new HBox();
-    footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
-    footerCardsPlayer.getStyleClass().add("footer-header-hbox");
-
-    // À REFACTORER SA MERE DANS UNE AUTRE CLASSE -----------
-    for (int i = 0; i < 5; i++) {
-      FileInputStream imagePath =
-          new FileInputStream("src/main/resources/design/images/cards/cardSample.png");
-      Image image = new Image(imagePath);
-      ImageView imageView = new ImageView(image);
-      imageView.setFitWidth(image.getWidth() * 0.7);
-      imageView.setFitHeight(image.getHeight() * 0.7);
-      // -------------------------------------
-      footerCardsPlayer.getChildren().add(imageView);
-      footerCardsPlayer.getStyleClass().add("corps-gridPane");
-    }
-
-    return footerCardsPlayer;
-  }
-
-  public void setPlayer1(Player player1) {
-    this.player1 = player1;
-  }
-
-  public void setPlayer2(Player player2) {
-    this.player2 = player2;
+    InGameWindow inGameWindow =
+            new InGameWindow(racine,defineHeader(false),
+                    gridIslandsPanel, GUIBoard, player1, player2, isGaming, currentStage);
   }
 }

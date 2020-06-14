@@ -1,10 +1,10 @@
-package Network.JsonUtils;
+package network.JsonUtils;
 
-import GameLogic.Board.Board;
-import GameLogic.Commands.GuiCommands.*;
-import GameLogic.Commands.CommandName;
-import GameLogic.Commands.ConcreteCommand;
-import GameLogic.Commands.Macro;
+import gameLogic.Board.Board;
+import gameLogic.Commands.GuiCommands.*;
+import gameLogic.Commands.CommandName;
+import gameLogic.Commands.ConcreteCommand;
+import gameLogic.Commands.Macro;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

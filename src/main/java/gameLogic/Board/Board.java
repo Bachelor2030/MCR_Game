@@ -1,6 +1,4 @@
-package GameLogic.Board;
-
-import javafx.geometry.Pos;
+package gameLogic.Board;
 
 import java.util.LinkedList;
 

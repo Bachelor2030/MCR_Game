@@ -1,7 +1,7 @@
-package Network.Utilities;
+package network.Utilities;
 
-import Network.States.ClientState;
-import Network.Messages;
+import network.States.ClientState;
+import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,8 +9,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static Network.Utilities.Info.clientClassName;
-import static Network.Utilities.Info.printMessage;
+import static network.Utilities.Info.clientClassName;
+import static network.Utilities.Info.printMessage;
 
 public class JsonClient {
 

@@ -1,10 +1,10 @@
-package GameLogic.Commands.GuiCommands;
+package gameLogic.Commands.GuiCommands;
 
-import GUI.GameBoard;
-import GameLogic.Board.Spot;
-import GameLogic.Receptors.Creature;
-import GameLogic.Commands.CommandName;
-import GameLogic.Receptors.Receptor;
+import gui.GameBoard;
+import gameLogic.Board.Spot;
+import gameLogic.Receptors.Creature;
+import gameLogic.Commands.CommandName;
+import gameLogic.Receptors.Receptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 

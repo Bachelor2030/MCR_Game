@@ -1,4 +1,4 @@
-package Network.States;
+package network.States;
 
 public enum ClientState {
     CLIENT_LISTENING,

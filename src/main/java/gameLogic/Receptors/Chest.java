@@ -1,4 +1,4 @@
-package GameLogic.Receptors;
+package gameLogic.Receptors;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

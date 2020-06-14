@@ -1,12 +1,7 @@
-package GameLogic.Invocator.Card;
+package gameLogic.Invocator.Card;
 
-import GameLogic.Commands.ConcreteCommand;
-import GameLogic.Commands.Macro;
-import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
-import GameLogic.Invocator.Invocator;
-import GameLogic.Receptors.Creature;
-import GameLogic.Receptors.Trap;
-import org.json.JSONArray;
+import gameLogic.Commands.Macro;
+import gameLogic.Invocator.Invocator;
 import org.json.JSONException;
 import org.json.JSONObject;
 

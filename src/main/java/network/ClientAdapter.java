@@ -1,7 +1,7 @@
-package Network;
+package network;
 
-import Network.States.ClientState;
-import Network.Utilities.Info;
+import network.States.ClientState;
+import network.Utilities.Info;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,9 +14,9 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-import static Network.Utilities.Info.clientClassName;
-import static Network.Utilities.Info.printMessage;
-import static Network.Utilities.JsonClient.*;
+import static network.Utilities.Info.clientClassName;
+import static network.Utilities.Info.printMessage;
+import static network.Utilities.JsonClient.*;
 
 public class ClientAdapter {
 

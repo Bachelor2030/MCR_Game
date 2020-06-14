@@ -1,6 +1,6 @@
-package GameLogic.Receptors;
+package gameLogic.Receptors;
 
-import GameLogic.Invocator.Card.Card;
+import gameLogic.Invocator.Card.Card;
 import org.json.JSONException;
 import org.json.JSONObject;
 

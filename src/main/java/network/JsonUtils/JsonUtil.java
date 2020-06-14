@@ -1,4 +1,4 @@
-package Network.JsonUtils;
+package network.JsonUtils;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

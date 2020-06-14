@@ -1,7 +1,7 @@
-package GameLogic.Commands.PlayersAction;
+package gameLogic.Commands.PlayersAction;
 
-import GameLogic.Invocator.Card.Card;
-import GameLogic.Commands.CommandName;
+import gameLogic.Invocator.Card.Card;
+import gameLogic.Commands.CommandName;
 
 public class Undo extends PlayersAction {
     public Undo() {

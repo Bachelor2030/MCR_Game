@@ -1,4 +1,4 @@
-package GameLogic.Commands;
+package gameLogic.Commands;
 
 public interface Command {
     void execute();

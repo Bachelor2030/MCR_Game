@@ -1,18 +1,18 @@
-package Network.Utilities;
+package network.Utilities;
 
-import Network.Messages;
-import Network.States.PlayState;
-import Network.States.ServerState;
-import Network.States.WorkerState;
+import network.Messages;
+import network.States.PlayState;
+import network.States.ServerState;
+import network.States.WorkerState;
 import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static Network.Utilities.Info.*;
-import static Network.Utilities.JsonServer.*;
-import static Network.Utilities.JsonServer.sendJsonType;
+import static network.Utilities.Info.*;
+import static network.Utilities.JsonServer.*;
+import static network.Utilities.JsonServer.sendJsonType;
 
 public class NetworkWaiting {
 

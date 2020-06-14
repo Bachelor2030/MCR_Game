@@ -1,7 +1,7 @@
-package GameLogic.Commands.OnLiveReceptors.OnCreature;
+package gameLogic.Commands.OnLiveReceptors.OnCreature;
 
-import GameLogic.Board.Spot;
-import GameLogic.Commands.CommandName;
+import gameLogic.Board.Spot;
+import gameLogic.Commands.CommandName;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

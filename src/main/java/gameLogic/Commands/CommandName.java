@@ -1,17 +1,17 @@
-package GameLogic.Commands;
+package gameLogic.Commands;
 
-import GameLogic.Commands.GuiCommands.*;
-import GameLogic.Commands.CardMovement.Discard;
-import GameLogic.Commands.CardMovement.Draw;
-import GameLogic.Commands.CardMovement.DrawTypeFromDiscard;
-import GameLogic.Commands.PlayersAction.Abandon;
-import GameLogic.Commands.PlayersAction.EndTurn;
-import GameLogic.Commands.PlayersAction.PlayCard;
-import GameLogic.Commands.PlayersAction.Undo;
-import GameLogic.Commands.OnLiveReceptors.Heal;
-import GameLogic.Commands.OnLiveReceptors.Hit;
-import GameLogic.Commands.OnLiveReceptors.Kill;
-import GameLogic.Commands.OnLiveReceptors.OnCreature.*;
+import gameLogic.Commands.GuiCommands.*;
+import gameLogic.Commands.CardMovement.Discard;
+import gameLogic.Commands.CardMovement.Draw;
+import gameLogic.Commands.CardMovement.DrawTypeFromDiscard;
+import gameLogic.Commands.PlayersAction.Abandon;
+import gameLogic.Commands.PlayersAction.EndTurn;
+import gameLogic.Commands.PlayersAction.PlayCard;
+import gameLogic.Commands.PlayersAction.Undo;
+import gameLogic.Commands.OnLiveReceptors.Heal;
+import gameLogic.Commands.OnLiveReceptors.Hit;
+import gameLogic.Commands.OnLiveReceptors.Kill;
+import gameLogic.Commands.OnLiveReceptors.OnCreature.*;
 
 public enum CommandName {
     /* GUI */

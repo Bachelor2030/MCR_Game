@@ -1,9 +1,9 @@
-package GameLogic.Receptors;
+package gameLogic.Receptors;
 
-import GameLogic.Board.Spot;
-import GameLogic.Commands.ConcreteCommand;
-import GameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
-import GameLogic.Commands.Macro;
+import gameLogic.Board.Spot;
+import gameLogic.Commands.ConcreteCommand;
+import gameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
+import gameLogic.Commands.Macro;
 import org.json.JSONException;
 import org.json.JSONObject;
 

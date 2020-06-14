@@ -1,7 +1,7 @@
-package Network;
+package network;
 
-import Network.States.ServerState;
-import Network.States.WorkerState;
+import network.States.ServerState;
+import network.States.WorkerState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,13 +12,13 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static Network.Utilities.Info.*;
-import static Network.Utilities.JsonServer.sendJson;
-import static Network.Utilities.JsonServer.sendJsonType;
-import static Network.Utilities.NetworkWaiting.awaitClientHandshake;
-import static Network.Utilities.NetworkWaiting.awaitClientMessage;
-import static Network.Utilities.Streams.cleanupResources;
-import static Network.States.WorkerState.INIT;
+import static network.Utilities.Info.*;
+import static network.Utilities.JsonServer.sendJson;
+import static network.Utilities.JsonServer.sendJsonType;
+import static network.Utilities.NetworkWaiting.awaitClientHandshake;
+import static network.Utilities.NetworkWaiting.awaitClientMessage;
+import static network.Utilities.Streams.cleanupResources;
+import static network.States.WorkerState.INIT;
 
 
 public class ServerAdapter {

@@ -1,10 +1,10 @@
-package GameLogic.Commands.PlayersAction;
+package gameLogic.Commands.PlayersAction;
 
-import GameLogic.Receptors.Player;
-import GameLogic.Invocator.Card.Card;
-import GameLogic.Invocator.Card.CardType;
-import GameLogic.Commands.CommandName;
-import GameLogic.Commands.ConcreteCommand;
+import gameLogic.Receptors.Player;
+import gameLogic.Invocator.Card.Card;
+import gameLogic.Invocator.Card.CardType;
+import gameLogic.Commands.CommandName;
+import gameLogic.Commands.ConcreteCommand;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -1,14 +1,12 @@
-package GameLogic.Commands.GuiCommands;
+package gameLogic.Commands.GuiCommands;
 
-import GUI.GameBoard;
-import GameLogic.Board.Spot;
-import GameLogic.Receptors.Creature;
-import GameLogic.Commands.CommandName;
-import GameLogic.Receptors.LiveReceptor;
+import gui.GameBoard;
+import gameLogic.Board.Spot;
+import gameLogic.Receptors.Creature;
+import gameLogic.Commands.CommandName;
+import gameLogic.Receptors.LiveReceptor;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import javax.swing.text.Position;
 
 public class ChangePoints extends GuiCommand {
     private Spot position;

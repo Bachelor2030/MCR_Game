@@ -1,7 +1,7 @@
-package GameLogic.Commands.OnLiveReceptors.OnCreature;
+package gameLogic.Commands.OnLiveReceptors.OnCreature;
 
-import GameLogic.Receptors.Creature;
-import GameLogic.Commands.CommandName;
+import gameLogic.Receptors.Creature;
+import gameLogic.Commands.CommandName;
 
 public class Retreat extends MoveCreature {
     public Retreat() {

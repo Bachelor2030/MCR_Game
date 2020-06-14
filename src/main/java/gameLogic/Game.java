@@ -1,8 +1,8 @@
-package GameLogic;
+package gameLogic;
 
-import GameLogic.Board.Board;
-import GameLogic.Invocator.Card.Card;
-import GameLogic.Receptors.Player;
+import gameLogic.Board.Board;
+import gameLogic.Invocator.Card.Card;
+import gameLogic.Receptors.Player;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
