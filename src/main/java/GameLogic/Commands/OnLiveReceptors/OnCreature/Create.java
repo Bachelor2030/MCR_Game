@@ -1,19 +1,19 @@
 package GameLogic.Commands.OnLiveReceptors.OnCreature;
 
+import GameLogic.Board.Spot;
 import GameLogic.Commands.CommandName;
-import GameLogic.Board.Position;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Create extends OnCreature {
-    private Position[] positions;
+    private Spot[] positions;
 
     public Create(){
         super(CommandName.CREATE_CREATURE);
     }
 
-    public void setPositions(Position[] positions) {
+    public void setPositions(Spot[] positions) {
         this.positions = positions;
     }
 
@@ -38,11 +38,13 @@ public class Create extends OnCreature {
         JSONObject create = super.toJson();
         JSONArray jsonPositions = new JSONArray();
         try {
-            if(positions != null)
+
+            if (positions != null) {
                 for (int i = 0; i < positions.length; ++i) {
                     jsonPositions.put(positions[i].toJson());
                 }
-            create.put("positions", jsonPositions);
+                create.put("positions", jsonPositions);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

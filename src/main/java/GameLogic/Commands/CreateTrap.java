@@ -1,14 +1,14 @@
 package GameLogic.Commands;
 
 import GameLogic.Receptors.Player;
-import GameLogic.Board.Position;
+import GameLogic.Board.Spot;
 import GameLogic.Receptors.Trap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CreateTrap extends ConcreteCommand {
     private Player player;
-    private Position position;
+    private Spot position;
     private Trap trap;
 
     public CreateTrap(Trap trap){
@@ -20,7 +20,7 @@ public class CreateTrap extends ConcreteCommand {
         super(CommandName.CREATE_TRAP);
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Spot position) {
         this.position = position;
     }
 

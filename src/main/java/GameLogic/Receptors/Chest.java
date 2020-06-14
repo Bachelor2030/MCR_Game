@@ -23,6 +23,7 @@ public class Chest extends LiveReceptor {
      */
     public Chest(String name, Player owner) {
         super(name, CHEST_LIFE_POINTS, "Chest");
+        super.setOwner(owner);
         //TODO initDisplayChest();
     }
 

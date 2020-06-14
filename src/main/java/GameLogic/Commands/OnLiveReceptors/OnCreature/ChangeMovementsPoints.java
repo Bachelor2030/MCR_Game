@@ -7,26 +7,25 @@ import org.json.JSONObject;
 
 public class ChangeMovementsPoints extends OnCreature {
     private int newMP;
-    private int oldMP;
+    private int[] oldMP;
 
     public ChangeMovementsPoints() {
         super(CommandName.CHANGE_MP);
     }
 
-    public void setNewMP(int newMP) {
-        this.newMP = newMP;
+    public void setMovementsPoints(int mp) {
+        newMP = mp;
     }
 
     @Override
     public void execute() {
         if (receptors == null)
             return;
-        for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).setMovementsPoints(newMP);
-    }
-
-    public void setMovementsPoints(int mp) {
-        oldMP = mp;
+        oldMP = new int[receptors.length];
+        for (int i = 0; i < receptors.length; i++) {
+            oldMP[i] = ((Creature) receptors[i]).getSteps();
+            ((Creature) receptors[i]).setAttackPoints(newMP);
+        }
     }
 
     @Override
@@ -34,7 +33,7 @@ public class ChangeMovementsPoints extends OnCreature {
         if (receptors == null)
             return;
         for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).wakeUp();
+            ((Creature) receptors[i]).setMovementsPoints(oldMP[i]);
     }
 
     @Override

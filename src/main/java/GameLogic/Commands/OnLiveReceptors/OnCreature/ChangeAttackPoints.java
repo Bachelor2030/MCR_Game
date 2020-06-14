@@ -7,22 +7,25 @@ import org.json.JSONObject;
 
 public class ChangeAttackPoints extends OnCreature {
     private int newAP;
-    private int oldAP;
+    private int[] oldAP;
 
     public ChangeAttackPoints() {
         super(CommandName.CHANGE_AP);
     }
 
-    public void setNewAP(int newAP) {
-        this.newAP = newAP;
+    public void setAttackPoints(int ap) {
+        newAP = ap;
     }
 
     @Override
     public void execute() {
         if (receptors == null)
             return;
-        for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).setAttackPoints(newAP);
+        oldAP = new int[receptors.length];
+        for (int i = 0; i < receptors.length; i++) {
+            oldAP[i] = ((Creature) receptors[i]).getAttackPoints();
+            ((Creature) receptors[i]).setAttackPoints(newAP);
+        }
     }
 
     @Override
@@ -30,11 +33,7 @@ public class ChangeAttackPoints extends OnCreature {
         if (receptors == null)
             return;
         for (int i = 0; i < receptors.length; i++)
-            ((Creature)receptors[i]).wakeUp();
-    }
-
-    public void setAttackPoints(int ap) {
-        oldAP = ap;
+            ((Creature) receptors[i]).setAttackPoints(oldAP[i]);
     }
 
     @Override

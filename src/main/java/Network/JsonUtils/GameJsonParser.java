@@ -1,6 +1,7 @@
 package Network.JsonUtils;
 
 import GameLogic.Board.Board;
+import GameLogic.Commands.CreateTrap;
 import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Player;
 import GameLogic.Invocator.Card.Card;
@@ -17,16 +18,18 @@ import java.util.ArrayList;
 public class GameJsonParser {
     private final String path;
     private final ArrayList<Card> allCards;
-    private final Board board;
+    private final int nbr_lines, nbr_spots;
 
-    public GameJsonParser(ArrayList<Card> allCards, String path, Board board) {
+    public GameJsonParser(ArrayList<Card> allCards, String path, int nbr_lines, int nbr_spots) {
         this.allCards = allCards;
         this.path = path;
-        this.board = board;
+        this.nbr_lines = nbr_lines;
+        this.nbr_spots = nbr_spots;
     }
 
     public Game parseJson(String json) throws JSONException, FileNotFoundException {
         JSONObject obj = new JSONObject(json);
+        Game game = new Game(nbr_lines, nbr_spots);
 
         String player1 = obj.getJSONObject("playerNames").getString("player1");
         String player2 = obj.getJSONObject("playerNames").getString("player2");
@@ -46,13 +49,17 @@ public class GameJsonParser {
 
         setOwner(cardsPlayer1, p1);
         setOwner(cardsPlayer2, p2);
+        game.initGame(p1, p2);
 
-        return new Game(p1, p2, board);
+        return game;
     }
 
     private void setOwner(ArrayList<Card> cards, Player player) {
         for (Card card : cards) {
             for (ConcreteCommand command : card.getCommand().getCommands()) {
+                if (command.getClass() == CreateTrap.class) {
+                    ((CreateTrap)command).setPlayer(player);
+                }
                 if (command.getName() == CommandName.CREATE_CREATURE) {
                     for (Creature c : ((Create)command).getCreatures()) {
                         c.setOwner(player);
