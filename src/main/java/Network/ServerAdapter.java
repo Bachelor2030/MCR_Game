@@ -1,18 +1,22 @@
 package Network;
 
 import GameLogic.Game;
+import GameLogic.Invocator.Card.Card;
+import GameLogic.Receptors.Player;
+import Network.JsonUtils.CardJsonParser;
+import Network.JsonUtils.JsonUtil;
 import Network.States.ServerState;
 import Network.States.WorkerState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
+import static Network.JsonUtils.ParserLauncher.parseJsonCards;
 import static Network.Utilities.Info.*;
 import static Network.Utilities.JsonServer.sendJson;
 import static Network.Utilities.JsonServer.sendJsonType;
@@ -24,21 +28,28 @@ import static Network.States.WorkerState.INIT;
 
 public class ServerAdapter {
 
+    private final String jsonPath = "src/main/resources/json/";
+
     private int port;
-
-    
+    ArrayList<Card> allCards;
+    Game game;
     ServerState serverState;
-
-    // TODO private Game game;
 
     /**
      * Constructor
      *
      * @param port the port to listen on
      */
-    public ServerAdapter(int port, int playingFirstId) {
+    public ServerAdapter(int port, int nbrLines, int lineLength) {
         this.port = port;
-        serverState = new ServerState(playingFirstId);
+        this.game = new Game(this, nbrLines, lineLength);
+        serverState = new ServerState(game.getFirstPlayerId());
+
+        try {
+            allCards = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -84,7 +95,16 @@ public class ServerAdapter {
                 }
             }
             printMessage(receptionistClassName(), "Two players have connected to the server. Stop listening for new connexions.");
-            //Todo game = new Game();
+
+
+            // Wait for player names to have been set
+            while (!serverState.playerNamesSet()) {}
+
+            CardJsonParser cardJsonParser = new CardJsonParser();
+            List<Card> deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", allCards);
+            List<Card> deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", allCards);
+            
+            game.initGame(new Player(serverState.getPlayerName(1), deck1), new Player(serverState.getPlayerName(2), deck2));
         }
 
         /**
@@ -99,7 +119,6 @@ public class ServerAdapter {
             PrintWriter outPrintWriter = null;
 
             int playerId;
-
 
             public ServantWorker(Socket clientSocket, int playerId) {
                 this.playerId = playerId;
@@ -124,33 +143,27 @@ public class ServerAdapter {
                     while (serverState.getWorkerState(playerId) != WorkerState.GAME_ENDED) {
                         switch (serverState.getWorkerState(playerId)) {
                             case INIT:
-                                String turnS;
+                                // Wait for game to finish init, parsing, etc...
+                                while (!serverState.finishedInit()) {}
+
                                 if (playerId == serverState.getPlayingId()) {
-                                    turnS = Messages.JSON_TYPE_YOUR_TURN;
                                     serverState.setWorkerState(playerId, WorkerState.SERVER_LISTENING);
                                 } else {
-                                    turnS = Messages.JSON_TYPE_WAIT_TURN;
                                     serverState.setWorkerState(playerId, WorkerState.CLIENT_LISTENING);
                                 }
 
-
-                                // TODO: Send init from logic class?
-                                JSONObject init = new JSONObject();
-                                init.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
-
-                                JSONObject gamestate = new JSONObject();
-                                gamestate.put(Messages.JSON_TYPE_TURN, turnS);
-                                gamestate.put(Messages.JSON_TYPE_ENEMYNAME, serverState.getPlayerName(serverState.otherPlayer(playerId)));
-
-                                init.put(Messages.JSON_GAMESTATE, gamestate);
-
+                                JSONObject init;
+                                if (playerId == 1) {
+                                    init = game.initStateP1();
+                                } else {
+                                    init = game.initStateP2();
+                                }
                                 sendJson(init, outPrintWriter, servantClassName(playerId));
                                 break;
 
                             case INIT_WAITING:
                                 while (serverState.getPlayerCount() < 2 || serverState.getPlayerName(serverState.otherPlayer(playerId)) == null) {}
 
-                                // TODO: This send should be fine
                                 sendJsonType(Messages.JSON_TYPE_GAME_START, outPrintWriter, servantClassName(playerId));
                                 serverState.setWorkerState(playerId, INIT);
                                 break;

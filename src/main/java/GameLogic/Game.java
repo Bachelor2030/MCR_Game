@@ -21,14 +21,22 @@ public class Game {
     private int
             turn;
     private Board board;
+    private ServerAdapter serverAdapter;
+    private int firstPlayerId;
 
-    public Game(int nbr_lines, int nbr_spots) {
+    public Game(ServerAdapter serverAdapter, int nbr_lines, int nbr_spots) {
+        this.serverAdapter = serverAdapter;
         this.board = new Board(nbr_lines, nbr_spots);
         turn = 0;
+        if (Math.random() < 0.5) {
+            firstPlayerId = 1;
+        } else {
+            firstPlayerId = 2;
+        }
     }
 
     public void initGame(Player player1, Player player2) {
-        if (Math.random() < 0.5) {
+        if (firstPlayerId == 1) {
             this.player1 = player1;
             this.player2 = player2;
         } else {
@@ -51,6 +59,18 @@ public class Game {
                 //todo player2.sendyourturn
                 player2.playTurn(turn);
             }
+        }
+    }
+
+    public void nextTurn() {
+        System.out.println("Turn " + (++turn));
+
+        //todo player1.sendyourturn
+        player1.playTurn(turn);
+
+        if(!finished()) {
+            //todo player2.sendyourturn
+            player2.playTurn(turn);
         }
     }
 
@@ -136,5 +156,9 @@ public class Game {
         }
 
         return gameJSON;
+    }
+
+    public int getFirstPlayerId() {
+        return firstPlayerId;
     }
 }

@@ -12,6 +12,7 @@ public class ServerState {
     private LinkedList<JSONObject>[] jsonToSend;
     private boolean[] intendToSendJson;
 
+    private boolean finishedInit;
     private int playingNowId;
     private int playerCount = 0;
 
@@ -34,8 +35,16 @@ public class ServerState {
 
         intendToSendJson = new boolean[2];
 
-
+        finishedInit = false;
         playingNowId = playingFirstId;
+    }
+
+    public synchronized boolean finishedInit() {
+        return finishedInit;
+    }
+
+    public synchronized void setFinishedInit() {
+        this.finishedInit = true;
     }
 
     public synchronized boolean intendToSendJson(int playerId) {
@@ -94,12 +103,16 @@ public class ServerState {
         return playerId % 2 + 1;
     }
 
-    public void setPlayerName(int playerId, String playerName) {
+    public synchronized void setPlayerName(int playerId, String playerName) {
         playerNames[workerId(playerId)] = playerName;
     }
 
-    public String getPlayerName(int playerId) {
+    public synchronized String getPlayerName(int playerId) {
         return playerNames[workerId(playerId)];
+    }
+
+    public synchronized boolean playerNamesSet() {
+        return playerNames[workerId(1)] != null && playerNames[workerId(2)] != null;
     }
 
     private int workerId(int playerId) {

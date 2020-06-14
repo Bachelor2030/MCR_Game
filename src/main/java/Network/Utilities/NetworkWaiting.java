@@ -55,6 +55,7 @@ public class NetworkWaiting {
             String type = readJsonType(receivedMessage, className);
             switch (type) {
                 case Messages.JSON_TYPE_PLAY:
+                    //TODO: HERE
                     serverState.setPlayStates(playerId, PlayState.EVAL_PLAY);
 
                     // TODO: Remove this (here only for testing purposes, failing at random)
