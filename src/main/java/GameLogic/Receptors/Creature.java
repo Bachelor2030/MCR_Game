@@ -1,7 +1,8 @@
 package GameLogic.Receptors;
 
-import GameLogic.Card.Card;
-import GameLogic.ModelClasses.LiveReceptor;
+import GameLogic.Invocator.Card.Card;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Creature class, modelises the creatures that move on the board of the game and fight each other
@@ -127,5 +128,20 @@ public class Creature extends LiveReceptor {
             advance();
         }
         asleep = false;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject creature =  super.toJson();
+
+        try {
+            creature.put("steps", steps);
+            creature.put("attackpoints", attackPoints);
+            creature.put("cardid", originCard.getID());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return creature;
     }
 }

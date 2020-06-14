@@ -1,6 +1,6 @@
 package Network.JsonUtils;
 
-import GameLogic.Card.Card;
+import GameLogic.Invocator.Card.Card;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

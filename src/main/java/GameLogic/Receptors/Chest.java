@@ -1,6 +1,5 @@
 package GameLogic.Receptors;
 
-import GameLogic.ModelClasses.LiveReceptor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

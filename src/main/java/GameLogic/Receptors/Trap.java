@@ -1,17 +1,17 @@
 package GameLogic.Receptors;
 
-import GameLogic.ModelClasses.ConcreteCommand;
-import GameLogic.ModelClasses.Commands.OnLiveReceptors.OnLiveReceptors;
-import GameLogic.Position;
-import GameLogic.ModelClasses.LiveReceptor;
-import GameLogic.ModelClasses.Macro;
-import GameLogic.ModelClasses.Receptor;
+import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
+import GameLogic.Board.Position;
+import GameLogic.Commands.Macro;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Modelizes a trap in the game
  */
 public class Trap extends Receptor {
-    private Macro effect;           // the eggect the trap has on the first creature that lands on it
+    private Macro effect;           // the effect the trap has on the first creature that lands on it
     private Position position;      // the position at which the trap is
 
     /**
@@ -22,6 +22,10 @@ public class Trap extends Receptor {
     public Trap(String name, Macro effect) {
         super("Trap " + name);
         this.effect = effect;
+    }
+
+    public Macro getEffect() {
+        return effect;
     }
 
     /**
@@ -57,5 +61,18 @@ public class Trap extends Receptor {
                 effect.getCommands()) {
             ((OnLiveReceptors)c).setReceptors(new LiveReceptor[]{creature});
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject trap = super.toJson();
+        try {
+            trap.put("effect", effect.toJson());
+            trap.put("position", position.toJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return trap;
     }
 }

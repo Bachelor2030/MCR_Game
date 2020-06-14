@@ -1,14 +1,14 @@
 package GUI;
 
-import GameLogic.GuiCommands.EndGame;
-import GameLogic.GuiCommands.Move;
-import GameLogic.GameBoard.Board;
+import GameLogic.Commands.GuiCommands.EndGame;
+import GameLogic.Commands.GuiCommands.Move;
+import GameLogic.Board.Board;
 import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Player;
-import GameLogic.Card.Card;
-import GameLogic.ModelClasses.Commands.PlayersAction.EndTurn;
-import GameLogic.ModelClasses.Receptor;
-import GameLogic.Position;
+import GameLogic.Invocator.Card.Card;
+import GameLogic.Commands.PlayersAction.EndTurn;
+import GameLogic.Receptors.Receptor;
+import GameLogic.Board.Position;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -775,14 +775,6 @@ public class GameBoard extends Application {
           // TODO send this to backend
           System.out.println(endTurn.toJson());
 
-          Creature c = new Creature("bluey", 1, 1, 1);
-          c.setImagePath("design/images/creatures/bluey.gif");
-          place(c, 1, 1);
-
-          Creature c1 = new Creature("shark", 1, 1, 1);
-          c1.setImagePath("design/images/creatures/shark.gif");
-          place(c1, 2, 2);
-
           System.out.println("you hit the validate button...");
         });
 
@@ -793,13 +785,7 @@ public class GameBoard extends Application {
           endGame.setPlayerName(player1.getName());
           endGame.setPlayerState('L');
 
-          Move m = new Move();
-          m.setFrom(new Position(board.getLine(1), 2));
-          m.setTo(new Position(board.getLine(1), 5));
-          m.execute(this);
-
           //TODO send this to backend
-          System.out.println(m.toJson());
           System.out.println(endGame.toJson());
         });
 

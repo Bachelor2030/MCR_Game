@@ -1,17 +1,17 @@
 package Network.JsonUtils;
 
 import GUI.GameBoard;
-import GameLogic.GameBoard.Board;
+import GameLogic.Board.Board;
 import GameLogic.Receptors.Creature;
 import GameLogic.Receptors.Trap;
-import GameLogic.Card.Card;
-import GameLogic.Card.CardType;
-import GameLogic.ModelClasses.Commands.CommandName;
-import GameLogic.ModelClasses.Commands.CreateTrap;
-import GameLogic.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
+import GameLogic.Invocator.Card.Card;
+import GameLogic.Invocator.Card.CardType;
+import GameLogic.Commands.CommandName;
+import GameLogic.Commands.CreateTrap;
+import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
 import GameLogic.Game;
-import GameLogic.ModelClasses.ConcreteCommand;
-import GameLogic.ModelClasses.Macro;
+import GameLogic.Commands.ConcreteCommand;
+import GameLogic.Commands.Macro;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,9 @@ public class ParserLauncher {
         GameBoard gameBoard = new GameBoard();
 
         Game game = parseJsonGame(file, gameBoard.getBoard());
-        game.startGame();
+        //game.startGame();
+        System.out.println(game.initStateP1());
+        System.out.println(game.initStateP2());
 
         /*
         ArrayList<ConcreteCommand> commands = new ArrayList<>();
@@ -86,7 +88,7 @@ public class ParserLauncher {
         return game;
     }
 
-    public static ArrayList<Card> parseJsonCards(String json) throws JSONException, FileNotFoundException {
+    public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
         ArrayList<Card> cards = new ArrayList<>();
 
         JSONObject obj = new JSONObject(json);
@@ -120,7 +122,6 @@ public class ParserLauncher {
                 JSONArray cmds = jsonTrap.getJSONArray("commands");
 
                 for (int j = 0; j < cmds.length(); j++) {
-
                     trapCommands.add(CommandName.getCommandName(cmds.getString(j)).getCommand());
                 }
 

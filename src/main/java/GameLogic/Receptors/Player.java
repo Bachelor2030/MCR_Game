@@ -1,9 +1,8 @@
 package GameLogic.Receptors;
 
-import GameLogic.Card.Card;
-import GameLogic.ModelClasses.Commands.OnLiveReceptors.OnCreature.Create;
-import GameLogic.ModelClasses.Commands.PlayersAction.PlayersAction;
-import GameLogic.ModelClasses.Receptor;
+import GameLogic.Invocator.Card.Card;
+import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
+import GameLogic.Commands.PlayersAction.PlayersAction;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -75,6 +74,10 @@ public class Player extends Receptor {
         for (int i = 0; i < NBR_CHESTS; ++i) {
             chests.add(new Chest(name + " - Chest " + (i + 1), this));
         }
+    }
+
+    public Deque<Card> getHand() {
+        return hand;
     }
 
     /**
