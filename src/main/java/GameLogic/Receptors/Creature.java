@@ -40,7 +40,7 @@ public class Creature extends LiveReceptor {
      */
     public void advance() {
         for (int step = 0; step < steps; ++step) {
-            if (!position.next().isValid()) {
+            if (position.next() == null) {
                 returnToDeck();
             }
 
@@ -54,7 +54,7 @@ public class Creature extends LiveReceptor {
                 break;
             }
         }
-        if (lifePoints > 0 && !position.next().isEmpty() && position.next().isValid()) {
+        if (lifePoints > 0 && !position.next().isEmpty() && position.next() != null) {
             if(!((LiveReceptor) position.next().getOccupant()).isAlly(this)) {
 
                 ((LiveReceptor) position.next().getOccupant()).loseLifePoints(attackPoints);

@@ -20,12 +20,12 @@ public class Game {
             turn;
     private Board board;
 
-    /**
-     * Constructeur de la classe Game
-     * @param player1 : le joueur n°1
-     * @param player2 : le joueur n°2
-     */
-    public Game(Player player1, Player player2, Board board) {
+    public Game(int nbr_lines, int nbr_spots) {
+        this.board = new Board(nbr_lines, nbr_spots);
+        turn = 0;
+    }
+
+    public void initGame(Player player1, Player player2) {
         if (Math.random() < 0.5) {
             this.player1 = player1;
             this.player2 = player2;
@@ -33,16 +33,6 @@ public class Game {
             this.player1 = player2;
             this.player2 = player1;
         }
-        this.board = board;
-        turn = 0;
-    }
-
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public Player getPlayer2() {
-        return player2;
     }
 
     /**
@@ -103,8 +93,8 @@ public class Game {
         try {
             gameJSON.put("type","init");
             JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNB_LINES());
-            initJSON.put("linelength", board.getLine(0).getNB_SPOTS());
+            initJSON.put("lines", board.getNbLines());
+            initJSON.put("linelength", board.getLine(0).getNbSpots());
             initJSON.put("enemyname", player2.getName());
             initJSON.put("turn", "Your turn");
 
@@ -127,8 +117,8 @@ public class Game {
         try {
             gameJSON.put("type","init");
             JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNB_LINES());
-            initJSON.put("linelength", board.getLine(0).getNB_SPOTS());
+            initJSON.put("lines", board.getNbLines());
+            initJSON.put("linelength", board.getLine(0).getNbSpots());
             initJSON.put("ennemyname", player1.getName());
             initJSON.put("turn", "Wait turn");
 

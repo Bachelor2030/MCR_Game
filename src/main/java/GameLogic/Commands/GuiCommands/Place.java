@@ -1,16 +1,17 @@
 package GameLogic.Commands.GuiCommands;
 
 import GUI.GameBoard;
+import GameLogic.Board.Spot;
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
-import GameLogic.Board.Position;
+import GameLogic.Receptors.Receptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Place extends GuiCommand {
-    private Position position;
+    private Spot position;
     private int cardID;
-    private Creature creature;
+    private Receptor receptor;
 
     public Place() {
         super(CommandName.PLACE);
@@ -19,10 +20,10 @@ public class Place extends GuiCommand {
     public void setCardID(int cardID) {
         this.cardID = cardID;
         // TODO change that
-        creature = null;
+        receptor = null;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Spot position) {
         this.position = position;
     }
 
@@ -42,11 +43,16 @@ public class Place extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // Todo : execution on the GUI
+        Receptor receptor = (Receptor)gameBoard
+                .getGUIBoard()
+                .getLine(position.getLineNumber())
+                .getSpot(position.getSpotNumber())
+                .getOccupant();
+        gameBoard.place(receptor, position.getLineNumber(), position.getSpotNumber());
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
-        // Todo : undo on the GUI
+        gameBoard.place(new Creature("empty", 0, 0, 0), position.getLineNumber(), position.getSpotNumber());
     }
 }

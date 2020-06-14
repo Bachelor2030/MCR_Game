@@ -1,8 +1,8 @@
 package GameLogic.Receptors;
 
+import GameLogic.Board.Spot;
 import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
-import GameLogic.Board.Position;
 import GameLogic.Commands.Macro;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +12,7 @@ import org.json.JSONObject;
  */
 public class Trap extends Receptor {
     private Macro effect;           // the effect the trap has on the first creature that lands on it
-    private Position position;      // the position at which the trap is
+    private Spot position;      // the position at which the trap is
 
     /**
      * Creates the trap with the given name and effect
@@ -43,7 +43,7 @@ public class Trap extends Receptor {
      * Sets the position of the trap which places it on the game board
      * @param position the position of the trap on the board
      */
-    public void setPosition(Position position) {
+    public void setPosition(Spot position) {
         if (position != null)
             position.setOccupant(this);
         this.position = position;
@@ -52,7 +52,7 @@ public class Trap extends Receptor {
     @Override
     public void playTurn(int turn) {}
 
-    public Position getPosition() {
+    public Spot getPosition() {
         return position;
     }
 
@@ -68,7 +68,9 @@ public class Trap extends Receptor {
         JSONObject trap = super.toJson();
         try {
             trap.put("effect", effect.toJson());
-            trap.put("position", position.toJson());
+            if (position != null) {
+                trap.put("position", position.toJson());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -5,10 +5,15 @@ import javafx.scene.image.ImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public abstract class Receptor {
     protected String name;
 
-    private String imagePath = "design/images/creatures/empty.jpg";
+    private String imgPath = "src/main/resources/design/images/creatures/empty.jpg";
+    private FileInputStream fis;
+
     private Image image;
     private ImageView imageView;
 
@@ -35,14 +40,10 @@ public abstract class Receptor {
 
     private void initDisplay() {
         try {
-            image = new Image(imagePath);
+            image = new Image(new FileInputStream(imgPath));
             imageView = new ImageView(image);
             imageView.setFitWidth(image.getWidth() * 0.2);
             imageView.setFitHeight(image.getHeight() * 0.2);
-
-            if(imagePath.equals("design/images/creatures/empty.jpg")) {
-                imageView.setImage(null);
-            }
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -56,32 +57,32 @@ public abstract class Receptor {
         return image;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
         initDisplay();
     }
 
     public void setTo(Receptor receptor) {
         System.out.println("I am a new receptor");
         if(receptor == null) {
-            imagePath = "design/images/creatures/empty.jpg";
+            try {
+                fis = new FileInputStream("src/main/resources/design/images/creatures/empty.jpg");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             initDisplay();
         } else {
-            imagePath = receptor.imagePath;
+            fis = receptor.fis;
             image = receptor.image;
             imageView = receptor.imageView;
         }
-    }
-
-    public String getImagePath() {
-        return imagePath;
     }
 
     public JSONObject toJson() {
         JSONObject receptor = new JSONObject();
         try {
             receptor.put("name", name);
-            receptor.put("image", imagePath);
+            receptor.put("image", imgPath);
         } catch (JSONException e) {
             e.printStackTrace();
         }
