@@ -28,6 +28,10 @@ public final class Messages {
     public static final String JSON_TYPE_PLAY_OK = "play ok";
     public static final String JSON_TYPE_PLAY_BAD = "play bad";
 
+    public static final String JSON_TYPE_LINE = "line";
+    public static final String JSON_TYPE_SPOT = "spot";
+    public static final String JSON_TYPE_CARDS = "cards";
+
 
     private Messages() {
         throw new IllegalStateException("Can't instantiate the messages class");

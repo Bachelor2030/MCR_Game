@@ -6,6 +6,7 @@ import GameLogic.Invocator.Card.Card;
 import GameLogic.Receptors.Player;
 import GameLogic.Receptors.Receptor;
 import Network.JsonUtils.JsonUtil;
+import Network.Messages;
 import Network.ServerAdapter;
 import Network.States.ServerState;
 import javafx.concurrent.WorkerStateEvent;
@@ -96,26 +97,26 @@ public class Game extends Receptor {
         try {
             Player player = (playerId == firstPlayerId ? player1 : player2);
 
-            gameJSON.put("type","init");
+            gameJSON.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
             JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNbLines());
-            initJSON.put("linelength", board.getLine(0).getNbSpots());
+            initJSON.put(Messages.JSON_TYPE_LINE, board.getNbLines());
+            initJSON.put(Messages.JSON_TYPE_SPOT, board.getLine(0).getNbSpots());
 
             if (playerId == firstPlayerId) {
-                initJSON.put("enemyname", player2.getName());
-                initJSON.put("turn", "Your turn");
+                initJSON.put(Messages.JSON_TYPE_ENEMYNAME, player2.getName());
+                initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
             } else {
-                initJSON.put("enemyname", player1.getName());
-                initJSON.put("turn", "Wait turn");
+                initJSON.put(Messages.JSON_TYPE_ENEMYNAME, player1.getName());
+                initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
             }
 
             JSONArray cardsJSON = new JSONArray();
             for (Card card : player.getHand()) {
                 cardsJSON.put(card.toJSON());
             }
-            initJSON.put("cards", cardsJSON);
+            initJSON.put(Messages.JSON_TYPE_CARDS, cardsJSON);
 
-            gameJSON.put("init", initJSON);
+            gameJSON.put(Messages.JSON_TYPE_INIT, initJSON);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -44,7 +44,7 @@ public abstract class MoveCreature extends OnCreature {
                 position.put("positionTo", to.toJson());
             }
             positions.put(position);
-            moveCreature.put("position", positions);
+            moveCreature.put("positions", positions);
         } catch (JSONException e) {
             e.printStackTrace();
         }
