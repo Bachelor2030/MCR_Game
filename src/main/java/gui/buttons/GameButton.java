@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 public class GameButton {
