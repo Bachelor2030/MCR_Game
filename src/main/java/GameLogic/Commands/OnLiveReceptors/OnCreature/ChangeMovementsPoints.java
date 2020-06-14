@@ -2,6 +2,8 @@ package GameLogic.Commands.OnLiveReceptors.OnCreature;
 
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ChangeMovementsPoints extends OnCreature {
     private int newMP;
@@ -33,5 +35,16 @@ public class ChangeMovementsPoints extends OnCreature {
             return;
         for (int i = 0; i < receptors.length; i++)
             ((Creature)receptors[i]).wakeUp();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject changeMP = super.toJson();
+        try {
+            changeMP.put("newsteps", newMP);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return changeMP;
     }
 }

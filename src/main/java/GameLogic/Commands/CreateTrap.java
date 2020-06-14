@@ -3,6 +3,8 @@ package GameLogic.Commands;
 import GameLogic.Receptors.Player;
 import GameLogic.Board.Position;
 import GameLogic.Receptors.Trap;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CreateTrap extends ConcreteCommand {
     private Player player;
@@ -45,7 +47,15 @@ public class CreateTrap extends ConcreteCommand {
     }
 
     @Override
-    public String toJson() {
-        return "{\"type\" : \"Command\", \"name\" : \"" + name + "\", \"player\" : \"" + player.getName() + "\"}";
+    public JSONObject toJson() {
+        JSONObject playTrap = super.toJson();
+        try {
+            playTrap.put("player", player.getName());
+            playTrap.put("trap", trap.toJson());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return playTrap;
     }
 }

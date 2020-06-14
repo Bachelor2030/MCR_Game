@@ -3,6 +3,8 @@ package GameLogic.Commands.GuiCommands;
 import GUI.GameBoard;
 import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public abstract class GuiCommand extends ConcreteCommand {
     protected String playerName;
@@ -24,4 +26,17 @@ public abstract class GuiCommand extends ConcreteCommand {
 
     @Override
     public void undo() {}
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject guiCommand = super.toJson();
+
+        try {
+            guiCommand.put("player", playerName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return guiCommand;
+    }
 }

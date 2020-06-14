@@ -15,20 +15,6 @@ public class EndGame extends GuiCommand {
     }
 
     @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"GUI Command\", \"name\" : \"");
-        sb.append(name);
-        sb.append("\", \"player\" : \"");
-        sb.append(playerName);
-        sb.append("\", \"playerState\" : '");
-        sb.append(playerState);
-        sb.append("'}");
-
-        return sb.toString();
-    }
-
-    @Override
     public void execute(GameBoard gameBoard) {
         gameBoard.exitGame();
     }

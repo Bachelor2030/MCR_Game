@@ -2,6 +2,8 @@ package GameLogic.Commands.GuiCommands;
 
 import GUI.GameBoard;
 import GameLogic.Commands.CommandName;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RemoveCard extends GuiCommand {
     private int cardID;
@@ -15,17 +17,16 @@ public class RemoveCard extends GuiCommand {
     }
 
     @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"GUI Command\", \"name\"");
-        sb.append(name);
-        sb.append("\", \"player\" : ");
-        sb.append(playerName);
-        sb.append(", \"cardID\" : ");
-        sb.append(cardID);
-        sb.append("}");
+    public JSONObject toJson() {
+        JSONObject removeCard = super.toJson();
 
-        return sb.toString();
+        try {
+            removeCard.put("cardid", cardID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return removeCard;
     }
 
     @Override

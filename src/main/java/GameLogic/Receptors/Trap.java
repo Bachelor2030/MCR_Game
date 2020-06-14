@@ -4,6 +4,8 @@ import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
 import GameLogic.Board.Position;
 import GameLogic.Commands.Macro;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Modelizes a trap in the game
@@ -59,5 +61,18 @@ public class Trap extends Receptor {
                 effect.getCommands()) {
             ((OnLiveReceptors)c).setReceptors(new LiveReceptor[]{creature});
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject trap = super.toJson();
+        try {
+            trap.put("effect", effect.toJson());
+            trap.put("position", position.toJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return trap;
     }
 }

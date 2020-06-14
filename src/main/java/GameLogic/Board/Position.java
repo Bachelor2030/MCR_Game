@@ -1,6 +1,8 @@
 package GameLogic.Board;
 
 import GameLogic.Receptors.Receptor;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Position {
     private BoardLine boardLine;
@@ -64,5 +66,16 @@ public class Position {
 
     public boolean isValid() {
         return position < boardLine.getNB_SPOTS() && boardLine.getSpot(position) != null;
+    }
+
+    public JSONObject toJson() {
+        JSONObject position = new JSONObject();
+        try {
+            position.put("line", boardLine.getNoLine());
+            position.put("spot", position);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return position;
     }
 }

@@ -5,6 +5,8 @@ import GameLogic.Invocator.Card.Card;
 import GameLogic.Invocator.Card.CardType;
 import GameLogic.Commands.CommandName;
 import GameLogic.Commands.ConcreteCommand;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Scanner;
 
@@ -44,7 +46,14 @@ public abstract class PlayersAction extends ConcreteCommand {
     }
 
     @Override
-    public String toJson() {
-        return "{\"type\" : \"Command\", \"name\" : \"" + name + "\", \"player\" : \"" + player.getName() + "\"}";
+    public JSONObject toJson() {
+        JSONObject playersAction = super.toJson();
+        try {
+            playersAction.put("player", player.getName());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return playersAction;
     }
 }

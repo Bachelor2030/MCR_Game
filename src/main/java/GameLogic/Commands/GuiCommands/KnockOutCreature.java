@@ -4,6 +4,8 @@ import GUI.GameBoard;
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.LiveReceptor;
 import GameLogic.Board.Position;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class KnockOutCreature extends GuiCommand {
     private Position position;
@@ -17,17 +19,16 @@ public class KnockOutCreature extends GuiCommand {
     }
 
     @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"GUI Command\", \"name\"" + name + "\", \"player\" : " + playerName);
+    public JSONObject toJson() {
+        JSONObject knockout = super.toJson();
 
-        sb.append(", \"position\" : { \"line\" : " +
-                position.getBoardLine() +
-                ", \"spot\" : " +
-                position.getPosition() +
-                "}}");
+        try {
+            knockout.put("position", position.toJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        return sb.toString();
+        return knockout;
     }
 
     @Override

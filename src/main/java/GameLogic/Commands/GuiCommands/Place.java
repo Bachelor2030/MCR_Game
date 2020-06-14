@@ -4,6 +4,8 @@ import GUI.GameBoard;
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
 import GameLogic.Board.Position;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Place extends GuiCommand {
     private Position position;
@@ -25,19 +27,17 @@ public class Place extends GuiCommand {
     }
 
     @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"GUI Command\", \"name\"" + name + "\", \"player\" : " + playerName);
+    public JSONObject toJson() {
+        JSONObject place = super.toJson();
 
-        sb.append(", \"cardID\" : " + cardID);
+        try {
+            place.put("cardid", cardID);
+            place.put("position", position.toJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        sb.append(", \"position\" : { \"line\" : " +
-                position.getBoardLine() +
-                ", \"spot\" : " +
-                position.getPosition() +
-                "}}");
-
-        return sb.toString();
+        return place;
     }
 
     @Override

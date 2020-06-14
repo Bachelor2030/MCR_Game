@@ -5,6 +5,8 @@ import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
 import GameLogic.Receptors.LiveReceptor;
 import GameLogic.Board.Position;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ChangePoints extends GuiCommand {
     private Position position;
@@ -29,25 +31,32 @@ public class ChangePoints extends GuiCommand {
     }
 
     @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"GUI Command\", \"name\"");
-        sb.append(name);
-        sb.append(" (");
-        sb.append(pointsType);
-        sb.append(")\", \"player\" : ");
-        sb.append(playerName);
+    public JSONObject toJson() {
+        JSONObject changePoints = super.toJson();
 
-        sb.append(", \"effect\" : ");
-        sb.append(newPointValue);
+        try {
+            changePoints.put("position", position.toJson());
 
-        sb.append(", \"position\" : { \"line\" : ");
-        sb.append(position.getBoardLine());
-        sb.append(", \"spot\" : ");
-        sb.append(position.getPosition());
-        sb.append("}}");
+            switch (pointsType) {
+                // Movement Points
+                case 'M':
+                    changePoints.put("newsteps", newPointValue);
+                    break;
+                // Attack Points
+                case 'A':
+                    changePoints.put("newattackpoints", newPointValue);
+                    break;
+                // Life Points
+                case 'L':
+                    changePoints.put("newlifepoints", newPointValue);
+                    break;
+                default: break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        return sb.toString();
+        return changePoints;
     }
 
     @Override

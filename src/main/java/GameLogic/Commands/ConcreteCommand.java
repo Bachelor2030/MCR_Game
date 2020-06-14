@@ -1,5 +1,8 @@
 package GameLogic.Commands;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 public abstract class ConcreteCommand implements Command {
@@ -13,7 +16,16 @@ public abstract class ConcreteCommand implements Command {
         return name;
     }
 
-    public abstract String toJson();
+    public JSONObject toJson() {
+        JSONObject command = new JSONObject();
+        try {
+            command.put("type", "play");
+            command.put("name", name.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return command;
+    }
 
     @Override
     public String toString() {

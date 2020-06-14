@@ -126,37 +126,7 @@ public class Card implements Invocator {
             c.put("name", name);
             c.put("type", type);
             c.put("cost", cost);
-            JSONArray commands = new JSONArray();
-            for (ConcreteCommand command :
-                    this.command.getCommands()) {
-                commands.put(command.getName());
-            }
-
-            if (type == CardType.CREATURE) {
-                JSONObject creature = new JSONObject();
-                Creature cre = this.command.getCreateCreature().get(0).getCreatures()[0];
-                creature.put("name", cre.getName());
-                creature.put("img", cre.getImagePath());
-                creature.put("life", cre.getLifePoints());
-                creature.put("steps", cre.getSteps());
-                creature.put("attack", cre.getAttackPoints());
-
-                c.put("creature", creature);
-            }
-            else if (type == CardType.TRAP) {
-                JSONObject trap = new JSONObject();
-                Trap tra = this.command.getCreateTrap().get(0).getTrap();
-                trap.put("name", tra.getName());
-                trap.put("img", tra.getImagePath());
-
-                JSONArray trapCommands = new JSONArray();
-                for (ConcreteCommand command : tra.getEffect().getCommands()) {
-                    trapCommands.put(command.getName());
-                }
-
-                c.put("trap", trap);
-            }
-
+            c.put("commands", command.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }

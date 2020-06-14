@@ -7,6 +7,10 @@ import GameLogic.Commands.OnLiveReceptors.OnCreature.MoveCreature;
 import GameLogic.Commands.ConcreteCommand;
 import GameLogic.Commands.OnLiveReceptors.OnCreature.ChangeAttackPoints;
 import GameLogic.Receptors.LiveReceptor;
+import GameLogic.Receptors.Receptor;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public abstract class OnLiveReceptors extends ConcreteCommand {
     protected LiveReceptor[] receptors;
@@ -31,49 +35,20 @@ public abstract class OnLiveReceptors extends ConcreteCommand {
     }
 
     @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"content\" : [");
+    public JSONObject toJson() {
+        JSONObject onLiveReceptors = super.toJson();
 
-        for (int i = 0; i < receptors.length; i++) {
-            LiveReceptor receptor = receptors[i];
-            sb.append("{\"type\" : \"Command\", \"name\" : \"" + name + "\", \"player\" : \"" + receptor.getOwnerName() + "\"");
-
-            if (name == CommandName.CHANGE_AP       ||
-                name == CommandName.CHANGE_MP       ||
-                name == CommandName.CREATE_CREATURE ||
-                name == CommandName.HEAL            ||
-                name == CommandName.KNOCK_OUT       ||
-                name == CommandName.HIT             ||
-                name == CommandName.KILL) {
-                if(name == CommandName.CREATE_CREATURE) {
-                    sb.append(", \"cardID\" : " + ((Creature)receptor).getOriginCard().getID());
-                }
-                sb.append(", \"position\" : { \"line\" : " +
-                        receptor.getPosition().getBoardLine().getNoLine() +
-                        ", \"spot\" : " +
-                        receptor.getPosition().getPosition() +
-                        "}}");
-            } else {
-                sb.append(", \"positionTo\" : { \"line\" : " +
-                        receptor.getPosition().getBoardLine().getNoLine() +
-                        ", \"spot\" : " +
-                        receptor.getPosition().getPosition() +
-                        "}");
-
-                sb.append(", \"positionFrom\" : { \"line\" : " +
-                        ((MoveCreature)this).getFrom()[i].getBoardLine().getNoLine() +
-                        ", \"spot\" : " +
-                        ((MoveCreature)this).getFrom()[i].getPosition() +
-                        "}}");
-            }
-
-            if (i < receptors.length - 1) {
-                sb.append(", ");
-            }
+        JSONArray liveReceptors = new JSONArray();
+        for (LiveReceptor liveReceptor : receptors) {
+            liveReceptors.put(liveReceptor.toJson());
         }
 
-        sb.append("]}");
-        return sb.toString();
+        try {
+            onLiveReceptors.put("receptors", liveReceptors);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return onLiveReceptors;
     }
 }

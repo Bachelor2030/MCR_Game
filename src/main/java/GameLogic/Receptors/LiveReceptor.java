@@ -1,6 +1,8 @@
 package GameLogic.Receptors;
 
 import GameLogic.Board.Position;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public abstract class LiveReceptor extends Receptor {
     protected Position position;       // Position of the creature
@@ -14,10 +16,6 @@ public abstract class LiveReceptor extends Receptor {
         this.lifePoints = lifePoints;
         this.MAX_LIFE_POINTS = lifePoints;
         this.type = type;
-    }
-
-    public String getOwnerName() {
-        return owner.getName();
     }
 
     public void loseLifePoints(int points) {
@@ -83,5 +81,20 @@ public abstract class LiveReceptor extends Receptor {
 
     public void setLifePoints(int newPointValue) {
         lifePoints = newPointValue;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject liveReceptor = super.toJson();
+        try {
+            liveReceptor.put("position", position.toJson());
+            liveReceptor.put("lifepoints", lifePoints);
+            liveReceptor.put("owner", owner.getName());
+            liveReceptor.put("type", type);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return liveReceptor;
     }
 }

@@ -2,6 +2,8 @@ package GameLogic.Receptors;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public abstract class Receptor {
     protected String name;
@@ -73,5 +75,16 @@ public abstract class Receptor {
 
     public String getImagePath() {
         return imagePath;
+    }
+
+    public JSONObject toJson() {
+        JSONObject receptor = new JSONObject();
+        try {
+            receptor.put("name", name);
+            receptor.put("image", imagePath);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return receptor;
     }
 }

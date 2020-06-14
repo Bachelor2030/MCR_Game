@@ -1,6 +1,9 @@
 package GameLogic.Commands;
 
 import GameLogic.Commands.OnLiveReceptors.OnCreature.Create;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,22 @@ public class Macro implements Command {
             }
         }
         return concreteCommands;
+    }
+
+    public JSONObject toJson() {
+        JSONObject macro = new JSONObject();
+
+        try {
+            JSONArray cmds = new JSONArray();
+            for (ConcreteCommand command : commands) {
+                cmds.put(command.toJson());
+            }
+            macro.put("commands", cmds);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return macro;
     }
 
     @Override
@@ -73,15 +92,5 @@ public class Macro implements Command {
     @Override
     public int hashCode() {
         return Objects.hash(commands);
-    }
-
-    public String[] toJson() {
-        String[] macro = new String[commands.size()];
-
-        for (int i = 0; i < commands.size(); i++) {
-            macro[i] = commands.get(i).toJson();
-        }
-
-        return macro;
     }
 }

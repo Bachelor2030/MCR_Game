@@ -2,6 +2,8 @@ package GameLogic.Commands.PlayersAction;
 
 import GameLogic.Invocator.Card.Card;
 import GameLogic.Commands.CommandName;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PlayCard extends PlayersAction {
     private Card cardToPlay;
@@ -12,6 +14,17 @@ public class PlayCard extends PlayersAction {
 
     public void setCardToPlay(Card cardToPlay) {
         this.cardToPlay = cardToPlay;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject playCard = super.toJson();
+        try {
+            playCard.put("cardid", cardToPlay.getID());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return playCard;
     }
 
     @Override

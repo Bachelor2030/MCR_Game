@@ -9,18 +9,6 @@ public class EndPlayerTurn extends GuiCommand {
     }
 
     @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"GUI Command\", \"name\"");
-        sb.append(name);
-        sb.append("\", \"player\" : ");
-        sb.append(playerName);
-        sb.append("}");
-
-        return sb.toString();
-    }
-
-    @Override
     public void execute(GameBoard gameBoard) {
 
     }

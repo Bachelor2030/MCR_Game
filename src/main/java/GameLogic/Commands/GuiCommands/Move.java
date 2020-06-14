@@ -4,6 +4,8 @@ import GUI.GameBoard;
 import GameLogic.Receptors.Creature;
 import GameLogic.Commands.CommandName;
 import GameLogic.Board.Position;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Move extends GuiCommand {
     private Position from, to;
@@ -21,23 +23,17 @@ public class Move extends GuiCommand {
     }
 
     @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"type\" : \"GUI Command\", \"name\" :\"" + name + "\", \"player\" : \"" + playerName + "\"");
+    public JSONObject toJson() {
+        JSONObject move = super.toJson();
 
-        sb.append(", \"positionTo\" : { \"line\" : " +
-                to.getBoardLine().getNoLine() +
-                ", \"spot\" : " +
-                to.getPosition() +
-                "}");
+        try {
+            move.put("positionFrom", from.toJson());
+            move.put("positionTo", to.toJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        sb.append(", \"positionFrom\" : { \"line\" : " +
-                from.getBoardLine().getNoLine() +
-                ", \"spot\" : " +
-                from.getPosition() +
-                "}}");
-
-        return sb.toString();
+        return move;
     }
 
     @Override
