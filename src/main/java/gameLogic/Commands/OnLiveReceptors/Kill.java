@@ -1,33 +1,23 @@
-package gameLogic.Commands.OnLiveReceptors;
+package gameLogic.commands.onLiveReceptors;
 
-import gameLogic.Commands.CommandName;
-import gameLogic.Receptors.LiveReceptor;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.LiveReceptor;
 
-public class Kill extends OnLiveReceptors {
-    private int[] lifePoints;
+public class Kill extends OnLiveReceptor {
+    private int lifePoints;
 
     public Kill() {
         super(CommandName.KILL);
     }
 
     @Override
-    public void execute() {
-        int i = 0;
-        lifePoints = new int[receptors.length];
-        for (LiveReceptor receptor : receptors) {
-            lifePoints[i++] = receptor.getLifePoints();
-            receptor.loseLifePoints(receptor.getLifePoints());
-        }
-    }
-
-    public void setLifePoints(int[] lp) {
-        lifePoints = lp;
+    public void execute(LiveReceptor liveReceptor) {
+        lifePoints = liveReceptor.getLifePoints();
+        liveReceptor.loseLifePoints(liveReceptor.getLifePoints());
     }
 
     @Override
-    public void undo() {
-        for (int i = 0; i < receptors.length; i++) {
-            receptors[i].gainLifePoints(lifePoints[i]);
-        }
+    public void undo(LiveReceptor liveReceptor) {
+        liveReceptor.gainLifePoints(lifePoints);
     }
 }

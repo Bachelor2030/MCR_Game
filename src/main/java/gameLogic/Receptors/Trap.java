@@ -1,9 +1,10 @@
-package gameLogic.Receptors;
+package gameLogic.receptors;
 
-import gameLogic.Board.Spot;
-import gameLogic.Commands.ConcreteCommand;
-import gameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
-import gameLogic.Commands.Macro;
+import gameLogic.board.Spot;
+import gameLogic.commands.Macro;
+import gameLogic.commands.playersAction.PlayersAction;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,8 +33,7 @@ public class Trap extends Receptor {
      * Triggers the trap on the given victim
      */
     public void trigger(Creature creature) {
-        setVictim(creature);
-        effect.execute();
+        effect.execute(creature);
         if (position != null)
             position.leave();
         position = null;
@@ -49,27 +49,20 @@ public class Trap extends Receptor {
         this.position = position;
     }
 
-    @Override
-    public void playTurn(int turn) {}
-
     public Spot getPosition() {
         return position;
     }
 
-    private void setVictim(Creature creature) {
-        for (ConcreteCommand c :
-                effect.getCommands()) {
-            ((OnLiveReceptors)c).setReceptors(new LiveReceptor[]{creature});
-        }
-    }
+    @Override
+    public void playTurn(int turn, PlayersAction action) {}
 
     @Override
     public JSONObject toJson() {
         JSONObject trap = super.toJson();
         try {
-            trap.put("effect", effect.toJson());
+            trap.put(Messages.JSON_TYPE_EFFECT, effect.toJson());
             if (position != null) {
-                trap.put("position", position.toJson());
+                trap.put(Messages.JSON_TYPE_POSITION, position.toJson());
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -1,18 +1,19 @@
-package network.Utilities;
+package network.utilities;
 
+import gameLogic.Game;
 import network.Messages;
-import network.States.PlayState;
-import network.States.ServerState;
-import network.States.WorkerState;
+import network.states.ServerState;
+import network.states.WorkerState;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static network.Utilities.Info.*;
-import static network.Utilities.JsonServer.*;
-import static network.Utilities.JsonServer.sendJsonType;
+import static network.utilities.Info.*;
+import static network.utilities.JsonServer.*;
+import static network.utilities.JsonServer.sendJsonType;
 
 public class NetworkWaiting {
 
@@ -45,7 +46,7 @@ public class NetworkWaiting {
         }
     }
 
-    public static void awaitClientMessage(ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
+    public static void awaitClientMessage(Game game, ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
         String receivedMessage;
         printMessage(className, "Reading until client sends messages or closes the connection...");
 
@@ -55,30 +56,23 @@ public class NetworkWaiting {
             String type = readJsonType(receivedMessage, className);
             switch (type) {
                 case Messages.JSON_TYPE_PLAY:
-                    serverState.setPlayStates(playerId, PlayState.EVAL_PLAY);
+                    boolean goodPlay;
+                    goodPlay = game.playerSentMessage(playerId, receivedMessage);
 
-                    // TODO: Remove this (here only for testing purposes, failing at random)
-                    if (Math.random() < 0.5) {
-                        serverState.setPlayStates(playerId, PlayState.PLAY_OK);
+                    // wait for new play
+                    if (goodPlay) {
+                        serverState.setIntendToSendJson(playerId, true);
+                        sendJsonType(Messages.JSON_TYPE_PLAY_OK, outPrintWriter, className);
+                        // Sending all game updates
+                        if (serverState.getIntendToSendJson(playerId)) {
+                            while(!serverState.jsonToSendEmpty(playerId)) {
+                                JSONObject jsonObject = serverState.popJsonToSend(playerId);
+                                sendJson(jsonObject, outPrintWriter, servantClassName(playerId));
+                            }
+                        }
+                        serverState.setIntendToSendJson(playerId, false);
                     } else {
-                        serverState.setPlayStates(playerId, PlayState.PLAY_BAD);
-                    }
-
-                    // Wait for the game logic to decide if the play was good or bad
-                    while (serverState.getPlayStates(playerId) == PlayState.EVAL_PLAY) {}
-
-                    switch (serverState.getPlayStates(playerId)) {
-                        case PLAY_OK:
-                            serverState.setWorkerState(playerId, WorkerState.CLIENT_LISTENING);
-                            serverState.setPlayStates(playerId, PlayState.WAIT_TURN);
-                            sendJsonType(Messages.JSON_TYPE_PLAY_OK, outPrintWriter, className);
-                            serverState.nextPlayer();
-                            return;
-
-                        case PLAY_BAD:
-                            serverState.setPlayStates(playerId, PlayState.WAIT_PLAY);
-                            sendJsonType(Messages.JSON_TYPE_PLAY_BAD, outPrintWriter, className);
-                            break; // wait for new play
+                        sendJsonType(Messages.JSON_TYPE_PLAY_BAD, outPrintWriter, className);
                     }
                     break;
 
@@ -93,5 +87,4 @@ public class NetworkWaiting {
             }
         }
     }
-
 }

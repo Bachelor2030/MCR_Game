@@ -1,7 +1,7 @@
-package gameLogic.Commands.PlayersAction;
+package gameLogic.commands.playersAction;
 
-import gameLogic.Invocator.Card.Card;
-import gameLogic.Commands.CommandName;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.Player;
 
 public class Undo extends PlayersAction {
     public Undo() {
@@ -9,14 +9,12 @@ public class Undo extends PlayersAction {
     }
 
     @Override
-    public void execute() {
-        Card card = player.lastCardPlayed();
-        if (card != null)
-            player.undoCard(card);
+    public void execute(Player player) {
+        player.undoLastMove();
     }
 
     @Override
-    public void undo() {
-        player.lastCardPlayed().play();
+    public void undo(Player player) {
+        player.redoLastMove();
     }
 }

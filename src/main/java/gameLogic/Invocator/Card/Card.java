@@ -1,7 +1,8 @@
-package gameLogic.Invocator.Card;
+package gameLogic.invocator.card;
 
-import gameLogic.Commands.Macro;
-import gameLogic.Invocator.Invocator;
+import gameLogic.commands.Macro;
+import gameLogic.invocator.Invocator;
+import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,11 +12,11 @@ import java.util.Objects;
  * Modelizes a card for the game
  */
 public class Card implements Invocator {
-    private final int ID;                   // the id of the card
-    private Macro command;                  // the command that it executes
-    private String name;                    // the name of the card
-    private int cost;                       // the cost (in action points)
-    private CardType type;                  // the type of the card
+    protected final int ID;                   // the id of the card
+    protected Macro command;                  // the command that it executes
+    protected String name;                    // the name of the card
+    protected int cost;                       // the cost (in action points)
+    protected CardType type;                  // the type of the card
 
     /**
      * Creates a card with the given information
@@ -33,7 +34,7 @@ public class Card implements Invocator {
 
     public void undo() {
         if(command != null) {
-            command.undo();
+            command.undo(command.getReceptor());
         }
     }
 
@@ -43,7 +44,7 @@ public class Card implements Invocator {
     public void play() {
         if(command != null) {
             System.out.println("Playing : " + this);
-            command.execute();
+            command.execute(command.getReceptor());
         }
     }
 
@@ -117,11 +118,11 @@ public class Card implements Invocator {
     public JSONObject toJSON() {
         JSONObject c = new JSONObject();
         try {
-            c.put("id", ID);
-            c.put("name", name);
-            c.put("type", type);
-            c.put("cost", cost);
-            c.put("commands", command.toJson());
+            c.put(Messages.JSON_TYPE_ID, ID);
+            c.put(Messages.JSON_TYPE_NAME, name);
+            c.put(Messages.JSON_TYPE, type);
+            c.put(Messages.JSON_TYPE_COST, cost);
+            c.put(Messages.JSON_TYPE_COMMANDS, command.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }

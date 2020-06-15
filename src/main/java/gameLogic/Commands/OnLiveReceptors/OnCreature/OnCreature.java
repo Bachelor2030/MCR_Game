@@ -1,22 +1,33 @@
-package gameLogic.Commands.OnLiveReceptors.OnCreature;
+package gameLogic.commands.onLiveReceptors.onCreature;
 
-import gameLogic.Receptors.Creature;
-import gameLogic.Commands.OnLiveReceptors.OnLiveReceptors;
-import gameLogic.Commands.CommandName;
 
-public abstract class OnCreature extends OnLiveReceptors {
+import gameLogic.receptors.Creature;
+import gameLogic.commands.onLiveReceptors.OnLiveReceptor;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.LiveReceptor;
+
+public abstract class OnCreature extends OnLiveReceptor {
     public OnCreature(CommandName name) {
         super(name);
     }
 
-    public void setCreatures(Creature[] creatures) {
-        setReceptors(creatures);
+    public Creature getCreatures() {
+        return (Creature)receptor;
     }
 
-    public Creature[] getCreatures() {
-        if(receptors != null) {
-            return (Creature[])receptors;
-        }
-        return null;
+    public abstract void execute(Creature creature);
+    public abstract void undo(Creature creature);
+
+    @Override
+    public void execute(LiveReceptor receptor) {
+        this.receptor = (Creature) receptor;
+        execute((Creature)receptor);
     }
+
+    @Override
+    public void undo(LiveReceptor receptor) {
+        this.receptor = (Creature) receptor;
+        undo((Creature)receptor);
+    }
+
 }

@@ -1,8 +1,13 @@
 package gameLogic;
 
-import gameLogic.Board.Board;
-import gameLogic.Invocator.Card.Card;
-import gameLogic.Receptors.Player;
+import gameLogic.board.Board;
+import gameLogic.commands.playersAction.PlayersAction;
+import gameLogic.invocator.card.Card;
+import gameLogic.receptors.Player;
+import gameLogic.receptors.Receptor;
+import network.jsonUtils.JsonUtil;
+import network.Messages;
+import network.ServerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,46 +15,42 @@ import org.json.JSONObject;
 /**
  * Cette classe permet de modéliser le jeu.
  */
-public class Game {
+public class Game extends Receptor {
     private static final int
             NBR_CHESTS_TO_DESTROY = 2;
     private Player
             player1,
             player2;
     private int
-            turn;
+            turn,
+            firstPlayerId;
     private Board board;
+    private ServerAdapter serverAdapter;
 
-    public Game(int nbr_lines, int nbr_spots) {
+    public Game(ServerAdapter serverAdapter, int nbr_lines, int nbr_spots) {
+        this.serverAdapter = serverAdapter;
         this.board = new Board(nbr_lines, nbr_spots);
         turn = 0;
+        if (Math.random() < 0.5) {
+            firstPlayerId = 1;
+        } else {
+            firstPlayerId = 2;
+        }
     }
 
     public void initGame(Player player1, Player player2) {
-        if (Math.random() < 0.5) {
+        if (firstPlayerId == 1) {
             this.player1 = player1;
             this.player2 = player2;
         } else {
             this.player1 = player2;
             this.player2 = player1;
         }
+        serverAdapter.getServerState().setFinishedInit();
     }
 
-    /**
-     * Permet de commencer le jeu.
-     */
-    public void startGame() {
-        while (!finished()) {
-            System.out.println("Turn " + (++turn));
-
-            //todo player1.sendyourturn
-            player1.playTurn(turn);
-
-            if(!finished()) {
-                //todo player2.sendyourturn
-                player2.playTurn(turn);
-            }
-        }
+    public void nextTurn() {
+        System.out.println("Turn " + (++turn));
     }
 
     /**
@@ -88,23 +89,32 @@ public class Game {
         return turn;
     }
 
-    public JSONObject initStateP1() {
+
+    public JSONObject initState(int playerId) {
         JSONObject gameJSON = new JSONObject();
         try {
-            gameJSON.put("type","init");
+            Player player = (playerId == firstPlayerId ? player1 : player2);
+
+            gameJSON.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
             JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNbLines());
-            initJSON.put("linelength", board.getLine(0).getNbSpots());
-            initJSON.put("enemyname", player2.getName());
-            initJSON.put("turn", "Your turn");
+            initJSON.put(Messages.JSON_TYPE_LINE, board.getNbLines());
+            initJSON.put(Messages.JSON_TYPE_SPOT, board.getLine(0).getNbSpots());
+
+            if (playerId == firstPlayerId) {
+                initJSON.put(Messages.JSON_TYPE_ENEMYNAME, player2.getName());
+                initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
+            } else {
+                initJSON.put(Messages.JSON_TYPE_ENEMYNAME, player1.getName());
+                initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
+            }
 
             JSONArray cardsJSON = new JSONArray();
-            for (Card card : player1.getHand()) {
+            for (Card card : player.getHand()) {
                 cardsJSON.put(card.toJSON());
             }
-            initJSON.put("cards", cardsJSON);
+            initJSON.put(Messages.JSON_TYPE_CARDS, cardsJSON);
 
-            gameJSON.put("init", initJSON);
+            gameJSON.put(Messages.JSON_GAMESTATE, initJSON);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,27 +122,20 @@ public class Game {
         return gameJSON;
     }
 
-    public JSONObject initStateP2() {
-        JSONObject gameJSON = new JSONObject();
-        try {
-            gameJSON.put("type","init");
-            JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNbLines());
-            initJSON.put("linelength", board.getLine(0).getNbSpots());
-            initJSON.put("ennemyname", player1.getName());
-            initJSON.put("turn", "Wait turn");
-
-            JSONArray cardsJSON = new JSONArray();
-            for (Card card : player2.getHand()) {
-                cardsJSON.put(card.toJSON());
-            }
-            initJSON.put("cards", cardsJSON);
-
-            gameJSON.put("init", initJSON);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return gameJSON;
+    public int getFirstPlayerId() {
+        return firstPlayerId;
     }
+
+    public boolean playerSentMessage(int playerId, String receivedMessage) {
+        //TODO: If true, put json updates in serverAdapter.serverState.pushJsonToSend
+        Player player = (playerId == firstPlayerId ? player1 : player2);
+
+        PlayersAction action = new JsonUtil().getPlayerAction(receivedMessage);
+        player.playTurn(turn, action);
+
+        return true;
+    }
+
+    @Override
+    public void playTurn(int turn, PlayersAction action) {}
 }

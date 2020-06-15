@@ -1,6 +1,6 @@
 package gui.gameWindows;
 
-import gameLogic.Receptors.Player;
+import gameLogic.receptors.Player;
 import gui.board.GUIBoard;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

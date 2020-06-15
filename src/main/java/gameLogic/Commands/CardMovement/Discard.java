@@ -1,6 +1,7 @@
-package gameLogic.Commands.CardMovement;
+package gameLogic.commands.cardMovement;
 
-import gameLogic.Commands.CommandName;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.Player;
 
 public class Discard extends CardMovement {
     public Discard() {
@@ -8,12 +9,12 @@ public class Discard extends CardMovement {
     }
 
     @Override
-    public void execute() {
+    public void execute(Player player) {
         player.discardCard(card);
     }
 
     @Override
-    public void undo() {
+    public void undo(Player player) {
         player.giveCard(card);
     }
 

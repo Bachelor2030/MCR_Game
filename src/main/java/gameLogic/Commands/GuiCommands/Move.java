@@ -1,9 +1,11 @@
-package gameLogic.Commands.GuiCommands;
+package gameLogic.commands.guiCommands;
 
 import gui.GameBoard;
-import gameLogic.Board.Spot;
-import gameLogic.Receptors.Creature;
-import gameLogic.Commands.CommandName;
+import gameLogic.board.Spot;
+import gameLogic.receptors.Creature;
+import gameLogic.commands.CommandName;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,8 +29,8 @@ public class Move extends GuiCommand {
         JSONObject move = super.toJson();
 
         try {
-            move.put("positionFrom", from.toJson());
-            move.put("positionTo", to.toJson());
+            move.put(Messages.JSON_TYPE_POSITION_FROM, from.toJson());
+            move.put(Messages.JSON_TYPE_POSITION_TO, to.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -38,7 +40,6 @@ public class Move extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // Todo : execution on the GUI
         Creature creature = (Creature)gameBoard
                 .getGUIBoard()
                 .getLine(from.getLineNumber())
@@ -50,7 +51,6 @@ public class Move extends GuiCommand {
 
     @Override
     public void undo(GameBoard gameBoard) {
-        // Todo : undo on the GUI
         Creature creature = (Creature)gameBoard
                 .getGUIBoard()
                 .getLine(to.getLineNumber())

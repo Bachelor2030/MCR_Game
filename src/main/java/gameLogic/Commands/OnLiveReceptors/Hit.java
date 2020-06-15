@@ -1,11 +1,13 @@
-package gameLogic.Commands.OnLiveReceptors;
+package gameLogic.commands.onLiveReceptors;
 
-import gameLogic.Commands.CommandName;
-import gameLogic.Receptors.LiveReceptor;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.LiveReceptor;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Hit extends OnLiveReceptors {
+public class Hit extends OnLiveReceptor {
     private int attackPoints;
 
     public Hit() {
@@ -17,28 +19,20 @@ public class Hit extends OnLiveReceptors {
     }
 
     @Override
-    public void execute() {
-        if (receptors == null)
-            return;
-
-        for (LiveReceptor receptor : receptors) {
-            if(receptor != null)
-                receptor.loseLifePoints(attackPoints);
-        }
+    public void execute(LiveReceptor liveReceptor) {
+        liveReceptor.loseLifePoints(attackPoints);
     }
 
     @Override
-    public void undo() {
-        for (LiveReceptor receptor : receptors) {
-            receptor.gainLifePoints(attackPoints);
-        }
+    public void undo(LiveReceptor liveReceptor) {
+        liveReceptor.gainLifePoints(attackPoints);
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject hit = super.toJson();
         try {
-            hit.put("attackpoints", attackPoints);
+            hit.put(Messages.JSON_TYPE_AP, attackPoints);
         } catch (JSONException e) {
             e.printStackTrace();
         }

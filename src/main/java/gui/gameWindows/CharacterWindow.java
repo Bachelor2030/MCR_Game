@@ -1,6 +1,6 @@
 package gui.gameWindows;
 
-import gameLogic.Receptors.Player;
+import gameLogic.receptors.Player;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;

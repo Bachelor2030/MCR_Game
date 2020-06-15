@@ -1,13 +1,15 @@
-package gameLogic.Commands.OnLiveReceptors.OnCreature;
+package gameLogic.commands.onLiveReceptors.onCreature;
 
-import gameLogic.Receptors.Creature;
-import gameLogic.Commands.CommandName;
+import gameLogic.receptors.Creature;
+import gameLogic.commands.CommandName;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ChangeAttackPoints extends OnCreature {
     private int newAP;
-    private int[] oldAP;
+    private int oldAP;
 
     public ChangeAttackPoints() {
         super(CommandName.CHANGE_AP);
@@ -18,29 +20,21 @@ public class ChangeAttackPoints extends OnCreature {
     }
 
     @Override
-    public void execute() {
-        if (receptors == null)
-            return;
-        oldAP = new int[receptors.length];
-        for (int i = 0; i < receptors.length; i++) {
-            oldAP[i] = ((Creature) receptors[i]).getAttackPoints();
-            ((Creature) receptors[i]).setAttackPoints(newAP);
-        }
+    public void execute(Creature creature) {
+        oldAP = creature.getAttackPoints();
+        creature.setAttackPoints(newAP);
     }
 
     @Override
-    public void undo() {
-        if (receptors == null)
-            return;
-        for (int i = 0; i < receptors.length; i++)
-            ((Creature) receptors[i]).setAttackPoints(oldAP[i]);
+    public void undo(Creature creature) {
+        creature.setAttackPoints(oldAP);
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject changeAP = super.toJson();
         try {
-            changeAP.put("newattackpoints", newAP);
+            changeAP.put(Messages.JSON_TYPE_AP, newAP);
         } catch (JSONException e) {
             e.printStackTrace();
         }

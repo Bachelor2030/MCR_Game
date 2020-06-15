@@ -1,6 +1,9 @@
-package gameLogic.Commands;
+package gameLogic.commands;
 
-import gameLogic.Commands.OnLiveReceptors.OnCreature.Create;
+import gameLogic.commands.onLiveReceptors.onCreature.Create;
+import gameLogic.receptors.Receptor;
+import network.Messages;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Macro implements Command {
+    private Receptor receptor;
     private ArrayList<ConcreteCommand> commands;
 
     public Macro(ArrayList<ConcreteCommand> commands) {
@@ -47,7 +51,7 @@ public class Macro implements Command {
             for (ConcreteCommand command : commands) {
                 cmds.put(command.toJson());
             }
-            macro.put("commands", cmds);
+            macro.put(Messages.JSON_TYPE_COMMANDS, cmds);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -55,17 +59,23 @@ public class Macro implements Command {
         return macro;
     }
 
+    public Receptor getReceptor() {
+        return receptor;
+    }
+
     @Override
-    public void execute() {
+    public void execute(Receptor receptor) {
+        this.receptor = receptor;
         for (Command command : commands) {
-            command.execute();
+            command.execute(receptor);
         }
     }
 
     @Override
-    public void undo() {
+    public void undo(Receptor receptor) {
+        this.receptor = receptor;
         for(Command command : commands) {
-            command.undo();
+            command.undo(receptor);
         }
     }
 

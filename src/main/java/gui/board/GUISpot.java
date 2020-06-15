@@ -1,8 +1,8 @@
 package gui.board;
 
-import gui.Maths.Vector2f;
-import gameLogic.Receptors.Trap;
-import gameLogic.Receptors.Receptor;
+import gui.maths.Vector2f;
+import gameLogic.receptors.Trap;
+import gameLogic.receptors.Receptor;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

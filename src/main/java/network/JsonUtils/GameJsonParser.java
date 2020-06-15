@@ -1,13 +1,8 @@
-package network.JsonUtils;
+package network.jsonUtils;
 
-import gameLogic.Commands.CreateTrap;
-import gameLogic.Receptors.Creature;
-import gameLogic.Receptors.Player;
-import gameLogic.Invocator.Card.Card;
-import gameLogic.Commands.CommandName;
-import gameLogic.Commands.ConcreteCommand;
-import gameLogic.Commands.OnLiveReceptors.OnCreature.Create;
+import gameLogic.receptors.Player;
 import gameLogic.Game;
+import gameLogic.invocator.card.Card;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,7 +23,7 @@ public class GameJsonParser {
 
     public Game parseJson(String json) throws JSONException, FileNotFoundException {
         JSONObject obj = new JSONObject(json);
-        Game game = new Game(nbr_lines, nbr_spots);
+        Game game = null;
 
         String player1 = obj.getJSONObject("playerNames").getString("player1");
         String player2 = obj.getJSONObject("playerNames").getString("player2");
@@ -43,28 +38,12 @@ public class GameJsonParser {
         cardsPlayer1 = cardJsonParser.parseJson(path + cards1, allCards);
         cardsPlayer2 = cardJsonParser.parseJson(path + cards2, allCards);
 
-        Player p1 = new Player(player1, cardsPlayer1);
-        Player p2 = new Player(player2, cardsPlayer2);
+        Player p1 = new Player(player1, cardsPlayer1, game);
+        Player p2 = new Player(player2, cardsPlayer2, game);
 
-        setOwner(cardsPlayer1, p1);
-        setOwner(cardsPlayer2, p2);
         game.initGame(p1, p2);
 
         return game;
     }
 
-    private void setOwner(ArrayList<Card> cards, Player player) {
-        for (Card card : cards) {
-            for (ConcreteCommand command : card.getCommand().getCommands()) {
-                if (command.getClass() == CreateTrap.class) {
-                    ((CreateTrap)command).setPlayer(player);
-                }
-                if (command.getName() == CommandName.CREATE_CREATURE) {
-                    for (Creature c : ((Create)command).getCreatures()) {
-                        c.setOwner(player);
-                    }
-                }
-            }
-        }
-    }
 }

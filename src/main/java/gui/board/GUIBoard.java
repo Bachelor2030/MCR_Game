@@ -1,7 +1,7 @@
 package gui.board;
 
-import gameLogic.Receptors.Player;
-import gameLogic.Receptors.Receptor;
+import gameLogic.receptors.Player;
+import gameLogic.receptors.Receptor;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;

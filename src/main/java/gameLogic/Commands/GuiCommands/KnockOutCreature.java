@@ -1,9 +1,11 @@
-package gameLogic.Commands.GuiCommands;
+package gameLogic.commands.guiCommands;
 
 import gui.GameBoard;
-import gameLogic.Board.Spot;
-import gameLogic.Commands.CommandName;
-import gameLogic.Receptors.LiveReceptor;
+import gameLogic.board.Spot;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.LiveReceptor;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +25,7 @@ public class KnockOutCreature extends GuiCommand {
         JSONObject knockout = super.toJson();
 
         try {
-            knockout.put("position", position.toJson());
+            knockout.put(Messages.JSON_TYPE_POSITION, position.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -33,7 +35,7 @@ public class KnockOutCreature extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // Todo : execution on the GUI
+        // Todo : execution on the gui
         LiveReceptor receptor = (LiveReceptor)gameBoard
                 .getGUIBoard()
                 .getLine(position.getLineNumber())
@@ -43,7 +45,7 @@ public class KnockOutCreature extends GuiCommand {
 
     @Override
     public void undo(GameBoard gameBoard) {
-        // Todo : undo on the GUI
+        // Todo : undo on the gui
         LiveReceptor receptor = (LiveReceptor)gameBoard
                 .getGUIBoard()
                 .getLine(position.getLineNumber())

@@ -1,7 +1,10 @@
-package gameLogic.Commands.GuiCommands;
+package gameLogic.commands.guiCommands;
+
 
 import gui.GameBoard;
-import gameLogic.Commands.CommandName;
+import gameLogic.commands.CommandName;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +24,7 @@ public class RemoveCard extends GuiCommand {
         JSONObject removeCard = super.toJson();
 
         try {
-            removeCard.put("cardid", cardID);
+            removeCard.put(Messages.JSON_TYPE_CARD_ID, cardID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -31,11 +34,11 @@ public class RemoveCard extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // Todo : execution on the GUI
+        // Todo : execution on the gui
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
-        // Todo : undo on the GUI
+        // Todo : undo on the gui
     }
 }

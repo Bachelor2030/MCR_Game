@@ -1,10 +1,12 @@
-package gameLogic.Commands.GuiCommands;
+package gameLogic.commands.guiCommands;
 
 import gui.GameBoard;
-import gameLogic.Board.Spot;
-import gameLogic.Receptors.Creature;
-import gameLogic.Commands.CommandName;
-import gameLogic.Receptors.Receptor;
+import gameLogic.board.Spot;
+import gameLogic.receptors.Creature;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.Receptor;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,8 +34,8 @@ public class Place extends GuiCommand {
         JSONObject place = super.toJson();
 
         try {
-            place.put("cardid", cardID);
-            place.put("position", position.toJson());
+            place.put(Messages.JSON_TYPE_CARD_ID, cardID);
+            place.put(Messages.JSON_TYPE_POSITION, position.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }

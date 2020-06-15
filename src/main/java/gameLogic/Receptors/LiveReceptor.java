@@ -1,6 +1,8 @@
-package gameLogic.Receptors;
+package gameLogic.receptors;
 
-import gameLogic.Board.Spot;
+import gameLogic.board.Spot;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -88,10 +90,10 @@ public abstract class LiveReceptor extends Receptor {
         JSONObject liveReceptor = super.toJson();
         try {
             if (position != null)
-                liveReceptor.put("position", position.toJson());
-            liveReceptor.put("lifepoints", lifePoints);
-            liveReceptor.put("owner", owner.getName());
-            liveReceptor.put("type", type);
+                liveReceptor.put(Messages.JSON_TYPE_POSITION, position.toJson());
+            liveReceptor.put(Messages.JSON_TYPE_LP, lifePoints);
+            liveReceptor.put(Messages.JSON_TYPE_OWNER, owner.getName());
+            liveReceptor.put(Messages.JSON_TYPE, type);
 
         } catch (JSONException e) {
             e.printStackTrace();

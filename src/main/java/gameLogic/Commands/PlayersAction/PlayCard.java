@@ -1,7 +1,9 @@
-package gameLogic.Commands.PlayersAction;
+package gameLogic.commands.playersAction;
 
-import gameLogic.Invocator.Card.Card;
-import gameLogic.Commands.CommandName;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.Player;
+import network.Messages;
+import gameLogic.invocator.card.Card;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +22,7 @@ public class PlayCard extends PlayersAction {
     public JSONObject toJson() {
         JSONObject playCard = super.toJson();
         try {
-            playCard.put("cardid", cardToPlay.getID());
+            playCard.put(Messages.JSON_TYPE_CARD_ID, cardToPlay.getID());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -28,12 +30,12 @@ public class PlayCard extends PlayersAction {
     }
 
     @Override
-    public void execute() {
+    public void execute(Player player) {
         player.playCard(cardToPlay);
     }
 
     @Override
-    public void undo() {
+    public void undo(Player player) {
         player.undoCard(cardToPlay);
     }
 }

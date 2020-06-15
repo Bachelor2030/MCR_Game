@@ -1,10 +1,12 @@
-package gameLogic.Commands.GuiCommands;
+package gameLogic.commands.guiCommands;
 
 import gui.GameBoard;
-import gameLogic.Board.Spot;
-import gameLogic.Receptors.Creature;
-import gameLogic.Commands.CommandName;
-import gameLogic.Receptors.LiveReceptor;
+import gameLogic.board.Spot;
+import gameLogic.receptors.Creature;
+import gameLogic.commands.CommandName;
+import gameLogic.receptors.LiveReceptor;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,20 +37,20 @@ public class ChangePoints extends GuiCommand {
         JSONObject changePoints = super.toJson();
 
         try {
-            changePoints.put("position", position.toJson());
+            changePoints.put(Messages.JSON_TYPE_POSITION, position.toJson());
 
             switch (pointsType) {
                 // Movement Points
                 case 'M':
-                    changePoints.put("newsteps", newPointValue);
+                    changePoints.put(Messages.JSON_TYPE_MP, newPointValue);
                     break;
                 // Attack Points
                 case 'A':
-                    changePoints.put("newattackpoints", newPointValue);
+                    changePoints.put(Messages.JSON_TYPE_AP, newPointValue);
                     break;
                 // Life Points
                 case 'L':
-                    changePoints.put("newlifepoints", newPointValue);
+                    changePoints.put(Messages.JSON_TYPE_LP, newPointValue);
                     break;
                 default: break;
             }

@@ -1,8 +1,11 @@
-package gameLogic.Commands.GuiCommands;
+package gameLogic.commands.guiCommands;
 
 import gui.GameBoard;
-import gameLogic.Commands.CommandName;
-import gameLogic.Commands.ConcreteCommand;
+import gameLogic.commands.CommandName;
+import gameLogic.commands.ConcreteCommand;
+import gameLogic.receptors.Receptor;
+import network.Messages;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,17 +25,22 @@ public abstract class GuiCommand extends ConcreteCommand {
     public abstract void undo(GameBoard gameBoard);
 
     @Override
-    public void execute() {}
+    public Receptor getReceptor() {
+        return null;
+    }
 
     @Override
-    public void undo() {}
+    public void execute(Receptor receptor) {}
+
+    @Override
+    public void undo(Receptor receptor) {}
 
     @Override
     public JSONObject toJson() {
         JSONObject guiCommand = super.toJson();
 
         try {
-            guiCommand.put("player", playerName);
+            guiCommand.put(Messages.JSON_TYPE_PLAYER, playerName);
         } catch (JSONException e) {
             e.printStackTrace();
         }

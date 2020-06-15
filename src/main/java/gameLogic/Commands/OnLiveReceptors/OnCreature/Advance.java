@@ -1,8 +1,7 @@
-package gameLogic.Commands.OnLiveReceptors.OnCreature;
+package gameLogic.commands.onLiveReceptors.onCreature;
 
-import gameLogic.Board.Spot;
-import gameLogic.Receptors.Creature;
-import gameLogic.Commands.CommandName;
+import gameLogic.receptors.Creature;
+import gameLogic.commands.CommandName;
 
 public class Advance extends MoveCreature {
     public Advance() {
@@ -10,31 +9,16 @@ public class Advance extends MoveCreature {
     }
 
     @Override
-    public void execute() {
-        if (receptors == null)
-            return;
-
-        from = new Spot[receptors.length];
-        to   = new Spot[receptors.length];
-        for (int i = 0; i < receptors.length; i++) {
-            from[i] = receptors[i].getPosition();
-            ((Creature) receptors[i]).advance();
-            from[i] = receptors[i].getPosition();
-        }
+    public void execute(Creature creature) {
+        from = creature.getPosition();
+        creature.advance();
+        from = creature.getPosition();
     }
 
     @Override
-    public void undo() {
-        if (receptors == null)
-            return;
-
-        from = new Spot[receptors.length];
-        to   = new Spot[receptors.length];
-        for (int i = 0; i < receptors.length; i++) {
-            from[i] = receptors[i].getPosition();
-            ((Creature) receptors[i]).retreat(((Creature) receptors[i]).getSteps());
-            from[i] = receptors[i].getPosition();
-        }
+    public void undo(Creature creature) {
+        from = creature.getPosition();
+        creature.retreat(creature.getSteps());
+        from = creature.getPosition();
     }
-
 }

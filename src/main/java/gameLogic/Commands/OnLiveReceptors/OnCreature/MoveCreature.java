@@ -1,13 +1,15 @@
-package gameLogic.Commands.OnLiveReceptors.OnCreature;
+package gameLogic.commands.onLiveReceptors.onCreature;
 
-import gameLogic.Board.Spot;
-import gameLogic.Commands.CommandName;
+import gameLogic.board.Spot;
+import gameLogic.commands.CommandName;
+import network.Messages;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public abstract class MoveCreature extends OnCreature {
-    protected Spot[]
+    protected Spot
             from,
             to;
 
@@ -15,19 +17,19 @@ public abstract class MoveCreature extends OnCreature {
         super(name);
     }
 
-    public Spot[] getFrom() {
+    public Spot getFrom() {
         return from;
     }
 
-    public Spot[] getTo() {
+    public Spot getTo() {
         return to;
     }
 
-    public void setFrom(Spot[] from) {
+    public void setFrom(Spot from) {
         this.from = from;
     }
 
-    public void setTo(Spot[] to) {
+    public void setTo(Spot to) {
         this.to = to;
     }
 
@@ -36,13 +38,15 @@ public abstract class MoveCreature extends OnCreature {
         JSONObject moveCreature = super.toJson();
         JSONArray positions = new JSONArray();
         try {
-            for (int i = 0; i < from.length; ++i) {
-                JSONObject position = new JSONObject();
-                position.put("positionFrom", from[i].toJson());
-                position.put("positionTo", to[i].toJson());
-                positions.put(position);
+            JSONObject position = new JSONObject();
+            if(from != null) {
+                position.put(Messages.JSON_TYPE_POSITION_FROM, from.toJson());
             }
-            moveCreature.put("positions", positions);
+            if(to != null) {
+                position.put(Messages.JSON_TYPE_POSITION_TO, to.toJson());
+            }
+            positions.put(position);
+            moveCreature.put(Messages.JSON_TYPE_POSITION, positions);
         } catch (JSONException e) {
             e.printStackTrace();
         }
