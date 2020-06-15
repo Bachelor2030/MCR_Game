@@ -1,7 +1,8 @@
 package gameLogic.receptors;
 
-import gameLogic.commands.Command;
 import gameLogic.commands.ConcreteCommand;
+import gameLogic.commands.Macro;
+import gameLogic.commands.playersAction.Abandon;
 import gameLogic.commands.playersAction.PlayersAction;
 import network.Messages;
 import javafx.scene.image.Image;
@@ -11,9 +12,10 @@ import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public abstract class Receptor {
-    protected Command lastMove;
+    protected Macro lastMove;
     protected String name;
 
     private String imgPath = "src/main/resources/design/images/creatures/empty.jpg";
@@ -36,14 +38,18 @@ public abstract class Receptor {
         return name;
     }
 
+    public Macro getLastMove() {
+        return lastMove;
+    }
+
     public abstract void playTurn(int turn, PlayersAction action);
 
     public void undoLastMove() {
-        lastMove.undo(((ConcreteCommand)lastMove).getReceptor());
+        lastMove.undo(lastMove.getReceptor());
     }
 
     public void redoLastMove(){
-        lastMove.execute(((ConcreteCommand)lastMove).getReceptor());
+        lastMove.execute(lastMove.getReceptor());
     }
 
     @Override
@@ -104,5 +110,17 @@ public abstract class Receptor {
             e.printStackTrace();
         }
         return receptor;
+    }
+
+    public void addLastMove(ConcreteCommand concreteCommand) {
+        lastMove.addCommand(concreteCommand);
+    }
+
+    public void removeLastMove(ConcreteCommand concreteCommand) {
+        lastMove.getCommands().remove(concreteCommand);
+    }
+
+    public void addLastMoves(ArrayList<ConcreteCommand> commands) {
+        lastMove.getCommands().addAll(commands);
     }
 }

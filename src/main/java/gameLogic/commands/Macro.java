@@ -23,6 +23,10 @@ public class Macro implements Command {
         return commands;
     }
 
+    public void addCommand(ConcreteCommand concreteCommand) {
+        commands.add(concreteCommand);
+    }
+
     public ArrayList<Create> getCreateCreature() {
         ArrayList<Create> concreteCommands = new ArrayList<>();
         for (ConcreteCommand concreteCommand : commands) {
