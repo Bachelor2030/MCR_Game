@@ -42,6 +42,7 @@ public class JsonUtil {
             String type = jsonAction.getString(Messages.JSON_TYPE);
 
             if (type.equals(Messages.JSON_TYPE_PLAY)) {
+
                 String playerName = jsonAction.getString(Messages.JSON_TYPE_PLAYER);
                 if (playerName.equals(player.getName())) {
                     CommandName actionName = CommandName.getCommandName(jsonAction.getString(Messages.JSON_TYPE_NAME));

@@ -1,6 +1,7 @@
 package gameLogic;
 
 import gameLogic.board.Board;
+import gameLogic.commands.CommandName;
 import gameLogic.commands.Macro;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.invocator.card.Card;
@@ -129,7 +130,6 @@ public class Game extends Receptor {
     }
 
     public boolean playerSentMessage(int playerId, String receivedMessage) {
-        //TODO: If true, put json updates in serverAdapter.serverState.pushJsonToSend
         Player player = (playerId == firstPlayerId ? player1 : player2);
 
         PlayersAction action = new JsonUtil().getPlayerAction(player, receivedMessage);
@@ -139,9 +139,26 @@ public class Game extends Receptor {
 
         player.playTurn(turn, action);
         lastMove = new Macro(player.getLastMove().getCommands());
-        serverAdapter.sendAction();
+
+        // Put json updates in serverAdapter.serverState.pushJsonToSend
+        serverAdapter.getServerState().pushJsonToSend(lastMove.toJson(), playerId);
 
         // TODO if end turn envoyer end turn (le bon a chaque joueur serverAdapter.serverState.getOtherPlayer(playerId))
+        if (action.getName() == CommandName.END_TURN) {
+            JSONObject end = new JSONObject();
+            try {
+                end.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            serverAdapter.getServerState().pushJsonToSend(end, playerId);
+            try {
+                end.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            serverAdapter.getServerState().pushJsonToSend(end, serverAdapter.getServerState().otherPlayer(playerId));
+        }
         // Pour end game il faudra faire autrement /!\ ne pas s'en occuper, le serveur s'en charge
         return true;
     }
