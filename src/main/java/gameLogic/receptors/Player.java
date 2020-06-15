@@ -11,7 +11,7 @@ import gameLogic.commands.playersAction.PlayersAction;
 import java.util.*;
 
 /**
- * Modelises a player of the game
+ * Modelises a Player of the game
  */
 public class Player extends Receptor {
     private static final int NBR_INIT_CARDS = 3;
@@ -25,26 +25,26 @@ public class Player extends Receptor {
     // Players hand (cards he/she can play in the current turn)
     private ArrayList<Card> hand = new ArrayList<>(NBR_CARDS_MAX_IN_HAND);
 
-    // Historic of the player
+    // Historic of the Player
     private HashMap<Integer, List<Card>> discard = new HashMap<>();
-    // Chests the player must protect
+    // Chests the Player must protect
     private List<Chest> chests = new LinkedList<>();
     // Players creatures that move on the board
     private ArrayList<Creature> creatures = new ArrayList<>();
 
     private int
             actionPoints,   // Players action points
-            currentTurn;    // Current turn the player is in
+            currentTurn;    // Current turn the Player is in
     private boolean
-            abandoned,      // True if the player abandons the game
-            play;           // False when the player ends his/her turn
+            abandoned,      // True if the Player abandons the game
+            play;           // False when the Player ends his/her turn
 
     private Game game;
 
     /**
-     * Creates a player with the given name and deck
-     * @param name the name of the player
-     * @param deck the dock of cards the player has
+     * Creates a Player with the given name and deck
+     * @param name the name of the Player
+     * @param deck the dock of cards the Player has
      */
     public Player(String name, List<Card> deck, Game game) {
         super(name);
@@ -67,7 +67,7 @@ public class Player extends Receptor {
     }
 
     /**
-     * Initializes the player
+     * Initializes the Player
      */
     private void init() {
         abandoned = false;
@@ -99,7 +99,7 @@ public class Player extends Receptor {
     }
 
     /**
-     * Returns the number of cards the player has in his/her hand
+     * Returns the number of cards the Player has in his/her hand
      * @return size of the hand list of cards
      */
     public int getNbrCardsInHand() {
@@ -107,7 +107,7 @@ public class Player extends Receptor {
     }
 
     /**
-     * Returns the number of the player's chests that have been opened
+     * Returns the number of the Player's chests that have been opened
      * @return nbrOpenedChests
      */
     public int getNbChestsDestroyed() {
@@ -121,7 +121,7 @@ public class Player extends Receptor {
     }
 
     /**
-     * Makes the player play given the card
+     * Makes the Player play given the card
      * @param card the card to play
      * @return true if the card can be played, false otherwise
      */
@@ -148,7 +148,7 @@ public class Player extends Receptor {
     }
 
     /**
-     * Get the discard pile of the player
+     * Get the discard pile of the Player
      * @returna hashmap representing the discrad pile
      */
     public HashMap<Integer, List<Card>> getDiscard() {
@@ -157,7 +157,7 @@ public class Player extends Receptor {
 
     /**
      * Puts the given card in the players hand
-     * @param card the card to give to the player
+     * @param card the card to give to the Player
      */
     public void giveCard(Card card) {
         if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
@@ -166,7 +166,7 @@ public class Player extends Receptor {
     }
 
     /**
-     * Makes the player discard the given cardd, it will put it in the discard pile
+     * Makes the Player discard the given cardd, it will put it in the discard pile
      * @param card the card to discard
      */
     public void discardCard(Card card) {
@@ -182,7 +182,7 @@ public class Player extends Receptor {
     }
 
     /**
-     * Makes the player draw a card in his/her deck
+     * Makes the Player draw a card in his/her deck
      * @return the card that went from the players deck to his/her hand
      */
     public Card drawCard() {
