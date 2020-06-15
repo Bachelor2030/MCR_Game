@@ -9,7 +9,7 @@ public final class Messages {
     public static final String JSON_TYPE_UNKNOWN = "Nani?";
 
     public static final String JSON_TYPE_HELLO = "Hello";
-    public static final String JSON_TYPE_WAIT_PLAYER = "Waiting for player 2";
+    public static final String JSON_TYPE_WAIT_PLAYER = "Waiting for Player 2";
     public static final String JSON_TYPE_INIT = "Init";
 
     public static final String JSON_TYPE_GOODBYE = "Goodbye";
@@ -17,7 +17,7 @@ public final class Messages {
     public static final String JSON_TYPE_GAME_END = "Game end";
     public static final String JSON_TYPE_GAME_START = "Game start";
 
-    public static final String JSON_TYPE_PLAYERNAME = "player name";
+    public static final String JSON_TYPE_PLAYERNAME = "Player name";
     public static final String JSON_TYPE_ENEMYNAME = "enemy name";
 
     public static final String JSON_TYPE_TURN = "turn";
@@ -44,7 +44,7 @@ public final class Messages {
     public static final String JSON_TYPE_COMMANDS = "commands";
     public static final String JSON_TYPE_ID = "id";
     public static final String JSON_TYPE_COST = "cost";
-    public static final String JSON_TYPE_PLAYER = "player";
+    public static final String JSON_TYPE_PLAYER = "Player";
     public static final String JSON_TYPE_RECEPTOR = "livereceptor";
     public static final String JSON_TYPE_POSITION_TO = "position to";
     public static final String JSON_TYPE_POSITION_FROM = "position from";

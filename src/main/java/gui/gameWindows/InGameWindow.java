@@ -85,7 +85,7 @@ public class InGameWindow extends GameWindow {
   }
 
   /**
-   * @return les informations du player
+   * @return les informations du Player
    */
   private VBox getPlayerInformations(String labelTitle) throws FileNotFoundException {
     VBox informationPannelUser = new VBox();

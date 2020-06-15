@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
- * Chest owned by a player. Said player must protect it by using creatures and spells
+ * Chest owned by a Player. Said Player must protect it by using creatures and spells
  */
 public class Chest extends LiveReceptor {
     // Max life points for a chest
@@ -20,7 +20,7 @@ public class Chest extends LiveReceptor {
     /**
      * Create a chest with the given name and owner
      * @param name the name of the current chest
-     * @param owner the player that owns the current chest
+     * @param owner the Player that owns the current chest
      */
     public Chest(String name, Player owner) {
         super(name, CHEST_LIFE_POINTS, "Chest");

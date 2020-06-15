@@ -87,12 +87,12 @@ public class ServerAdapter {
             }
 
             while (serverState.getPlayerCount() < 2) {
-                printMessage(MessageLevel.Info, receptionistClassName(), "Waiting (blocking) for a new player on port " + port);
+                printMessage(MessageLevel.Info, receptionistClassName(), "Waiting (blocking) for a new Player on port " + port);
 
                 try {
                     Socket clientSocket = serverSocket.accept();
                     serverState.incrementPlayerCount();
-                    printMessage(MessageLevel.Info, receptionistClassName(), "A new player has arrived. Starting a new thread and delegating work to a new servant...");
+                    printMessage(MessageLevel.Info, receptionistClassName(), "A new Player has arrived. Starting a new thread and delegating work to a new servant...");
                     new Thread(new ServantWorker(clientSocket, serverState.getPlayerCount())).start();
                 } catch (IOException ex) {
                     printMessage(MessageLevel.Error, receptionistClassName(), ex.toString());
@@ -101,7 +101,7 @@ public class ServerAdapter {
             printMessage(receptionistClassName(), "Two players have connected to the server. Stop listening for new connexions.");
 
 
-            // Wait for player names to have been set
+            // Wait for Player names to have been set
             while (!serverState.playerNamesSet()) {}
 
             CardJsonParser cardJsonParser = new CardJsonParser();
@@ -127,7 +127,7 @@ public class ServerAdapter {
             public ServantWorker(Socket clientSocket, int playerId) {
                 this.playerId = playerId;
 
-                printMessage(servantClassName(playerId), "Starting worker for player " + playerId);
+                printMessage(servantClassName(playerId), "Starting worker for Player " + playerId);
                 try {
                     this.clientSocket = clientSocket;
                     inBufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -179,7 +179,7 @@ public class ServerAdapter {
                                     }
                                 }
 
-                                // Wait for backend to signify it's next player's turn
+                                // Wait for backend to signify it's next Player's turn
                                 while (serverState.getPlayingId() != playerId) {}
 
                                 // TODO: Send "your turn" from logic class?

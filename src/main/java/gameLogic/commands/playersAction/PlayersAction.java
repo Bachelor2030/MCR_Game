@@ -1,8 +1,8 @@
 package gameLogic.commands.playersAction;
 
-import gameLogic.receptors.Player;
 import gameLogic.commands.CommandName;
 import gameLogic.commands.ConcreteCommand;
+import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import network.Messages;
 import org.json.JSONException;

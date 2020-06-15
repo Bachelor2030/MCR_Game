@@ -1,8 +1,7 @@
 package gameLogic.commands;
 
-import gameLogic.Game;
-import gameLogic.receptors.Player;
 import gameLogic.board.Spot;
+import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import gameLogic.receptors.Trap;
 import network.Messages;

@@ -17,9 +17,13 @@ import java.io.FileNotFoundException;
 
 public class CharacterWindow extends GameWindow
 {
-  private String  DARK_ASCII_PATH = "src/main/resources/design/images/characters/character.png",
-                  ELODIE_PATH = "src/main/resources/design/images/characters/elodie.png",
-                  CLARUSSO_PATH = "src/main/resources/design/images/characters/clarisse.png";
+  private final String
+          DARK_ASCII_PATH = "src/main/resources/design/images/characters/character.png",
+          ELODIE_PATH = "src/main/resources/design/images/characters/elodie.png",
+          CLARUSSO_PATH = "src/main/resources/design/images/characters/clarisse.png",
+          MATT_PATH = "src/main/resources/design/images/characters/matt.png",
+          GUS_PATH = "src/main/resources/design/images/characters/gus.png";
+
   private VBox corps;
 
   private ToggleGroup radioButtonGroup;
@@ -58,7 +62,17 @@ public class CharacterWindow extends GameWindow
     clarisseBox.setAlignment(Pos.CENTER);
     clarisseBox.setSpacing(20);
 
-    characters.getChildren().addAll(darkAsciiBox,elodieBox,clarisseBox);
+    //GUS
+    VBox gusBox =  createToggle(radioButtonGroup, GUS_PATH, "Gus", false);
+    gusBox.setAlignment(Pos.CENTER);
+    gusBox.setSpacing(20);
+
+    //MATT
+    VBox mattBox =  createToggle(radioButtonGroup, MATT_PATH, "Matt", false);
+    mattBox.setAlignment(Pos.CENTER);
+    mattBox.setSpacing(20);
+
+    characters.getChildren().addAll(darkAsciiBox,elodieBox,clarisseBox, gusBox, mattBox);
     characters.setSpacing(70);
     characters.setAlignment(Pos.CENTER);
     corps.getChildren().addAll(title, characters);
@@ -106,6 +120,8 @@ public class CharacterWindow extends GameWindow
     {
       case "Elodie"     : return ELODIE_PATH;
       case "Clarusso"   : return CLARUSSO_PATH;
+      case "Gus"        : return GUS_PATH;
+      case "Matt"       : return MATT_PATH;
       default : return DARK_ASCII_PATH;
     }
   }

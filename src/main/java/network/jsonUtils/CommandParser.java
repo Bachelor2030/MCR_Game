@@ -21,7 +21,7 @@ public class CommandParser {
         for (int commandNo = 0; commandNo < jsonCommands.length(); ++commandNo) {
             JSONObject command = jsonCommands.getJSONObject(commandNo);
 
-            String player = command.getString("player");
+            String player = command.getString("Player");
             CommandName name = CommandName.getCommandName(command.getString("name"));
 
             ConcreteCommand concreteCommand = null;
