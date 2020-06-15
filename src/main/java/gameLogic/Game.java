@@ -143,7 +143,7 @@ public class Game extends Receptor {
         // Put json updates in serverAdapter.serverState.pushJsonToSend
         serverAdapter.getServerState().pushJsonToSend(lastMove.toJson(), playerId);
 
-        // TODO if end turn envoyer end turn (le bon a chaque joueur serverAdapter.serverState.getOtherPlayer(playerId))
+        // End turn envoyer end turn (le bon a chaque joueur serverAdapter.serverState.getOtherPlayer(playerId))
         if (action.getName() == CommandName.END_TURN) {
             JSONObject end = new JSONObject();
             try {
