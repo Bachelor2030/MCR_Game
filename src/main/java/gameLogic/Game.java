@@ -1,6 +1,7 @@
 package gameLogic;
 
 import gameLogic.board.Board;
+import gameLogic.commands.Macro;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.invocator.card.Card;
 import gameLogic.receptors.Player;
@@ -26,6 +27,7 @@ public class Game extends Receptor {
             firstPlayerId;
     private Board board;
     private ServerAdapter serverAdapter;
+
 
     public Game(ServerAdapter serverAdapter, int nbr_lines, int nbr_spots) {
         this.serverAdapter = serverAdapter;
@@ -130,12 +132,17 @@ public class Game extends Receptor {
         //TODO: If true, put json updates in serverAdapter.serverState.pushJsonToSend
         Player player = (playerId == firstPlayerId ? player1 : player2);
 
-        PlayersAction action = new JsonUtil().getPlayerAction(receivedMessage);
+        PlayersAction action = new JsonUtil().getPlayerAction(player, receivedMessage);
         if (action == null) {
             return false;
         }
-        player.playTurn(turn, action);
 
+        player.playTurn(turn, action);
+        lastMove = new Macro(player.getLastMove().getCommands());
+        serverAdapter.sendAction();
+
+        // TODO if end turn envoyer end turn (le bon a chaque joueur serverAdapter.serverState.getOtherPlayer(playerId))
+        // Pour end game il faudra faire autrement /!\ ne pas s'en occuper, le serveur s'en charge
         return true;
     }
 

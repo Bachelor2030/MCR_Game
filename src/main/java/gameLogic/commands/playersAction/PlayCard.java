@@ -31,7 +31,10 @@ public class PlayCard extends PlayersAction {
 
     @Override
     public void execute(Player player) {
-        player.playCard(cardToPlay);
+        if(!player.playCard(cardToPlay)) {
+            player.removeLastMove(this);
+        }
+        player.addLastMoves(cardToPlay.getCommand().getCommands());
     }
 
     @Override
