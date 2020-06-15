@@ -114,7 +114,7 @@ public class Game extends Receptor {
             }
             initJSON.put(Messages.JSON_TYPE_CARDS, cardsJSON);
 
-            gameJSON.put(Messages.JSON_TYPE_INIT, initJSON);
+            gameJSON.put(Messages.JSON_GAMESTATE, initJSON);
         } catch (JSONException e) {
             e.printStackTrace();
         }
