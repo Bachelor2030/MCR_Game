@@ -30,8 +30,8 @@ public class ParserLauncher {
         Creature pier = new Creature("pier", 1, 1, 1), seb = new Creature("Sebas-chan", 2, 2, 2);
         pier.setOwner(new Player("Clarusso", null));
         seb.setOwner(new Player("Clarusso", null));
-        pier.setOriginCard(new Card(1, "Pier", CardType.CREATURE, 12));
-        seb.setOriginCard(new Card(2, "Seb", CardType.CREATURE, 13));
+        pier.setOriginCard(new card(1, "Pier", CardType.CREATURE, 12));
+        seb.setOriginCard(new card(2, "Seb", CardType.CREATURE, 13));
 
         create.setCreatures(new Creature[]{pier, seb});
         create.setPositions(new Position[]{new Position(new GUILine(1), 1), new Position(new GUILine(2), 2)});
