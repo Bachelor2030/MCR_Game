@@ -26,12 +26,14 @@ public abstract class PlayersAction extends ConcreteCommand {
     @Override
     public void execute(Receptor receptor) {
         player = (Player) receptor;
+        player.addLastMove(this);
         execute((Player)receptor);
     }
 
     @Override
     public void undo(Receptor receptor) {
         player = (Player) receptor;
+        player.removeLastMove(this);
         undo((Player)receptor);
     }
 
