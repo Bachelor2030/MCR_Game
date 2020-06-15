@@ -1,6 +1,7 @@
 package network.jsonUtils;
 
 import gameLogic.invocator.card.Card;
+import network.Messages;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,5 +53,19 @@ public class CardJsonParser {
         }
 
         return cards;
+    }
+
+    public Card parseCard(String json) {
+        Card card = null;
+        try {
+            JSONObject jsonCard = new JSONObject(json);
+            String name = jsonCard.getString(Messages.JSON_TYPE_NAME);
+            // TODO je sais pas ce que je fais
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return card;
     }
 }
