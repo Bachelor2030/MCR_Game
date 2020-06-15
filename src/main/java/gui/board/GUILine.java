@@ -66,21 +66,21 @@ public class GUILine {
         chests.add(new Chest("",player1));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((chests.get(0).getImageView()), (GUISpots.get(spot).getImageView()));
+                .addAll((chests.get(0).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
       }
       else if(spot == 11) {
         chests.add(new Chest("",player2));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((chests.get(1).getImageView()), (GUISpots.get(spot).getImageView()));
+                .addAll((chests.get(1).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
       }
       else {
         receptors.add(new Creature("unknown", 0, 0, 0));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((receptors.get(indexCreature++).getImageView()), (GUISpots.get(spot).getImageView()));
+                .addAll((receptors.get(indexCreature++).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
       }
 
