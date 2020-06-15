@@ -131,6 +131,9 @@ public class Game extends Receptor {
         Player player = (playerId == firstPlayerId ? player1 : player2);
 
         PlayersAction action = new JsonUtil().getPlayerAction(receivedMessage);
+        if (action == null) {
+            return false;
+        }
         player.playTurn(turn, action);
 
         return true;
