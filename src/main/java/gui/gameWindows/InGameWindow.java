@@ -3,6 +3,7 @@ package gui.gameWindows;
 import gameLogic.receptors.Player;
 import gui.GUICard;
 import gui.board.GUIBoard;
+import gui.receptors.GUIPlayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class InGameWindow extends GameWindow {
   private GridPane gridIslandsPanel;
   private GUIBoard GUIBoard;
-  private Player player1, player2;
+  private GUIPlayer player1, player2;
   ArrayList<GUICard> handPlayer;
 
   public InGameWindow(
@@ -27,8 +28,8 @@ public class InGameWindow extends GameWindow {
       HBox navigation,
       GridPane gridIslandsPanel,
       GUIBoard GUIBoard,
-      Player player1,
-      Player player2,
+      GUIPlayer player1,
+      GUIPlayer player2,
       boolean isGaming,
       Stage stage,
       ArrayList<GUICard> handPlayer)
@@ -48,10 +49,10 @@ public class InGameWindow extends GameWindow {
     racine.setCenter(displayInGameField());
 
     // On créé l'espace d'infos du joueur 1
-    racine.setLeft(getPlayerInformations("Player 1"));
+    racine.setLeft(getPlayerInformations(player1.getName()));
 
     // On créé l'espace d'infos du joueur 1
-    racine.setRight(getPlayerInformations("Player 2"));
+    racine.setRight(getPlayerInformations(player2.getName()));
 
     // On crée un footer dans le BorderPane
     racine.setBottom(footerBar());
@@ -87,7 +88,7 @@ public class InGameWindow extends GameWindow {
   private VBox getPlayerInformations(String labelTitle) throws FileNotFoundException {
     VBox informationPannelUser = new VBox();
     // on set l'image de player 1
-    if (labelTitle.equals("Player 1")) {
+    if (labelTitle.equals(player1.getName())) {
       ImageView imageView = new ImageView(player1.getImage());
       imageView.setFitWidth(player1.getImage().getWidth() / 2.5);
       imageView.setFitHeight(player1.getImage().getHeight() / 2.5);
@@ -123,12 +124,12 @@ public class InGameWindow extends GameWindow {
    *
    * @return le footer
    */
-  private HBox footerBar() throws FileNotFoundException {
+  private HBox footerBar() {
 
     // On définit une boxe horizontale qui définira l'espace "footer" -> cartes du joueur
     HBox footerCardsPlayer = new HBox();
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
-    footerCardsPlayer.getStyleClass().add("footer-header-hbox");
+    //footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
     for (GUICard card : handPlayer) {
       card.getView().setFitWidth(0.3);
@@ -138,7 +139,7 @@ public class InGameWindow extends GameWindow {
     }
 
     footerCardsPlayer.setVisible(true);
-    //footerCardsPlayer.getStyleClass().add("corps-gridPane");
+    footerCardsPlayer.getStyleClass().add("corps-gridPane");
 
     return footerCardsPlayer;
   }

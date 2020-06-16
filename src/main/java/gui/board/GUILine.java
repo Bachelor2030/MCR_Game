@@ -4,6 +4,8 @@ import gameLogic.receptors.Chest;
 import gameLogic.receptors.Creature;
 import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
+import gui.receptors.GUIChest;
+import gui.receptors.GUIPlayer;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -30,7 +32,7 @@ public class GUILine {
   private LinkedList<Receptor> receptors;
 
   //La liste de trésors
-  private LinkedList<Chest> chests;
+  private LinkedList<GUIChest> chests;
 
   private VBox vBox;
   private GridPane gridPane;
@@ -48,7 +50,7 @@ public class GUILine {
    *
    * @param noLine : le numéro de la ligne
    */
-  public GUILine(int noLine, GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
+  public GUILine(int noLine, GridPane gridPane, VBox vbox, GUIPlayer player1, GUIPlayer player2) throws IOException {
     this.noLine = noLine;
     receptors = new LinkedList<>(); // on initialise la liste de créatures.
     GUISpots = new LinkedList<>(); // on initialise la liste de GUISpots.
@@ -63,14 +65,14 @@ public class GUILine {
       GUISpots.add(new GUISpot());
       if(spot == 0)
       {
-        chests.add(new Chest("",player1));
+        chests.add(new GUIChest("",player1));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
                 .addAll((chests.get(0).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
       }
       else if(spot == 11) {
-        chests.add(new Chest("",player2));
+        chests.add(new GUIChest("",player2));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
                 .addAll((chests.get(1).getImageView()), (GUISpots.get(spot).getButton()));

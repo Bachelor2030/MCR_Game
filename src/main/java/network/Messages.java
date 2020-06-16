@@ -48,6 +48,7 @@ public final class Messages {
     public static final String JSON_TYPE_RECEPTOR = "live receptor";
     public static final String JSON_TYPE_POSITION_TO = "position to";
     public static final String JSON_TYPE_POSITION_FROM = "position from";
+    public static final String JSON_TYPE_ENEMY_IMAGE = "enemy image";
 
 
     private Messages() {

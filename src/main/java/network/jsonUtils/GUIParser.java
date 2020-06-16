@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GUIParser {
@@ -80,13 +81,15 @@ public class GUIParser {
      * Récupère le nom de l'adversaire
      * @return
      */
-    public String getEnemyFromInit() {
+    public String[] getEnemyFromInit() {
+        String[] enemy = new String[2];
         try {
-            return gameState.getString(Messages.JSON_TYPE_ENEMYNAME);
+            enemy[0] = gameState.getString(Messages.JSON_TYPE_ENEMYNAME);
+            //TODO enemy[1] = gameState.getString(Messages.JSON_TYPE_ENEMY_IMAGE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return "";
+        return enemy;
     }
 /*
     public ArrayList<Card> readInit(String jsonInit) {
