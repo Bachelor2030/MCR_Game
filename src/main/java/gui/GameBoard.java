@@ -2,7 +2,6 @@ package gui;
 
 import gameLogic.commands.guiCommands.EndGame;
 import gameLogic.commands.playersAction.EndTurn;
-import gameLogic.invocator.card.Card;
 import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import gui.board.GUIBoard;
@@ -23,16 +22,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import network.ClientAdapter;
 import network.ClientRunner;
-import network.jsonUtils.CardJsonParser;
 import network.jsonUtils.GUIParser;
-import network.jsonUtils.JsonUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
-import static network.jsonUtils.ParserLauncher.parseJsonCards;
 
 // TODO : commande qui font des actions graphiques. (genre déplacer créature)
 
@@ -55,9 +50,8 @@ public class GameBoard extends Application {
   private BorderPane racine;
 
   private Player player1, player2;
-  private ArrayList<Card> deck1;
-  private ArrayList<Card> deck2;
-  private ArrayList<Card> all;
+  private GUIParser guiParser; // informations du tour pour le joueur
+  private ArrayList<GUICard> handPlayer;
   private final String jsonPath = "src/main/resources/json/";
   private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
 
@@ -102,14 +96,6 @@ public class GameBoard extends Application {
     stage.setTitle("MCR - BACHELOR HUNTERZ");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
-
-    //TODO corriger cette merde
-    CardJsonParser cardJsonParser = new CardJsonParser();
-    //toutes les cartes du jeu au complet
-    all = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
-    deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", all);
-    deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", all);
-
   }
 
   public void exitGame() {
@@ -213,11 +199,11 @@ public class GameBoard extends Application {
               try {
                 // On initialise les données
                 namePlayer1 = parameterWindow.getPlayerNameField().getText();
-                IpPlayer1   = parameterWindow.getPlayerIpField().getText();
+                IpPlayer1 = parameterWindow.getPlayerIpField().getText();
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
 
-
-                clientAdapter = new ClientAdapter(this, IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
+                clientAdapter =
+                    new ClientAdapter(this, IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
                 new Thread(new ClientRunner(clientAdapter)).start();
 
                 // On passe à la fenêtre de choix de character
@@ -258,12 +244,17 @@ public class GameBoard extends Application {
 
     characterWindow.getBody().getChildren().add(validateImageCharacter.getButton());
     racine.setCenter(characterWindow.getBody());
-
   }
 
   private void waitingForPlayer() throws IOException {
-    WaitingWindow waitingWindow = new WaitingWindow(racine, defineHeader(false), false, currentStage);
+    WaitingWindow waitingWindow =
+        new WaitingWindow(racine, defineHeader(false), false, currentStage);
     racine.setCenter(waitingWindow.getBody());
+    boolean temp = true; // TODO à remplacer
+    /*
+
+    while(temp) {
+
 
     while(!clientAdapter.getClientSharedState().isFinishedInit()) {
       //racine.setCenter(waitingWindow.getBody());
@@ -273,6 +264,8 @@ public class GameBoard extends Application {
     //TODO pecho info joueur2
     //TODO initialisation deck
 
+
+    */
     inGame(racine);
   }
 
@@ -309,7 +302,7 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
-                // blablabla définir ce que fait le bouton "valider tour" ici.
+                //TODO : envoyer au backend
                 EndTurn endTurn = new EndTurn();
                 System.out.println("you hit the validate button...");
               });
@@ -326,7 +319,7 @@ public class GameBoard extends Application {
                 endGame.setPlayerState('L');
 
                 // TODO send this to backend
-                //System.out.println(endGame.toJson());
+                // System.out.println(endGame.toJson());
                 System.out.println("you hit the abandon button...");
               });
       buttons.add(validateTourButton);
@@ -362,7 +355,7 @@ public class GameBoard extends Application {
             player1,
             player2,
             isGaming,
-            currentStage);
+            currentStage, handPlayer);
   }
 
   public GUIBoard getGUIBoard() {
@@ -382,12 +375,13 @@ public class GameBoard extends Application {
     this.clientAdapter = clientAdapter;
   }
 
-  public ArrayList<Card> getDeck1() {
-    return deck1;
+  public ArrayList<GUICard> getHandPlayer() {
+    return handPlayer;
   }
 
   public void sendInit(String initMessage) {
     GUIParser guiParser = new GUIParser(initMessage);
     // TODO Récup' les infos du deck et tout le bordel et l'afficher ou il faut
+    handPlayer = guiParser.getCardsFromInit();
   }
 }
