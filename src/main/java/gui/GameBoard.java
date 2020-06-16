@@ -264,17 +264,16 @@ public class GameBoard extends Application {
   private void waitingForPlayer() throws IOException {
     WaitingWindow waitingWindow = new WaitingWindow(racine, defineHeader(false), false, currentStage);
     racine.setCenter(waitingWindow.getBody());
-    boolean temp = true; //à remplacer
-    /*
 
-    while(temp) {
-
+    while(!clientAdapter.getClientSharedState().isFinishedInit()) {
+      //racine.setCenter(waitingWindow.getBody());
+      waitingWindow.execute();
     }
+
     //TODO pecho info joueur2
     //TODO initialisation deck
-    inGame(racine);
 
-    */
+    inGame(racine);
   }
 
   /**
