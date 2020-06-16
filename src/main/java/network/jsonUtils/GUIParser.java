@@ -10,11 +10,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class GUIParser {
-    public ArrayList<GUICard> getCardsFromInit(String jsonInit) {
+    private String jsonMessage;
+    private JSONObject jsonObject;
+
+    public GUIParser(String jsonMessage) {
+        this.jsonMessage = jsonMessage;
+        try {
+            jsonObject = new JSONObject(jsonMessage);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<GUICard> getCardsFromInit() {
         ArrayList<GUICard> playerCards = new ArrayList<>();
         try {
-            JSONObject init = new JSONObject(jsonInit);
-            JSONObject gameStat = init.getJSONObject(Messages.JSON_GAMESTATE);
+            JSONObject gameStat = jsonObject.getJSONObject(Messages.JSON_GAMESTATE);
             JSONArray cards = gameStat.getJSONArray(Messages.JSON_TYPE_CARDS);
 
             for (int c = 0; c < cards.length(); c++) {
@@ -32,4 +43,23 @@ public class GUIParser {
         }
         return playerCards;
     }
+
+    public String getTurnFromInit() {
+        try {
+            return jsonObject.getString(Messages.JSON_TYPE_TURN);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getPlayerFromInit() {
+        try {
+            return jsonObject.getString(Messages.JSON_TYPE_PLAYERNAME);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
