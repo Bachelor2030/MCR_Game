@@ -7,10 +7,7 @@ import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
-import gui.gameWindows.CharacterWindow;
-import gui.gameWindows.InGameWindow;
-import gui.gameWindows.InstructionWindow;
-import gui.gameWindows.ParameterWindow;
+import gui.gameWindows.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,14 +25,11 @@ import network.ClientAdapter;
 import network.ClientRunner;
 import network.jsonUtils.CardJsonParser;
 import network.jsonUtils.JsonUtil;
-import network.states.ClientState;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import static network.jsonUtils.ParserLauncher.parseJsonCards;
 
@@ -110,6 +104,7 @@ public class GameBoard extends Application {
 
     //TODO corriger cette merde
     CardJsonParser cardJsonParser = new CardJsonParser();
+    //toutes les cartes du jeu au complet
     all = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
     deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", all);
     deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", all);
@@ -237,7 +232,7 @@ public class GameBoard extends Application {
   }
 
   /** Permet de choisir le personnage qui représentera le Player. */
-  private void chooseCharacter() throws FileNotFoundException {
+  private void chooseCharacter() throws IOException {
     CharacterWindow characterWindow =
         new CharacterWindow(racine, defineHeader(true), currentStage, WIDTH_WINDOW, player1);
 
@@ -247,21 +242,38 @@ public class GameBoard extends Application {
         .getButton()
         .setOnAction(
             event -> {
-              isGaming = true;
               try {
+                isGaming = false;
+
                 // On récupère la sélection du joueur
                 ((Receptor) player1).setImgPath(characterWindow.defineSelectedUrl());
 
                 // On passe à la fenêtre d'attente d'adversaire
-                // TODO : remplacer par fenêtre de chargement d'adversaire.
-                inGame(racine);
+                waitingForPlayer();
               } catch (IOException e) {
                 e.printStackTrace();
               }
             });
 
-    characterWindow.getCorps().getChildren().add(validateImageCharacter.getButton());
-    racine.setCenter(characterWindow.getCorps());
+    characterWindow.getBody().getChildren().add(validateImageCharacter.getButton());
+    racine.setCenter(characterWindow.getBody());
+
+  }
+
+  private void waitingForPlayer() throws IOException {
+    WaitingWindow waitingWindow = new WaitingWindow(racine, defineHeader(false), false, currentStage);
+    racine.setCenter(waitingWindow.getBody());
+    boolean temp = true; //à remplacer
+    /*
+
+    while(temp) {
+
+    }
+    //TODO pecho info joueur2
+    //TODO initialisation deck
+    inGame(racine);
+
+    */
   }
 
   /**
@@ -314,8 +326,7 @@ public class GameBoard extends Application {
                 endGame.setPlayerState('L');
 
                 // TODO send this to backend
-                System.out.println(endGame.toJson());
-
+                //System.out.println(endGame.toJson());
                 System.out.println("you hit the abandon button...");
               });
       buttons.add(validateTourButton);
@@ -369,5 +380,9 @@ public class GameBoard extends Application {
 
   public void setClientAdapter(ClientAdapter clientAdapter) {
     this.clientAdapter = clientAdapter;
+  }
+
+  public ArrayList<Card> getDeck1() {
+    return deck1;
   }
 }

@@ -126,14 +126,13 @@ public class InGameWindow extends GameWindow {
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
-    // À REFACTORER SA MERE DANS UNE AUTRE CLASSE -----------
     for (int i = 0; i < 5; i++) {
       FileInputStream imagePath =
-          new FileInputStream("src/main/resources/design/images/cards/cardSample.png");
+          new FileInputStream("src/main/resources/design/images/cards/spell.png");
       Image image = new Image(imagePath);
       ImageView imageView = new ImageView(image);
-      imageView.setFitWidth(image.getWidth() * 0.7);
-      imageView.setFitHeight(image.getHeight() * 0.7);
+      imageView.setFitWidth(image.getWidth() * 0.3);
+      imageView.setFitHeight(image.getHeight() * 0.3);
       // -------------------------------------
       footerCardsPlayer.getChildren().add(imageView);
       footerCardsPlayer.getStyleClass().add("corps-gridPane");

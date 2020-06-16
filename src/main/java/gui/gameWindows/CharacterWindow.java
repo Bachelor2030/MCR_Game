@@ -24,7 +24,7 @@ public class CharacterWindow extends GameWindow
           MATT_PATH = "src/main/resources/design/images/characters/matt.png",
           GUS_PATH = "src/main/resources/design/images/characters/gus.png";
 
-  private VBox corps;
+  private VBox body;
 
   private ToggleGroup radioButtonGroup;
 
@@ -35,9 +35,9 @@ public class CharacterWindow extends GameWindow
   }
 
   private void generate() throws FileNotFoundException {
-    corps = new VBox();
-    corps.getStyleClass().add("parameters-body");
-    corps.prefWidthProperty().bind(stage.widthProperty().multiply(0.80));
+    body = new VBox();
+    body.getStyleClass().add("parameters-body");
+    body.prefWidthProperty().bind(stage.widthProperty().multiply(0.80));
     Label title = new Label("Veuillez choisir un personnage :");
     title.getStyleClass().add("instructions-title");
 
@@ -75,9 +75,9 @@ public class CharacterWindow extends GameWindow
     characters.getChildren().addAll(darkDoniniBox,elodieBox,clarisseBox, gusBox, mattBox);
     characters.setSpacing(70);
     characters.setAlignment(Pos.CENTER);
-    corps.getChildren().addAll(title, characters);
-    corps.setAlignment(Pos.CENTER);
-    corps.setSpacing(70);
+    body.getChildren().addAll(title, characters);
+    body.setAlignment(Pos.CENTER);
+    body.setSpacing(70);
 
   }
 
@@ -105,8 +105,8 @@ public class CharacterWindow extends GameWindow
     return box;
   }
 
-  public VBox getCorps() {
-    return corps;
+  public VBox getBody() {
+    return body;
   }
 
   public ToggleGroup getRadioButtonGroup() {
