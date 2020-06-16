@@ -24,6 +24,7 @@ import javafx.stage.StageStyle;
 import network.ClientAdapter;
 import network.ClientRunner;
 import network.jsonUtils.CardJsonParser;
+import network.jsonUtils.GUIParser;
 import network.jsonUtils.JsonUtil;
 
 import java.io.FileInputStream;
@@ -216,7 +217,7 @@ public class GameBoard extends Application {
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
 
 
-                clientAdapter = new ClientAdapter(IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
+                clientAdapter = new ClientAdapter(this, IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
                 new Thread(new ClientRunner(clientAdapter)).start();
 
                 // On passe à la fenêtre de choix de character
@@ -388,5 +389,10 @@ public class GameBoard extends Application {
 
   public ArrayList<Card> getDeck1() {
     return deck1;
+  }
+
+  public void sendInit(String initMessage) {
+    GUIParser guiParser = new GUIParser(initMessage);
+    // TODO Récup' les infos du deck et tout le bordel et l'afficher ou il faut
   }
 }
