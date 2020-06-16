@@ -1,6 +1,6 @@
 package network.utilities;
 
-import network.states.ClientState;
+import network.states.ClientThreadState;
 import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +46,7 @@ public class JsonClient {
         return obj.getString(Messages.JSON_TYPE);
     }
 
-    public static ClientState getStateFromTurnInit(String jsonMessage) throws JSONException {
+    public static ClientThreadState getStateFromTurnInit(String jsonMessage) throws JSONException {
         JSONObject obj = new JSONObject(jsonMessage);
 
         JSONObject gameState = obj.getJSONObject(Messages.JSON_GAMESTATE);
@@ -55,12 +55,12 @@ public class JsonClient {
 
         if (turn.equals(Messages.JSON_TYPE_YOUR_TURN)) {
             printMessage(clientClassName(), "It's your turn");
-            return ClientState.SERVER_LISTENING;
+            return ClientThreadState.SERVER_LISTENING;
         } else if (turn.equals(Messages.JSON_TYPE_WAIT_TURN)) {
             printMessage(clientClassName(), "Wait for your turn");
-            return ClientState.CLIENT_LISTENING;
+            return ClientThreadState.CLIENT_LISTENING;
         } else {
-            return ClientState.ERROR;
+            return ClientThreadState.ERROR;
         }
     }
 }

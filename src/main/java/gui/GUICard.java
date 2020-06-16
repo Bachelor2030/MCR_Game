@@ -3,7 +3,7 @@ package gui;
 import gameLogic.invocator.card.CardType;
 
 public class GUICard {
-    private final int id;             // the ID of the card
+    private final int id;       // the ID of the card
     private String name;        // the name of the card
     private int cost;           // the cost (in action points)
     private CardType type;      //type de la carte

@@ -204,7 +204,7 @@ public class GameBoard extends Application {
               try {
                 // On initialise les données
                 namePlayer1 = parameterWindow.getPlayerNameField().getText();
-                IpPlayer1 = parameterWindow.getPlayerIpField().getText();
+                IpPlayer1   = parameterWindow.getPlayerIpField().getText();
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
 
 
