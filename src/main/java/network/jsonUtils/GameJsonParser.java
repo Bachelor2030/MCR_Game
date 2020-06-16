@@ -6,6 +6,8 @@ import gameLogic.invocator.card.Card;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import network.jsonUtils.CardJsonParser;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
