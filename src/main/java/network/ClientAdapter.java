@@ -1,5 +1,7 @@
 package network;
 
+import gameLogic.invocator.card.CardType;
+import gui.GUICard;
 import gui.GameBoard;
 import network.jsonUtils.GUIParser;
 import network.states.ClientSharedState;
@@ -132,7 +134,7 @@ public class ClientAdapter {
                     case Messages.JSON_TYPE_INIT:
                         clientThreadState = getStateFromTurnInit(receivedAnswer);
                         gameBoard.sendInit(receivedAnswer);
-                        GUIParser initParser = new GUIParser(receivedAnswer);
+                        GUIParser initParser = new GUIParser(receivedAnswer, getClientSharedState());
 
                         clientSharedState.setEnemyName(initParser.getEnemyFromInit()[0]);
                         clientSharedState.setEnemyImagePath(initParser.getEnemyFromInit()[1]);
@@ -142,14 +144,17 @@ public class ClientAdapter {
 
                     case Messages.JSON_TYPE_YOUR_TURN:
                         clientThreadState = ClientThreadState.SERVER_LISTENING;
+                        clientSharedState.setMyTurn(true);
                         break;
 
                     case Messages.JSON_TYPE_WAIT_TURN:
                         clientThreadState = ClientThreadState.CLIENT_LISTENING;
+                        clientSharedState.setMyTurn(false);
                         break;
 
                     case Messages.JSON_TYPE_GAME_END:
                         clientThreadState = ClientThreadState.GAME_ENDED;
+                        clientSharedState.setMyTurn(false);
                         break;
 
                     default:
@@ -170,9 +175,27 @@ public class ClientAdapter {
     private void awaitClientInput() throws IOException, JSONException {
         Scanner in = new Scanner(System.in);
         System.out.println("Waiting for client input");
-        while (in.nextLine( ).length( ) > 0) {}
+        clientSharedState.setMyTurn(true);
 
-        String jsonAnswer = sendJsonType(Messages.JSON_TYPE_PLAY, outPrintWriter, inBufferedReader);
+        while ( clientSharedState.getSelectedCard() == null ||
+                clientSharedState.getSelectedCard().getName().equals("empty") ||
+                (   clientSharedState.getChosenPosition() == null &&
+                    clientSharedState.getSelectedCard().getType() != CardType.SPELL)) {}
+
+        JSONObject play = jsonType(Messages.JSON_TYPE_PLAY);
+        play.put(Messages.JSON_TYPE_CARD_ID, clientSharedState.getSelectedCard().getId());
+        clientSharedState.setSelectedCard(new GUICard(0, "empty", CardType.SPELL, 0, clientSharedState));
+
+        if(clientSharedState.getChosenPosition() != null && clientSharedState.getChosenPosition()[0] >= 0) {
+            JSONObject position = new JSONObject();
+            position.put(Messages.JSON_TYPE_LINE, clientSharedState.getChosenPosition()[0]);
+            position.put(Messages.JSON_TYPE_SPOT, clientSharedState.getChosenPosition()[1]);
+            clientSharedState.setChosenPosition(new int[]{});
+
+            play.put(Messages.JSON_TYPE_POSITION, position);
+        }
+
+        String jsonAnswer = sendJson(play, outPrintWriter, inBufferedReader);
         String jsonType = readJsonType(jsonAnswer);
 
         if (jsonType.equals(Messages.JSON_TYPE_PLAY_OK)) {

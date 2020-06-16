@@ -1,5 +1,7 @@
 package gui.board;
 
+import gameLogic.invocator.card.CardType;
+import gui.GUICard;
 import gui.maths.Vector2f;
 import gameLogic.receptors.Trap;
 import gameLogic.receptors.Receptor;
@@ -9,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import network.states.ClientSharedState;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +24,8 @@ public class GUISpot extends Application {
 
   // Compteur de case
   private static int spotCounter = 0;
+
+  private ClientSharedState clientSharedState;
 
   // l'éventuelle créature présente sur la case
   private Receptor occupant;
@@ -46,8 +51,8 @@ public class GUISpot extends Application {
    *
    * @throws IOException
    */
-  public GUISpot() throws IOException {
-    this(spotCounter++, new Vector2f(STARTING_COORDINATE_X, STARTING_COORDINATE_Y));
+  public GUISpot(ClientSharedState clientSharedState) throws IOException {
+    this(spotCounter++, new Vector2f(STARTING_COORDINATE_X, STARTING_COORDINATE_Y), clientSharedState);
   }
 
   /**
@@ -57,13 +62,24 @@ public class GUISpot extends Application {
    * @param pos : sa position dans la fenêtre du jeu
    * @throws FileNotFoundException
    */
-  private GUISpot(int number, Vector2f pos) throws FileNotFoundException {
+  private GUISpot(int number, Vector2f pos, ClientSharedState clientSharedState) throws FileNotFoundException {
     image = new Image(imagePath);
     imageView = new ImageView(image);
+    this.clientSharedState = clientSharedState;
     button = new Button();
     button.getStyleClass().add("button-island");
     button.setOnAction(
         actionEvent -> {
+          if (!clientSharedState.isMyTurn()) {
+            return;
+          }
+          if (clientSharedState.getSelectedCard() != null &&
+              !clientSharedState.getSelectedCard().getName().equals("empty") &&
+              clientSharedState.getSelectedCard().getType() != CardType.SPELL) {
+
+                clientSharedState.setChosenPosition(new int[]{(number/GUILine.NB_SPOTS), number});
+
+          }
           System.out.println("j'appuye sur une île");
         });
     button.setGraphic(imageView);

@@ -12,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import network.states.ClientSharedState;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -20,7 +21,8 @@ import java.util.LinkedList;
 public class GUILine {
 
   // Le nombre de cases dans une ligne
-  private final int NB_SPOTS = 12;
+  public static final int NB_SPOTS = 12;
+  private ClientSharedState clientSharedState;
 
   // Le numéro de la ligne
   private int noLine;
@@ -50,11 +52,12 @@ public class GUILine {
    *
    * @param noLine : le numéro de la ligne
    */
-  public GUILine(int noLine, GridPane gridPane, VBox vbox, GUIPlayer player1, GUIPlayer player2) throws IOException {
+  public GUILine(int noLine, GridPane gridPane, VBox vbox, GUIPlayer player1, GUIPlayer player2, ClientSharedState clientSharedState) throws IOException {
     this.noLine = noLine;
     receptors = new LinkedList<>(); // on initialise la liste de créatures.
     GUISpots = new LinkedList<>(); // on initialise la liste de GUISpots.
     chests = new LinkedList<>(); //on initialise la liste de chess.
+    this.clientSharedState = clientSharedState;
 
     this.vBox = vbox;
     this.gridPane = gridPane;
@@ -62,7 +65,7 @@ public class GUILine {
     int indexCreature = 0;
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
       vbox = new VBox(); // On créé une box verticale pour aligne la créature à l'île.
-      GUISpots.add(new GUISpot());
+      GUISpots.add(new GUISpot(clientSharedState));
       if(spot == 0)
       {
         chests.add(new GUIChest("",player1));

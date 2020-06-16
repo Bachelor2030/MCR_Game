@@ -35,7 +35,7 @@ public class GUIBoard {
         lineCounter = 0;
         GUILines = new LinkedList<>();
         for(int line = 0; line < NB_LINES; ++line) {
-            GUILines.add(new GUILine(lineCounter++, gridPane, vbox, player1, player2));
+            GUILines.add(new GUILine(lineCounter++, gridPane, vbox, player1, player2, player1.getClientSharedState()) );
         }
     }
 
