@@ -74,4 +74,8 @@ public class GUIPlayer {
     public void setImgPath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
