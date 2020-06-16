@@ -1,6 +1,5 @@
 package network;
 
-import gameLogic.Game;
 import gui.GameBoard;
 import network.jsonUtils.GUIParser;
 import network.states.ClientSharedState;

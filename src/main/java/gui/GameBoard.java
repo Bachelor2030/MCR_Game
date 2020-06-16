@@ -64,7 +64,7 @@ public class GameBoard extends Application {
   private ClientAdapter clientAdapter;
 
   private boolean serverIsOn = false;
-  ServerAdapter server = new ServerAdapter(2205, 4, 12);
+  ServerAdapter server = new ServerAdapter(1337, 4, 12);
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
@@ -203,8 +203,18 @@ public class GameBoard extends Application {
                     event -> {
                       // TODO
                       serverIsOn =  !serverIsOn;
+                      if (serverIsOn) {
+                        startServer.getButton().setText("Server launched.\nCan't stop server for now");
+                        server.serveClients();
+                      } else {
+                        startServer.getButton().setText("Server launched.\nCan't stop server for now");
+                        //server.getServerSharedState().endGame();
+                        //server.closeClientSocket();
+                      }
+
                     }
             );
+
 
     parameterWindow.addGameButton(startServer);
 
@@ -224,10 +234,6 @@ public class GameBoard extends Application {
                 clientAdapter =
                     new ClientAdapter(this, IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
                 new Thread(new ClientRunner(clientAdapter)).start();
-
-                if(serverIsOn) {
-                  server.serveClients();
-                }
 
                 // On passe à la fenêtre de choix de character
                 chooseCharacter();
@@ -273,10 +279,11 @@ public class GameBoard extends Application {
     WaitingWindow waitingWindow =
         new WaitingWindow(racine, defineHeader(false), false, currentStage);
     racine.setCenter(waitingWindow.getBody());
+    waitingWindow.execute();
 
     while(!clientAdapter.getClientSharedState().isFinishedInit()) {
       //racine.setCenter(waitingWindow.getBody());
-      waitingWindow.execute();
+      //waitingWindow.execute();
     }
 
     //TODO pecho info joueur2

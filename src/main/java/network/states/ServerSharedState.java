@@ -13,6 +13,7 @@ public class ServerSharedState {
     private LinkedList<JSONObject>[] jsonToSend;
     private boolean[] intendToSendJson;
 
+    private boolean gameEnded = false;
     private boolean finishedInit;
     private int playingNowId;
     private final int playingFirstId;
@@ -42,6 +43,14 @@ public class ServerSharedState {
         playingNowId = playingFirstId;
         this.playingFirstId = playingFirstId;
         this.game = game;
+    }
+
+    public synchronized boolean gameEnded() {
+        return gameEnded;
+    }
+
+    public synchronized  void endGame() {
+        gameEnded = true;
     }
 
     public synchronized boolean finishedInit() {
