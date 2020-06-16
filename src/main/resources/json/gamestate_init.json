@@ -1,0 +1,63 @@
+{
+  "Game state": {
+    "enemy name": "Caca",
+    // TODO ajouter image
+    "cards": [
+      {
+        "cost": 3,
+        "name": "Spell Furnace",
+        "id": 5,
+        "type": "Spell",
+        "commands": {
+          "commands": [
+            {
+              "live receptor": [ ],
+              "name": "Hit",
+              "type": "play",
+              "AP": 0
+            }
+          ]
+        }
+      },
+      {
+        "cost": 4,
+        "name": "Creature Pier",
+        "id": 1,
+        "type": "Creature",
+        "commands": {
+          "commands": [
+            {
+              "live receptor": [ ],
+              "name": "Create_creature",
+              "type": "play"
+            },
+            {
+              "live receptor": [ ],
+              "name": "Knock_Out",
+              "type": "play"
+            }
+          ]
+        }
+      },
+      {
+        "cost": 10,
+        "name": "Creature Gregou",
+        "id": 3,
+        "type": "Creature",
+        "commands": {
+          "commands": [
+            {
+              "live receptor": [ ],
+              "name": "Create_creature",
+              "type": "play"
+            }
+          ]
+        }
+      }
+    ],
+    "line": 4,
+    "spot": 12,
+    "turn": "Wait turn"
+  },
+  "type": "Init"
+}
