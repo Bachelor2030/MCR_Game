@@ -229,6 +229,9 @@ public class GameBoard extends Application {
               try {
                 // On initialise les données
                 namePlayer1 = parameterWindow.getPlayerNameField().getText();
+                //TODO: Remove this, only for debugging
+                if (serverIsOn)
+                  namePlayer1 = "admin";
                 IpPlayer1 = parameterWindow.getPlayerIpField().getText();
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
 
@@ -411,7 +414,6 @@ public class GameBoard extends Application {
     player1.addHand(handPlayer);
 
     player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>());
-    player2.setImgPath("src/main/resources/design/images/characters/matt.png");
-    System.out.println(player2.getName());
+    player2.setImgPath("src/main/resources/design/images/characters/character.png");
   }
 }

@@ -135,9 +135,8 @@ public class InGameWindow extends GameWindow {
 
     for (GUICard card : handPlayer) {
       ImageView imageView = card.getView();
-      imageView.setFitWidth(0.3);
-      imageView.setFitHeight(0.3);
-      imageView.setVisible(true);
+      imageView.setFitWidth(200);
+      imageView.setPreserveRatio(true);
 
       footerCardsPlayer.getChildren().add(imageView);
     }
