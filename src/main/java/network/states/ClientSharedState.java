@@ -6,27 +6,27 @@ public class ClientSharedState {
     private String playerName;
     private boolean finishedInit = false;
 
-    public String getEnemyName() {
+    public synchronized String getEnemyName() {
         return enemyName;
     }
 
-    public void setEnemyName(String enemyName) {
+    public synchronized void setEnemyName(String enemyName) {
         this.enemyName = enemyName;
     }
 
-    public String getPlayerName() {
+    public synchronized String getPlayerName() {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
+    public synchronized void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
 
-    public boolean isFinishedInit() {
+    public synchronized boolean isFinishedInit() {
         return finishedInit;
     }
 
-    public void setFinishedInit(boolean finishedInit) {
+    public synchronized void setFinishedInit(boolean finishedInit) {
         this.finishedInit = finishedInit;
     }
 }
