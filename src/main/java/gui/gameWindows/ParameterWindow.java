@@ -9,7 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 public class ParameterWindow extends GameWindow {
   private VBox body;
@@ -43,8 +46,20 @@ public class ParameterWindow extends GameWindow {
     playerIP.getStyleClass().add("parameters-label");
 
     playerIpField = new TextField();
+    try(final DatagramSocket socket = new DatagramSocket()){
+      socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+      playerIpField.setText(
+              String.valueOf(socket.getLocalAddress().getHostAddress()));
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    } catch (SocketException e) {
+      e.printStackTrace();
+    }
+
+    /*
     playerIpField.setText(
         String.valueOf(InetAddress.getLoopbackAddress())); // récupère l'adresse IP
+     */
     playerIpField.getStyleClass().add("parameters-field");
 
     // Port du joueur

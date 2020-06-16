@@ -5,7 +5,6 @@ import gameLogic.commands.ConcreteCommand;
 import gameLogic.commands.Macro;
 import gameLogic.invocator.card.Card;
 import gameLogic.invocator.card.CardType;
-import gameLogic.receptors.Creature;
 import network.Messages;
 import org.json.JSONArray;
 import org.json.JSONException;

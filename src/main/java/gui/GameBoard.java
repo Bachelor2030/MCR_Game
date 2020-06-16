@@ -24,6 +24,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import network.ClientAdapter;
+import network.ClientRunner;
+import network.states.ClientState;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -57,6 +60,8 @@ public class GameBoard extends Application {
   private GUIBoard GUIBoard;
 
   private Stage currentStage;
+
+  private ClientAdapter clientAdapter;
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
@@ -93,6 +98,7 @@ public class GameBoard extends Application {
     stage.setTitle("MCR - JEU DE LA MUERTA");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
+
   }
 
   public void exitGame() {
@@ -198,6 +204,10 @@ public class GameBoard extends Application {
                 namePlayer1 = parameterWindow.getPlayerNameField().getText();
                 IpPlayer1 = parameterWindow.getPlayerIpField().getText();
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
+
+
+                clientAdapter = new ClientAdapter(IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
+                new Thread(new ClientRunner(clientAdapter)).start();
 
                 // On passe à la fenêtre de choix de character
                 chooseCharacter();
@@ -336,5 +346,13 @@ public class GameBoard extends Application {
   public void place(Receptor receptor, int line, int position) {
     GUIBoard.place(receptor, line, position);
     GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
+  }
+
+  public ClientAdapter getClientAdapter() {
+    return clientAdapter;
+  }
+
+  public void setClientAdapter(ClientAdapter clientAdapter) {
+    this.clientAdapter = clientAdapter;
   }
 }
