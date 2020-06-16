@@ -12,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import network.ClientAdapter;
 import network.ClientRunner;
+import network.ServerAdapter;
 import network.jsonUtils.GUIParser;
 
 import java.io.FileInputStream;
@@ -61,6 +63,9 @@ public class GameBoard extends Application {
 
   private ClientAdapter clientAdapter;
 
+  private boolean serverIsOn = false;
+  ServerAdapter server = new ServerAdapter(2205, 4, 12);
+
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
   public void start(Stage stage) throws Exception {
@@ -96,6 +101,7 @@ public class GameBoard extends Application {
     stage.setTitle("MCR - BACHELOR HUNTERZ");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
+
   }
 
   public void exitGame() {
@@ -189,6 +195,19 @@ public class GameBoard extends Application {
     ParameterWindow parameterWindow =
         new ParameterWindow(racine, defineHeader(true), currentStage, isGaming);
 
+    // On crée un bouton pour lancer le serveur
+    GameButton startServer = new GameButton("Lancer Serveur", "header-button");
+    startServer
+            .getButton()
+            .setOnAction(
+                    event -> {
+                      // TODO
+                      serverIsOn =  !serverIsOn;
+                    }
+            );
+
+    parameterWindow.addGameButton(startServer);
+
     // On crée un bouton qui va permettre de valider les paramètres et créer une nouvelle partie.
     GameButton validateParameters = new GameButton("Valider", "header-button");
     validateParameters
@@ -205,6 +224,10 @@ public class GameBoard extends Application {
                 clientAdapter =
                     new ClientAdapter(this, IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
                 new Thread(new ClientRunner(clientAdapter)).start();
+
+                if(serverIsOn) {
+                  server.serveClients();
+                }
 
                 // On passe à la fenêtre de choix de character
                 chooseCharacter();
@@ -250,11 +273,6 @@ public class GameBoard extends Application {
     WaitingWindow waitingWindow =
         new WaitingWindow(racine, defineHeader(false), false, currentStage);
     racine.setCenter(waitingWindow.getBody());
-    boolean temp = true; // TODO à remplacer
-    /*
-
-    while(temp) {
-
 
     while(!clientAdapter.getClientSharedState().isFinishedInit()) {
       //racine.setCenter(waitingWindow.getBody());
@@ -263,9 +281,6 @@ public class GameBoard extends Application {
 
     //TODO pecho info joueur2
     //TODO initialisation deck
-
-
-    */
     inGame(racine);
   }
 
