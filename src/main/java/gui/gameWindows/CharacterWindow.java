@@ -1,6 +1,6 @@
 package gui.gameWindows;
 
-import gameLogic.receptors.Player;
+import gui.receptors.GUIPlayer;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -29,7 +29,7 @@ public class CharacterWindow extends GameWindow
   private ToggleGroup radioButtonGroup;
 
   public CharacterWindow(BorderPane racine, HBox navigation, Stage stage,
-                         final int WIDTH_WINDOW, Player player) throws FileNotFoundException {
+                         final int WIDTH_WINDOW, GUIPlayer player) throws FileNotFoundException {
     super(racine, navigation, false, stage);
     generate();
   }

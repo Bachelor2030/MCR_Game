@@ -134,7 +134,7 @@ public class ClientAdapter {
                         gameBoard.sendInit(receivedAnswer);
                         GUIParser initParser = new GUIParser(receivedAnswer);
 
-                        clientSharedState.setEnemyName(initParser.getEnemyFromInit());
+                        clientSharedState.setEnemyName(initParser.getEnemyFromInit()[0]);
                         // todo: Parse the rest of init and determine how to give it to the gui (if not same way as for enemy name)
                         clientSharedState.setFinishedInit(true);
                         break;

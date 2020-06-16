@@ -105,9 +105,11 @@ public class Game extends Receptor {
 
             if (playerId == firstPlayerId) {
                 initJSON.put(Messages.JSON_TYPE_ENEMYNAME, player2.getName());
+                //TODO initJSON.put(Messages.JSON_TYPE_ENEMY_IMAGE, player2.getImgPath());
                 initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
             } else {
                 initJSON.put(Messages.JSON_TYPE_ENEMYNAME, player1.getName());
+                // TODO initJSON.put(Messages.JSON_TYPE_ENEMY_IMAGE, player1.getImgPath());
                 initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
             }
 
