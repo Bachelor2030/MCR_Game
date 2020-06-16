@@ -1,6 +1,6 @@
 package gui.gameWindows;
 
-import gameLogic.Receptors.Player;
+import gameLogic.receptors.Player;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -17,10 +17,14 @@ import java.io.FileNotFoundException;
 
 public class CharacterWindow extends GameWindow
 {
-  private String  DARK_ASCII_PATH = "src/main/resources/design/images/characters/character.png",
-                  ELODIE_PATH = "src/main/resources/design/images/characters/elodie.png",
-                  CLARUSSO_PATH = "src/main/resources/design/images/characters/clarisse.png";
-  private VBox corps;
+  private final String
+          DARK_DONINI_PATH = "src/main/resources/design/images/characters/darkDonini.png",
+          ELODIE_PATH = "src/main/resources/design/images/characters/elodie.png",
+          CLARUSSO_PATH = "src/main/resources/design/images/characters/clarisse.png",
+          MATT_PATH = "src/main/resources/design/images/characters/matt.png",
+          GUS_PATH = "src/main/resources/design/images/characters/gus.png";
+
+  private VBox body;
 
   private ToggleGroup radioButtonGroup;
 
@@ -31,9 +35,9 @@ public class CharacterWindow extends GameWindow
   }
 
   private void generate() throws FileNotFoundException {
-    corps = new VBox();
-    corps.getStyleClass().add("parameters-body");
-    corps.prefWidthProperty().bind(stage.widthProperty().multiply(0.80));
+    body = new VBox();
+    body.getStyleClass().add("parameters-body");
+    body.prefWidthProperty().bind(stage.widthProperty().multiply(0.80));
     Label title = new Label("Veuillez choisir un personnage :");
     title.getStyleClass().add("instructions-title");
 
@@ -44,9 +48,9 @@ public class CharacterWindow extends GameWindow
     button2.setToggleGroup(radioButtonGroup);
 
     //DARK ASCII
-    VBox darkAsciiBox = createToggle(radioButtonGroup, DARK_ASCII_PATH, "Dark Ascii", true);
-    darkAsciiBox.setAlignment(Pos.CENTER);
-    darkAsciiBox.setSpacing(20);
+    VBox darkDoniniBox = createToggle(radioButtonGroup, DARK_DONINI_PATH, "Dark Donini", true);
+    darkDoniniBox.setAlignment(Pos.CENTER);
+    darkDoniniBox.setSpacing(20);
 
     //ELODIE
     VBox elodieBox = createToggle(radioButtonGroup, ELODIE_PATH, "Elodie", false);
@@ -58,12 +62,22 @@ public class CharacterWindow extends GameWindow
     clarisseBox.setAlignment(Pos.CENTER);
     clarisseBox.setSpacing(20);
 
-    characters.getChildren().addAll(darkAsciiBox,elodieBox,clarisseBox);
+    //GUS
+    VBox gusBox =  createToggle(radioButtonGroup, GUS_PATH, "Gus", false);
+    gusBox.setAlignment(Pos.CENTER);
+    gusBox.setSpacing(20);
+
+    //MATT
+    VBox mattBox =  createToggle(radioButtonGroup, MATT_PATH, "Matt", false);
+    mattBox.setAlignment(Pos.CENTER);
+    mattBox.setSpacing(20);
+
+    characters.getChildren().addAll(darkDoniniBox,elodieBox,clarisseBox, gusBox, mattBox);
     characters.setSpacing(70);
     characters.setAlignment(Pos.CENTER);
-    corps.getChildren().addAll(title, characters);
-    corps.setAlignment(Pos.CENTER);
-    corps.setSpacing(70);
+    body.getChildren().addAll(title, characters);
+    body.setAlignment(Pos.CENTER);
+    body.setSpacing(70);
 
   }
 
@@ -91,8 +105,8 @@ public class CharacterWindow extends GameWindow
     return box;
   }
 
-  public VBox getCorps() {
-    return corps;
+  public VBox getBody() {
+    return body;
   }
 
   public ToggleGroup getRadioButtonGroup() {
@@ -106,7 +120,9 @@ public class CharacterWindow extends GameWindow
     {
       case "Elodie"     : return ELODIE_PATH;
       case "Clarusso"   : return CLARUSSO_PATH;
-      default : return DARK_ASCII_PATH;
+      case "Gus"        : return GUS_PATH;
+      case "Matt"       : return MATT_PATH;
+      default : return DARK_DONINI_PATH;
     }
   }
 }

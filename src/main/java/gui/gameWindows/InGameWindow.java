@@ -1,16 +1,13 @@
 package gui.gameWindows;
 
-import gameLogic.Receptors.Player;
+import gameLogic.receptors.Player;
 import gui.board.GUIBoard;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -68,15 +65,15 @@ public class InGameWindow extends GameWindow {
     gridIslandsPanel.getStyleClass().add("corps-gridPane");
     VBox vbox = new VBox(); // contient une créature et un emplacement.
 
-    /*
-    int numRows = 5;
+
+    int numRows = 4;
     for(int i = 0;i < numRows; ++i)
     {
       RowConstraints rc = new RowConstraints();
       rc.setPercentHeight(100 / numRows);
       gridIslandsPanel.getRowConstraints().add(rc);
     }
-    */
+
 
     // Répertoire contenant nos îles
     GUIBoard = new GUIBoard(gridIslandsPanel, vbox, player1, player2);
@@ -85,16 +82,19 @@ public class InGameWindow extends GameWindow {
   }
 
   /**
-   * @return les informations du player
+   * @return les informations du Player
    */
   private VBox getPlayerInformations(String labelTitle) throws FileNotFoundException {
     VBox informationPannelUser = new VBox();
+    //on set l'image de player 1
     if(labelTitle.equals("Player 1")) {
       ImageView imageView = new ImageView(player1.getImage());
-      imageView.setFitWidth(player1.getImage().getWidth()/2);
-      imageView.setFitHeight(player1.getImage().getHeight()/2);
+      imageView.setFitWidth(player1.getImage().getWidth()/2.5);
+      imageView.setFitHeight(player1.getImage().getHeight()/2.5);
       informationPannelUser.getChildren().add(imageView);
     }
+    //on set l'image de player 2 en chequant si elle est pas égale à celle de base.
+    //TODO remplace image 2 en reprenant info serveur
     else if(!(player2.getImage().equals("src/main/resources/design/images/creatures/empty.jpg"))) {
       ImageView imageView = new ImageView(new Image(new FileInputStream("src/main/resources/design/images/characters/character.png")));
       imageView.setFitWidth(player1.getImage().getWidth()/2.5);
@@ -126,14 +126,13 @@ public class InGameWindow extends GameWindow {
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
-    // À REFACTORER SA MERE DANS UNE AUTRE CLASSE -----------
     for (int i = 0; i < 5; i++) {
       FileInputStream imagePath =
-          new FileInputStream("src/main/resources/design/images/cards/cardSample.png");
+          new FileInputStream("src/main/resources/design/images/cards/spell.png");
       Image image = new Image(imagePath);
       ImageView imageView = new ImageView(image);
-      imageView.setFitWidth(image.getWidth() * 0.7);
-      imageView.setFitHeight(image.getHeight() * 0.7);
+      imageView.setFitWidth(image.getWidth() * 0.3);
+      imageView.setFitHeight(image.getHeight() * 0.3);
       // -------------------------------------
       footerCardsPlayer.getChildren().add(imageView);
       footerCardsPlayer.getStyleClass().add("corps-gridPane");

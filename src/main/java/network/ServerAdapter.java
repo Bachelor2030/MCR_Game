@@ -1,30 +1,38 @@
 package network;
 
-import network.States.ServerState;
-import network.States.WorkerState;
+import gameLogic.Game;
+import gameLogic.invocator.card.Card;
+import gameLogic.receptors.Player;
+import network.jsonUtils.CardJsonParser;
+import network.jsonUtils.JsonUtil;
+import network.states.ServerState;
+import network.states.WorkerState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
-import static network.Utilities.Info.*;
-import static network.Utilities.JsonServer.sendJson;
-import static network.Utilities.JsonServer.sendJsonType;
-import static network.Utilities.NetworkWaiting.awaitClientHandshake;
-import static network.Utilities.NetworkWaiting.awaitClientMessage;
-import static network.Utilities.Streams.cleanupResources;
-import static network.States.WorkerState.INIT;
+import static network.jsonUtils.ParserLauncher.parseJsonCards;
+import static network.utilities.Info.*;
+import static network.utilities.JsonServer.sendJson;
+import static network.utilities.JsonServer.sendJsonType;
+import static network.utilities.NetworkWaiting.awaitClientHandshake;
+import static network.utilities.NetworkWaiting.awaitClientMessage;
+import static network.utilities.Streams.cleanupResources;
+import static network.states.WorkerState.INIT;
 
 
 public class ServerAdapter {
 
-    private int port;
+    private final String jsonPath = "src/main/resources/json/";
 
+    private int port;
+    ArrayList<Card> allCards;
+    Game game;
     ServerState serverState;
 
     /**
@@ -32,9 +40,16 @@ public class ServerAdapter {
      *
      * @param port the port to listen on
      */
-    public ServerAdapter(int port, int playingFirstId) {
+    public ServerAdapter(int port, int nbrLines, int lineLength) {
         this.port = port;
-        serverState = new ServerState(playingFirstId);
+        this.game = new Game(this, nbrLines, lineLength);
+        serverState = new ServerState(game.getFirstPlayerId(), game);
+
+        try {
+            allCards = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -47,6 +62,10 @@ public class ServerAdapter {
     public void serveClients() {
         printMessage("ServerAdapter", "Starting the Receptionist Worker on a new thread...");
         new Thread(new ReceptionistWorker()).start();
+    }
+
+    public ServerState getServerState() {
+        return serverState;
     }
 
     /**
@@ -68,12 +87,12 @@ public class ServerAdapter {
             }
 
             while (serverState.getPlayerCount() < 2) {
-                printMessage(MessageLevel.Info, receptionistClassName(), "Waiting (blocking) for a new player on port " + port);
+                printMessage(MessageLevel.Info, receptionistClassName(), "Waiting (blocking) for a new Player on port " + port);
 
                 try {
                     Socket clientSocket = serverSocket.accept();
                     serverState.incrementPlayerCount();
-                    printMessage(MessageLevel.Info, receptionistClassName(), "A new player has arrived. Starting a new thread and delegating work to a new servant...");
+                    printMessage(MessageLevel.Info, receptionistClassName(), "A new Player has arrived. Starting a new thread and delegating work to a new servant...");
                     new Thread(new ServantWorker(clientSocket, serverState.getPlayerCount())).start();
                 } catch (IOException ex) {
                     printMessage(MessageLevel.Error, receptionistClassName(), ex.toString());
@@ -81,6 +100,15 @@ public class ServerAdapter {
             }
             printMessage(receptionistClassName(), "Two players have connected to the server. Stop listening for new connexions.");
 
+
+            // Wait for Player names to have been set
+            while (!serverState.playerNamesSet()) {}
+
+            CardJsonParser cardJsonParser = new CardJsonParser();
+            List<Card> deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", allCards);
+            List<Card> deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", allCards);
+
+            game.initGame(new Player(serverState.getPlayerName(1), deck1, game), new Player(serverState.getPlayerName(2), deck2, game));
         }
 
         /**
@@ -96,11 +124,10 @@ public class ServerAdapter {
 
             int playerId;
 
-
             public ServantWorker(Socket clientSocket, int playerId) {
                 this.playerId = playerId;
 
-                printMessage(servantClassName(playerId), "Starting worker for player " + playerId);
+                printMessage(servantClassName(playerId), "Starting worker for Player " + playerId);
                 try {
                     this.clientSocket = clientSocket;
                     inBufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -120,45 +147,39 @@ public class ServerAdapter {
                     while (serverState.getWorkerState(playerId) != WorkerState.GAME_ENDED) {
                         switch (serverState.getWorkerState(playerId)) {
                             case INIT:
-                                String turnS;
+                                // Wait for game to finish init, parsing, etc...
+                                while (!serverState.finishedInit()) {}
                                 if (playerId == serverState.getPlayingId()) {
-                                    turnS = Messages.JSON_TYPE_YOUR_TURN;
                                     serverState.setWorkerState(playerId, WorkerState.SERVER_LISTENING);
                                 } else {
-                                    turnS = Messages.JSON_TYPE_WAIT_TURN;
                                     serverState.setWorkerState(playerId, WorkerState.CLIENT_LISTENING);
                                 }
 
-
-                                // TODO: Send init from logic class?
-                                JSONObject init = new JSONObject();
-                                init.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
-
-                                JSONObject gamestate = new JSONObject();
-                                gamestate.put(Messages.JSON_TYPE_TURN, turnS);
-                                gamestate.put(Messages.JSON_TYPE_ENEMYNAME, serverState.getPlayerName(serverState.otherPlayer(playerId)));
-
-                                init.put(Messages.JSON_GAMESTATE, gamestate);
-
+                                JSONObject init;
+                                init = game.initState(playerId);
                                 sendJson(init, outPrintWriter, servantClassName(playerId));
                                 break;
 
                             case INIT_WAITING:
                                 while (serverState.getPlayerCount() < 2 || serverState.getPlayerName(serverState.otherPlayer(playerId)) == null) {}
 
-                                // TODO: This send should be fine
                                 sendJsonType(Messages.JSON_TYPE_GAME_START, outPrintWriter, servantClassName(playerId));
                                 serverState.setWorkerState(playerId, INIT);
                                 break;
 
                             case SERVER_LISTENING:
-                                awaitClientMessage(serverState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
+                                awaitClientMessage(game, serverState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
                                 break;
 
                             case CLIENT_LISTENING:
-                                //TODO: HERE HELP ME
-                                //while (serverState.)
+                                while (serverState.getIntendToSendJson(playerId)) {
+                                    while(!serverState.jsonToSendEmpty(playerId)) {
+                                        JSONObject jsonObject = serverState.popJsonToSend(playerId);
+                                        sendJson(jsonObject, outPrintWriter, servantClassName(playerId));
+                                    }
+                                }
 
+                                // Wait for backend to signify it's next Player's turn
                                 while (serverState.getPlayingId() != playerId) {}
 
                                 // TODO: Send "your turn" from logic class?

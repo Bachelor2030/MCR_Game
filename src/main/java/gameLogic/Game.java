@@ -1,8 +1,15 @@
 package gameLogic;
 
-import gameLogic.Board.Board;
-import gameLogic.Invocator.Card.Card;
-import gameLogic.Receptors.Player;
+import gameLogic.board.Board;
+import gameLogic.commands.CommandName;
+import gameLogic.commands.Macro;
+import gameLogic.commands.playersAction.PlayersAction;
+import gameLogic.invocator.card.Card;
+import gameLogic.receptors.Player;
+import gameLogic.receptors.Receptor;
+import network.jsonUtils.JsonUtil;
+import network.Messages;
+import network.ServerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,46 +17,43 @@ import org.json.JSONObject;
 /**
  * Cette classe permet de modéliser le jeu.
  */
-public class Game {
+public class Game extends Receptor {
     private static final int
             NBR_CHESTS_TO_DESTROY = 2;
     private Player
             player1,
             player2;
     private int
-            turn;
+            turn,
+            firstPlayerId;
     private Board board;
+    private ServerAdapter serverAdapter;
 
-    public Game(int nbr_lines, int nbr_spots) {
+
+    public Game(ServerAdapter serverAdapter, int nbr_lines, int nbr_spots) {
+        this.serverAdapter = serverAdapter;
         this.board = new Board(nbr_lines, nbr_spots);
         turn = 0;
+        if (Math.random() < 0.5) {
+            firstPlayerId = 1;
+        } else {
+            firstPlayerId = 2;
+        }
     }
 
     public void initGame(Player player1, Player player2) {
-        if (Math.random() < 0.5) {
+        if (firstPlayerId == 1) {
             this.player1 = player1;
             this.player2 = player2;
         } else {
             this.player1 = player2;
             this.player2 = player1;
         }
+        serverAdapter.getServerState().setFinishedInit();
     }
 
-    /**
-     * Permet de commencer le jeu.
-     */
-    public void startGame() {
-        while (!finished()) {
-            System.out.println("Turn " + (++turn));
-
-            //todo player1.sendyourturn
-            player1.playTurn(turn);
-
-            if(!finished()) {
-                //todo player2.sendyourturn
-                player2.playTurn(turn);
-            }
-        }
+    public void nextTurn() {
+        System.out.println("Turn " + (++turn));
     }
 
     /**
@@ -88,23 +92,32 @@ public class Game {
         return turn;
     }
 
-    public JSONObject initStateP1() {
+
+    public JSONObject initState(int playerId) {
         JSONObject gameJSON = new JSONObject();
         try {
-            gameJSON.put("type","init");
+            Player player = (playerId == firstPlayerId ? player1 : player2);
+
+            gameJSON.put(Messages.JSON_TYPE, Messages.JSON_TYPE_INIT);
             JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNbLines());
-            initJSON.put("linelength", board.getLine(0).getNbSpots());
-            initJSON.put("enemyname", player2.getName());
-            initJSON.put("turn", "Your turn");
+            initJSON.put(Messages.JSON_TYPE_LINE, board.getNbLines());
+            initJSON.put(Messages.JSON_TYPE_SPOT, board.getLine(0).getNbSpots());
+
+            if (playerId == firstPlayerId) {
+                initJSON.put(Messages.JSON_TYPE_ENEMYNAME, player2.getName());
+                initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
+            } else {
+                initJSON.put(Messages.JSON_TYPE_ENEMYNAME, player1.getName());
+                initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
+            }
 
             JSONArray cardsJSON = new JSONArray();
-            for (Card card : player1.getHand()) {
+            for (Card card : player.getHand()) {
                 cardsJSON.put(card.toJSON());
             }
-            initJSON.put("cards", cardsJSON);
+            initJSON.put(Messages.JSON_TYPE_CARDS, cardsJSON);
 
-            gameJSON.put("init", initJSON);
+            gameJSON.put(Messages.JSON_GAMESTATE, initJSON);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,27 +125,45 @@ public class Game {
         return gameJSON;
     }
 
-    public JSONObject initStateP2() {
-        JSONObject gameJSON = new JSONObject();
-        try {
-            gameJSON.put("type","init");
-            JSONObject initJSON = new JSONObject();
-            initJSON.put("lines", board.getNbLines());
-            initJSON.put("linelength", board.getLine(0).getNbSpots());
-            initJSON.put("ennemyname", player1.getName());
-            initJSON.put("turn", "Wait turn");
+    public int getFirstPlayerId() {
+        return firstPlayerId;
+    }
 
-            JSONArray cardsJSON = new JSONArray();
-            for (Card card : player2.getHand()) {
-                cardsJSON.put(card.toJSON());
-            }
-            initJSON.put("cards", cardsJSON);
+    public boolean playerSentMessage(int playerId, String receivedMessage) {
+        Player player = (playerId == firstPlayerId ? player1 : player2);
 
-            gameJSON.put("init", initJSON);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        PlayersAction action = new JsonUtil().getPlayerAction(player, receivedMessage);
+        if (action == null) {
+            return false;
         }
 
-        return gameJSON;
+        player.playTurn(turn, action);
+        lastMove = new Macro(player.getLastMove().getCommands());
+
+        JSONObject lastMoveJSON = lastMove.toJson();
+        // End turn envoyer end turn (le bon a chaque joueur serverAdapter.serverState.getOtherPlayer(playerId))
+        if (action.getName() == CommandName.END_TURN) {
+            JSONObject end = new JSONObject();
+            try {
+                lastMoveJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                end.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            serverAdapter.getServerState().pushJsonToSend(end, serverAdapter.getServerState().otherPlayer(playerId));
+        }
+
+        // Put json updates in serverAdapter.serverState.pushJsonToSend
+        serverAdapter.getServerState().pushJsonToSend(lastMoveJSON, playerId);
+
+        // Pour end game il faudra faire autrement /!\ ne pas s'en occuper, le serveur s'en charge
+        return true;
     }
+
+    @Override
+    public void playTurn(int turn, PlayersAction action) {}
 }

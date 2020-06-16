@@ -1,9 +1,10 @@
 package gui.board;
 
-import gui.Maths.Vector2f;
-import gameLogic.Receptors.Trap;
-import gameLogic.Receptors.Receptor;
+import gui.maths.Vector2f;
+import gameLogic.receptors.Trap;
+import gameLogic.receptors.Receptor;
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
@@ -29,6 +30,7 @@ public class GUISpot extends Application {
       new FileInputStream("src/main/resources/design/images/field/island.png");
   Image image;
   ImageView imageView;
+  Button button;
 
   // la position du spot dans l'espace
   protected Vector2f pos;
@@ -58,6 +60,13 @@ public class GUISpot extends Application {
   private GUISpot(int number, Vector2f pos) throws FileNotFoundException {
     image = new Image(imagePath);
     imageView = new ImageView(image);
+    button = new Button();
+    button.getStyleClass().add("button-island");
+    button.setOnAction(
+        actionEvent -> {
+          System.out.println("j'appuye sur une île");
+        });
+    button.setGraphic(imageView);
     this.number = number % 10;
     this.pos = pos;
     initDisplaySpot();
@@ -114,5 +123,9 @@ public class GUISpot extends Application {
 
   public ImageView getImageView() {
     return imageView;
+  }
+
+  public Button getButton() {
+    return button;
   }
 }

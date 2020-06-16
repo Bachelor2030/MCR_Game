@@ -1,16 +1,13 @@
 package gui;
 
-import gameLogic.Commands.GuiCommands.EndGame;
-import gameLogic.Commands.PlayersAction.EndTurn;
-import gameLogic.Invocator.Card.Card;
-import gameLogic.Receptors.Player;
-import gameLogic.Receptors.Receptor;
+import gameLogic.commands.guiCommands.EndGame;
+import gameLogic.commands.playersAction.EndTurn;
+import gameLogic.invocator.card.Card;
+import gameLogic.receptors.Player;
+import gameLogic.receptors.Receptor;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
-import gui.gameWindows.CharacterWindow;
-import gui.gameWindows.InGameWindow;
-import gui.gameWindows.InstructionWindow;
-import gui.gameWindows.ParameterWindow;
+import gui.gameWindows.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,11 +21,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import network.ClientAdapter;
+import network.ClientRunner;
+import network.jsonUtils.CardJsonParser;
+import network.jsonUtils.JsonUtil;
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+
+import static network.jsonUtils.ParserLauncher.parseJsonCards;
 
 // TODO : commande qui font des actions graphiques. (genre déplacer créature)
 
@@ -51,12 +54,17 @@ public class GameBoard extends Application {
   private BorderPane racine;
 
   private Player player1, player2;
-  private LinkedList<Card> deck1, deck2;
+  private ArrayList<Card> deck1;
+  private ArrayList<Card> deck2;
+  private ArrayList<Card> all;
+  private final String jsonPath = "src/main/resources/json/";
   private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
 
   private GUIBoard GUIBoard;
 
   private Stage currentStage;
+
+  private ClientAdapter clientAdapter;
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
@@ -90,9 +98,17 @@ public class GameBoard extends Application {
     stage.setScene(scene);
     // met la fenêtre au max
     stage.setMaximized(true);
-    stage.setTitle("MCR - JEU DE LA MUERTA");
+    stage.setTitle("MCR - BACHELOR HUNTERZ");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
+
+    //TODO corriger cette merde
+    CardJsonParser cardJsonParser = new CardJsonParser();
+    //toutes les cartes du jeu au complet
+    all = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
+    deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", all);
+    deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", all);
+
   }
 
   public void exitGame() {
@@ -157,8 +173,7 @@ public class GameBoard extends Application {
               displaySettingsMenu();
             });
 
-    buttons.getChildren()
-            .addAll(instructionButton.getButton(), newGameButton.getButton());
+    buttons.getChildren().addAll(instructionButton.getButton(), newGameButton.getButton());
     buttons.setSpacing(25);
     buttons.setAlignment(Pos.CENTER);
 
@@ -181,7 +196,7 @@ public class GameBoard extends Application {
     racine.setTop(barreNavigation);
   }
 
-  /** PAGE DU MENU DE SETTINGS (nom player, adresse IP, port) */
+  /** PAGE DU MENU DE SETTINGS (nom Player, adresse IP, port) */
   private void displaySettingsMenu() {
 
     ParameterWindow parameterWindow =
@@ -200,6 +215,10 @@ public class GameBoard extends Application {
                 IpPlayer1 = parameterWindow.getPlayerIpField().getText();
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
 
+
+                clientAdapter = new ClientAdapter(IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
+                new Thread(new ClientRunner(clientAdapter)).start();
+
                 // On passe à la fenêtre de choix de character
                 chooseCharacter();
 
@@ -212,8 +231,8 @@ public class GameBoard extends Application {
     racine.setCenter(parameterWindow.getBody());
   }
 
-  /** Permet de choisir le personnage qui représentera le player. */
-  private void chooseCharacter() throws FileNotFoundException {
+  /** Permet de choisir le personnage qui représentera le Player. */
+  private void chooseCharacter() throws IOException {
     CharacterWindow characterWindow =
         new CharacterWindow(racine, defineHeader(true), currentStage, WIDTH_WINDOW, player1);
 
@@ -223,21 +242,38 @@ public class GameBoard extends Application {
         .getButton()
         .setOnAction(
             event -> {
-              isGaming = true;
               try {
-                //On récupère la sélection du joueur
-                ((Receptor)player1).setImgPath(characterWindow.defineSelectedUrl());
+                isGaming = false;
+
+                // On récupère la sélection du joueur
+                ((Receptor) player1).setImgPath(characterWindow.defineSelectedUrl());
 
                 // On passe à la fenêtre d'attente d'adversaire
-                // TODO : remplacer par fenêtre de chargement d'adversaire.
-                inGame(racine);
+                waitingForPlayer();
               } catch (IOException e) {
                 e.printStackTrace();
               }
             });
 
-    characterWindow.getCorps().getChildren().add(validateImageCharacter.getButton());
-    racine.setCenter(characterWindow.getCorps());
+    characterWindow.getBody().getChildren().add(validateImageCharacter.getButton());
+    racine.setCenter(characterWindow.getBody());
+
+  }
+
+  private void waitingForPlayer() throws IOException {
+    WaitingWindow waitingWindow = new WaitingWindow(racine, defineHeader(false), false, currentStage);
+    racine.setCenter(waitingWindow.getBody());
+    boolean temp = true; //à remplacer
+    /*
+
+    while(temp) {
+
+    }
+    //TODO pecho info joueur2
+    //TODO initialisation deck
+    inGame(racine);
+
+    */
   }
 
   /**
@@ -258,6 +294,7 @@ public class GameBoard extends Application {
               actionEvent -> {
                 try {
                   inMainMenu();
+                  System.out.println("you hit the returnMenu button...");
                 } catch (IOException e) {
                   e.printStackTrace();
                 }
@@ -274,11 +311,6 @@ public class GameBoard extends Application {
               actionEvent -> {
                 // blablabla définir ce que fait le bouton "valider tour" ici.
                 EndTurn endTurn = new EndTurn();
-                endTurn.setPlayer(player1);
-
-                // TODO send this to backend
-                System.out.println(endTurn.toJson());
-
                 System.out.println("you hit the validate button...");
               });
 
@@ -294,7 +326,8 @@ public class GameBoard extends Application {
                 endGame.setPlayerState('L');
 
                 // TODO send this to backend
-                System.out.println(endGame.toJson());
+                //System.out.println(endGame.toJson());
+                System.out.println("you hit the abandon button...");
               });
       buttons.add(validateTourButton);
       buttons.add(abandonTourButton);
@@ -306,10 +339,7 @@ public class GameBoard extends Application {
     return navigationBar.getBarreNavigation();
   }
 
-  /**
-   * PAGE INSTRUCTIONS
-   *
-   */
+  /** PAGE INSTRUCTIONS */
   private void displayInstructions() {
     InstructionWindow instructionWindow =
         new InstructionWindow(racine, defineHeader(true), isGaming, currentStage);
@@ -342,5 +372,17 @@ public class GameBoard extends Application {
   public void place(Receptor receptor, int line, int position) {
     GUIBoard.place(receptor, line, position);
     GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
+  }
+
+  public ClientAdapter getClientAdapter() {
+    return clientAdapter;
+  }
+
+  public void setClientAdapter(ClientAdapter clientAdapter) {
+    this.clientAdapter = clientAdapter;
+  }
+
+  public ArrayList<Card> getDeck1() {
+    return deck1;
   }
 }
