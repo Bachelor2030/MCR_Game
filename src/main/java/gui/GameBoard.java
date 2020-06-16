@@ -414,6 +414,6 @@ public class GameBoard extends Application {
     player1.addHand(handPlayer);
 
     player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>());
-    player2.setImgPath("src/main/resources/design/images/characters/character.png");
+    //player2.setImgPath("src/main/resources/design/images/characters/character.png");
   }
 }

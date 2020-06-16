@@ -56,7 +56,7 @@ public class ClientAdapter {
 
         try {
             // Greeting the server
-            greetings(clientSharedState.getPlayerName());
+            greetings(clientSharedState.getPlayerName(), clientSharedState.getEnemyImagePath());
 
             while (clientThreadState != ClientThreadState.GAME_ENDED && clientThreadState != ClientThreadState.ERROR) {
                 switch (clientThreadState) {
@@ -94,11 +94,12 @@ public class ClientAdapter {
         }
     }
 
-    public void greetings(String playerName) throws IOException, JSONException {
+    public void greetings(String playerName, String imagePath) throws IOException, JSONException {
 
         JSONObject obj = new JSONObject();
         obj.put(Messages.JSON_TYPE, Messages.JSON_TYPE_HELLO);
         obj.put(Messages.JSON_TYPE_PLAYERNAME, playerName);
+        obj.put(Messages.JSON_TYPE_IMAGE, imagePath);
 
 
         String jsonType = readJsonType(sendJson(obj, outPrintWriter, inBufferedReader));
@@ -134,6 +135,7 @@ public class ClientAdapter {
                         GUIParser initParser = new GUIParser(receivedAnswer);
 
                         clientSharedState.setEnemyName(initParser.getEnemyFromInit()[0]);
+                        clientSharedState.setEnemyImagePath(initParser.getEnemyFromInit()[1]);
                         // todo: Parse the rest of init and determine how to give it to the gui (if not same way as for enemy name)
                         clientSharedState.setFinishedInit(true);
                         break;
@@ -184,8 +186,6 @@ public class ClientAdapter {
             clientThreadState = ClientThreadState.ERROR;
         }
     }
-
-
 
     public void exit() {
         if (clientThreadState == ClientThreadState.ERROR) {
