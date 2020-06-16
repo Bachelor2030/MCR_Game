@@ -21,6 +21,16 @@ public class GameJsonParser {
         this.nbr_spots = nbr_spots;
     }
 
+    public initGameParser(String jsonReceived) throws JSONException {
+        JSONObject init = new JSONObject(jsonReceived);
+        int nbLines = init.getJSONObject("init").getInt("lines");
+        int lineLength = init.getJSONObject("init").getInt("linelength");
+        ArrayList<Card> cards = new ArrayList<Card>();
+
+        cards = CardJsonParser.parseJson(init.getJSONArray("cards"), allCards);
+        // INIT GAME
+    }
+
     public Game parseJson(String json) throws JSONException, FileNotFoundException {
         JSONObject obj = new JSONObject(json);
         Game game = null;
