@@ -255,10 +255,15 @@ public class GameBoard extends Application {
 
     while(temp) {
 
+
+    while(!clientAdapter.getClientSharedState().isFinishedInit()) {
+      //racine.setCenter(waitingWindow.getBody());
+      waitingWindow.execute();
     }
+
     //TODO pecho info joueur2
     //TODO initialisation deck
-    inGame(racine);
+
 
     */
     inGame(racine);
