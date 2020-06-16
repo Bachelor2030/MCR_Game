@@ -138,7 +138,7 @@ public class InGameWindow extends GameWindow {
     }
 
     footerCardsPlayer.setVisible(true);
-    footerCardsPlayer.getStyleClass().add("corps-gridPane");
+    //footerCardsPlayer.getStyleClass().add("corps-gridPane");
 
     return footerCardsPlayer;
   }
