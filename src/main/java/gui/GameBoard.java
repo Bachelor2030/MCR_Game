@@ -26,12 +26,18 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import network.ClientAdapter;
 import network.ClientRunner;
+import network.jsonUtils.CardJsonParser;
+import network.jsonUtils.JsonUtil;
 import network.states.ClientState;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
+import static network.jsonUtils.ParserLauncher.parseJsonCards;
 
 // TODO : commande qui font des actions graphiques. (genre déplacer créature)
 
@@ -54,7 +60,10 @@ public class GameBoard extends Application {
   private BorderPane racine;
 
   private Player player1, player2;
-  private LinkedList<Card> deck1, deck2;
+  private ArrayList<Card> deck1;
+  private ArrayList<Card> deck2;
+  private ArrayList<Card> all;
+  private final String jsonPath = "src/main/resources/json/";
   private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
 
   private GUIBoard GUIBoard;
@@ -98,6 +107,12 @@ public class GameBoard extends Application {
     stage.setTitle("MCR - JEU DE LA MUERTA");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
+
+    //TODO corriger cette merde
+    CardJsonParser cardJsonParser = new CardJsonParser();
+    all = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
+    deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", all);
+    deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", all);
 
   }
 
