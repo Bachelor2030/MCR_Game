@@ -37,6 +37,10 @@ public class ClientAdapter {
         this.playerName = playerName;
     }
 
+    public ClientState getState() {
+        return state;
+    }
+
     public void run() {
         // Setting up connection
         setup(host, port);
