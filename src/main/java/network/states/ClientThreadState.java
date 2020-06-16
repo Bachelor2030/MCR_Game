@@ -1,6 +1,6 @@
 package network.states;
 
-public enum ClientState {
+public enum ClientThreadState {
     CLIENT_LISTENING,
     SERVER_LISTENING,
     GAME_ENDED,

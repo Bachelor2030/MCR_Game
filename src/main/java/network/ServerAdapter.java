@@ -5,8 +5,8 @@ import gameLogic.invocator.card.Card;
 import gameLogic.receptors.Player;
 import network.jsonUtils.CardJsonParser;
 import network.jsonUtils.JsonUtil;
-import network.states.ServerState;
-import network.states.WorkerState;
+import network.states.ServerSharedState;
+import network.states.ServerThreadState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +23,7 @@ import static network.utilities.JsonServer.sendJsonType;
 import static network.utilities.NetworkWaiting.awaitClientHandshake;
 import static network.utilities.NetworkWaiting.awaitClientMessage;
 import static network.utilities.Streams.cleanupResources;
-import static network.states.WorkerState.INIT;
+import static network.states.ServerThreadState.INIT;
 
 
 public class ServerAdapter {
@@ -33,7 +33,7 @@ public class ServerAdapter {
     private int port;
     ArrayList<Card> allCards;
     Game game;
-    ServerState serverState;
+    ServerSharedState serverSharedState;
 
     /**
      * Constructor
@@ -43,7 +43,7 @@ public class ServerAdapter {
     public ServerAdapter(int port, int nbrLines, int lineLength) {
         this.port = port;
         this.game = new Game(this, nbrLines, lineLength);
-        serverState = new ServerState(game.getFirstPlayerId(), game);
+        serverSharedState = new ServerSharedState(game.getFirstPlayerId(), game);
 
         try {
             allCards = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
@@ -64,8 +64,8 @@ public class ServerAdapter {
         new Thread(new ReceptionistWorker()).start();
     }
 
-    public ServerState getServerState() {
-        return serverState;
+    public ServerSharedState getServerSharedState() {
+        return serverSharedState;
     }
 
     /**
@@ -86,14 +86,14 @@ public class ServerAdapter {
                 return;
             }
 
-            while (serverState.getPlayerCount() < 2) {
+            while (serverSharedState.getPlayerCount() < 2) {
                 printMessage(MessageLevel.Info, receptionistClassName(), "Waiting (blocking) for a new Player on port " + port);
 
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    serverState.incrementPlayerCount();
+                    serverSharedState.incrementPlayerCount();
                     printMessage(MessageLevel.Info, receptionistClassName(), "A new Player has arrived. Starting a new thread and delegating work to a new servant...");
-                    new Thread(new ServantWorker(clientSocket, serverState.getPlayerCount())).start();
+                    new Thread(new ServantWorker(clientSocket, serverSharedState.getPlayerCount())).start();
                 } catch (IOException ex) {
                     printMessage(MessageLevel.Error, receptionistClassName(), ex.toString());
                 }
@@ -102,13 +102,13 @@ public class ServerAdapter {
 
 
             // Wait for Player names to have been set
-            while (!serverState.playerNamesSet()) {}
+            while (!serverSharedState.playerNamesSet()) {}
 
             CardJsonParser cardJsonParser = new CardJsonParser();
             List<Card> deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", allCards);
             List<Card> deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", allCards);
 
-            game.initGame(new Player(serverState.getPlayerName(1), deck1, game), new Player(serverState.getPlayerName(2), deck2, game));
+            game.initGame(new Player(serverSharedState.getPlayerName(1), deck1, game), new Player(serverSharedState.getPlayerName(2), deck2, game));
         }
 
         /**
@@ -141,18 +141,18 @@ public class ServerAdapter {
             public void run() {
                 try {
                     // Awaiting client greetings
-                    awaitClientHandshake(serverState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
+                    awaitClientHandshake(serverSharedState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
 
                     // Awaiting client messages
-                    while (serverState.getWorkerState(playerId) != WorkerState.GAME_ENDED) {
-                        switch (serverState.getWorkerState(playerId)) {
+                    while (serverSharedState.getWorkerState(playerId) != ServerThreadState.GAME_ENDED) {
+                        switch (serverSharedState.getWorkerState(playerId)) {
                             case INIT:
                                 // Wait for game to finish init, parsing, etc...
-                                while (!serverState.finishedInit()) {}
-                                if (playerId == serverState.getPlayingId()) {
-                                    serverState.setWorkerState(playerId, WorkerState.SERVER_LISTENING);
+                                while (!serverSharedState.finishedInit()) {}
+                                if (playerId == serverSharedState.getPlayingId()) {
+                                    serverSharedState.setWorkerState(playerId, ServerThreadState.SERVER_LISTENING);
                                 } else {
-                                    serverState.setWorkerState(playerId, WorkerState.CLIENT_LISTENING);
+                                    serverSharedState.setWorkerState(playerId, ServerThreadState.CLIENT_LISTENING);
                                 }
 
                                 JSONObject init;
@@ -161,30 +161,30 @@ public class ServerAdapter {
                                 break;
 
                             case INIT_WAITING:
-                                while (serverState.getPlayerCount() < 2 || serverState.getPlayerName(serverState.otherPlayer(playerId)) == null) {}
+                                while (serverSharedState.getPlayerCount() < 2 || serverSharedState.getPlayerName(serverSharedState.otherPlayer(playerId)) == null) {}
 
                                 sendJsonType(Messages.JSON_TYPE_GAME_START, outPrintWriter, servantClassName(playerId));
-                                serverState.setWorkerState(playerId, INIT);
+                                serverSharedState.setWorkerState(playerId, INIT);
                                 break;
 
                             case SERVER_LISTENING:
-                                awaitClientMessage(game, serverState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
+                                awaitClientMessage(game, serverSharedState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
                                 break;
 
                             case CLIENT_LISTENING:
-                                while (serverState.getIntendToSendJson(playerId)) {
-                                    while(!serverState.jsonToSendEmpty(playerId)) {
-                                        JSONObject jsonObject = serverState.popJsonToSend(playerId);
+                                while (serverSharedState.getIntendToSendJson(playerId)) {
+                                    while(!serverSharedState.jsonToSendEmpty(playerId)) {
+                                        JSONObject jsonObject = serverSharedState.popJsonToSend(playerId);
                                         sendJson(jsonObject, outPrintWriter, servantClassName(playerId));
                                     }
                                 }
 
                                 // Wait for backend to signify it's next Player's turn
-                                while (serverState.getPlayingId() != playerId) {}
+                                while (serverSharedState.getPlayingId() != playerId) {}
 
                                 // TODO: Send "your turn" from logic class?
                                 sendJsonType(Messages.JSON_TYPE_YOUR_TURN, outPrintWriter, servantClassName(playerId));
-                                serverState.setWorkerState(playerId, WorkerState.SERVER_LISTENING);
+                                serverSharedState.setWorkerState(playerId, ServerThreadState.SERVER_LISTENING);
                                 break;
 
                             case GAME_ENDED:
@@ -195,7 +195,7 @@ public class ServerAdapter {
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 } finally {
-                    serverState.decrementPlayerCount();
+                    serverSharedState.decrementPlayerCount();
                     cleanupResources(servantClassName(playerId), inBufferedReader, outPrintWriter, clientSocket);
                 }
             }
