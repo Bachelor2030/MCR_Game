@@ -8,6 +8,6 @@ public class ClientRunner implements Runnable {
 
     @Override
     public void run() {
-        clientAdapter.run();
+        //clientAdapter.run();
     }
 }
