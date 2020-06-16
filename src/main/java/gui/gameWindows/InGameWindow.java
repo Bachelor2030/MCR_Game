@@ -87,6 +87,7 @@ public class InGameWindow extends GameWindow {
   /** @return les informations du Player */
   private VBox getPlayerInformations(String labelTitle) throws FileNotFoundException {
     VBox informationPannelUser = new VBox();
+
     // on set l'image de player 1
     if (labelTitle.equals(player1.getName())) {
       ImageView imageView = new ImageView(player1.getImage());
@@ -94,6 +95,7 @@ public class InGameWindow extends GameWindow {
       imageView.setFitHeight(player1.getImage().getHeight() / 2.5);
       informationPannelUser.getChildren().add(imageView);
     }
+
     // on set l'image de player 2 en chequant si elle est pas égale à celle de base.
     // TODO remplace image 2 en reprenant info serveur
     else if (!(player2.getImage().equals("src/main/resources/design/images/creatures/empty.jpg"))) {
@@ -124,18 +126,20 @@ public class InGameWindow extends GameWindow {
    *
    * @return le footer
    */
-  private HBox footerBar() {
+  private HBox footerBar() throws FileNotFoundException {
 
     // On définit une boxe horizontale qui définira l'espace "footer" -> cartes du joueur
     HBox footerCardsPlayer = new HBox();
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
-    //footerCardsPlayer.getStyleClass().add("footer-header-hbox");
+    footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
     for (GUICard card : handPlayer) {
-      card.getView().setFitWidth(0.3);
-      card.getView().setFitHeight(0.3);
-      card.getView().setVisible(true);
-      footerCardsPlayer.getChildren().add(card.getView());
+      ImageView imageView = card.getView();
+      imageView.setFitWidth(0.3);
+      imageView.setFitHeight(0.3);
+      imageView.setVisible(true);
+
+      footerCardsPlayer.getChildren().add(imageView);
     }
 
     footerCardsPlayer.setVisible(true);

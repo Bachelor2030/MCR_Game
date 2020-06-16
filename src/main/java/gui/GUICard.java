@@ -52,7 +52,14 @@ public class GUICard {
         return type;
     }
 
-    public ImageView getView() {
-        return view;
+    public ImageView getView() throws FileNotFoundException {
+        ImageView imageView;
+
+        switch (type) {
+            case TRAP: imageView = new ImageView(new Image(new FileInputStream(TRAP_PATH)));
+            case CREATURE: imageView = new ImageView(new Image(new FileInputStream(CREATURE_PATH)));
+            default : imageView = new ImageView(new Image(new FileInputStream(SPELL_PATH)));
+        }
+        return imageView;
     }
 }

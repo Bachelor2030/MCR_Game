@@ -232,6 +232,8 @@ public class GameBoard extends Application {
                 IpPlayer1 = parameterWindow.getPlayerIpField().getText();
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
 
+                player1.setName(namePlayer1);
+
                 clientAdapter =
                     new ClientAdapter(this, IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
                 new Thread(new ClientRunner(clientAdapter)).start();
@@ -404,10 +406,12 @@ public class GameBoard extends Application {
 
   public void sendInit(String initMessage) {
     GUIParser guiParser = new GUIParser(initMessage);
-    // TODO Récup' les infos du deck et tout le bordel et l'afficher ou il faut
+
     handPlayer = guiParser.getCardsFromInit();
     player1.addHand(handPlayer);
 
     player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>());
+    player2.setImgPath("src/main/resources/design/images/characters/matt.png");
+    System.out.println(player2.getName());
   }
 }
