@@ -5,9 +5,9 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
-public class ServerState {
+public class ServerSharedState {
 
-    private WorkerState[] workerStates;
+    private ServerThreadState[] serverThreadStates;
     private String[] playerNames;
     private PlayState[] playStates;
     private LinkedList<JSONObject>[] jsonToSend;
@@ -19,10 +19,10 @@ public class ServerState {
     private int playerCount = 0;
     private Game game;
 
-    public ServerState(int playingFirstId, Game game) {
-        workerStates = new WorkerState[2];
-        workerStates[0] = WorkerState.CONNECTING;
-        workerStates[1] = WorkerState.CONNECTING;
+    public ServerSharedState(int playingFirstId, Game game) {
+        serverThreadStates = new ServerThreadState[2];
+        serverThreadStates[0] = ServerThreadState.CONNECTING;
+        serverThreadStates[1] = ServerThreadState.CONNECTING;
 
         playerNames = new String[2];
         playerNames[0] = null;
@@ -72,12 +72,12 @@ public class ServerState {
         return jsonToSend[workerId(playerId)].pop();
     }
 
-    public synchronized WorkerState getWorkerState(int playerId) {
-        return workerStates[workerId(playerId)];
+    public synchronized ServerThreadState getWorkerState(int playerId) {
+        return serverThreadStates[workerId(playerId)];
     }
 
-    public synchronized void setWorkerState(int playerId, WorkerState workerState) {
-        this.workerStates[workerId(playerId)] = workerState;
+    public synchronized void setWorkerState(int playerId, ServerThreadState serverThreadState) {
+        this.serverThreadStates[workerId(playerId)] = serverThreadState;
     }
 
     public synchronized void setPlayStates(int playerId, PlayState playState) {

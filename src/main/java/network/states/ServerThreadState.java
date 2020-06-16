@@ -1,6 +1,6 @@
 package network.states;
 
-public enum WorkerState {
+public enum ServerThreadState {
     CONNECTING,
     INIT,
     INIT_WAITING,

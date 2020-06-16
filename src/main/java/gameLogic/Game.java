@@ -49,7 +49,7 @@ public class Game extends Receptor {
             this.player1 = player2;
             this.player2 = player1;
         }
-        serverAdapter.getServerState().setFinishedInit();
+        serverAdapter.getServerSharedState().setFinishedInit();
     }
 
     public void nextTurn() {
@@ -141,6 +141,7 @@ public class Game extends Receptor {
         lastMove = new Macro(player.getLastMove().getCommands());
 
         JSONObject lastMoveJSON = lastMove.toJson();
+
         // End turn envoyer end turn (le bon a chaque joueur serverAdapter.serverState.getOtherPlayer(playerId))
         if (action.getName() == CommandName.END_TURN) {
             JSONObject end = new JSONObject();
@@ -154,11 +155,10 @@ public class Game extends Receptor {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            serverAdapter.getServerState().pushJsonToSend(end, serverAdapter.getServerState().otherPlayer(playerId));
+            serverAdapter.getServerSharedState().pushJsonToSend(end, serverAdapter.getServerSharedState().otherPlayer(playerId));
         }
-
         // Put json updates in serverAdapter.serverState.pushJsonToSend
-        serverAdapter.getServerState().pushJsonToSend(lastMoveJSON, playerId);
+        serverAdapter.getServerSharedState().pushJsonToSend(lastMoveJSON, playerId);
 
         // Pour end game il faudra faire autrement /!\ ne pas s'en occuper, le serveur s'en charge
         return true;
