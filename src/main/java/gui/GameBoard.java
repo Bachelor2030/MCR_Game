@@ -199,22 +199,21 @@ public class GameBoard extends Application {
     // On crée un bouton pour lancer le serveur
     GameButton startServer = new GameButton("Lancer Serveur", "header-button");
     startServer
-            .getButton()
-            .setOnAction(
-                    event -> {
-                      // TODO
-                      serverIsOn =  !serverIsOn;
-                      if (serverIsOn) {
-                        startServer.getButton().setText("Server launched.\nCan't stop server for now");
-                        server.serveClients();
-                      } else {
-                        startServer.getButton().setText("Server launched.\nCan't stop server for now");
-                        //server.getServerSharedState().endGame();
-                        //server.closeClientSocket();
-                      }
-
-                    }
-            );
+      .getButton()
+      .setOnAction(
+            event -> {
+              // TODO
+              serverIsOn =  !serverIsOn;
+              if (serverIsOn) {
+                startServer.getButton().setText("Server launched.\nCan't stop server for now");
+                server.serveClients();
+              } else {
+                startServer.getButton().setText("Server launched.\nCan't stop server for now");
+                //server.getServerSharedState().endGame();
+                //server.closeClientSocket();
+              }
+            }
+      );
 
 
     parameterWindow.addGameButton(startServer);

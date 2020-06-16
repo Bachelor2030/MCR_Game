@@ -78,4 +78,8 @@ public class GUIPlayer {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getImagePath() {
+        return imagePath;
+    }
 }

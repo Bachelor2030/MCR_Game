@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GUIParser {
@@ -84,7 +83,7 @@ public class GUIParser {
     public String[] getEnemyFromInit() {
         String[] enemy = new String[2];
         try {
-            enemy[0] = gameState.getString(Messages.JSON_TYPE_ENEMYNAME);
+            enemy[0] = gameState.getString(Messages.JSON_TYPE_ENEMY_NAME);
             enemy[1] = gameState.getString(Messages.JSON_TYPE_ENEMY_IMAGE);
         } catch (JSONException e) {
             e.printStackTrace();
