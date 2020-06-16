@@ -1,64 +1,77 @@
 package network.jsonUtils;
 
-import gameLogic.commands.CommandName;
-import gameLogic.commands.ConcreteCommand;
-import gameLogic.commands.Macro;
-import gameLogic.invocator.card.Card;
 import gameLogic.invocator.card.CardType;
+import gui.GUICard;
 import network.Messages;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-public class CardJsonParser {
-    private final JsonUtil jsonUtil = new JsonUtil();
+public class GUIParser {
+    private String jsonMessage;
+    private JSONObject gameState;
 
-    /**************************
-     *  JSON utils for Cards  *
-     **************************/
-    public ArrayList<Card> parseJson(String file, ArrayList<Card> all) {
-        ArrayList<Card> cards = new ArrayList<>();
-
+    public GUIParser(String jsonInit) {
+        this.jsonMessage = jsonInit;
         try {
-            HashMap<Integer, Integer> indexQuantityList = new HashMap<>();
-
-            JSONObject obj = new JSONObject(jsonUtil.getJsonContent(file));
-
-            JSONArray arr = obj.getJSONArray("cards");
-
-            for (int i = 0; i < arr.length(); i++) {
-                JSONObject card = arr.getJSONObject(i);
-
-                int id = card.getInt("id");
-                int cost = card.getInt("quantity");
-
-                indexQuantityList.put(id, cost);
-
-            }
-
-            for(Map.Entry<Integer, Integer> entry : indexQuantityList.entrySet()) {
-                int key = entry.getKey();
-                int quantity = entry.getValue();
-                for (Card c : all) {
-                    if (c.getID() == key) {
-                        for (int i = 0; i < quantity; i++) {
-                            cards.add(c);
-                        }
-                    }
-                }
-            }
-
+            gameState = new JSONObject(jsonInit).getJSONObject(Messages.JSON_GAMESTATE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        return cards;
     }
 
+    public int[] getLinesSpotDimensionFromInit() {
+        int[] dimensions = new int[2];
+        try {
+            dimensions[0] = gameState.getInt(Messages.JSON_TYPE_LINE);
+            dimensions[1] = gameState.getInt(Messages.JSON_TYPE_SPOT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return dimensions;
+    }
+
+    public ArrayList<GUICard> getCardsFromInit() {
+        ArrayList<GUICard> playerCards = new ArrayList<>();
+        try {
+            JSONArray cards = gameState.getJSONArray(Messages.JSON_TYPE_CARDS);
+
+            for (int c = 0; c < cards.length(); c++) {
+                JSONObject card = cards.getJSONObject(c);
+                playerCards
+                    .add(
+                        new GUICard(
+                            card.getInt(Messages.JSON_TYPE_CARD_ID),
+                            card.getString(Messages.JSON_TYPE_NAME),
+                            CardType.getType(card.getString(Messages.JSON_TYPE)),
+                            card.getInt(Messages.JSON_TYPE_COST)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return playerCards;
+    }
+
+    public String getTurnFromInit() {
+        try {
+            return gameState.getString(Messages.JSON_TYPE_TURN);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getEnemyFromInit() {
+        try {
+            return gameState.getString(Messages.JSON_TYPE_ENEMYNAME);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+/*
     public ArrayList<Card> readInit(String jsonInit) {
         ArrayList<Card> playerCards = new ArrayList<>();
         try {
@@ -95,4 +108,5 @@ public class CardJsonParser {
         }
         return playerCards;
     }
+ */
 }

@@ -1,6 +1,6 @@
 package network;
 
-import network.jsonUtils.InitParser;
+import network.jsonUtils.GUIParser;
 import network.states.ClientSharedState;
 import network.states.ClientThreadState;
 import network.utilities.Info;
@@ -127,9 +127,9 @@ public class ClientAdapter {
 
                     case Messages.JSON_TYPE_INIT:
                         clientThreadState = getStateFromTurnInit(receivedAnswer);
-                        InitParser initParser = new InitParser();
+                        GUIParser initParser = new GUIParser(receivedAnswer);
 
-                        clientSharedState.setEnemyName(initParser.readPlayerName(receivedAnswer));
+                        clientSharedState.setEnemyName(initParser.getEnemyFromInit());
                         // todo: Parse the rest of init and determine how to give it to the gui (if not same way as for enemy name)
                         clientSharedState.setFinishedInit(true);
                         break;
