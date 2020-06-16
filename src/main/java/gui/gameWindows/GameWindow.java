@@ -11,11 +11,11 @@ public abstract class GameWindow {
   protected Stage stage;
 
   public GameWindow(BorderPane racine, HBox navigation, boolean isGaming, Stage stage) {
+    this.racine = racine;
     racine.setRight(null);
     racine.setLeft(null);
     racine.setTop(null);
     racine.setBottom(null);
-    this.racine = racine;
     this.navigation = navigation;
     this.isGaming = isGaming;
     this.stage = stage;
