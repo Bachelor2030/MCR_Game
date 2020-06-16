@@ -118,7 +118,7 @@ public class Card implements Invocator {
     public JSONObject toJSON() {
         JSONObject c = new JSONObject();
         try {
-            c.put(Messages.JSON_TYPE_ID, ID);
+            c.put(Messages.JSON_TYPE_CARD_ID, ID);
             c.put(Messages.JSON_TYPE_NAME, name);
             c.put(Messages.JSON_TYPE, type);
             c.put(Messages.JSON_TYPE_COST, cost);

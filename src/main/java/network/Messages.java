@@ -1,7 +1,5 @@
 package network;
 
-import gameLogic.commands.CommandName;
-
 public final class Messages {
 
     public static final String JSON_TYPE = "type";
