@@ -136,7 +136,8 @@ public class InGameWindow extends GameWindow {
       footerCardsPlayer.getChildren().add(card.getView());
     }
 
-    footerCardsPlayer.getStyleClass().add("corps-gridPane");
+
+    //footerCardsPlayer.getStyleClass().add("corps-gridPane");
 
     return footerCardsPlayer;
   }

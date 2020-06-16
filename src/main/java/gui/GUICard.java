@@ -25,6 +25,7 @@ public class GUICard {
         FileInputStream imagePath = new FileInputStream(definePictureAccordingToType());
         Image image = new Image(imagePath);
         view = new ImageView(image);
+        view.setVisible(true);
     }
 
     private String definePictureAccordingToType() {
