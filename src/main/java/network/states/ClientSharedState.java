@@ -2,12 +2,16 @@ package network.states;
 
 public class ClientSharedState {
 
-    private String enemyName;
+    private String enemyName, enemyImagePath;
     private String playerName;
     private boolean finishedInit = false;
 
     public synchronized String getEnemyName() {
         return enemyName;
+    }
+
+    public synchronized String getEnemyImagePath() {
+        return enemyImagePath;
     }
 
     public synchronized void setEnemyName(String enemyName) {
@@ -20,6 +24,10 @@ public class ClientSharedState {
 
     public synchronized void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public synchronized void setEnemyImagePath(String enemyImagePath) {
+        this.enemyImagePath = enemyImagePath;
     }
 
     public synchronized boolean isFinishedInit() {
