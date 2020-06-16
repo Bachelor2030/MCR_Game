@@ -133,9 +133,11 @@ public class InGameWindow extends GameWindow {
     for (GUICard card : handPlayer) {
       card.getView().setFitWidth(0.3);
       card.getView().setFitHeight(0.3);
+      card.getView().setVisible(true);
       footerCardsPlayer.getChildren().add(card.getView());
     }
 
+    footerCardsPlayer.setVisible(true);
     footerCardsPlayer.getStyleClass().add("corps-gridPane");
 
     return footerCardsPlayer;
