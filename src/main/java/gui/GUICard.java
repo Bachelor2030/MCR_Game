@@ -16,24 +16,28 @@ public class GUICard {
     private final String
             SPELL_PATH    = "src/main/resources/design/images/cards/spell.png",
             CREATURE_PATH = "src/main/resources/design/images/cards/creature.png",
-            TRAP_PATH     = "src/main/resources/design/images/cards/trap.png";
+            TRAP_PATH     = "src/main/resources/design/images/cards/trap.png",
+            ERROR_PATH    = "src/main/resources/design/images/cards/cardSample.png";
 
     public GUICard(int id, String name, CardType type, int cost) throws FileNotFoundException {
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.type = type;
-        FileInputStream imagePath = new FileInputStream(definePictureAccordingToType());
-        Image image = new Image(imagePath);
-        view = new ImageView(image);
+        view = new ImageView(new Image(new FileInputStream(definePictureAccordingToType())));
         view.setVisible(true);
     }
 
     private String definePictureAccordingToType() {
         switch (type) {
-            case TRAP: return TRAP_PATH;
-            case CREATURE: return CREATURE_PATH;
-            default : return SPELL_PATH;
+            case TRAP:
+                return TRAP_PATH;
+            case CREATURE:
+                return CREATURE_PATH;
+            case SPELL:
+                return SPELL_PATH;
+            default :
+                return ERROR_PATH;
         }
     }
 
@@ -53,7 +57,7 @@ public class GUICard {
         return type;
     }
 
-    public ImageView getView() throws FileNotFoundException {
-        return new ImageView(new Image(new FileInputStream(definePictureAccordingToType())));
+    public ImageView getView() {
+        return view;
     }
 }
