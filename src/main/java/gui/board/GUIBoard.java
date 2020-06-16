@@ -2,6 +2,7 @@ package gui.board;
 
 import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
+import gui.receptors.GUIPlayer;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -30,7 +31,7 @@ public class GUIBoard {
     /**
      * Constructeur de la classe GUIBoard
      */
-    public GUIBoard(GridPane gridPane, VBox vbox, Player player1, Player player2) throws IOException {
+    public GUIBoard(GridPane gridPane, VBox vbox, GUIPlayer player1, GUIPlayer player2) throws IOException {
         lineCounter = 0;
         GUILines = new LinkedList<>();
         for(int line = 0; line < NB_LINES; ++line) {

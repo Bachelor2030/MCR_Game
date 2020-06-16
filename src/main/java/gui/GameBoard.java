@@ -7,6 +7,7 @@ import gameLogic.receptors.Receptor;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
 import gui.gameWindows.*;
+import gui.receptors.GUIPlayer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,7 +52,7 @@ public class GameBoard extends Application {
 
   private BorderPane racine;
 
-  private Player player1, player2;
+  private GUIPlayer player1, player2;
   private GUIParser guiParser; // informations du tour pour le joueur
   private ArrayList<GUICard> handPlayer;
   private final String jsonPath = "src/main/resources/json/";
@@ -70,9 +71,9 @@ public class GameBoard extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     currentStage = stage;
+
     // On initialise les players
-    player1 = new Player();
-    player2 = new Player();
+    player1 = new GUIPlayer();
 
     // Racine de scene
     racine = new BorderPane();
@@ -262,7 +263,7 @@ public class GameBoard extends Application {
                 isGaming = false;
 
                 // On récupère la sélection du joueur
-                ((Receptor) player1).setImgPath(characterWindow.defineSelectedUrl());
+                player1.setImgPath(characterWindow.defineSelectedUrl());
 
                 // On passe à la fenêtre d'attente d'adversaire
                 waitingForPlayer();
@@ -405,5 +406,8 @@ public class GameBoard extends Application {
     GUIParser guiParser = new GUIParser(initMessage);
     // TODO Récup' les infos du deck et tout le bordel et l'afficher ou il faut
     handPlayer = guiParser.getCardsFromInit();
+    player1.addHand(handPlayer);
+
+    player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>());
   }
 }
