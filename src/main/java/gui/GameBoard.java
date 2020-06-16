@@ -101,14 +101,6 @@ public class GameBoard extends Application {
     stage.setTitle("MCR - BACHELOR HUNTERZ");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
-
-    //TODO corriger cette merde
-    CardJsonParser cardJsonParser = new CardJsonParser();
-    //toutes les cartes du jeu au complet
-    all = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
-    deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", all);
-    deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", all);
-
   }
 
   public void exitGame() {
@@ -263,7 +255,7 @@ public class GameBoard extends Application {
   private void waitingForPlayer() throws IOException {
     WaitingWindow waitingWindow = new WaitingWindow(racine, defineHeader(false), false, currentStage);
     racine.setCenter(waitingWindow.getBody());
-    boolean temp = true; //à remplacer
+    boolean temp = true; //TODO à remplacer
     /*
 
     while(temp) {
