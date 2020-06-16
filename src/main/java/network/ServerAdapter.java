@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.exit;
 import static network.jsonUtils.ParserLauncher.parseJsonCards;
 import static network.utilities.Info.*;
 import static network.utilities.JsonServer.sendJson;
@@ -31,6 +32,7 @@ public class ServerAdapter {
     private final String jsonPath = "src/main/resources/json/";
 
     private int port;
+    private Socket clientSocket;
     ArrayList<Card> allCards;
     Game game;
     ServerSharedState serverSharedState;
@@ -90,7 +92,9 @@ public class ServerAdapter {
                 printMessage(MessageLevel.Info, receptionistClassName(), "Waiting (blocking) for a new Player on port " + port);
 
                 try {
-                    Socket clientSocket = serverSocket.accept();
+                    printMessage(receptionistClassName(), "1");
+                    clientSocket = serverSocket.accept();
+                    printMessage(receptionistClassName(), "2");
                     serverSharedState.incrementPlayerCount();
                     printMessage(MessageLevel.Info, receptionistClassName(), "A new Player has arrived. Starting a new thread and delegating work to a new servant...");
                     new Thread(new ServantWorker(clientSocket, serverSharedState.getPlayerCount())).start();
@@ -144,7 +148,7 @@ public class ServerAdapter {
                     awaitClientHandshake(serverSharedState, inBufferedReader, outPrintWriter, playerId, servantClassName(playerId));
 
                     // Awaiting client messages
-                    while (serverSharedState.getWorkerState(playerId) != ServerThreadState.GAME_ENDED) {
+                    while (!serverSharedState.gameEnded()) {
                         switch (serverSharedState.getWorkerState(playerId)) {
                             case INIT:
                                 // Wait for game to finish init, parsing, etc...
@@ -186,11 +190,10 @@ public class ServerAdapter {
                                 sendJsonType(Messages.JSON_TYPE_YOUR_TURN, outPrintWriter, servantClassName(playerId));
                                 serverSharedState.setWorkerState(playerId, ServerThreadState.SERVER_LISTENING);
                                 break;
-
-                            case GAME_ENDED:
-                                sendJsonType(Messages.JSON_TYPE_GAME_END, outPrintWriter, servantClassName(playerId));
-                                break;
                         }
+                    }
+                    if (serverSharedState.gameEnded()) {
+                        sendJsonType(Messages.JSON_TYPE_GAME_END, outPrintWriter, servantClassName(playerId));
                     }
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
@@ -198,6 +201,18 @@ public class ServerAdapter {
                     serverSharedState.decrementPlayerCount();
                     cleanupResources(servantClassName(playerId), inBufferedReader, outPrintWriter, clientSocket);
                 }
+            }
+        }
+    }
+
+    public void closeClientSocket() {
+        try {
+            clientSocket.close();
+        } catch (Exception e) {
+            if (serverSharedState.gameEnded()) {
+                printMessage(receptionistClassName(), "Closing server");
+            } else {
+                e.printStackTrace();
             }
         }
     }

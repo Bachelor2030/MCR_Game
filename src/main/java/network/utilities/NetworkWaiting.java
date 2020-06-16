@@ -77,7 +77,7 @@ public class NetworkWaiting {
                     break;
 
                 case Messages.JSON_TYPE_GOODBYE:
-                    serverSharedState.setWorkerState(playerId, ServerThreadState.GAME_ENDED);
+                    serverSharedState.endGame();
                     sendJsonType(Messages.JSON_TYPE_GOODBYE_ANS, outPrintWriter, className);
                     return;
 

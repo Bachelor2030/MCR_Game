@@ -67,7 +67,7 @@ public class ParameterWindow extends GameWindow {
     playerPort.getStyleClass().add("parameters-label");
 
     playerPortField = new TextField();
-    playerPortField.setText("2205"); // récupère l'adresse IP
+    playerPortField.setText("1337"); // récupère l'adresse IP
     playerPortField.getStyleClass().add("parameters-field");
 
     body.getChildren()

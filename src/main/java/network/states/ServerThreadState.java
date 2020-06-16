@@ -5,6 +5,5 @@ public enum ServerThreadState {
     INIT,
     INIT_WAITING,
     CLIENT_LISTENING,
-    SERVER_LISTENING,
-    GAME_ENDED
+    SERVER_LISTENING
 }
