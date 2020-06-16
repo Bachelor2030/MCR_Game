@@ -6,15 +6,15 @@
     "cards" : [
       {
         "id" : 3,
-        "quantity" : 1
+        "quantity" : 6
       },
       {
         "id" : 5,
-        "quantity" : 1
+        "quantity" : 15
       },
       {
         "id" : 4,
-        "quantity" : 1
+        "quantity" : 4
       },
       {
         "id" : 1,

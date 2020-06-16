@@ -24,11 +24,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import network.ClientAdapter;
+import network.ClientRunner;
+import network.jsonUtils.CardJsonParser;
+import network.jsonUtils.JsonUtil;
+import network.states.ClientState;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
+import static network.jsonUtils.ParserLauncher.parseJsonCards;
 
 // TODO : commande qui font des actions graphiques. (genre déplacer créature)
 
@@ -51,12 +60,17 @@ public class GameBoard extends Application {
   private BorderPane racine;
 
   private Player player1, player2;
-  private LinkedList<Card> deck1, deck2;
+  private ArrayList<Card> deck1;
+  private ArrayList<Card> deck2;
+  private ArrayList<Card> all;
+  private final String jsonPath = "src/main/resources/json/";
   private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
 
   private GUIBoard GUIBoard;
 
   private Stage currentStage;
+
+  private ClientAdapter clientAdapter;
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
@@ -93,6 +107,13 @@ public class GameBoard extends Application {
     stage.setTitle("MCR - BACHELOR HUNTERZ");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
+
+    //TODO corriger cette merde
+    CardJsonParser cardJsonParser = new CardJsonParser();
+    all = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
+    deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", all);
+    deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", all);
+
   }
 
   public void exitGame() {
@@ -198,6 +219,10 @@ public class GameBoard extends Application {
                 namePlayer1 = parameterWindow.getPlayerNameField().getText();
                 IpPlayer1 = parameterWindow.getPlayerIpField().getText();
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
+
+
+                clientAdapter = new ClientAdapter(IpPlayer1, Integer.parseInt(portPlayer1), namePlayer1);
+                new Thread(new ClientRunner(clientAdapter)).start();
 
                 // On passe à la fenêtre de choix de character
                 chooseCharacter();
@@ -336,5 +361,13 @@ public class GameBoard extends Application {
   public void place(Receptor receptor, int line, int position) {
     GUIBoard.place(receptor, line, position);
     GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
+  }
+
+  public ClientAdapter getClientAdapter() {
+    return clientAdapter;
+  }
+
+  public void setClientAdapter(ClientAdapter clientAdapter) {
+    this.clientAdapter = clientAdapter;
   }
 }
