@@ -265,11 +265,9 @@ public class GameBoard extends Application {
     WaitingWindow waitingWindow = new WaitingWindow(racine, defineHeader(false), false, currentStage);
     racine.setCenter(waitingWindow.getBody());
 
-    boolean temp = clientAdapter.getClientSharedState().isFinishedInit(); //à remplacer
-
-    while(!temp) {
-      temp = clientAdapter.getClientSharedState().isFinishedInit();
-
+    while(!clientAdapter.getClientSharedState().isFinishedInit()) {
+      //racine.setCenter(waitingWindow.getBody());
+      waitingWindow.execute();
     }
 
     //TODO pecho info joueur2
