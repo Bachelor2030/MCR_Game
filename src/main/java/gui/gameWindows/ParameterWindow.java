@@ -39,13 +39,18 @@ public class ParameterWindow extends GameWindow {
 
     playerNameField = new TextField();
     playerNameField.setText("Bouffon n°1");
-    playerNameField.getStyleClass().add("parameters-field");
+    playerNameField.setMinWidth(50);
+    playerNameField.setPrefWidth(50);
+    playerNameField.setMaxWidth(200);
 
     // Adresse IP du joueur
     Label playerIP = new Label("Adresse IP");
     playerIP.getStyleClass().add("parameters-label");
 
     playerIpField = new TextField();
+    playerIpField.setMinWidth(50);
+    playerIpField.setPrefWidth(50);
+    playerIpField.setMaxWidth(200);
     try(final DatagramSocket socket = new DatagramSocket()){
       socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
       playerIpField.setText(
@@ -60,7 +65,6 @@ public class ParameterWindow extends GameWindow {
     playerIpField.setText(
         String.valueOf(InetAddress.getLoopbackAddress())); // récupère l'adresse IP
      */
-    playerIpField.getStyleClass().add("parameters-field");
 
     // Port du joueur
     Label playerPort = new Label("Port");
@@ -68,7 +72,9 @@ public class ParameterWindow extends GameWindow {
 
     playerPortField = new TextField();
     playerPortField.setText("1337"); // récupère l'adresse IP
-    playerPortField.getStyleClass().add("parameters-field");
+    playerPortField.setMinWidth(50);
+    playerPortField.setPrefWidth(50);
+    playerPortField.setMaxWidth(200);
 
     body.getChildren()
         .addAll(
@@ -80,7 +86,7 @@ public class ParameterWindow extends GameWindow {
             playerPort,
             playerPortField);
     body.setAlignment(Pos.CENTER);
-    body.setSpacing(50); // espace entre les éléments
+    body.setSpacing(25); // espace entre les éléments
   }
 
   public void addGameButton(GameButton button) {

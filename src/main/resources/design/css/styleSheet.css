@@ -104,7 +104,7 @@
 
 
 .parameters-field {
-
+    -fx-pref-width: 100;
 }
 
 .parameters-label{
