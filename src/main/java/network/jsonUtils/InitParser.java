@@ -49,4 +49,16 @@ public class InitParser {
         }
         return playerCards;
     }
+
+    public String readPlayerName(String jsonInit) {
+        String playerName = "";
+        try {
+            JSONObject init = new JSONObject(jsonInit);
+            JSONObject gameStat = init.getJSONObject(Messages.JSON_GAMESTATE);
+            playerName = gameStat.getString(Messages.JSON_TYPE_ENEMYNAME);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return playerName;
+    }
 }

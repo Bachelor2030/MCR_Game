@@ -1,6 +1,8 @@
 package network;
 
-import network.states.ClientState;
+import network.jsonUtils.InitParser;
+import network.states.ClientSharedState;
+import network.states.ClientThreadState;
 import network.utilities.Info;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,25 +22,29 @@ import static network.utilities.JsonClient.*;
 
 public class ClientAdapter {
 
-    final static int BUFFER_SIZE = 1024;
-    String host;
-    int port;
+    private final static int BUFFER_SIZE = 1024;
+    private String host;
+    private int port;
 
-    Socket clientSocket = null;
-    BufferedReader inBufferedReader = null;
-    PrintWriter outPrintWriter = null;
+    private Socket clientSocket = null;
+    private BufferedReader inBufferedReader = null;
+    private PrintWriter outPrintWriter = null;
 
-    ClientState state = ClientState.SERVER_LISTENING;
-    String playerName;
+    private ClientThreadState clientThreadState = ClientThreadState.SERVER_LISTENING;
+    private ClientSharedState clientSharedState;
+
+
+    boolean finishedInit = false;
 
     public ClientAdapter(String host, int port, String playerName) {
         this.host = host;
         this.port = port;
-        this.playerName = playerName;
+        this.clientSharedState = new ClientSharedState();
+        this.clientSharedState.setPlayerName(playerName);
     }
 
-    public ClientState getState() {
-        return state;
+    public ClientSharedState getClientSharedState() {
+        return clientSharedState;
     }
 
     public void run() {
@@ -47,10 +53,10 @@ public class ClientAdapter {
 
         try {
             // Greeting the server
-            greetings(playerName);
+            greetings(clientSharedState.getPlayerName());
 
-            while (state != ClientState.GAME_ENDED && state != ClientState.ERROR) {
-                switch (state) {
+            while (clientThreadState != ClientThreadState.GAME_ENDED && clientThreadState != ClientThreadState.ERROR) {
+                switch (clientThreadState) {
                     case CLIENT_LISTENING:
                         System.out.println("Client listening");
                         awaitServerMessage();
@@ -100,39 +106,44 @@ public class ClientAdapter {
             printMessage(clientClassName(), "Successful connection to the server. Player1 is already connected. Starting the game.");
         } else {
             printMessage(Info.MessageLevel.Error, clientClassName(), "Unexpected server answer. Exiting the game");
-            state = ClientState.ERROR;
+            clientThreadState = ClientThreadState.ERROR;
             exit();
         }
-        state = ClientState.CLIENT_LISTENING;
+        clientThreadState = ClientThreadState.CLIENT_LISTENING;
     }
 
     private void awaitServerMessage() {
         String receivedAnswer;
 
         try {
-            while (state == ClientState.CLIENT_LISTENING
+            while (clientThreadState == ClientThreadState.CLIENT_LISTENING
                     && (receivedAnswer = receiveJson(inBufferedReader.readLine())) != null) {
                 String jsonType = readJsonType(receivedAnswer);
 
                 switch (jsonType) {
                     case Messages.JSON_TYPE_GAME_START:
-                        state = ClientState.CLIENT_LISTENING;
+                        clientThreadState = ClientThreadState.CLIENT_LISTENING;
                         break;
 
                     case Messages.JSON_TYPE_INIT:
-                        state = getStateFromTurnInit(receivedAnswer);
+                        clientThreadState = getStateFromTurnInit(receivedAnswer);
+                        InitParser initParser = new InitParser();
+
+                        clientSharedState.setEnemyName(initParser.readPlayerName(receivedAnswer));
+                        // todo: Parse the rest of init and determine how to give it to the gui (if not same way as for enemy name)
+                        clientSharedState.setFinishedInit(true);
                         break;
 
                     case Messages.JSON_TYPE_YOUR_TURN:
-                        state = ClientState.SERVER_LISTENING;
+                        clientThreadState = ClientThreadState.SERVER_LISTENING;
                         break;
 
                     case Messages.JSON_TYPE_WAIT_TURN:
-                        state = ClientState.CLIENT_LISTENING;
+                        clientThreadState = ClientThreadState.CLIENT_LISTENING;
                         break;
 
                     case Messages.JSON_TYPE_GAME_END:
-                        state = ClientState.GAME_ENDED;
+                        clientThreadState = ClientThreadState.GAME_ENDED;
                         break;
 
                     default:
@@ -159,21 +170,21 @@ public class ClientAdapter {
         String jsonType = readJsonType(jsonAnswer);
 
         if (jsonType.equals(Messages.JSON_TYPE_PLAY_OK)) {
-            state = ClientState.CLIENT_LISTENING;
+            clientThreadState = ClientThreadState.CLIENT_LISTENING;
             printMessage(clientClassName(), "Played a valid move. Waiting for server game update");
 
         } else if (jsonType.equals(Messages.JSON_TYPE_PLAY_BAD)) {
-            state = ClientState.SERVER_LISTENING;
+            clientThreadState = ClientThreadState.SERVER_LISTENING;
             printMessage(clientClassName(), "You donkey, you played the wrong card! Play again.");
         } else {
-            state = ClientState.ERROR;
+            clientThreadState = ClientThreadState.ERROR;
         }
     }
 
 
 
     public void exit() {
-        if (state == ClientState.ERROR) {
+        if (clientThreadState == ClientThreadState.ERROR) {
             printMessage(Info.MessageLevel.Error, clientClassName(), "An error occured. Trying to exit properly");
         } else {
             printMessage(clientClassName(), "Exiting the game");

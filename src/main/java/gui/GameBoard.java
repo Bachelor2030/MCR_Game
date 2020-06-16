@@ -28,14 +28,12 @@ import network.ClientAdapter;
 import network.ClientRunner;
 import network.jsonUtils.CardJsonParser;
 import network.jsonUtils.JsonUtil;
-import network.states.ClientState;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import static network.jsonUtils.ParserLauncher.parseJsonCards;
 

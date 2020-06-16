@@ -2,8 +2,8 @@ package network.utilities;
 
 import gameLogic.Game;
 import network.Messages;
-import network.states.ServerState;
-import network.states.WorkerState;
+import network.states.ServerSharedState;
+import network.states.ServerThreadState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,40 +17,40 @@ import static network.utilities.JsonServer.sendJsonType;
 
 public class NetworkWaiting {
 
-    public static void awaitClientHandshake(ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
+    public static void awaitClientHandshake(ServerSharedState serverSharedState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
         String receivedMessage;
         printMessage(className, "Reading until client sends greetings to open the connection...");
 
-        while (serverState.getWorkerState(playerId) == WorkerState.CONNECTING
+        while (serverSharedState.getWorkerState(playerId) == ServerThreadState.CONNECTING
                 && (receivedMessage = readJson(inBufferedReader.readLine(), className)) != null) {
 
             String type = readJsonType(receivedMessage, className);
             if (type.equals(Messages.JSON_TYPE_HELLO)) {
                 String playerName = readJsonPlayerName(receivedMessage, className);
-                serverState.setPlayerName(playerId, playerName);
+                serverSharedState.setPlayerName(playerId, playerName);
 
-                if (serverState.getPlayerCount() == 1) {
+                if (serverSharedState.getPlayerCount() == 1) {
                     sendJsonType(Messages.JSON_TYPE_WAIT_PLAYER, outPrintWriter, className);
-                    serverState.setWorkerState(playerId, WorkerState.INIT_WAITING);
-                } else if (serverState.getPlayerCount() == 2) {
+                    serverSharedState.setWorkerState(playerId, ServerThreadState.INIT_WAITING);
+                } else if (serverSharedState.getPlayerCount() == 2) {
                     sendJsonType(Messages.JSON_TYPE_GAME_START, outPrintWriter, className);
-                    serverState.setWorkerState(playerId, WorkerState.INIT);
+                    serverSharedState.setWorkerState(playerId, ServerThreadState.INIT);
                 } else {
-                    debugMessage("Weird. You have " + serverState.getPlayerCount() + " players. This should not have happened");
-                    serverState.setWorkerState(playerId, WorkerState.CONNECTING);
+                    debugMessage("Weird. You have " + serverSharedState.getPlayerCount() + " players. This should not have happened");
+                    serverSharedState.setWorkerState(playerId, ServerThreadState.CONNECTING);
                 }
             } else {
                 sendJsonType(Messages.JSON_TYPE_UNKNOWN, outPrintWriter, className);
-                serverState.setWorkerState(playerId, WorkerState.CONNECTING);
+                serverSharedState.setWorkerState(playerId, ServerThreadState.CONNECTING);
             }
         }
     }
 
-    public static void awaitClientMessage(Game game, ServerState serverState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
+    public static void awaitClientMessage(Game game, ServerSharedState serverSharedState, BufferedReader inBufferedReader, PrintWriter outPrintWriter, int playerId, String className) throws IOException, JSONException {
         String receivedMessage;
         printMessage(className, "Reading until client sends messages or closes the connection...");
 
-        while (serverState.getWorkerState(playerId) == WorkerState.SERVER_LISTENING
+        while (serverSharedState.getWorkerState(playerId) == ServerThreadState.SERVER_LISTENING
                 && (receivedMessage = readJson(inBufferedReader.readLine(), className)) != null) {
 
             String type = readJsonType(receivedMessage, className);
@@ -61,23 +61,23 @@ public class NetworkWaiting {
 
                     // wait for new play
                     if (goodPlay) {
-                        serverState.setIntendToSendJson(playerId, true);
+                        serverSharedState.setIntendToSendJson(playerId, true);
                         sendJsonType(Messages.JSON_TYPE_PLAY_OK, outPrintWriter, className);
                         // Sending all game updates
-                        if (serverState.getIntendToSendJson(playerId)) {
-                            while(!serverState.jsonToSendEmpty(playerId)) {
-                                JSONObject jsonObject = serverState.popJsonToSend(playerId);
+                        if (serverSharedState.getIntendToSendJson(playerId)) {
+                            while(!serverSharedState.jsonToSendEmpty(playerId)) {
+                                JSONObject jsonObject = serverSharedState.popJsonToSend(playerId);
                                 sendJson(jsonObject, outPrintWriter, servantClassName(playerId));
                             }
                         }
-                        serverState.setIntendToSendJson(playerId, false);
+                        serverSharedState.setIntendToSendJson(playerId, false);
                     } else {
                         sendJsonType(Messages.JSON_TYPE_PLAY_BAD, outPrintWriter, className);
                     }
                     break;
 
                 case Messages.JSON_TYPE_GOODBYE:
-                    serverState.setWorkerState(playerId, WorkerState.GAME_ENDED);
+                    serverSharedState.setWorkerState(playerId, ServerThreadState.GAME_ENDED);
                     sendJsonType(Messages.JSON_TYPE_GOODBYE_ANS, outPrintWriter, className);
                     return;
 
