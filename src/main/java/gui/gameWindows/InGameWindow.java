@@ -134,11 +134,7 @@ public class InGameWindow extends GameWindow {
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
     for (GUICard card : handPlayer) {
-      ImageView imageView = card.getView();
-      imageView.setFitWidth(200);
-      imageView.setPreserveRatio(true);
-
-      footerCardsPlayer.getChildren().add(imageView);
+      footerCardsPlayer.getChildren().add(card.getButton());
     }
 
     footerCardsPlayer.setVisible(true);

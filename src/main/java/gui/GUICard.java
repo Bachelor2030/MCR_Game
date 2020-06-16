@@ -1,6 +1,7 @@
 package gui;
 
 import gameLogic.invocator.card.CardType;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ public class GUICard {
     private int cost;           // the cost (in action points)
     private CardType type;      //type de la carte
     private ImageView view;
+    private Button button;
 
     private final String
             SPELL_PATH    = "src/main/resources/design/images/cards/spell.png",
@@ -24,8 +26,17 @@ public class GUICard {
         this.name = name;
         this.cost = cost;
         this.type = type;
-        view = new ImageView(new Image(new FileInputStream(definePictureAccordingToType())));
-        view.setVisible(true);
+        Image image = new Image(new FileInputStream(definePictureAccordingToType()));
+        view = new ImageView(image);
+        view.setFitWidth(image.getWidth() * 0.35);
+        view.setFitHeight(image.getHeight() * 0.35);
+        button = new Button();
+        button.getStyleClass().add("button-island");
+        button.setOnAction(
+                actionEvent -> {
+                    System.out.println("j'appuye sur une carte");
+                });
+        button.setGraphic(view);
     }
 
     private String definePictureAccordingToType() {
@@ -59,5 +70,9 @@ public class GUICard {
 
     public ImageView getView() {
         return view;
+    }
+
+    public Button getButton() {
+        return button;
     }
 }
