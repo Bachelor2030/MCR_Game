@@ -263,17 +263,21 @@ public class GameBoard extends Application {
   private void waitingForPlayer() throws IOException {
     WaitingWindow waitingWindow = new WaitingWindow(racine, defineHeader(false), false, currentStage);
     racine.setCenter(waitingWindow.getBody());
-    boolean temp = true; //à remplacer
-    /*
+    boolean temp = clientAdapter.getClientSharedState().isFinishedInit(); //à remplacer
 
-    while(temp) {
-
+    while(!temp) {
+      temp = clientAdapter.getClientSharedState().isFinishedInit();
+      try {
+        wait();
+      } catch (InterruptedException e)  {
+        Thread.currentThread().interrupt();
+        System.out.println("Thread interrupted");
+      }
     }
     //TODO pecho info joueur2
     //TODO initialisation deck
     inGame(racine);
 
-    */
   }
 
   /**
