@@ -7,10 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -68,15 +65,15 @@ public class InGameWindow extends GameWindow {
     gridIslandsPanel.getStyleClass().add("corps-gridPane");
     VBox vbox = new VBox(); // contient une créature et un emplacement.
 
-    /*
-    int numRows = 5;
+
+    int numRows = 4;
     for(int i = 0;i < numRows; ++i)
     {
       RowConstraints rc = new RowConstraints();
       rc.setPercentHeight(100 / numRows);
       gridIslandsPanel.getRowConstraints().add(rc);
     }
-    */
+
 
     // Répertoire contenant nos îles
     GUIBoard = new GUIBoard(gridIslandsPanel, vbox, player1, player2);
@@ -89,12 +86,15 @@ public class InGameWindow extends GameWindow {
    */
   private VBox getPlayerInformations(String labelTitle) throws FileNotFoundException {
     VBox informationPannelUser = new VBox();
+    //on set l'image de player 1
     if(labelTitle.equals("Player 1")) {
       ImageView imageView = new ImageView(player1.getImage());
-      imageView.setFitWidth(player1.getImage().getWidth()/2);
-      imageView.setFitHeight(player1.getImage().getHeight()/2);
+      imageView.setFitWidth(player1.getImage().getWidth()/2.5);
+      imageView.setFitHeight(player1.getImage().getHeight()/2.5);
       informationPannelUser.getChildren().add(imageView);
     }
+    //on set l'image de player 2 en chequant si elle est pas égale à celle de base.
+    //TODO remplace image 2 en reprenant info serveur
     else if(!(player2.getImage().equals("src/main/resources/design/images/creatures/empty.jpg"))) {
       ImageView imageView = new ImageView(new Image(new FileInputStream("src/main/resources/design/images/characters/character.png")));
       imageView.setFitWidth(player1.getImage().getWidth()/2.5);

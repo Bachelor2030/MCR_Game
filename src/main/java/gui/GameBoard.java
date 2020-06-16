@@ -104,7 +104,7 @@ public class GameBoard extends Application {
     stage.setScene(scene);
     // met la fenêtre au max
     stage.setMaximized(true);
-    stage.setTitle("MCR - JEU DE LA MUERTA");
+    stage.setTitle("MCR - BACHELOR HUNTERZ");
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
 
