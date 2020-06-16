@@ -1,4 +1,4 @@
-package network.jsonUtils;
+package network.JsonUtils;
 
 import gameLogic.receptors.Player;
 import gameLogic.Game;
