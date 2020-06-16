@@ -1,5 +1,7 @@
 package network;
 
+import gameLogic.Game;
+import gui.GameBoard;
 import network.jsonUtils.GUIParser;
 import network.states.ClientSharedState;
 import network.states.ClientThreadState;
@@ -33,14 +35,16 @@ public class ClientAdapter {
     private ClientThreadState clientThreadState = ClientThreadState.SERVER_LISTENING;
     private ClientSharedState clientSharedState;
 
+    private GameBoard gameBoard;
 
     boolean finishedInit = false;
 
-    public ClientAdapter(String host, int port, String playerName) {
+    public ClientAdapter(GameBoard gameBoard, String host, int port, String playerName) {
         this.host = host;
         this.port = port;
         this.clientSharedState = new ClientSharedState();
         this.clientSharedState.setPlayerName(playerName);
+        this.gameBoard = gameBoard;
     }
 
     public ClientSharedState getClientSharedState() {
@@ -127,6 +131,7 @@ public class ClientAdapter {
 
                     case Messages.JSON_TYPE_INIT:
                         clientThreadState = getStateFromTurnInit(receivedAnswer);
+                        gameBoard.sendInit(receivedAnswer);
                         GUIParser initParser = new GUIParser(receivedAnswer);
 
                         clientSharedState.setEnemyName(initParser.getEnemyFromInit());
