@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class GUIParser {
@@ -22,6 +23,10 @@ public class GUIParser {
         }
     }
 
+    /**
+     * Récupère les dimensions du board
+     * @return
+     */
     public int[] getLinesSpotDimensionFromInit() {
         int[] dimensions = new int[2];
         try {
@@ -33,6 +38,10 @@ public class GUIParser {
         return dimensions;
     }
 
+    /**
+     * Récupère la liste des cartes dans la main du joueur
+     * @return
+     */
     public ArrayList<GUICard> getCardsFromInit() {
         ArrayList<GUICard> playerCards = new ArrayList<>();
         try {
@@ -48,28 +57,36 @@ public class GUIParser {
                             CardType.getType(card.getString(Messages.JSON_TYPE)),
                             card.getInt(Messages.JSON_TYPE_COST)));
             }
-        } catch (JSONException e) {
+        } catch (JSONException | FileNotFoundException e) {
             e.printStackTrace();
         }
         return playerCards;
     }
 
+    /**
+     * À qui le tour ? (jouer ou attendre)
+     * @return
+     */
     public String getTurnFromInit() {
         try {
             return gameState.getString(Messages.JSON_TYPE_TURN);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
+    /**
+     * Récupère le nom de l'adversaire
+     * @return
+     */
     public String getEnemyFromInit() {
         try {
             return gameState.getString(Messages.JSON_TYPE_ENEMYNAME);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 /*
     public ArrayList<Card> readInit(String jsonInit) {
