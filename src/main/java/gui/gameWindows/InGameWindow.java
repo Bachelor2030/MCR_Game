@@ -10,6 +10,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import network.states.ClientSharedState;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class InGameWindow extends GameWindow {
   private GUIBoard GUIBoard;
   private GUIPlayer player1, player2;
   private ArrayList<GUICard> handPlayer;
-  ToggleGroup groupButtons;
+  private ClientSharedState clientSharedState;
+  private ToggleGroup groupButtons;
 
   public InGameWindow(
       BorderPane racine,
@@ -30,6 +32,7 @@ public class InGameWindow extends GameWindow {
       GUIPlayer player1,
       GUIPlayer player2,
       boolean isGaming,
+      ClientSharedState clientSharedState,
       Stage stage,
       ArrayList<GUICard> handPlayer)
       throws IOException {
@@ -39,6 +42,7 @@ public class InGameWindow extends GameWindow {
     this.player1 = player1;
     this.player2 = player2;
     this.handPlayer = handPlayer;
+    this.clientSharedState = clientSharedState;
     groupButtons = new ToggleGroup();
 
     generateBody();
@@ -123,7 +127,7 @@ public class InGameWindow extends GameWindow {
    *
    * @return le footer
    */
-  private HBox footerBar() throws FileNotFoundException {
+  private HBox footerBar() {
 
     // On définit une boxe horizontale qui définira l'espace "footer" -> cartes du joueur
     HBox footerCardsPlayer = new HBox();
@@ -137,11 +141,14 @@ public class InGameWindow extends GameWindow {
         // If selected, color the background cyan
         if (newValue) {
           card.getButton().getStyleClass().add("toggle-selected");
+          clientSharedState.setSelectedCard(card);
+          System.out.println("Selected " + clientSharedState.getSelectedCard().getName());
         } else {
           card.getButton().getStyleClass().add("toggle-unselected");
+          clientSharedState.setSelectedCard(null);
+          System.out.println("Set selected card to null");
         }
       });
-
         groupButtons.getToggles().add(card.getButton());
     }
 

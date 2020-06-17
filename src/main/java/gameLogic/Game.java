@@ -33,7 +33,7 @@ public class Game extends Receptor {
     public Game(ServerAdapter serverAdapter, int nbr_lines, int nbr_spots) {
         this.serverAdapter = serverAdapter;
         this.board = new Board(nbr_lines, nbr_spots);
-        turn = 0;
+        turn = 1;
         if (Math.random() < 0.5) {
             firstPlayerId = 1;
         } else {

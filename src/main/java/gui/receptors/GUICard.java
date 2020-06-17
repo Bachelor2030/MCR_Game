@@ -5,10 +5,15 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import network.Messages;
 import network.states.ClientSharedState;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import static network.utilities.JsonClient.jsonType;
 
 public class GUICard {
   private final int id; // the ID of the card
@@ -75,6 +80,7 @@ public class GUICard {
     button.setTooltip(t);
   }
 
+
   private String definePictureAccordingToType() {
     switch (type) {
       case TRAP:
@@ -88,9 +94,23 @@ public class GUICard {
     }
   }
 
-  public int getId() {
-    return id;
-  }
+    public JSONObject getJson() throws JSONException {
+        JSONObject play = jsonType(Messages.JSON_TYPE_PLAY);
+        play.put(Messages.JSON_TYPE_CARD_ID, clientSharedState.getSelectedCard().getId());
+
+        JSONObject position = new JSONObject();
+        position.put(Messages.JSON_TYPE_LINE, clientSharedState.getChosenPosition().getKey());
+        position.put(Messages.JSON_TYPE_SPOT, clientSharedState.getChosenPosition().getValue());
+        play.put(Messages.JSON_TYPE_POSITION, position);
+
+        clientSharedState.setChosenPosition(null);
+
+        return play;
+    }
+
+    public int getId() {
+        return id;
+    }
 
   public String getName() {
     return name;

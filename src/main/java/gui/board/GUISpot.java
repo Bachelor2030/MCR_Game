@@ -4,11 +4,17 @@ import gameLogic.invocator.card.CardType;
 import gui.maths.Vector2f;
 import gui.receptors.GUIReceptor;
 import gui.receptors.GUITrap;
+import gui.receptors.GUICard;
+import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 import network.states.ClientSharedState;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -77,16 +83,25 @@ public class GUISpot {
     button.setOnAction(
         actionEvent -> {
           if (!clientSharedState.isMyTurn()) {
+            // TODO: Afficher une alerte sur le GUI
+            System.out.println("Please wait for your turn");
             return;
-          }
-          if (clientSharedState.getSelectedCard() != null
-              && !clientSharedState.getSelectedCard().getName().equals("empty")
-              && clientSharedState.getSelectedCard().getType() != CardType.SPELL) {
+          } else {
+            // If there is a selected card and it's not an empty card
+            if (clientSharedState.getSelectedCard() != null) {
 
-            clientSharedState.setChosenPosition(
-                new int[] {(number / GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)});
+              clientSharedState.setChosenPosition(new Pair<>((number / GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)));
+
+              try {
+                JSONObject json = clientSharedState.getSelectedCard().getJson();
+                clientSharedState.pushJsonToSend(json);
+                clientSharedState.setIntendToSendJson(true);
+              } catch (JSONException e) {
+                e.printStackTrace();
+              }
+            }
+            System.out.println("Island number " + number + " clicked");
           }
-          System.out.println("j'appuye sur une île");
         });
     button.setGraphic(imageView);
     this.number = number % 10;
