@@ -3,6 +3,15 @@ package network;
 public final class Messages {
 
   public static final String JSON_TYPE = "type";
+
+
+  public static final String JSON_TYPE_PLAY = "play";
+  public static final String JSON_TYPE_END_TURN = "end turn";
+  public static final String JSON_TYPE_ABANDON = "abandon";
+  public static final String JSON_TYPE_UNDO = "undo";
+
+
+
   public static final String JSON_GAMESTATE = "Game state";
 
   public static final String JSON_TYPE_UNKNOWN = "Nani?";
@@ -22,7 +31,6 @@ public final class Messages {
   public static final String JSON_TYPE_TURN = "turn";
   public static final String JSON_TYPE_WAIT_TURN = "Wait turn";
   public static final String JSON_TYPE_YOUR_TURN = "Your turn";
-  public static final String JSON_TYPE_PLAY = "play";
 
   public static final String JSON_TYPE_PLAY_OK = "play ok";
   public static final String JSON_TYPE_PLAY_BAD = "play bad";

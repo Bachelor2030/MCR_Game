@@ -90,7 +90,7 @@ public class InGameWindow extends GameWindow {
   }
 
   /** @return les informations du Player */
-  private VBox getPlayerInformations(String labelTitle) throws FileNotFoundException {
+  private VBox getPlayerInformations(String labelTitle) {
     VBox informationPannelUser = new VBox();
 
     // on set l'image de player 1
@@ -145,11 +145,9 @@ public class InGameWindow extends GameWindow {
                 if (newValue) {
                   card.getButton().getStyleClass().add("toggle-selected");
                   clientSharedState.setSelectedCard(card);
-                  System.out.println("Selected " + clientSharedState.getSelectedCard().getName());
                 } else {
                   card.getButton().getStyleClass().add("toggle-unselected");
                   clientSharedState.setSelectedCard(null);
-                  System.out.println("Set selected card to null");
                 }
               });
       groupButtons.getToggles().add(card.getButton());
