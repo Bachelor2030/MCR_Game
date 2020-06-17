@@ -64,4 +64,12 @@ public class GUIBoard {
     public int getNB_LINES() {
         return NB_LINES;
     }
+
+    public void placeTrap(int line, int position) {
+        GUILines.get(line).getSpot(position).trap();
+    }
+
+    public void removeTrap(int line, int position) {
+        GUILines.get(line).getSpot(position).unTrap();
+    }
 }
