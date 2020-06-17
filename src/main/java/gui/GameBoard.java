@@ -1,7 +1,6 @@
 package gui;
 
 import gameLogic.commands.guiCommands.EndGame;
-import gameLogic.commands.playersAction.EndTurn;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
 import gui.gameWindows.*;
@@ -13,6 +12,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -28,7 +29,6 @@ import network.ClientRunner;
 import network.Messages;
 import network.ServerAdapter;
 import network.jsonUtils.GUIParser;
-import network.states.ClientSharedState;
 import network.utilities.JsonClient;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -318,6 +318,7 @@ public class GameBoard extends Application {
               actionEvent -> {
                 try {
                   inMainMenu();
+                  //TODO : afficher alert : voulez vous déclarer forfait ?
                   System.out.println("you hit the returnMenu button...");
                 } catch (IOException e) {
                   e.printStackTrace();
@@ -333,8 +334,8 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                displayNotYourTurnAlert();
                 if (!clientAdapter.getClientSharedState().isMyTurn()) {
-                  // TODO: Afficher une alerte sur le GUI
                   System.out.println("Please wait for your turn to validate it");
                   return;
                 } else {
@@ -355,6 +356,7 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                displayNotYourTurnAlert();
                 if (!clientAdapter.getClientSharedState().isMyTurn()) {
                   return;
                 }
@@ -373,6 +375,8 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                displayNotYourTurnAlert();
+                //TODO implement undo button
                 System.out.println("you hit the undo button...");
               });
       buttons.add(validateTourButton);
@@ -384,6 +388,27 @@ public class GameBoard extends Application {
     navigationBar.generate();
 
     return navigationBar.getBarreNavigation();
+  }
+
+  private void displayNotYourTurnAlert() {
+    if (!player1.getClientSharedState().isMyTurn()) {
+      // TODO: Afficher une alerte sur le GUI
+      // on créé une alerte WARNING qui indique à l'utilisateur
+      // que ce n'est pas à lui de jouer.
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setAlertType(Alert.AlertType.WARNING);
+      alert.setTitle("Ce n'est pas à votre tour de jouer !");
+      Image image =
+              new Image(
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
+      ImageView imageView = new ImageView(image);
+      alert.setGraphic(imageView);
+      DialogPane dialogPane = alert.getDialogPane();
+      dialogPane
+              .getStylesheets()
+              .add(getClass().getResource("/design/css/styleSheet.css").toExternalForm());
+      alert.show();
+    }
   }
 
   /** PAGE INSTRUCTIONS */
