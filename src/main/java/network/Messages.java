@@ -6,10 +6,10 @@ public final class Messages {
 
 
   public static final String JSON_TYPE_PLAY = "play";
+  public static final String JSON_TYPE_UPDATE = "update";
   public static final String JSON_TYPE_END_TURN = "end turn";
   public static final String JSON_TYPE_ABANDON = "abandon";
   public static final String JSON_TYPE_UNDO = "undo";
-
 
 
   public static final String JSON_GAMESTATE = "Game state";
@@ -47,16 +47,17 @@ public final class Messages {
   public static final String JSON_TYPE_LP = "LP";
   public static final String JSON_TYPE_MP = "MP";
   public static final String JSON_TYPE_AP = "AP";
-  public static final String JSON_TYPE_TRAP = "trap";
   public static final String JSON_TYPE_DESCRIPTION = "trap";
   public static final String JSON_TYPE_CARD_ID = "card id";
   public static final String JSON_TYPE_COMMANDS = "commands";
   public static final String JSON_TYPE_COST = "cost";
   public static final String JSON_TYPE_PLAYER = "Player";
   public static final String JSON_TYPE_RECEPTOR = "live receptor";
-  public static final String JSON_TYPE_POSITION_TO = "position to";
-  public static final String JSON_TYPE_POSITION_FROM = "position from";
+  public static final String JSON_TYPE_POSITION_TO = "to";
+  public static final String JSON_TYPE_POSITION_FROM = "from";
   public static final String JSON_TYPE_ENEMY_IMAGE = "enemy image";
+  public static final String JSON_TYPE_COMMAND = "command";
+  public static final String JSON_TYPE_POINTS_TYPE = "point type";
 
   private Messages() {
     throw new IllegalStateException("Can't instantiate the messages class");

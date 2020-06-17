@@ -156,6 +156,11 @@ public class Game extends Receptor {
           .getServerSharedState()
           .pushJsonToSend(end, serverAdapter.getServerSharedState().otherPlayer(playerId));
     }
+    try {
+      lastMoveJSON.put(Messages.JSON_TYPE, Messages.JSON_TYPE_UPDATE);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
     // Put json updates in serverAdapter.serverState.pushJsonToSend
     serverAdapter.getServerSharedState().pushJsonToSend(lastMoveJSON, playerId);
 

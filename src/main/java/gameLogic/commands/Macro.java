@@ -1,6 +1,17 @@
 package gameLogic.commands;
 
-import gameLogic.commands.onLiveReceptors.onCreature.Create;
+import gameLogic.commands.cardMovement.Discard;
+import gameLogic.commands.cardMovement.Draw;
+import gameLogic.commands.cardMovement.DrawTypeFromDiscard;
+import gameLogic.commands.guiCommands.*;
+import gameLogic.commands.onLiveReceptors.Heal;
+import gameLogic.commands.onLiveReceptors.Hit;
+import gameLogic.commands.onLiveReceptors.Kill;
+import gameLogic.commands.onLiveReceptors.onCreature.*;
+import gameLogic.commands.playersAction.Abandon;
+import gameLogic.commands.playersAction.EndTurn;
+import gameLogic.commands.playersAction.PlayCard;
+import gameLogic.commands.playersAction.Undo;
 import gameLogic.receptors.Receptor;
 import network.Messages;
 import org.json.JSONArray;
@@ -50,11 +61,13 @@ public class Macro implements Command {
     JSONObject macro = new JSONObject();
 
     try {
-      JSONArray cmds = new JSONArray();
-      for (ConcreteCommand command : commands) {
-        cmds.put(command.toJson());
-      }
-      macro.put(Messages.JSON_TYPE_COMMANDS, cmds);
+      ConcreteCommand command = commands.get(commands.size()-1);
+
+      // Add last command name
+      macro.put(Messages.JSON_TYPE_COMMAND, command.name);
+
+      // TODO ajouter ce qu'il faut
+
     } catch (JSONException e) {
       e.printStackTrace();
     }

@@ -3,6 +3,7 @@ package gameLogic.commands.guiCommands;
 import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gui.GameBoard;
+import gui.board.GUISpot;
 import gui.receptors.GUICreature;
 import gui.receptors.GUIReceptor;
 import gui.receptors.GUITrap;
@@ -11,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Place extends GuiCommand {
-  private Spot position;
+  private GUISpot position;
   private int cardID;
   private GUIReceptor receptor;
 
@@ -25,7 +26,7 @@ public class Place extends GuiCommand {
     receptor = null;
   }
 
-  public void setPosition(Spot position) {
+  public void setPosition(GUISpot position) {
     this.position = position;
   }
 
