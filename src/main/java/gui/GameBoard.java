@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 // TODO : commande qui font des actions graphiques. (genre déplacer créature)
-
 /** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
 
@@ -97,15 +96,14 @@ public class GameBoard extends Application {
     scene.getStylesheets().add("/design/css/styleSheet.css");
 
     stage.setScene(scene);
+
     // met la fenêtre au max
     // stage.setMaximized(false);
     stage.setResizable(true);
-    stage.initStyle(StageStyle.TRANSPARENT);
 
     stage.setTitle("MCR - BACHELOR HUNTERZ");
     stage.initStyle(StageStyle.DECORATED);
     stage.show();
-
   }
 
   public void exitGame() {
@@ -204,19 +202,19 @@ public class GameBoard extends Application {
     // On crée un bouton pour lancer le serveur
     GameButton startServer = new GameButton("Lancer Serveur", "bouton-menu-principal");
     startServer
-      .getButton()
-      .setOnAction(
+        .getButton()
+        .setOnAction(
             event -> {
               if (!serverIsOn) {
                 serverIsOn = true;
                 startServer.getButton().setDisable(true);
                 parameterWindow.getBody().getChildren().add(serverLaunchedLabel);
-                server = new ServerAdapter(Integer.valueOf(parameterWindow.getPlayerPortField().getText()), 4, 12);
+                server =
+                    new ServerAdapter(
+                        Integer.valueOf(parameterWindow.getPlayerPortField().getText()), 4, 12);
                 server.serveClients();
               }
-            }
-      );
-
+            });
 
     parameterWindow.addGameButton(startServer);
 
@@ -230,7 +228,7 @@ public class GameBoard extends Application {
               try {
                 // On initialise les données
                 namePlayer1 = parameterWindow.getPlayerNameField().getText();
-                //TODO: Remove this, only for debugging
+                // TODO: Remove this, only for debugging
                 if (serverIsOn && namePlayer1.equals(parameterWindow.defaultName))
                   namePlayer1 = "Admin";
                 IpPlayer1 = parameterWindow.getPlayerIpField().getText();
@@ -288,9 +286,9 @@ public class GameBoard extends Application {
     racine.setCenter(waitingWindow.getBody());
     waitingWindow.execute();
 
-    while(!clientAdapter.getClientSharedState().isFinishedInit()) {
-      //racine.setCenter(waitingWindow.getBody());
-      //waitingWindow.execute();
+    while (!clientAdapter.getClientSharedState().isFinishedInit()) {
+      // racine.setCenter(waitingWindow.getBody());
+      // waitingWindow.execute();
     }
 
     inGame(racine);
@@ -332,7 +330,7 @@ public class GameBoard extends Application {
                 if (!clientAdapter.getClientSharedState().isMyTurn()) {
                   return;
                 }
-                //TODO : envoyer au backend
+                // TODO : envoyer au backend
                 EndTurn endTurn = new EndTurn();
                 System.out.println("you hit the validate button...");
               });
@@ -358,11 +356,11 @@ public class GameBoard extends Application {
 
       GameButton undoButton = new GameButton("Undo", "header-button");
       undoButton
-              .getButton()
-              .setOnAction(
-                      actionEvent -> {
-                        System.out.println("you hit the undo button...");
-                      });
+          .getButton()
+          .setOnAction(
+              actionEvent -> {
+                System.out.println("you hit the undo button...");
+              });
       buttons.add(validateTourButton);
       buttons.add(undoButton);
       buttons.add(abandonTourButton);
@@ -397,7 +395,8 @@ public class GameBoard extends Application {
             player1,
             player2,
             isGaming,
-            currentStage, handPlayer);
+            currentStage,
+            handPlayer);
   }
 
   public GUIBoard getGUIBoard() {
@@ -428,6 +427,11 @@ public class GameBoard extends Application {
     player1.addHand(handPlayer);
     player1.setClientSharedState(clientAdapter.getClientSharedState());
 
-    player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>(), clientAdapter.getClientSharedState());
+    player2 =
+        new GUIPlayer(
+            guiParser.getEnemyFromInit()[0],
+            guiParser.getEnemyFromInit()[1],
+            new ArrayList<>(),
+            clientAdapter.getClientSharedState());
   }
 }

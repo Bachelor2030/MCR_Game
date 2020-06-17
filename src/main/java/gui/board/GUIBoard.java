@@ -26,8 +26,6 @@ public class GUIBoard {
     //les lignes du board
     private LinkedList<GUILine> GUILines;
 
-    Group root;
-
     /**
      * Constructeur de la classe GUIBoard
      */
