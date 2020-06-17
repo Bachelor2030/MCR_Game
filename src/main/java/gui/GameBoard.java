@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -198,19 +199,21 @@ public class GameBoard extends Application {
     ParameterWindow parameterWindow =
         new ParameterWindow(racine, defineHeader(true), currentStage, isGaming);
 
+    Label serverLaunchedLabel = new Label("Server launched. Can't stop server for now");
+
     // On crée un bouton pour lancer le serveur
     GameButton startServer = new GameButton("Lancer Serveur", "bouton-menu-principal");
     startServer
       .getButton()
       .setOnAction(
             event -> {
-              // TODO
+              startServer.getButton().setDisable(true);
+              parameterWindow.getBody().getChildren().add(serverLaunchedLabel);
               serverIsOn =  !serverIsOn;
               if (serverIsOn) {
-                startServer.getButton().setText("Server launched.\nCan't stop server for now");
+
                 server.serveClients();
               } else {
-                startServer.getButton().setText("Server launched.\nCan't stop server for now");
                 //server.getServerSharedState().endGame();
                 //server.closeClientSocket();
               }
