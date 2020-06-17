@@ -1,5 +1,6 @@
 package network.states;
 
+import javafx.util.Pair;
 import org.json.JSONObject;
 import java.util.LinkedList;
 import gui.receptors.GUICard;
@@ -7,9 +8,9 @@ import gui.receptors.GUICard;
 public class ClientSharedState {
 
     private GUICard selectedCard;
-    private int[] chosenPosition;
+    private Pair<Integer, Integer> chosenPosition;
 
-    private LinkedList<JSONObject> jsonToSend;
+    private LinkedList<JSONObject> jsonToSend = new LinkedList<>();
     private boolean intendToSendJson = false;
 
     private String enemyName, enemyImagePath;
@@ -70,8 +71,12 @@ public class ClientSharedState {
         this.finishedInit = finishedInit;
     }
 
-    public synchronized void setChosenPosition(int[] chosenPosition) {
+    public synchronized void setChosenPosition(Pair<Integer, Integer> chosenPosition) {
         this.chosenPosition = chosenPosition;
+    }
+
+    public synchronized Pair<Integer, Integer> getChosenPosition() {
+        return chosenPosition;
     }
 
     public synchronized void setSelectedCard(GUICard selectedCard) {

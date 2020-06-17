@@ -72,13 +72,13 @@ public class GUIParser {
      * À qui le tour ? (jouer ou attendre)
      * @return
      */
-    public String getTurnFromInit() {
+    public boolean getTurnFromInit() {
         try {
-            return gameState.getString(Messages.JSON_TYPE_TURN);
+            return (gameState.getString(Messages.JSON_TYPE_TURN).equals(Messages.JSON_TYPE_YOUR_TURN));
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
-        return "";
     }
 
     /**
