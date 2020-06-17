@@ -15,84 +15,82 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CardJsonParser {
-    private final JsonUtil jsonUtil = new JsonUtil();
+  private final JsonUtil jsonUtil = new JsonUtil();
 
-    /**************************
-     *  JSON utils for Cards  *
-     **************************/
-    public ArrayList<Card> parseJson(String file, ArrayList<Card> all) {
-        ArrayList<Card> cards = new ArrayList<>();
+  /** ************************ JSON utils for Cards * ************************ */
+  public ArrayList<Card> parseJson(String file, ArrayList<Card> all) {
+    ArrayList<Card> cards = new ArrayList<>();
 
-        try {
-            HashMap<Integer, Integer> indexQuantityList = new HashMap<>();
+    try {
+      HashMap<Integer, Integer> indexQuantityList = new HashMap<>();
 
-            JSONObject obj = new JSONObject(jsonUtil.getJsonContent(file));
+      JSONObject obj = new JSONObject(jsonUtil.getJsonContent(file));
 
-            JSONArray arr = obj.getJSONArray("cards");
+      JSONArray arr = obj.getJSONArray("cards");
 
-            for (int i = 0; i < arr.length(); i++) {
-                JSONObject card = arr.getJSONObject(i);
+      for (int i = 0; i < arr.length(); i++) {
+        JSONObject card = arr.getJSONObject(i);
 
-                int id = card.getInt("id");
-                int cost = card.getInt("quantity");
+        int id = card.getInt("id");
+        int cost = card.getInt("quantity");
 
-                indexQuantityList.put(id, cost);
+        indexQuantityList.put(id, cost);
+      }
 
+      for (Map.Entry<Integer, Integer> entry : indexQuantityList.entrySet()) {
+        int key = entry.getKey();
+        int quantity = entry.getValue();
+        for (Card c : all) {
+          if (c.getID() == key) {
+            for (int i = 0; i < quantity; i++) {
+              cards.add(c);
             }
-
-            for(Map.Entry<Integer, Integer> entry : indexQuantityList.entrySet()) {
-                int key = entry.getKey();
-                int quantity = entry.getValue();
-                for (Card c : all) {
-                    if (c.getID() == key) {
-                        for (int i = 0; i < quantity; i++) {
-                            cards.add(c);
-                        }
-                    }
-                }
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+          }
         }
+      }
 
-        return cards;
+    } catch (JSONException e) {
+      e.printStackTrace();
     }
 
-    public ArrayList<Card> readInit(String jsonInit) {
-        ArrayList<Card> playerCards = new ArrayList<>();
-        try {
-            JSONObject init = new JSONObject(jsonInit);
-            JSONObject gameStat = init.getJSONObject(Messages.JSON_GAMESTATE);
-            JSONArray cards = gameStat.getJSONArray(Messages.JSON_TYPE_CARDS);
+    return cards;
+  }
 
-            for (int c = 0; c < cards.length(); c++) {
-                JSONObject card = cards.getJSONObject(c);
-                Card playersCard =
-                        new Card(card.getInt(Messages.JSON_TYPE_CARD_ID),
-                                card.getString(Messages.JSON_TYPE_NAME),
-                                CardType.getType(card.getString(Messages.JSON_TYPE)),
-                                card.getInt(Messages.JSON_TYPE_COST));
+  public ArrayList<Card> readInit(String jsonInit) {
+    ArrayList<Card> playerCards = new ArrayList<>();
+    try {
+      JSONObject init = new JSONObject(jsonInit);
+      JSONObject gameStat = init.getJSONObject(Messages.JSON_GAMESTATE);
+      JSONArray cards = gameStat.getJSONArray(Messages.JSON_TYPE_CARDS);
 
-                ArrayList<ConcreteCommand> cardCommand = new ArrayList<>();
-                JSONArray commands = card
-                        .getJSONObject(Messages.JSON_TYPE_COMMANDS)
-                        .getJSONArray(Messages.JSON_TYPE_COMMANDS);
+      for (int c = 0; c < cards.length(); c++) {
+        JSONObject card = cards.getJSONObject(c);
+        Card playersCard =
+            new Card(
+                card.getInt(Messages.JSON_TYPE_CARD_ID),
+                card.getString(Messages.JSON_TYPE_NAME),
+                CardType.getType(card.getString(Messages.JSON_TYPE)),
+                card.getInt(Messages.JSON_TYPE_COST));
 
-                for (int cmd = 0; cmd < commands.length(); cmd++) {
-                    CommandName name = CommandName
-                            .getCommandName(commands.getJSONObject(cmd).getString(Messages.JSON_TYPE_NAME));
-                    cardCommand.add(name.getCommand());
-                }
+        ArrayList<ConcreteCommand> cardCommand = new ArrayList<>();
+        JSONArray commands =
+            card.getJSONObject(Messages.JSON_TYPE_COMMANDS)
+                .getJSONArray(Messages.JSON_TYPE_COMMANDS);
 
-                playersCard.setCommand(new Macro(cardCommand));
-                playerCards.add(playersCard);
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        for (int cmd = 0; cmd < commands.length(); cmd++) {
+          CommandName name =
+              CommandName.getCommandName(
+                  commands.getJSONObject(cmd).getString(Messages.JSON_TYPE_NAME));
+          cardCommand.add(name.getCommand());
         }
-        return playerCards;
+
+        playersCard.setCommand(new Macro(cardCommand));
+        playerCards.add(playersCard);
+      }
+
+    } catch (JSONException e) {
+      e.printStackTrace();
     }
+    return playerCards;
+  }
 }
