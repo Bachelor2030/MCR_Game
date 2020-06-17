@@ -10,7 +10,7 @@ import org.json.JSONObject;
  * Creature class, modelises the creatures that move on the board of the game and fight each other
  */
 public class Creature extends LiveReceptor {
-  private int steps; // Number of stpes the creature can do in one turn
+  private int steps; // Number of steps the creature can do in one turn
   private int attackPoints; // Number of points the creature takes from an ennemi when hitting it
   private Card originCard; // The card that created the creature
   private boolean asleep;
@@ -41,13 +41,13 @@ public class Creature extends LiveReceptor {
   /** Moves the creature of it's number of steps and hits the first ennemy encountered */
   public void advance() {
     for (int step = 0; step < steps; ++step) {
-      if (position.next() == null) {
+      if (position.next(owner.getId()) == null) {
         returnToDeck();
       }
 
-      if (position.next().isEmpty()) {
+      if (position.next(owner.getId()).isEmpty()) {
         position.leave();
-        position = position.next();
+        position = position.next(owner.getId());
         if (position.isTrapped()) {
           ((Trap) position.getOccupant()).trigger(this);
         }
@@ -55,12 +55,12 @@ public class Creature extends LiveReceptor {
         break;
       }
     }
-    if (lifePoints > 0 && !position.next().isEmpty() && position.next() != null) {
-      if (!((LiveReceptor) position.next().getOccupant()).isAlly(this)) {
+    if (lifePoints > 0 && !position.next(owner.getId()).isEmpty() && position.next(owner.getId()) != null) {
+      if (!((LiveReceptor) position.next(owner.getId()).getOccupant()).isAlly(this)) {
 
-        ((LiveReceptor) position.next().getOccupant()).loseLifePoints(attackPoints);
-        if (((LiveReceptor) position.next().getOccupant()).getType().equals(this.getType())) {
-          this.loseLifePoints(((Creature) position.next().getOccupant()).getAttackPoints());
+        ((LiveReceptor) position.next(owner.getId()).getOccupant()).loseLifePoints(attackPoints);
+        if (((LiveReceptor) position.next(owner.getId()).getOccupant()).getType().equals(this.getType())) {
+          this.loseLifePoints(((Creature) position.next(owner.getId()).getOccupant()).getAttackPoints());
         }
       }
     }
@@ -78,9 +78,9 @@ public class Creature extends LiveReceptor {
    */
   public void retreat(int distance) {
     for (int step = 0; step < distance; ++step) {
-      if (position.previous().isEmpty()) {
+      if (position.previous(owner.getId()).isEmpty()) {
         position.leave();
-        position = position.previous();
+        position = position.previous(owner.getId());
         if (position.isTrapped()) {
           ((Trap) position.getOccupant()).trigger(this);
         }

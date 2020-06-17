@@ -20,13 +20,13 @@ public abstract class OnCreature extends OnLiveReceptor {
 
   @Override
   public void execute(LiveReceptor receptor) {
-    this.receptor = (Creature) receptor;
+    this.receptor = receptor;
     execute((Creature) receptor);
   }
 
   @Override
   public void undo(LiveReceptor receptor) {
-    this.receptor = (Creature) receptor;
+    this.receptor = receptor;
     undo((Creature) receptor);
   }
 }

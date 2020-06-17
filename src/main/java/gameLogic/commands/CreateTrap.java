@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 public class CreateTrap extends ConcreteCommand {
   private Player player;
-  private Spot position;
   private Trap trap;
 
   public CreateTrap(Trap trap) {
@@ -20,10 +19,6 @@ public class CreateTrap extends ConcreteCommand {
 
   public CreateTrap() {
     super(CommandName.CREATE_TRAP);
-  }
-
-  public void setPosition(Spot position) {
-    this.position = position;
   }
 
   public void setTrap(Trap trap) {
@@ -40,7 +35,7 @@ public class CreateTrap extends ConcreteCommand {
 
   @Override
   public void execute(Receptor receptor) {
-    trap.setPosition(position);
+    trap.setPosition((Spot)receptor);
   }
 
   @Override

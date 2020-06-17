@@ -41,6 +41,8 @@ public class Game extends Receptor {
       this.player1 = player2;
       this.player2 = player1;
     }
+    this.player1.setId(1);
+    this.player2.setId(2);
     serverAdapter.getServerSharedState().setFinishedInit();
   }
 

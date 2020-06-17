@@ -78,7 +78,6 @@ public class GUIBoard {
   }
 
   public GUILine getLineAt(int number) {
-      return GUILines.get(number);
+      return guiLines.get(number);
   }
-
 }

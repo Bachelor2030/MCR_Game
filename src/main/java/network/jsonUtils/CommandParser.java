@@ -5,6 +5,7 @@ import gameLogic.commands.CommandName;
 import gameLogic.commands.ConcreteCommand;
 import gameLogic.commands.Macro;
 import gameLogic.commands.guiCommands.*;
+import gui.board.GUIBoard;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 // TODO s'assurer qu'on récupère tout !!!
 public class CommandParser {
-  public Macro parse(String jsonContent, Board board) throws JSONException {
+  public Macro parse(String jsonContent, GUIBoard board) throws JSONException {
     JSONObject obj = new JSONObject(jsonContent);
     ArrayList<ConcreteCommand> commands = new ArrayList<>();
     JSONArray jsonCommands = obj.getJSONArray("commands");
@@ -30,13 +31,13 @@ public class CommandParser {
         concreteCommand = new Move();
         ((Move) concreteCommand)
             .setFrom(
-                board.getPosition(
+                board.getSpot(
                     command.getJSONObject("positionFrom").getInt("line"),
                     command.getJSONObject("positionFrom").getInt("spot")));
 
         ((Move) concreteCommand)
             .setTo(
-                board.getPosition(
+                board.getSpot(
                     command.getJSONObject("positionTo").getInt("line"),
                     command.getJSONObject("positionTo").getInt("spot")));
       } else if (name == CommandName.ABANDON) {
@@ -53,14 +54,14 @@ public class CommandParser {
         concreteCommand = new KnockOutCreature();
         ((KnockOutCreature) concreteCommand)
             .setPosition(
-                board.getPosition(
+                board.getSpot(
                     command.getJSONObject("position").getInt("line"),
                     command.getJSONObject("position").getInt("spot")));
       } else if (name == CommandName.HIT || name == CommandName.HEAL || name == CommandName.KILL) {
         concreteCommand = new ChangePoints();
         ((ChangePoints) concreteCommand)
             .setPosition(
-                board.getPosition(
+                board.getSpot(
                     command.getJSONObject("position").getInt("line"),
                     command.getJSONObject("position").getInt("spot")));
         ((ChangePoints) concreteCommand).setPointsType('L');
@@ -69,7 +70,7 @@ public class CommandParser {
         concreteCommand = new ChangePoints();
         ((ChangePoints) concreteCommand)
             .setPosition(
-                board.getPosition(
+                board.getSpot(
                     command.getJSONObject("position").getInt("line"),
                     command.getJSONObject("position").getInt("spot")));
         ((ChangePoints) concreteCommand).setPointsType('M');
@@ -78,7 +79,7 @@ public class CommandParser {
         concreteCommand = new ChangePoints();
         ((ChangePoints) concreteCommand)
             .setPosition(
-                board.getPosition(
+                board.getSpot(
                     command.getJSONObject("position").getInt("line"),
                     command.getJSONObject("position").getInt("spot")));
         ((ChangePoints) concreteCommand).setPointsType('A');
@@ -87,7 +88,7 @@ public class CommandParser {
         concreteCommand = new Place();
         ((Place) concreteCommand)
             .setPosition(
-                board.getPosition(
+                board.getSpot(
                     command.getJSONObject("position").getInt("line"),
                     command.getJSONObject("position").getInt("spot")));
         ((Place) concreteCommand).setCardID(command.getInt("cardID"));
