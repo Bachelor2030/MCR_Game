@@ -65,7 +65,7 @@ public class GameBoard extends Application {
   private ClientAdapter clientAdapter;
 
   private boolean serverIsOn = false;
-  ServerAdapter server = new ServerAdapter(1337, 4, 12);
+  ServerAdapter server;
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
@@ -206,14 +206,11 @@ public class GameBoard extends Application {
       .setOnAction(
             event -> {
               // TODO
-              serverIsOn =  !serverIsOn;
-              if (serverIsOn) {
-                startServer.getButton().setText("Server launched.\nCan't stop server for now");
+              if (!serverIsOn) {
+                serverIsOn = true;
+                startServer.getButton().setText("Serveur lancé. \nPas arrêtable.");
+                server = new ServerAdapter(Integer.valueOf(parameterWindow.getPlayerPortField().getText()), 4, 12);
                 server.serveClients();
-              } else {
-                startServer.getButton().setText("Server launched.\nCan't stop server for now");
-                //server.getServerSharedState().endGame();
-                //server.closeClientSocket();
               }
             }
       );
@@ -232,8 +229,8 @@ public class GameBoard extends Application {
                 // On initialise les données
                 namePlayer1 = parameterWindow.getPlayerNameField().getText();
                 //TODO: Remove this, only for debugging
-                if (serverIsOn)
-                  namePlayer1 = "admin";
+                if (serverIsOn && namePlayer1.equals(parameterWindow.defaultName))
+                  namePlayer1 = "Admin";
                 IpPlayer1 = parameterWindow.getPlayerIpField().getText();
                 portPlayer1 = parameterWindow.getPlayerPortField().getText();
 
