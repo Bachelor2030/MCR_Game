@@ -72,4 +72,9 @@ public class GUIBoard {
   public void removeTrap(int line, int position) {
     GUILines.get(line).getSpot(position).unTrap();
   }
+
+  public GUILine getLineAt(int number) {
+      return GUILines.get(number);
+  }
+
 }
