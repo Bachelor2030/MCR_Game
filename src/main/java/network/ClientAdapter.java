@@ -1,5 +1,6 @@
 package network;
 
+import gameLogic.commands.guiCommands.GuiCommand;
 import gui.GameBoard;
 import network.jsonUtils.GUIParser;
 import network.states.ClientSharedState;
@@ -141,6 +142,12 @@ public class ClientAdapter {
             // todo: Parse the rest of init and determine how to give it to the gui (if not same way
             // as for enemy name)
             clientSharedState.setFinishedInit(true);
+            break;
+
+          case Messages.JSON_TYPE_UPDATE:
+            clientThreadState = ClientThreadState.SERVER_LISTENING;
+            GUIParser.getCommand(receivedAnswer, gameBoard.getGUIBoard()).execute(gameBoard);
+            clientSharedState.setMyTurn(true);
             break;
 
           case Messages.JSON_TYPE_YOUR_TURN:

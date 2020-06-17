@@ -1,7 +1,10 @@
 package gameLogic.invocator.card;
 
+import gameLogic.board.Spot;
 import gameLogic.commands.Macro;
 import gameLogic.invocator.Invocator;
+import gameLogic.receptors.LiveReceptor;
+import gameLogic.receptors.Receptor;
 import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,9 +41,9 @@ public class Card implements Invocator {
   }
 
   /** Plays the card which executes its commands */
-  public void play() {
-    if (command != null) {
-      command.execute(command.getReceptor());
+  public void play(Spot spot) {
+    if (command != null && spot != null) {
+      command.execute(spot);
     }
   }
 

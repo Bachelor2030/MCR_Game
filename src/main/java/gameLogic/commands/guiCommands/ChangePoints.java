@@ -3,13 +3,14 @@ package gameLogic.commands.guiCommands;
 import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gui.GameBoard;
+import gui.board.GUISpot;
 import gui.receptors.GUICreature;
 import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ChangePoints extends GuiCommand {
-  private Spot position;
+  private GUISpot position;
   private int newPointValue;
   private int oldPointValue;
   private char pointsType;
@@ -18,7 +19,7 @@ public class ChangePoints extends GuiCommand {
     super(CommandName.CHANGE_POINTS);
   }
 
-  public void setPosition(Spot position) {
+  public void setPosition(GUISpot position) {
     this.position = position;
   }
 

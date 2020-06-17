@@ -184,4 +184,16 @@ public class GUISpot {
     isTrapped = false;
   }
 
+  public JSONObject toJson() {
+    // TODO
+    return null;
+  }
+
+  public int getLineNumber() {
+    return (number / GUILine.NB_SPOTS);
+  }
+
+  public int getSpotNumber() {
+    return (number % GUILine.NB_SPOTS);
+  }
 }

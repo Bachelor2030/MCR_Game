@@ -1,5 +1,6 @@
 package gameLogic.commands.onLiveReceptors;
 
+import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gameLogic.commands.ConcreteCommand;
 import gameLogic.receptors.LiveReceptor;
@@ -28,13 +29,13 @@ public abstract class OnLiveReceptor extends ConcreteCommand {
   @Override
   public void execute(Receptor receptor) {
     this.receptor = (LiveReceptor) receptor;
-    execute((LiveReceptor) receptor);
+    execute(((Spot) receptor).getOccupant());
   }
 
   @Override
   public void undo(Receptor receptor) {
     this.receptor = (LiveReceptor) receptor;
-    undo((LiveReceptor) receptor);
+    undo(((Spot) receptor).getOccupant());
   }
 
   @Override

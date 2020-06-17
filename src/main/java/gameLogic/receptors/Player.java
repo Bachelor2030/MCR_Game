@@ -1,10 +1,11 @@
 package gameLogic.receptors;
 
 import gameLogic.Game;
+import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gameLogic.commands.ConcreteCommand;
 import gameLogic.commands.CreateTrap;
-import gameLogic.commands.onLiveReceptors.onCreature.Create;
+import gameLogic.commands.Create;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.invocator.card.Card;
 
@@ -37,6 +38,7 @@ public class Player extends Receptor {
       play; // False when the Player ends his/her turn
 
   private Game game;
+  private int id;
 
   /**
    * Creates a Player with the given name and deck
@@ -124,16 +126,16 @@ public class Player extends Receptor {
    * @param card the card to play
    * @return true if the card can be played, false otherwise
    */
-  public boolean playCard(Card card) {
+  public boolean playCard(Card card, Spot spot) {
     if (!hand.contains(card)) return false;
 
     if (card != null && actionPoints >= card.getCost()) {
 
-      card.play();
+      card.play(spot);
 
       ArrayList<Create> createCreatures = card.getCommand().getCreateCreature();
       for (Create create : createCreatures) {
-        creatures.addAll(Arrays.asList(create.getCreatures()));
+        creatures.addAll(Arrays.asList(create.getCreature()));
       }
 
       discard.get(currentTurn).add(card);
@@ -314,5 +316,13 @@ public class Player extends Receptor {
       setTurn(turn);
     }
     action.execute(this);
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 }

@@ -22,27 +22,27 @@ public class GUIBoard {
   private static int lineCounter;
 
   // les lignes du board
-  private LinkedList<GUILine> GUILines;
+  private LinkedList<GUILine> guiLines;
 
   /** Constructeur de la classe GUIBoard */
   public GUIBoard(GridPane gridPane, VBox vbox, GUIPlayer player1, GUIPlayer player2)
       throws IOException {
     lineCounter = 0;
-    GUILines = new LinkedList<>();
+    guiLines = new LinkedList<>();
     for (int line = 0; line < NB_LINES; ++line) {
-      GUILines.add(
+      guiLines.add(
           new GUILine(
               lineCounter++, gridPane, vbox, player1, player2, player1.getClientSharedState()));
     }
   }
 
   public void place(GUIReceptor receptor, int lineCounter, int spot) {
-    GUILines.get(lineCounter).setReceptor(receptor, spot);
+    guiLines.get(lineCounter).setReceptor(receptor, spot);
   }
 
   public GUILine getLine(int index) {
-    if (index < GUILines.size()) {
-      return GUILines.get(index);
+    if (index < guiLines.size()) {
+      return guiLines.get(index);
     }
     return null;
   }
@@ -52,8 +52,8 @@ public class GUIBoard {
    *
    * @return la liste des lignes du board.
    */
-  public LinkedList<GUILine> getGUILines() {
-    return GUILines;
+  public LinkedList<GUILine> getGuiLines() {
+    return guiLines;
   }
 
   /**
@@ -66,15 +66,18 @@ public class GUIBoard {
   }
 
   public void placeTrap(int line, int position) {
-    GUILines.get(line).getSpot(position).trap();
+    guiLines.get(line).getSpot(position).trap();
   }
 
   public void removeTrap(int line, int position) {
-    GUILines.get(line).getSpot(position).unTrap();
+    guiLines.get(line).getSpot(position).unTrap();
+  }
+
+  public GUISpot getSpot(int line, int spot) {
+    return guiLines.get(line).getSpot(spot);
   }
 
   public GUILine getLineAt(int number) {
-      return GUILines.get(number);
+      return guiLines.get(number);
   }
-
 }

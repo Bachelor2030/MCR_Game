@@ -41,6 +41,8 @@ public class Game extends Receptor {
       this.player1 = player2;
       this.player2 = player1;
     }
+    this.player1.setId(1);
+    this.player2.setId(2);
     serverAdapter.getServerSharedState().setFinishedInit();
   }
 
@@ -155,6 +157,11 @@ public class Game extends Receptor {
       serverAdapter
           .getServerSharedState()
           .pushJsonToSend(end, serverAdapter.getServerSharedState().otherPlayer(playerId));
+    }
+    try {
+      lastMoveJSON.put(Messages.JSON_TYPE, Messages.JSON_TYPE_UPDATE);
+    } catch (JSONException e) {
+      e.printStackTrace();
     }
     // Put json updates in serverAdapter.serverState.pushJsonToSend
     serverAdapter.getServerSharedState().pushJsonToSend(lastMoveJSON, playerId);
