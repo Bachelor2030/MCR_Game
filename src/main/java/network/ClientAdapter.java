@@ -190,7 +190,7 @@ public class ClientAdapter {
             JSONObject position = new JSONObject();
             position.put(Messages.JSON_TYPE_LINE, clientSharedState.getChosenPosition()[0]);
             position.put(Messages.JSON_TYPE_SPOT, clientSharedState.getChosenPosition()[1]);
-            clientSharedState.setChosenPosition(new int[]{});
+            clientSharedState.setChosenPosition(new int[]{-1, -1});
 
             play.put(Messages.JSON_TYPE_POSITION, position);
         }

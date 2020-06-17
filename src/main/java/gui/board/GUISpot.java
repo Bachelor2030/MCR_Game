@@ -77,7 +77,7 @@ public class GUISpot extends Application {
               !clientSharedState.getSelectedCard().getName().equals("empty") &&
               clientSharedState.getSelectedCard().getType() != CardType.SPELL) {
 
-                clientSharedState.setChosenPosition(new int[]{(number/GUILine.NB_SPOTS), number});
+                clientSharedState.setChosenPosition(new int[]{(number/GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)});
 
           }
           System.out.println("j'appuye sur une île");
