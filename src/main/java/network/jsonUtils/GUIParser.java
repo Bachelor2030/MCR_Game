@@ -1,7 +1,7 @@
 package network.jsonUtils;
 
 import gameLogic.invocator.card.CardType;
-import gui.GUICard;
+import gui.receptors.GUICard;
 import network.Messages;
 import network.states.ClientSharedState;
 import org.json.JSONArray;

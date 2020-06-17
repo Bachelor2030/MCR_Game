@@ -1,12 +1,12 @@
 package gui.gameWindows;
 
-import gameLogic.receptors.Player;
-import gui.GUICard;
+import gui.receptors.GUICard;
 import gui.board.GUIBoard;
 import gui.receptors.GUIPlayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -21,7 +21,8 @@ public class InGameWindow extends GameWindow {
   private GridPane gridIslandsPanel;
   private GUIBoard GUIBoard;
   private GUIPlayer player1, player2;
-  ArrayList<GUICard> handPlayer;
+  private ArrayList<GUICard> handPlayer;
+  ToggleGroup groupButtons;
 
   public InGameWindow(
       BorderPane racine,
@@ -40,6 +41,7 @@ public class InGameWindow extends GameWindow {
     this.player1 = player1;
     this.player2 = player2;
     this.handPlayer = handPlayer;
+    groupButtons = new ToggleGroup();
     generateBody();
   }
 
@@ -131,6 +133,17 @@ public class InGameWindow extends GameWindow {
 
     for (GUICard card : handPlayer) {
       footerCardsPlayer.getChildren().add(card.getButton());
+      card.getButton().selectedProperty().addListener((observable, oldValue, newValue) -> {
+
+        // If selected, color the background cyan
+        if (newValue) {
+          card.getButton().getStyleClass().add("toggle-selected");
+        } else {
+          card.getButton().getStyleClass().add("toggle-unselected");
+        }
+      });
+
+        groupButtons.getToggles().add(card.getButton());
     }
 
     footerCardsPlayer.setVisible(true);

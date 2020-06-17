@@ -129,6 +129,26 @@
     -fx-background-color: transparent;
 }
 
+.toggle-unselected{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.toggle-selected{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.toggle-selected:selected{
+    -fx-border-color: #42ecdc;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
 /* ************************************************ */
 /* COLONNE GAUCHE */
 /* ************************************************ */
