@@ -2,8 +2,7 @@ package network.jsonUtils;
 
 import gameLogic.board.Board;
 import gameLogic.board.Spot;
-import gameLogic.commands.playersAction.PlayCard;
-import gameLogic.commands.playersAction.PlayersAction;
+import gameLogic.commands.playersAction.*;
 import gameLogic.invocator.card.Card;
 import gameLogic.receptors.Player;
 import network.Messages;
@@ -17,50 +16,66 @@ import java.io.InputStreamReader;
 
 public class JsonUtil {
 
-  public String getJsonContent(String file) {
-    StringBuilder sb = new StringBuilder();
-    try {
-      FileInputStream fileInputStream = new FileInputStream(file);
-      BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
+    public String getJsonContent(String file) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
 
-      String line;
-      while ((line = br.readLine()) != null) {
-        sb.append(line);
-        sb.append('\n');
-      }
-      fileInputStream.close();
-    } catch (IOException e) {
-      e.printStackTrace();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+                sb.append('\n');
+            }
+            fileInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
-    return sb.toString();
-  }
 
   public PlayersAction getPlayerAction(Player player, String receivedMessage, Board board) {
-    Card cardPlayed = null;
-    Spot position = null;
+    PlayersAction playersAction = null;
+
     try {
       JSONObject jsonAction = new JSONObject(receivedMessage);
       String type = jsonAction.getString(Messages.JSON_TYPE);
 
-      if (type.equals(Messages.JSON_TYPE_PLAY)) {
-        int cardID = jsonAction.getInt(Messages.JSON_TYPE_CARD_ID);
+      switch (type) {
+        case Messages.JSON_TYPE_PLAY:
+          Card cardPlayed = null;
+          Spot position;
+          int cardID = jsonAction.getInt(Messages.JSON_TYPE_CARD_ID);
 
-        for (Card card : player.getHand()) {
-          if (cardID == card.getID()) {
-            cardPlayed = card;
-            break;
+          for (Card card : player.getHand()) {
+            if (cardID == card.getID()) {
+              cardPlayed = card;
+              break;
+            }
           }
-        }
 
-        JSONObject pos = jsonAction.getJSONObject(Messages.JSON_TYPE_POSITION);
-        position =
-            board.getPosition(
-                pos.getInt(Messages.JSON_TYPE_LINE), pos.getInt(Messages.JSON_TYPE_SPOT));
+          JSONObject pos = jsonAction.getJSONObject(Messages.JSON_TYPE_POSITION);
+          position =
+              board.getPosition(
+                  pos.getInt(Messages.JSON_TYPE_LINE), pos.getInt(Messages.JSON_TYPE_SPOT));
+          return new PlayCard(cardPlayed, position);
+
+        case Messages.JSON_TYPE_END_TURN:
+          return new EndTurn();
+
+        case Messages.JSON_TYPE_UNDO:
+          return new Undo();
+
+        case Messages.JSON_TYPE_ABANDON:
+          return new Abandon();
+
+        default:
+          return null;
       }
+
     } catch (JSONException e) {
       e.printStackTrace();
+      return null;
     }
-
-    return new PlayCard(cardPlayed, position);
   }
 }

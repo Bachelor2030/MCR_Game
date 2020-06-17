@@ -97,7 +97,6 @@ public class GUISpot {
                 e.printStackTrace();
               }
             }
-            System.out.println("Island number " + number + " clicked");
           }
         });
     button.setGraphic(imageView);

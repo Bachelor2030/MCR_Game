@@ -25,8 +25,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import network.ClientAdapter;
 import network.ClientRunner;
+import network.Messages;
 import network.ServerAdapter;
 import network.jsonUtils.GUIParser;
+import network.utilities.JsonClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -329,11 +333,19 @@ public class GameBoard extends Application {
           .setOnAction(
               actionEvent -> {
                 if (!clientAdapter.getClientSharedState().isMyTurn()) {
+                  // TODO: Afficher une alerte sur le GUI
+                  System.out.println("Please wait for your turn to validate it");
                   return;
+                } else {
+                  JSONObject json = null;
+                  try {
+                    json = JsonClient.jsonType(Messages.JSON_TYPE_END_TURN);
+                  } catch (JSONException e) {
+                    e.printStackTrace();
+                  }
+                  clientAdapter.getClientSharedState().pushJsonToSend(json);
+                  clientAdapter.getClientSharedState().setIntendToSendJson(true);
                 }
-                // TODO : envoyer au backend
-                EndTurn endTurn = new EndTurn();
-                System.out.println("you hit the validate button...");
               });
 
       // abandonne la partie
