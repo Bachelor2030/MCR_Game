@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /** Cette classe représente une case qui constitue une ligne de combat */
-public class GUISpot extends Application {
+public class GUISpot {
   // un case est représentée par un numéro
   private final int number;
 
@@ -95,9 +95,6 @@ public class GUISpot extends Application {
     //imageView.setX(pos.x);
     //imageView.setY(pos.y);
   }
-
-  @Override
-  public void start(Stage stage) throws Exception {}
 
   /**
    * Permet de savoir si une case est occupée par une créature.

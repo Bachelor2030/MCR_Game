@@ -4,6 +4,7 @@ import gameLogic.invocator.card.CardType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import network.states.ClientSharedState;
@@ -38,6 +39,7 @@ public class GUICard {
         view.setFitWidth(image.getWidth() * 0.35);
         view.setFitHeight(image.getHeight() * 0.35);
         button = new ToggleButton();
+        button.setTooltip(new Tooltip("hi bitch!"));
         button.getStyleClass().add("toggle-unselected");
         button.setOnAction(
                 actionEvent -> {
@@ -57,6 +59,10 @@ public class GUICard {
                     System.out.println("Card clicked");
                 });
         button.setGraphic(view);
+
+        //informations de la carte dans une bulle
+        Tooltip t = new Tooltip( "- Informations -\n\nType : " + type + "\n" + name + "\n" + "PA : " + cost + "\n");
+        button.setTooltip(t);
     }
 
     private String definePictureAccordingToType() {
