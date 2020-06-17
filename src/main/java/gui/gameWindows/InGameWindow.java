@@ -42,6 +42,7 @@ public class InGameWindow extends GameWindow {
     this.player2 = player2;
     this.handPlayer = handPlayer;
     groupButtons = new ToggleGroup();
+
     generateBody();
   }
 

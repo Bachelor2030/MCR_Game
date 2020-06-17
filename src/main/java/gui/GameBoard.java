@@ -356,7 +356,16 @@ public class GameBoard extends Application {
                 // System.out.println(endGame.toJson());
                 System.out.println("you hit the abandon button...");
               });
+
+      GameButton undoButton = new GameButton("Undo", "header-button");
+      undoButton
+              .getButton()
+              .setOnAction(
+                      actionEvent -> {
+                        System.out.println("you hit the undo button...");
+                      });
       buttons.add(validateTourButton);
+      buttons.add(undoButton);
       buttons.add(abandonTourButton);
     }
 
