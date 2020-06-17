@@ -28,6 +28,7 @@ import network.ClientRunner;
 import network.Messages;
 import network.ServerAdapter;
 import network.jsonUtils.GUIParser;
+import network.states.ClientSharedState;
 import network.utilities.JsonClient;
 import org.json.JSONException;
 import org.json.JSONObject;

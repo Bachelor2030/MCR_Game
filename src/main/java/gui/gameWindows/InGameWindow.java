@@ -93,6 +93,14 @@ public class InGameWindow extends GameWindow {
   private VBox getPlayerInformations(String labelTitle) {
     VBox informationPannelUser = new VBox();
 
+    Label isPlaying = new Label("- Playing now -");
+    isPlaying.getStyleClass().add("isPlaying-label");
+    informationPannelUser.getChildren().add(isPlaying);
+    if(!(clientSharedState.isMyTurn()))
+    {
+      isPlaying.setText("");
+    }
+
     // on set l'image de player 1
     if (labelTitle.equals(player1.getName())) {
       ImageView imageView = new ImageView(player1.getImage());
@@ -117,8 +125,8 @@ public class InGameWindow extends GameWindow {
     // On créé le titre "Actions"
     Label informationPanelUserTitle = new Label(labelTitle);
     informationPanelUserTitle.getStyleClass().add("titre-label");
-
-    informationPannelUser.getChildren().addAll(informationPanelUserTitle);
+    informationPannelUser.getChildren().add(informationPanelUserTitle);
+    
     return informationPannelUser;
   }
   /**
