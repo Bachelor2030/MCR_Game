@@ -76,4 +76,9 @@ public class GUIBoard {
   public GUISpot getSpot(int line, int spot) {
     return guiLines.get(line).getSpot(spot);
   }
+
+  public GUILine getLineAt(int number) {
+      return GUILines.get(number);
+  }
+
 }

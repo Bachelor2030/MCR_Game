@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +28,7 @@ import network.ClientRunner;
 import network.Messages;
 import network.ServerAdapter;
 import network.jsonUtils.GUIParser;
+import network.states.ClientSharedState;
 import network.utilities.JsonClient;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -459,11 +461,13 @@ public class GameBoard extends Application {
 
   public void placeTrap(int line, int position) {
     GUIBoard.placeTrap(line, position);
-    // TODO mettre le piège
+    DropShadow shadow = new DropShadow();
+    GUIBoard.getLine(line).getSpot(position).getButton().setEffect(shadow);
+    //TODO Need to test
   }
 
   public void removeTrap(int line, int position) {
     GUIBoard.removeTrap(line, position);
-    // TODO enlever le piège
+    GUIBoard.getLine(line).getSpot(position).getButton().getStyleClass().add("button-island");
   }
 }
