@@ -4,12 +4,14 @@ import gui.receptors.GUIChest;
 import gui.receptors.GUICreature;
 import gui.receptors.GUIPlayer;
 import gui.receptors.GUIReceptor;
+
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+
 import network.states.ClientSharedState;
 
 import java.io.IOException;
@@ -133,5 +135,10 @@ public class GUILine {
    */
   public int getNoLine() {
     return noLine;
+  }
+
+  public GUISpot getSpotAt(int position)
+  {
+    return GUISpots.get(position);
   }
 }

@@ -167,4 +167,5 @@ public class GUISpot {
   public void unTrap() {
     isTrapped = false;
   }
+
 }
