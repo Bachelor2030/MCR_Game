@@ -12,10 +12,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class GUICard {
-    private final int id;       // the ID of the card
-    private String name;        // the name of the card
-    private int cost;           // the cost (in action points)
-    private CardType type;      //type de la carte
+    private final int id;         // the ID of the card
+    private String name;          // the name of the card
+    private String description;   // the description of the card
+    private int cost;             // the cost (in action points)
+    private CardType type;        //type de la carte
     private ImageView view;
     private ToggleButton button;
 
@@ -26,6 +27,14 @@ public class GUICard {
             CREATURE_PATH = "src/main/resources/design/images/cards/creature.png",
             TRAP_PATH     = "src/main/resources/design/images/cards/trap.png",
             ERROR_PATH    = "src/main/resources/design/images/cards/cardSample.png";
+
+    public GUICard(int id, String name, CardType type, int cost, String description) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.type = type;
+        this.description = description;
+    }
 
     public GUICard(int id, String name, CardType type, int cost, ClientSharedState clientSharedState) throws FileNotFoundException {
         this.id = id;

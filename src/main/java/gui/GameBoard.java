@@ -427,4 +427,12 @@ public class GameBoard extends Application {
 
     player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>(), clientAdapter.getClientSharedState());
   }
+
+  public void addCard(GUICard card) {
+    player1.addToHand(card);
+  }
+
+  public void removeCard(int cardID) {
+    player1.removeFromHand(cardID);
+  }
 }

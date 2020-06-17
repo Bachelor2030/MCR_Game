@@ -9,14 +9,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class GUIPlayer {
+public class GUIPlayer extends GUIReceptor {
     private ClientSharedState clientSharedState;
-    private String name;
-    private String imagePath;
     private ArrayList<GUICard> hand = new ArrayList<>();
 
     public GUIPlayer(String name, String imagePath, ArrayList<GUICard> hand, ClientSharedState clientSharedState) {
-        this.name = name;
+        super(name, imagePath);
         this.imagePath = imagePath;
         this.hand.addAll(hand);
         this.clientSharedState = clientSharedState;
@@ -28,13 +26,14 @@ public class GUIPlayer {
      * @throws FileNotFoundException
      */
     public GUIPlayer(Player player, ClientSharedState clientSharedState) throws FileNotFoundException {
-        name = player.getName();
-        imagePath = player.getImgPath();
+        super(player.getName(), player.getImgPath());
         initializeCards(player.getHand());
         this.clientSharedState = clientSharedState;
     }
 
-    public GUIPlayer() {}
+    public GUIPlayer() {
+        super("", "");
+    }
 
     public void setClientSharedState(ClientSharedState clientSharedState) {
         this.clientSharedState = clientSharedState;
@@ -92,5 +91,18 @@ public class GUIPlayer {
 
     public String getImagePath() {
         return imagePath;
+    }
+
+    public void addToHand(GUICard card) {
+        hand.add(card);
+    }
+
+    public void removeFromHand(int cardID) {
+        for (GUICard card : hand) {
+            if (card.getId() == cardID) {
+                hand.remove(card);
+                break;
+            }
+        }
     }
 }
