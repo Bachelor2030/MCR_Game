@@ -41,8 +41,8 @@ public class GameBoard extends Application {
   // ******************************************************************
 
   // Taille fenêtre
-  public static final int WIDTH_WINDOW = 1200;
-  public static final int HEIGHT_WINDOW = 700;
+  public static final int WIDTH_WINDOW = 1400;
+  public static final int HEIGHT_WINDOW = 750;
 
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
   private GridPane gridIslandsPanel;
