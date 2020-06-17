@@ -56,12 +56,19 @@ public class GUIBoard {
     return GUILines;
   }
 
-  /**
-   * Permet de savoir le nombre de lignes constituant un board.
-   *
-   * @return le nombre de lignes constituant un board.
-   */
-  public int getNB_LINES() {
-    return NB_LINES;
-  }
+    /**
+     * Permet de savoir le nombre de lignes constituant un board.
+     * @return le nombre de lignes constituant un board.
+     */
+    public int getNB_LINES() {
+        return NB_LINES;
+    }
+
+    public void placeTrap(int line, int position) {
+        GUILines.get(line).getSpot(position).trap();
+    }
+
+    public void removeTrap(int line, int position) {
+        GUILines.get(line).getSpot(position).unTrap();
+    }
 }
