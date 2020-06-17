@@ -95,4 +95,12 @@ public class ClientSharedState {
   public synchronized void setMyTurn(boolean myTurn) {
     this.myTurn = myTurn;
   }
+
+  public synchronized boolean isPlayerTurn(String playerName) {
+    if (playerName.equals(playerName)) {
+      return myTurn;
+    } else {
+      return !myTurn;
+    }
+  }
 }
