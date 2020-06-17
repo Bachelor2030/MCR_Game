@@ -1,7 +1,9 @@
-package gui;
+package gui.receptors;
 
 import gameLogic.invocator.card.CardType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import network.states.ClientSharedState;
@@ -15,7 +17,7 @@ public class GUICard {
     private int cost;           // the cost (in action points)
     private CardType type;      //type de la carte
     private ImageView view;
-    private Button button;
+    private ToggleButton button;
 
     private ClientSharedState clientSharedState;
 
@@ -35,14 +37,14 @@ public class GUICard {
         view = new ImageView(image);
         view.setFitWidth(image.getWidth() * 0.35);
         view.setFitHeight(image.getHeight() * 0.35);
-        button = new Button();
-        button.getStyleClass().add("button-island");
+        button = new ToggleButton();
+        button.getStyleClass().add("toggle-unselected");
         button.setOnAction(
                 actionEvent -> {
                     if (!clientSharedState.isMyTurn()) {
                         return;
                     }
-                    System.out.println("Card clicked");
+
                     if(clientSharedState.getSelectedCard() == null || clientSharedState.getSelectedCard().getName().equals("empty")) {
                         clientSharedState.setSelectedCard(this);
                     } else if(clientSharedState.getSelectedCard() == this) {
@@ -52,6 +54,7 @@ public class GUICard {
                             e.printStackTrace();
                         }
                     }
+                    System.out.println("Card clicked");
                 });
         button.setGraphic(view);
     }
@@ -89,7 +92,7 @@ public class GUICard {
         return view;
     }
 
-    public Button getButton() {
+    public ToggleButton getButton() {
         return button;
     }
 }
