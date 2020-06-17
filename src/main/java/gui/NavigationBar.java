@@ -134,4 +134,8 @@ public class NavigationBar {
             ((Stage) quitButton.getButton().getScene().getWindow()).close();
         }
     }
+
+    public LinkedList<GameButton> getButtons() {
+        return buttons;
+    }
 }
