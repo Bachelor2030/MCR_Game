@@ -5,6 +5,7 @@ import gameLogic.board.Spot;
 import gameLogic.receptors.Creature;
 import gameLogic.commands.CommandName;
 import gameLogic.receptors.LiveReceptor;
+import gui.receptors.GUICreature;
 import network.Messages;
 
 import org.json.JSONException;
@@ -63,7 +64,7 @@ public class ChangePoints extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        LiveReceptor receptor = (LiveReceptor)gameBoard
+        GUICreature creature = (GUICreature)gameBoard
                 .getGUIBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
@@ -72,18 +73,18 @@ public class ChangePoints extends GuiCommand {
         switch (pointsType) {
             // Movement Points
             case 'M':
-                oldPointValue = ((Creature)receptor).getSteps();
-                ((Creature)receptor).setMovementsPoints(newPointValue);
+                oldPointValue = creature.getSteps();
+                creature.setMovementsPoints(newPointValue);
                 return;
             // Attack Points
             case 'A':
-                oldPointValue = ((Creature)receptor).getAttackPoints();
-                ((Creature)receptor).setAttackPoints(newPointValue);
+                oldPointValue = creature.getAttackPoints();
+                creature.setAttackPoints(newPointValue);
                 return;
             // Life Points
             case 'L':
-                oldPointValue = receptor.getLifePoints();
-                receptor.setLifePoints(newPointValue);
+                oldPointValue = creature.getLifePoints();
+                creature.setLifePoints(newPointValue);
                 return;
             default: return;
         }
@@ -91,7 +92,7 @@ public class ChangePoints extends GuiCommand {
 
     @Override
     public void undo(GameBoard gameBoard) {
-        LiveReceptor receptor = (LiveReceptor)gameBoard
+        GUICreature creature = (GUICreature)gameBoard
                 .getGUIBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
@@ -100,15 +101,15 @@ public class ChangePoints extends GuiCommand {
         switch (pointsType) {
             // Movement Points
             case 'M':
-                ((Creature)receptor).setMovementsPoints(oldPointValue);
+                creature.setMovementsPoints(oldPointValue);
                 return;
             // Attack Points
             case 'A':
-                ((Creature)receptor).setAttackPoints(oldPointValue);
+                creature.setAttackPoints(oldPointValue);
                 return;
             // Life Points
             case 'L':
-                receptor.setLifePoints(oldPointValue);
+                creature.setLifePoints(oldPointValue);
                 return;
             default: return;
         }

@@ -22,14 +22,6 @@ public class GUICreature extends GUIReceptor {
         this.attack = attack;
     }
 
-    public int getAttack() {
-        return attack;
-    }
-
-    public int getLife() {
-        return life;
-    }
-
     public int getSteps() {
         return steps;
     }
@@ -40,5 +32,25 @@ public class GUICreature extends GUIReceptor {
 
     public void wakeUp() {
         asleep = false;
+    }
+
+    public void setMovementsPoints(int steps) {
+        this.steps = steps;
+    }
+
+    public int getAttackPoints() {
+        return attack;
+    }
+
+    public void setAttackPoints(int attack) {
+        this.attack = attack;
+    }
+
+    public int getLifePoints() {
+        return life;
+    }
+
+    public void setLifePoints(int life) {
+        this.life = life;
     }
 }
