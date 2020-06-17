@@ -1,7 +1,7 @@
 package gui.gameWindows;
 
-import gui.receptors.GUICard;
 import gui.board.GUIBoard;
+import gui.receptors.GUICard;
 import gui.receptors.GUIPlayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -136,20 +136,23 @@ public class InGameWindow extends GameWindow {
 
     for (GUICard card : handPlayer) {
       footerCardsPlayer.getChildren().add(card.getButton());
-      card.getButton().selectedProperty().addListener((observable, oldValue, newValue) -> {
+      card.getButton()
+          .selectedProperty()
+          .addListener(
+              (observable, oldValue, newValue) -> {
 
-        // If selected, color the background cyan
-        if (newValue) {
-          card.getButton().getStyleClass().add("toggle-selected");
-          clientSharedState.setSelectedCard(card);
-          System.out.println("Selected " + clientSharedState.getSelectedCard().getName());
-        } else {
-          card.getButton().getStyleClass().add("toggle-unselected");
-          clientSharedState.setSelectedCard(null);
-          System.out.println("Set selected card to null");
-        }
-      });
-        groupButtons.getToggles().add(card.getButton());
+                // If selected, color the background cyan
+                if (newValue) {
+                  card.getButton().getStyleClass().add("toggle-selected");
+                  clientSharedState.setSelectedCard(card);
+                  System.out.println("Selected " + clientSharedState.getSelectedCard().getName());
+                } else {
+                  card.getButton().getStyleClass().add("toggle-unselected");
+                  clientSharedState.setSelectedCard(null);
+                  System.out.println("Set selected card to null");
+                }
+              });
+      groupButtons.getToggles().add(card.getButton());
     }
 
     footerCardsPlayer.setVisible(true);

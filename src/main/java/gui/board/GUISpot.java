@@ -1,16 +1,12 @@
 package gui.board;
 
-import gameLogic.invocator.card.CardType;
 import gui.maths.Vector2f;
 import gui.receptors.GUIReceptor;
 import gui.receptors.GUITrap;
-import gui.receptors.GUICard;
-import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 import network.states.ClientSharedState;
 import org.json.JSONException;
@@ -90,7 +86,8 @@ public class GUISpot {
             // If there is a selected card and it's not an empty card
             if (clientSharedState.getSelectedCard() != null) {
 
-              clientSharedState.setChosenPosition(new Pair<>((number / GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)));
+              clientSharedState.setChosenPosition(
+                  new Pair<>((number / GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)));
 
               try {
                 JSONObject json = clientSharedState.getSelectedCard().getJson();

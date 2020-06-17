@@ -54,10 +54,9 @@ public class ParameterWindow extends GameWindow {
     playerIpField.setMinWidth(50);
     playerIpField.setPrefWidth(50);
     playerIpField.setMaxWidth(200);
-    try(final DatagramSocket socket = new DatagramSocket()){
+    try (final DatagramSocket socket = new DatagramSocket()) {
       socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
-      playerIpField.setText(
-              String.valueOf(socket.getLocalAddress().getHostAddress()));
+      playerIpField.setText(String.valueOf(socket.getLocalAddress().getHostAddress()));
     } catch (UnknownHostException | SocketException e) {
       e.printStackTrace();
     }

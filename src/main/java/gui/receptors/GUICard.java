@@ -52,25 +52,6 @@ public class GUICard {
     view.setFitHeight(image.getHeight() * 0.35);
     button = new ToggleButton();
     button.getStyleClass().add("toggle-unselected");
-    button.setOnAction(
-        actionEvent -> {
-          if (!clientSharedState.isMyTurn()) {
-            return;
-          }
-
-          if (clientSharedState.getSelectedCard() == null
-              || clientSharedState.getSelectedCard().getName().equals("empty")) {
-            clientSharedState.setSelectedCard(this);
-          } else if (clientSharedState.getSelectedCard() == this) {
-            try {
-              clientSharedState.setSelectedCard(
-                  new GUICard(0, "empty", CardType.SPELL, 0, clientSharedState));
-            } catch (FileNotFoundException e) {
-              e.printStackTrace();
-            }
-          }
-          System.out.println("Card clicked");
-        });
     button.setGraphic(view);
 
     // informations de la carte dans une bulle
@@ -79,7 +60,6 @@ public class GUICard {
             "- Informations -\n\nType : " + type + "\n" + name + "\n" + "PA : " + cost + "\n");
     button.setTooltip(t);
   }
-
 
   private String definePictureAccordingToType() {
     switch (type) {
@@ -94,23 +74,23 @@ public class GUICard {
     }
   }
 
-    public JSONObject getJson() throws JSONException {
-        JSONObject play = jsonType(Messages.JSON_TYPE_PLAY);
-        play.put(Messages.JSON_TYPE_CARD_ID, clientSharedState.getSelectedCard().getId());
+  public JSONObject getJson() throws JSONException {
+    JSONObject play = jsonType(Messages.JSON_TYPE_PLAY);
+    play.put(Messages.JSON_TYPE_CARD_ID, clientSharedState.getSelectedCard().getId());
 
-        JSONObject position = new JSONObject();
-        position.put(Messages.JSON_TYPE_LINE, clientSharedState.getChosenPosition().getKey());
-        position.put(Messages.JSON_TYPE_SPOT, clientSharedState.getChosenPosition().getValue());
-        play.put(Messages.JSON_TYPE_POSITION, position);
+    JSONObject position = new JSONObject();
+    position.put(Messages.JSON_TYPE_LINE, clientSharedState.getChosenPosition().getKey());
+    position.put(Messages.JSON_TYPE_SPOT, clientSharedState.getChosenPosition().getValue());
+    play.put(Messages.JSON_TYPE_POSITION, position);
 
-        clientSharedState.setChosenPosition(null);
+    clientSharedState.setChosenPosition(null);
 
-        return play;
-    }
+    return play;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
   public String getName() {
     return name;
