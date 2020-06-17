@@ -43,7 +43,7 @@ public class GameBoard extends Application {
 
   // Taille fenêtre
   public static final int WIDTH_WINDOW = 1200;
-  public static final int HEIGHT_WINDOW = 800;
+  public static final int HEIGHT_WINDOW = 700;
 
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
   private GridPane gridIslandsPanel;
@@ -98,9 +98,12 @@ public class GameBoard extends Application {
 
     stage.setScene(scene);
     // met la fenêtre au max
-    stage.setMaximized(true);
-    stage.setTitle("MCR - BACHELOR HUNTERZ");
+    // stage.setMaximized(false);
+    stage.setResizable(true);
     stage.initStyle(StageStyle.TRANSPARENT);
+
+    stage.setTitle("MCR - BACHELOR HUNTERZ");
+    //stage.initStyle(StageStyle.TRANSPARENT);
     stage.show();
 
   }
@@ -197,7 +200,7 @@ public class GameBoard extends Application {
         new ParameterWindow(racine, defineHeader(true), currentStage, isGaming);
 
     // On crée un bouton pour lancer le serveur
-    GameButton startServer = new GameButton("Lancer Serveur", "header-button");
+    GameButton startServer = new GameButton("Lancer Serveur", "bouton-menu-principal");
     startServer
       .getButton()
       .setOnAction(
@@ -219,7 +222,7 @@ public class GameBoard extends Application {
     parameterWindow.addGameButton(startServer);
 
     // On crée un bouton qui va permettre de valider les paramètres et créer une nouvelle partie.
-    GameButton validateParameters = new GameButton("Valider", "header-button");
+    GameButton validateParameters = new GameButton("Valider", "bouton-menu-principal");
     validateParameters
         .getButton()
         .setOnAction(
@@ -291,8 +294,6 @@ public class GameBoard extends Application {
       //waitingWindow.execute();
     }
 
-    //TODO pecho info joueur2
-    //TODO initialisation deck
     inGame(racine);
   }
 
@@ -329,6 +330,9 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                if (!clientAdapter.getClientSharedState().isMyTurn()) {
+                  return;
+                }
                 //TODO : envoyer au backend
                 EndTurn endTurn = new EndTurn();
                 System.out.println("you hit the validate button...");
@@ -340,6 +344,9 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                if (!clientAdapter.getClientSharedState().isMyTurn()) {
+                  return;
+                }
                 // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
                 EndGame endGame = new EndGame();
                 endGame.setPlayerName(player1.getName());
@@ -407,12 +414,12 @@ public class GameBoard extends Application {
   }
 
   public void sendInit(String initMessage) {
-    GUIParser guiParser = new GUIParser(initMessage);
+    GUIParser guiParser = new GUIParser(initMessage, clientAdapter.getClientSharedState());
 
     handPlayer = guiParser.getCardsFromInit();
     player1.addHand(handPlayer);
+    player1.setClientSharedState(clientAdapter.getClientSharedState());
 
-    player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>());
-    //player2.setImgPath("src/main/resources/design/images/characters/character.png");
+    player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>(), clientAdapter.getClientSharedState());
   }
 }

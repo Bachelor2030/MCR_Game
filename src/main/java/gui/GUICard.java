@@ -4,6 +4,8 @@ import gameLogic.invocator.card.CardType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import network.states.ClientSharedState;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -15,17 +17,20 @@ public class GUICard {
     private ImageView view;
     private Button button;
 
+    private ClientSharedState clientSharedState;
+
     private final String
             SPELL_PATH    = "src/main/resources/design/images/cards/spell.png",
             CREATURE_PATH = "src/main/resources/design/images/cards/creature.png",
             TRAP_PATH     = "src/main/resources/design/images/cards/trap.png",
             ERROR_PATH    = "src/main/resources/design/images/cards/cardSample.png";
 
-    public GUICard(int id, String name, CardType type, int cost) throws FileNotFoundException {
+    public GUICard(int id, String name, CardType type, int cost, ClientSharedState clientSharedState) throws FileNotFoundException {
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.type = type;
+        this.clientSharedState = clientSharedState;
         Image image = new Image(new FileInputStream(definePictureAccordingToType()));
         view = new ImageView(image);
         view.setFitWidth(image.getWidth() * 0.35);
@@ -34,7 +39,19 @@ public class GUICard {
         button.getStyleClass().add("button-island");
         button.setOnAction(
                 actionEvent -> {
-                    System.out.println("j'appuye sur une carte");
+                    if (!clientSharedState.isMyTurn()) {
+                        return;
+                    }
+                    System.out.println("Card clicked");
+                    if(clientSharedState.getSelectedCard() == null || clientSharedState.getSelectedCard().getName().equals("empty")) {
+                        clientSharedState.setSelectedCard(this);
+                    } else if(clientSharedState.getSelectedCard() == this) {
+                        try {
+                            clientSharedState.setSelectedCard(new GUICard(0, "empty", CardType.SPELL, 0, clientSharedState));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 });
         button.setGraphic(view);
     }

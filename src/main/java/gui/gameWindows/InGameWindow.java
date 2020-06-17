@@ -110,10 +110,10 @@ public class InGameWindow extends GameWindow {
     informationPannelUser.setAlignment(Pos.CENTER);
 
     // On créé le titre "Actions"
-    Label informationPannelUserTitle = new Label(labelTitle);
-    informationPannelUserTitle.getStyleClass().add("titre-label");
+    Label informationPanelUserTitle = new Label(labelTitle);
+    informationPanelUserTitle.getStyleClass().add("titre-label");
 
-    informationPannelUser.getChildren().addAll(informationPannelUserTitle);
+    informationPannelUser.getChildren().addAll(informationPanelUserTitle);
     return informationPannelUser;
   }
   /**
