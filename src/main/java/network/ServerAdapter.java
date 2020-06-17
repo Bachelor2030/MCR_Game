@@ -16,7 +16,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.System.exit;
 import static network.jsonUtils.ParserLauncher.parseJsonCards;
 import static network.utilities.Info.*;
 import static network.utilities.JsonServer.sendJson;

@@ -17,7 +17,7 @@ public final class Messages {
     public static final String JSON_TYPE_GAME_START = "Game start";
 
     public static final String JSON_TYPE_PLAYERNAME = "Player name";
-    public static final String JSON_TYPE_ENEMYNAME = "enemy name";
+    public static final String JSON_TYPE_ENEMY_NAME = "enemy name";
 
     public static final String JSON_TYPE_TURN = "turn";
     public static final String JSON_TYPE_WAIT_TURN = "Wait turn";
