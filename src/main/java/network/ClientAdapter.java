@@ -173,9 +173,8 @@ public class ClientAdapter {
     }
 
     private void awaitClientInput() throws IOException, JSONException {
-        Scanner in = new Scanner(System.in);
         System.out.println("Waiting for client input");
-        clientSharedState.setMyTurn(true);
+/*        clientSharedState.setMyTurn(true);
 
         while ( clientSharedState.getSelectedCard() == null ||
                 clientSharedState.getSelectedCard().getName().equals("empty") ||
@@ -193,7 +192,16 @@ public class ClientAdapter {
             clientSharedState.setChosenPosition(new int[]{-1, -1});
 
             play.put(Messages.JSON_TYPE_POSITION, position);
+        }*/
+
+        while (!clientSharedState.getIntendToSendJson()) {}
+        clientSharedState.setIntendToSendJson(false);
+
+        if (clientSharedState.jsonToSendEmpty()) {
+            return;
         }
+
+        JSONObject play = clientSharedState.popJsonToSend();
 
         String jsonAnswer = sendJson(play, outPrintWriter, inBufferedReader);
         String jsonType = readJsonType(jsonAnswer);

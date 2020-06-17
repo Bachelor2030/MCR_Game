@@ -15,6 +15,9 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class ParameterWindow extends GameWindow {
+
+  public final String defaultName = "ASCII";
+
   private VBox body;
   private TextField playerNameField, playerIpField, playerPortField;
 
@@ -38,7 +41,7 @@ public class ParameterWindow extends GameWindow {
     playerName.getStyleClass().add("parameters-label");
 
     playerNameField = new TextField();
-    playerNameField.setText("Bouffon n°1");
+    playerNameField.setText(defaultName);
     playerNameField.setMinWidth(50);
     playerNameField.setPrefWidth(50);
     playerNameField.setMaxWidth(200);

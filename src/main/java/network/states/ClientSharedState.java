@@ -1,11 +1,16 @@
 package network.states;
 
+import org.json.JSONObject;
+import java.util.LinkedList;
 import gui.receptors.GUICard;
 
 public class ClientSharedState {
 
     private GUICard selectedCard;
     private int[] chosenPosition;
+
+    private LinkedList<JSONObject> jsonToSend;
+    private boolean intendToSendJson = false;
 
     private String enemyName, enemyImagePath;
     private String playerName;
@@ -15,6 +20,26 @@ public class ClientSharedState {
 
     public synchronized String getEnemyName() {
         return enemyName;
+    }
+
+    public synchronized void setIntendToSendJson(boolean intent) {
+        intendToSendJson = intent;
+    }
+
+    public synchronized boolean getIntendToSendJson() {
+        return intendToSendJson;
+    }
+
+    public synchronized boolean jsonToSendEmpty() {
+        return jsonToSend.size() == 0;
+    }
+
+    public synchronized void pushJsonToSend(JSONObject json) {
+        jsonToSend.push(json);
+    }
+
+    public synchronized JSONObject popJsonToSend() {
+        return jsonToSend.pop();
     }
 
     public synchronized String getEnemyImagePath() {
@@ -55,10 +80,6 @@ public class ClientSharedState {
 
     public synchronized GUICard getSelectedCard() {
         return selectedCard;
-    }
-
-    public synchronized int[] getChosenPosition() {
-        return chosenPosition;
     }
 
     public synchronized boolean isMyTurn() {

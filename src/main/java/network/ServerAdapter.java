@@ -91,9 +91,7 @@ public class ServerAdapter {
                 printMessage(MessageLevel.Info, receptionistClassName(), "Waiting (blocking) for a new Player on port " + port);
 
                 try {
-                    printMessage(receptionistClassName(), "1");
                     clientSocket = serverSocket.accept();
-                    printMessage(receptionistClassName(), "2");
                     serverSharedState.incrementPlayerCount();
                     printMessage(MessageLevel.Info, receptionistClassName(), "A new Player has arrived. Starting a new thread and delegating work to a new servant...");
                     new Thread(new ServantWorker(clientSocket, serverSharedState.getPlayerCount())).start();

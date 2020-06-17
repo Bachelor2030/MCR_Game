@@ -50,6 +50,7 @@ public class Player extends Receptor {
         super(name);
         this.game = game;
         actionPoints = 0;
+        this.setImgPath("src/main/resources/design/images/characters/character.png");
         if(deck != null)
         {
             // Shuffle the given deck
