@@ -96,6 +96,377 @@
       "cost" : 3,
       "effect point" : 1,
       "target" : "one"
+    },
+    {
+      "id" : 8,
+      "name" : "As slowly as necessary",
+      "type" : "Spell",
+      "card commands" : ["Change_MP"],
+      "cost" : 3,
+      "effect point" : -2,
+      "target" : "one"
+    },
+    {
+      "id" : 9,
+      "name" : "As fast as possible",
+      "type" : "Spell",
+      "card commands" : ["Change_MP"],
+      "cost" : 3,
+      "effect point" : 2,
+      "target" : "one"
+    },
+    {
+      "id" : 10,
+      "name" : "Gus the cook",
+      "type" : "Creature",
+      "cost" : 6,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Gus the cook",
+        "img" : "link to the image",
+        "life" : 4,
+        "steps" : 2,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 11,
+      "name" : "Matt the dwarf",
+      "type" : "Creature",
+      "cost" : 5,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Matt the dwarf",
+        "img" : "link to the image",
+        "life" : 7,
+        "steps" : 1,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 12,
+      "name" : "The Party",
+      "type" : "Creature",
+      "cost" : 10,
+      "card commands" : [],
+      "creature" : [{
+          "name" : "Matt the dwarf",
+          "img" : "link to the image",
+          "life" : 7,
+          "steps" : 1,
+          "attack" : 4
+        },
+        {
+          "name" : "Gus the cook",
+          "img" : "link to the image",
+          "life" : 4,
+          "steps" : 2,
+          "attack" : 5
+        },
+        {
+          "name" : "Cosmic Elodie",
+          "img" : "link to the image",
+          "life" : 3,
+          "steps" : 3,
+          "attack" : 5
+        },
+        {
+          "name" : "Clarusso the elf",
+          "img" : "link to the image",
+          "life" : 2,
+          "steps" : 5,
+          "attack" : 3
+        }
+      ]
+    },
+    {
+      "id" : 13,
+      "name" : "Sah quel plaisir",
+      "type" : "Creature",
+      "cost" : 10,
+      "card commands" : [],
+      "creature" : [{
+          "name" : "CA the un-understandable",
+          "img" : "link to the image",
+          "life" : 6,
+          "steps" : "random :)",
+          "attack" : 4
+        },
+        {
+          "name" : "Loris Gibbs",
+          "img" : "link to the image",
+          "life" : 3,
+          "steps" : 3,
+          "attack" : 3
+        },
+        {
+          "name" : "Guillaume, killer on wheels",
+          "img" : "link to the image",
+          "life" : 4,
+          "steps" : 6,
+          "attack" : 2
+        }
+      ]
+    },
+    {
+      "id" : 14,
+      "name" : "Feliz Coronavidad",
+      "type" : "Trap",
+      "cost" : 7,
+      "card commands" : [],
+      "trap" : {
+        "name" :"Feliz Coronavidad",
+        "commands" : ["Knock_Out"],
+        "effect point" : 0
+      }
+    },
+    {
+      "id" : 15,
+      "name" : "3.43",
+      "type" : "Trap",
+      "cost" : 4,
+      "card commands" : [],
+      "trap" : {
+        "name" :"3.43",
+        "commands" : ["Retreat_creature"],
+        "effect point" : -3
+      }
+    },
+    {
+      "id" : 16,
+      "name" : "Clarusso the elf",
+      "type" : "Creature",
+      "cost" : 8,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Clarusso the elf",
+        "img" : "link to the image",
+        "life" : 7,
+        "steps" : 1,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 17,
+      "name" : "Cosmic Elodie",
+      "type" : "Creature",
+      "cost" : 8,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Cosmic Elodie",
+        "img" : "link to the image",
+        "life" : 3,
+        "steps" : 3,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 18,
+      "name" : "Loris the Vampire",
+      "type" : "Creature",
+      "cost" : 7,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Loris the Vampire",
+        "img" : "link to the image",
+        "life" : 2,
+        "steps" : 4,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 19,
+      "name" : "Guy-Laurent the brazilian fighter",
+      "type" : "Creature",
+      "cost" : 6,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Guy-Laurent the brazilian fighter",
+        "img" : "link to the image",
+        "life" : 2,
+        "steps" : 1,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 20,
+      "name" : "Unicorn of death",
+      "type" : "Creature",
+      "cost" : 9,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Unicorn of death",
+        "img" : "link to the image",
+        "life" : 6,
+        "steps" : 4,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 21,
+      "name" : "Jaquette the Bear",
+      "type" : "Creature",
+      "cost" : 4,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Jaquette the Bear",
+        "img" : "link to the image",
+        "life" : 1,
+        "steps" : 1,
+        "attack" : 1
+      }
+    },
+    {
+      "id" : 22,
+      "name" : "Alexandre the wizard",
+      "type" : "Creature",
+      "cost" : 5,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Alexandre the wizard",
+        "img" : "link to the image",
+        "life" : 2,
+        "steps" : 2,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 24,
+      "name" : "Mateo the bauf'",
+      "type" : "Creature",
+      "cost" : 6,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Mateo the bauf'",
+        "img" : "link to the image",
+        "life" : 2,
+        "steps" : 3,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 25,
+      "name" : "Alison or power of the kittens",
+      "type" : "Creature",
+      "cost" : 4,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Alison or power of the kittens",
+        "img" : "link to the image",
+        "life" : 1,
+        "steps" : 2,
+        "attack" : 3
+      }
+    },
+    {
+      "id" : 26,
+      "name" : "Sleep my child",
+      "type" : "Spell",
+      "card commands" : ["Knock_Out"],
+      "cost" : 15,
+      "effect point" : 0,
+      "target" : "one"
+    },
+    {
+      "id" : 26,
+      "name" : "It's (not) a trap (anymore)",
+      "type" : "Spell",
+      "card commands" : ["Kill"],
+      "cost" : 15,
+      "effect point" : 0,
+      "target" : "one"
+    },
+    {
+      "id" : 27,
+      "name" : "Loris Gibbs",
+      "type" : "Creature",
+      "cost" : 6,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Loris Gibbs",
+        "img" : "link to the image",
+        "life" : 3,
+        "steps" : 3,
+        "attack" : 3
+      }
+    },
+    {
+      "id" : 28,
+      "name" : "Guillaume, killer on wheels",
+      "type" : "Creature",
+      "cost" : 7,
+      "card commands" : [],
+      "creature" : {
+        "name" : "Guillaume, killer on wheels",
+        "img" : "link to the image",
+        "life" : 4,
+        "steps" : 6,
+        "attack" : 2
+      }
+    },
+    {
+      "id" : 28,
+      "name" : "A flock of Loris",
+      "type" : "Creature",
+      "cost" : 12,
+      "card commands" : [],
+      "creature" : [{
+          "name" : "Loris the Vampire",
+          "img" : "link to the image",
+          "life" : 2,
+          "steps" : 4,
+          "attack" : 4
+        },
+        {
+          "name" : "Loris Gibbs",
+          "img" : "link to the image",
+          "life" : 3,
+          "steps" : 3,
+          "attack" : 3
+        }
+      ]
+    },
+    {
+      "id" : 29,
+      "name" : "Doom",
+      "type" : "Creature",
+      "cost" : 18,
+      "card commands" : [],
+      "creature" : [
+        {
+          "name" : "Pier",
+          "img" : "link to the image",
+          "life" : 6,
+          "steps" : 3,
+          "attack" : 4
+        },
+        {
+          "name" : "Sebas-chan",
+          "img" : "link to the image",
+          "life" : 4,
+          "steps" : 2,
+          "attack" : 2
+        },
+        {
+          "name" : "Gregou",
+          "img" : "link to the image",
+          "life" : 4,
+          "steps" : 1,
+          "attack" : 3
+        }
+      ]
+    },
+    {
+      "id" : 30,
+      "name" : "Draw cowboy",
+      "type" : "Trap",
+      "cost" : 7,
+      "card commands" : [],
+      "trap" : {
+        "name" :"Draw cowboy",
+        "commands" : ["Draw", "Draw"],
+        "effect point" : 0
+      }
     }
   ]
 }
