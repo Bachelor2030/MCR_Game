@@ -50,14 +50,24 @@ public class InGameWindow extends GameWindow {
 
   private void generateBody() throws IOException {
 
+    if(clientSharedState.isPlayerTurn(player1.getName())) {
+      // On créé l'espace d'infos du joueur 1
+      racine.setLeft(getPlayerInformations(player1.getName()));
+
+      // On créé l'espace d'infos du joueur 2
+      racine.setRight(getPlayerInformations(player2.getName()));
+    }
+    else {
+      // On créé l'espace d'infos du joueur 1
+      racine.setLeft(getPlayerInformations(player2.getName()));
+
+      // On créé l'espace d'infos du joueur 2
+      racine.setRight(getPlayerInformations(player1.getName()));
+    }
     // On met en place le corps du texte
     racine.setCenter(displayInGameField());
 
-    // On créé l'espace d'infos du joueur 1
-    racine.setLeft(getPlayerInformations(player1.getName()));
 
-    // On créé l'espace d'infos du joueur 1
-    racine.setRight(getPlayerInformations(player2.getName()));
 
     // On crée un footer dans le BorderPane
     racine.setBottom(footerBar());

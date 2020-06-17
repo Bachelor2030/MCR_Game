@@ -5,6 +5,7 @@ import gui.receptors.GUIReceptor;
 import gui.receptors.GUITrap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
@@ -89,6 +90,10 @@ public class GUISpot {
             Image image = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
             ImageView imageView = new ImageView(image);
             alert.setGraphic(imageView);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane
+                    .getStylesheets()
+                    .add(getClass().getResource("/design/css/styleSheet.css").toExternalForm());
             alert.show();
 
             System.out.println("Please wait for your turn");
