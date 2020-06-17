@@ -11,7 +11,7 @@
         "commands": {
           "commands": [
             {
-              "live receptor": [ ],
+              "live receptor": [],
               "name": "Hit",
               "type": "play",
               "AP": 0
@@ -27,12 +27,12 @@
         "commands": {
           "commands": [
             {
-              "live receptor": [ ],
+              "live receptor": [],
               "name": "Create_creature",
               "type": "play"
             },
             {
-              "live receptor": [ ],
+              "live receptor": [],
               "name": "Knock_Out",
               "type": "play"
             }
@@ -47,7 +47,7 @@
         "commands": {
           "commands": [
             {
-              "live receptor": [ ],
+              "live receptor": [],
               "name": "Create_creature",
               "type": "play"
             }

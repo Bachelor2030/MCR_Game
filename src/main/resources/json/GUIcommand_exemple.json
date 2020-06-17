@@ -1,58 +1,58 @@
 {
-  "type" : "GUI_command",
-  "commands" : [
+  "type": "GUI_command",
+  "commands": [
     {
-      "player" : "Caillou",
-      "name" : "GUI_draw",
-      "cardID" : 2
+      "player": "Caillou",
+      "name": "GUI_draw",
+      "cardID": 2
     },
     {
-      "player" : "Caillou",
-      "name" : "GUI_create_creature",
-      "cardID" : 1,
-      "position" : {
-        "line" : 1,
-        "spot" : 1
+      "player": "Caillou",
+      "name": "GUI_create_creature",
+      "cardID": 1,
+      "position": {
+        "line": 1,
+        "spot": 1
       }
     },
     {
-      "player" : "Caillou",
-      "name" : "GUI_create_trap",
-      "cardID" : 4,
-      "position" : {
-        "line" : 3,
-        "spot" : 4
+      "player": "Caillou",
+      "name": "GUI_create_trap",
+      "cardID": 4,
+      "position": {
+        "line": 3,
+        "spot": 4
       }
     },
     {
-      "player" : "Caillou",
-      "name" : "GUI_hit",
-      "cardID" : 5,
-      "position" : {
-        "line" : 4,
-        "spot" : 6
+      "player": "Caillou",
+      "name": "GUI_hit",
+      "cardID": 5,
+      "position": {
+        "line": 4,
+        "spot": 6
       }
     },
     {
-      "player" : "Caillou",
-      "name" : "Change_AP",
-      "cardID" : 7,
-      "position" : {
-        "line" : 4,
-        "spot" : 6
+      "player": "Caillou",
+      "name": "Change_AP",
+      "cardID": 7,
+      "position": {
+        "line": 4,
+        "spot": 6
       }
     },
     {
-      "player" : "Caillou",
-      "name" : "GUI_move_creature",
-      "cardID" : 1,
-      "positionFrom" : {
-        "line" : 1,
-        "spot" : 1
+      "player": "Caillou",
+      "name": "GUI_move_creature",
+      "cardID": 1,
+      "positionFrom": {
+        "line": 1,
+        "spot": 1
       },
-      "positionTo" : {
-        "line" : 1,
-        "spot" : 4
+      "positionTo": {
+        "line": 1,
+        "spot": 4
       }
     }
   ]

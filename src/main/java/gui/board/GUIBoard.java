@@ -14,13 +14,11 @@ import java.util.LinkedList;
  */
 public class GUIBoard {
 
+  // compteur de ligne
+  private static int lineCounter;
   // TODO : rentre paramétrique.
   // le nombre de lignes
   private final int NB_LINES = 4;
-
-  // compteur de ligne
-  private static int lineCounter;
-
   // les lignes du board
   private LinkedList<GUILine> GUILines;
 
@@ -56,19 +54,20 @@ public class GUIBoard {
     return GUILines;
   }
 
-    /**
-     * Permet de savoir le nombre de lignes constituant un board.
-     * @return le nombre de lignes constituant un board.
-     */
-    public int getNB_LINES() {
-        return NB_LINES;
-    }
+  /**
+   * Permet de savoir le nombre de lignes constituant un board.
+   *
+   * @return le nombre de lignes constituant un board.
+   */
+  public int getNB_LINES() {
+    return NB_LINES;
+  }
 
-    public void placeTrap(int line, int position) {
-        GUILines.get(line).getSpot(position).trap();
-    }
+  public void placeTrap(int line, int position) {
+    GUILines.get(line).getSpot(position).trap();
+  }
 
-    public void removeTrap(int line, int position) {
-        GUILines.get(line).getSpot(position).unTrap();
-    }
+  public void removeTrap(int line, int position) {
+    GUILines.get(line).getSpot(position).unTrap();
+  }
 }

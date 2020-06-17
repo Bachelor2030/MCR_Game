@@ -1,127 +1,129 @@
 {
-    "pageInfo" : {
-        "pageName" : "All creatures",
-        "pageContent" : ["creatures"]
+  "pageInfo": {
+    "pageName": "All creatures",
+    "pageContent": [
+      "creatures"
+    ]
+  },
+  "creatures": {
+    "creature": {
+      "name": "Pier",
+      "img": "link to the image",
+      "life": 6,
+      "steps": 3,
+      "attack": 4
     },
-    "creatures" : {
-        "creature" : {
-            "name" : "Pier",
-            "img" : "link to the image",
-            "life" : 6,
-            "steps" : 3,
-            "attack" : 4
-        },
-        "creature" : {
-            "name" : "Sebas-chan",
-            "img" : "link to the image",
-            "life" : 4,
-            "steps" : 2,
-            "attack" : 2            
-        },
-        "creature" : {
-            "name" : "Gregou",
-            "img" : "link to the image",
-            "life" : 4,
-            "steps" : 1,
-            "attack" : 3
-        },
-        "creature" : {
-            "name" : "Cosmic Elodie",
-            "img" : "link to the image",
-            "life" : 3,
-            "steps" : 3,
-            "attack" : 5
-        },
-        "creature" : {
-            "name" : "Gus the cook",
-            "img" : "link to the image",
-            "life" : 4,
-            "steps" : 2,
-            "attack" : 5
-        },
-        "creature" : {
-            "name" : "Matt the dwarf",
-            "img" : "link to the image",
-            "life" : 7,
-            "steps" : 1,
-            "attack" : 4
-        },
-        "creature" : {
-            "name" : "Clarusso the elf",
-            "img" : "link to the image",
-            "life" : 2,
-            "steps" : 5,
-            "attack" : 3
-        },
-        "creature" : {
-            "name" : "Loris the Vampire",
-            "img" : "link to the image",
-            "life" : 2,
-            "steps" : 4,
-            "attack" : 4
-        },
-        "creature" : {
-            "name" : "Guy-Laurent the brazilian fighter",
-            "img" : "link to the image",
-            "life" : 2,
-            "steps" : 1,
-            "attack" : 5
-        },
-        "creature" : {
-            "name" : "Unicorn of death",
-            "img" : "link to the image",
-            "life" : 6,
-            "steps" : 4,
-            "attack" : 5
-        },
-        "creature" : {
-            "name" : "Jaquette the Bear",
-            "img" : "link to the image",
-            "life" : 1,
-            "steps" : 1,
-            "attack" : 1
-        },
-        "creature" : {
-            "name" : "CA the un-understandable",
-            "img" : "link to the image",
-            "life" : 6,
-            "steps" : "random :)",
-            "attack" : 4
-        },
-        "creature" : {
-            "name" : "Alexandre the wizard",
-            "img" : "link to the image",
-            "life" : 2,
-            "steps" : 2,
-            "attack" : 5
-        },
-        "creature" : {
-            "name" : "Mateo the bauf'",
-            "img" : "link to the image",
-            "life" : 2,
-            "steps" : 3,
-            "attack" : 4
-        },
-        "creature" : {
-            "name" : "Alison or power of the kittens",
-            "img" : "link to the image",
-            "life" : 1,
-            "steps" : 2,
-            "attack" : 3
-        },
-        "creature" : {
-            "name" : "Loris Gibbs",
-            "img" : "link to the image",
-            "life" : 3,
-            "steps" : 3,
-            "attack" : 3
-        },
-        "creature" : {
-            "name" : "Guillaume, killer on wheels",
-            "img" : "link to the image",
-            "life" : 4,
-            "steps" : 6,
-            "attack" : 2
-        }
+    "creature": {
+      "name": "Sebas-chan",
+      "img": "link to the image",
+      "life": 4,
+      "steps": 2,
+      "attack": 2
+    },
+    "creature": {
+      "name": "Gregou",
+      "img": "link to the image",
+      "life": 4,
+      "steps": 1,
+      "attack": 3
+    },
+    "creature": {
+      "name": "Cosmic Elodie",
+      "img": "link to the image",
+      "life": 3,
+      "steps": 3,
+      "attack": 5
+    },
+    "creature": {
+      "name": "Gus the cook",
+      "img": "link to the image",
+      "life": 4,
+      "steps": 2,
+      "attack": 5
+    },
+    "creature": {
+      "name": "Matt the dwarf",
+      "img": "link to the image",
+      "life": 7,
+      "steps": 1,
+      "attack": 4
+    },
+    "creature": {
+      "name": "Clarusso the elf",
+      "img": "link to the image",
+      "life": 2,
+      "steps": 5,
+      "attack": 3
+    },
+    "creature": {
+      "name": "Loris the Vampire",
+      "img": "link to the image",
+      "life": 2,
+      "steps": 4,
+      "attack": 4
+    },
+    "creature": {
+      "name": "Guy-Laurent the brazilian fighter",
+      "img": "link to the image",
+      "life": 2,
+      "steps": 1,
+      "attack": 5
+    },
+    "creature": {
+      "name": "Unicorn of death",
+      "img": "link to the image",
+      "life": 6,
+      "steps": 4,
+      "attack": 5
+    },
+    "creature": {
+      "name": "Jaquette the Bear",
+      "img": "link to the image",
+      "life": 1,
+      "steps": 1,
+      "attack": 1
+    },
+    "creature": {
+      "name": "CA the un-understandable",
+      "img": "link to the image",
+      "life": 6,
+      "steps": "random :)",
+      "attack": 4
+    },
+    "creature": {
+      "name": "Alexandre the wizard",
+      "img": "link to the image",
+      "life": 2,
+      "steps": 2,
+      "attack": 5
+    },
+    "creature": {
+      "name": "Mateo the bauf'",
+      "img": "link to the image",
+      "life": 2,
+      "steps": 3,
+      "attack": 4
+    },
+    "creature": {
+      "name": "Alison or power of the kittens",
+      "img": "link to the image",
+      "life": 1,
+      "steps": 2,
+      "attack": 3
+    },
+    "creature": {
+      "name": "Loris Gibbs",
+      "img": "link to the image",
+      "life": 3,
+      "steps": 3,
+      "attack": 3
+    },
+    "creature": {
+      "name": "Guillaume, killer on wheels",
+      "img": "link to the image",
+      "life": 4,
+      "steps": 6,
+      "attack": 2
     }
+  }
 }

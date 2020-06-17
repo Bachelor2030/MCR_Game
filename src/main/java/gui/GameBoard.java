@@ -2,7 +2,6 @@ package gui;
 
 import gameLogic.commands.guiCommands.EndGame;
 import gameLogic.commands.playersAction.EndTurn;
-import gameLogic.receptors.Receptor;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
 import gui.gameWindows.*;
@@ -44,28 +43,20 @@ public class GameBoard extends Application {
   // Taille fenêtre
   public static final int WIDTH_WINDOW = 1400;
   public static final int HEIGHT_WINDOW = 750;
-
+  private static boolean isGaming;
+  private final String jsonPath = "src/main/resources/json/";
+  ServerAdapter server;
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
   private GridPane gridIslandsPanel;
-
-  private static boolean isGaming;
-
   private BorderPane racine;
-
   private GUIPlayer player1, player2;
   private GUIParser guiParser; // informations du tour pour le joueur
   private ArrayList<GUICard> handPlayer;
-  private final String jsonPath = "src/main/resources/json/";
   private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
-
   private GUIBoard GUIBoard;
-
   private Stage currentStage;
-
   private ClientAdapter clientAdapter;
-
   private boolean serverIsOn = false;
-  ServerAdapter server;
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override

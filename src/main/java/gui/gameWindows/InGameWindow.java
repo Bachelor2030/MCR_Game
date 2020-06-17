@@ -1,7 +1,7 @@
 package gui.gameWindows;
 
-import gui.receptors.GUICard;
 import gui.board.GUIBoard;
+import gui.receptors.GUICard;
 import gui.receptors.GUIPlayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,19 +10,17 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import network.states.ClientSharedState;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class InGameWindow extends GameWindow {
+  ToggleGroup groupButtons;
   private GridPane gridIslandsPanel;
   private GUIBoard GUIBoard;
   private GUIPlayer player1, player2;
   private ArrayList<GUICard> handPlayer;
-  private ClientSharedState clientSharedState;
-  private ToggleGroup groupButtons;
 
   public InGameWindow(
       BorderPane racine,
@@ -32,7 +30,6 @@ public class InGameWindow extends GameWindow {
       GUIPlayer player1,
       GUIPlayer player2,
       boolean isGaming,
-      ClientSharedState clientSharedState,
       Stage stage,
       ArrayList<GUICard> handPlayer)
       throws IOException {
@@ -42,7 +39,6 @@ public class InGameWindow extends GameWindow {
     this.player1 = player1;
     this.player2 = player2;
     this.handPlayer = handPlayer;
-    this.clientSharedState = clientSharedState;
     groupButtons = new ToggleGroup();
 
     generateBody();
@@ -127,7 +123,7 @@ public class InGameWindow extends GameWindow {
    *
    * @return le footer
    */
-  private HBox footerBar() {
+  private HBox footerBar() throws FileNotFoundException {
 
     // On définit une boxe horizontale qui définira l'espace "footer" -> cartes du joueur
     HBox footerCardsPlayer = new HBox();
@@ -136,20 +132,20 @@ public class InGameWindow extends GameWindow {
 
     for (GUICard card : handPlayer) {
       footerCardsPlayer.getChildren().add(card.getButton());
-      card.getButton().selectedProperty().addListener((observable, oldValue, newValue) -> {
+      card.getButton()
+          .selectedProperty()
+          .addListener(
+              (observable, oldValue, newValue) -> {
 
-        // If selected, color the background cyan
-        if (newValue) {
-          card.getButton().getStyleClass().add("toggle-selected");
-          clientSharedState.setSelectedCard(card);
-          System.out.println("Selected " + clientSharedState.getSelectedCard().getName());
-        } else {
-          card.getButton().getStyleClass().add("toggle-unselected");
-          clientSharedState.setSelectedCard(null);
-          System.out.println("Set selected card to null");
-        }
-      });
-        groupButtons.getToggles().add(card.getButton());
+                // If selected, color the background cyan
+                if (newValue) {
+                  card.getButton().getStyleClass().add("toggle-selected");
+                } else {
+                  card.getButton().getStyleClass().add("toggle-unselected");
+                }
+              });
+
+      groupButtons.getToggles().add(card.getButton());
     }
 
     footerCardsPlayer.setVisible(true);

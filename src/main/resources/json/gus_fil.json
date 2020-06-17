@@ -3,9 +3,7 @@ Communication player -> server:
 "type": <type of communication>
 }
 
-Communications :
-init game :
-{
+Communications: init game: {
 "type": "init",
 "init": [
 "lines": <nb lines>,
@@ -29,18 +27,18 @@ init game :
 ]
 }
 
-update game :
-{
+update game: {
 "type": "update",
 "moves": [
-"create": ["line": <line x>, "pos": <pos y>, "creature":[
+"create": [
+"line": <line x>, "pos": <pos y>, "creature":[
 "name": <creature name>,
 "img": <creature picture>,
 "life": <health points>,
 "steps": <creature possible steps>,
 "attack": <attack points>
-]],
+]
+],
 "move": ["line": <line x>, "pos": <pos y>],
-
 ]
 }
