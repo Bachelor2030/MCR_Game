@@ -96,7 +96,7 @@ public class InGameWindow extends GameWindow {
     Label isPlaying = new Label("- Playing now -");
     isPlaying.getStyleClass().add("isPlaying-label");
     informationPannelUser.getChildren().add(isPlaying);
-    if(!(clientSharedState.isMyTurn()))
+    if(!(clientSharedState.isPlayerTurn(labelTitle)))
     {
       isPlaying.setText("");
     }

@@ -97,7 +97,7 @@ public class ClientSharedState {
   }
 
   public synchronized boolean isPlayerTurn(String playerName) {
-    if (playerName.equals(playerName)) {
+    if (this.playerName.equals(playerName)) {
       return myTurn;
     } else {
       return !myTurn;
