@@ -295,8 +295,6 @@ public class GameBoard extends Application {
       //waitingWindow.execute();
     }
 
-    //TODO pecho info joueur2
-    //TODO initialisation deck
     inGame(racine);
   }
 
@@ -333,6 +331,9 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                if (!clientAdapter.getClientSharedState().isMyTurn()) {
+                  return;
+                }
                 //TODO : envoyer au backend
                 EndTurn endTurn = new EndTurn();
                 System.out.println("you hit the validate button...");
@@ -344,6 +345,9 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                if (!clientAdapter.getClientSharedState().isMyTurn()) {
+                  return;
+                }
                 // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
                 EndGame endGame = new EndGame();
                 endGame.setPlayerName(player1.getName());
@@ -411,12 +415,12 @@ public class GameBoard extends Application {
   }
 
   public void sendInit(String initMessage) {
-    GUIParser guiParser = new GUIParser(initMessage);
+    GUIParser guiParser = new GUIParser(initMessage, clientAdapter.getClientSharedState());
 
     handPlayer = guiParser.getCardsFromInit();
     player1.addHand(handPlayer);
+    player1.setClientSharedState(clientAdapter.getClientSharedState());
 
-    player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>());
-    //player2.setImgPath("src/main/resources/design/images/characters/character.png");
+    player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>(), clientAdapter.getClientSharedState());
   }
 }

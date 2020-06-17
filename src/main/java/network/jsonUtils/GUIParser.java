@@ -3,20 +3,22 @@ package network.jsonUtils;
 import gameLogic.invocator.card.CardType;
 import gui.GUICard;
 import network.Messages;
+import network.states.ClientSharedState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GUIParser {
+    private ClientSharedState clientSharedState;
     private String jsonMessage;
     private JSONObject gameState;
 
-    public GUIParser(String jsonInit) {
+    public GUIParser(String jsonInit, ClientSharedState clientSharedState) {
         this.jsonMessage = jsonInit;
+        this.clientSharedState = clientSharedState;
         try {
             gameState = new JSONObject(jsonInit).getJSONObject(Messages.JSON_GAMESTATE);
         } catch (JSONException e) {
@@ -56,7 +58,8 @@ public class GUIParser {
                             card.getInt(Messages.JSON_TYPE_CARD_ID),
                             card.getString(Messages.JSON_TYPE_NAME),
                             CardType.getType(card.getString(Messages.JSON_TYPE)),
-                            card.getInt(Messages.JSON_TYPE_COST)));
+                            card.getInt(Messages.JSON_TYPE_COST),
+                            clientSharedState));
             }
         } catch (JSONException | FileNotFoundException e) {
             e.printStackTrace();

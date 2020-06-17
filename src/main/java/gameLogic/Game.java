@@ -134,7 +134,7 @@ public class Game extends Receptor {
     public boolean playerSentMessage(int playerId, String receivedMessage) {
         Player player = (playerId == firstPlayerId ? player1 : player2);
 
-        PlayersAction action = new JsonUtil().getPlayerAction(player, receivedMessage);
+        PlayersAction action = new JsonUtil().getPlayerAction(player, receivedMessage, board);
         if (action == null) {
             return false;
         }
