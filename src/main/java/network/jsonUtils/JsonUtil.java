@@ -2,8 +2,7 @@ package network.jsonUtils;
 
 import gameLogic.board.Board;
 import gameLogic.board.Spot;
-import gameLogic.commands.playersAction.PlayCard;
-import gameLogic.commands.playersAction.PlayersAction;
+import gameLogic.commands.playersAction.*;
 import gameLogic.invocator.card.Card;
 import gameLogic.receptors.Player;
 import network.Messages;
@@ -35,30 +34,48 @@ public class JsonUtil {
         return sb.toString();
     }
 
-    public PlayersAction getPlayerAction(Player player, String receivedMessage, Board board) {
-        Card cardPlayed = null;
-        Spot position = null;
-        try {
-            JSONObject jsonAction = new JSONObject(receivedMessage);
-            String type = jsonAction.getString(Messages.JSON_TYPE);
+  public PlayersAction getPlayerAction(Player player, String receivedMessage, Board board) {
+    PlayersAction playersAction = null;
 
-            if (type.equals(Messages.JSON_TYPE_PLAY)) {
-                int cardID = jsonAction.getInt(Messages.JSON_TYPE_CARD_ID);
+    try {
+      JSONObject jsonAction = new JSONObject(receivedMessage);
+      String type = jsonAction.getString(Messages.JSON_TYPE);
 
-                for (Card card : player.getHand()) {
-                    if (cardID == card.getID()) {
-                        cardPlayed = card;
-                        break;
-                    }
-                }
+      switch (type) {
+        case Messages.JSON_TYPE_PLAY:
+          Card cardPlayed = null;
+          Spot position;
+          int cardID = jsonAction.getInt(Messages.JSON_TYPE_CARD_ID);
 
-                JSONObject pos = jsonAction.getJSONObject(Messages.JSON_TYPE_POSITION);
-                position = board.getPosition(pos.getInt(Messages.JSON_TYPE_LINE), pos.getInt(Messages.JSON_TYPE_SPOT));
+          for (Card card : player.getHand()) {
+            if (cardID == card.getID()) {
+              cardPlayed = card;
+              break;
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+          }
 
-        return new PlayCard(cardPlayed, position);
+          JSONObject pos = jsonAction.getJSONObject(Messages.JSON_TYPE_POSITION);
+          position =
+              board.getPosition(
+                  pos.getInt(Messages.JSON_TYPE_LINE), pos.getInt(Messages.JSON_TYPE_SPOT));
+          return new PlayCard(cardPlayed, position);
+
+        case Messages.JSON_TYPE_END_TURN:
+          return new EndTurn();
+
+        case Messages.JSON_TYPE_UNDO:
+          return new Undo();
+
+        case Messages.JSON_TYPE_ABANDON:
+          return new Abandon();
+
+        default:
+          return null;
+      }
+
+    } catch (JSONException e) {
+      e.printStackTrace();
+      return null;
     }
+  }
 }
