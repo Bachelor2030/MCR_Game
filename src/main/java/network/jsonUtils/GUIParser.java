@@ -87,7 +87,7 @@ public class GUIParser {
     public String[] getEnemyFromInit() {
         String[] enemy = new String[2];
         try {
-            enemy[0] = gameState.getString(Messages.JSON_TYPE_ENEMYNAME);
+            enemy[0] = gameState.getString(Messages.JSON_TYPE_ENEMY_NAME);
             enemy[1] = gameState.getString(Messages.JSON_TYPE_ENEMY_IMAGE);
         } catch (JSONException e) {
             e.printStackTrace();
