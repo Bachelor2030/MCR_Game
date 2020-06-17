@@ -1,14 +1,14 @@
 package gui.receptors;
 
 public class GUITrap extends GUIReceptor {
-    private String description;
+  private String description;
 
-    public GUITrap(String description) {
-        super("", "");
-        this.description = description;
-    }
+  public GUITrap(String description) {
+    super("", "");
+    this.description = description;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getDescription() {
+    return description;
+  }
 }

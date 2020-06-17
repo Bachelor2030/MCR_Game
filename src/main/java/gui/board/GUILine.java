@@ -1,9 +1,5 @@
 package gui.board;
 
-import gameLogic.receptors.Chest;
-import gameLogic.receptors.Creature;
-import gameLogic.receptors.Player;
-import gameLogic.receptors.Receptor;
 import gui.receptors.GUIChest;
 import gui.receptors.GUICreature;
 import gui.receptors.GUIPlayer;
@@ -29,13 +25,13 @@ public class GUILine {
   // Le numéro de la ligne
   private int noLine;
 
-  //Les cases composant la ligne
+  // Les cases composant la ligne
   private LinkedList<GUISpot> GUISpots;
 
-  //La liste de creatures
+  // La liste de creatures
   private LinkedList<GUIReceptor> receptors;
 
-  //La liste de trésors
+  // La liste de trésors
   private LinkedList<GUIChest> chests;
 
   private VBox vBox;
@@ -43,7 +39,6 @@ public class GUILine {
 
   // le groupe d'îlots qu'on affichera par la suite
   Group root;
-
 
   public GUILine(int noLine) {
     this.noLine = noLine;
@@ -54,11 +49,18 @@ public class GUILine {
    *
    * @param noLine : le numéro de la ligne
    */
-  public GUILine(int noLine, GridPane gridPane, VBox vbox, GUIPlayer player1, GUIPlayer player2, ClientSharedState clientSharedState) throws IOException {
+  public GUILine(
+      int noLine,
+      GridPane gridPane,
+      VBox vbox,
+      GUIPlayer player1,
+      GUIPlayer player2,
+      ClientSharedState clientSharedState)
+      throws IOException {
     this.noLine = noLine;
     receptors = new LinkedList<>(); // on initialise la liste de créatures.
     GUISpots = new LinkedList<>(); // on initialise la liste de GUISpots.
-    chests = new LinkedList<>(); //on initialise la liste de chess.
+    chests = new LinkedList<>(); // on initialise la liste de chess.
     this.clientSharedState = clientSharedState;
 
     this.vBox = vbox;
@@ -68,29 +70,24 @@ public class GUILine {
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
       vbox = new VBox(); // On créé une box verticale pour aligne la créature à l'île.
       GUISpots.add(new GUISpot(clientSharedState));
-      if(spot == 0)
-      {
-        chests.add(new GUIChest("",player1));
+      if (spot == 0) {
+        chests.add(new GUIChest("", player1));
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren()
-                .addAll((chests.get(0).getImageView()), (GUISpots.get(spot).getButton()));
+        vbox.getChildren().addAll((chests.get(0).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
-      }
-      else if(spot == 11) {
-        chests.add(new GUIChest("",player2));
+      } else if (spot == 11) {
+        chests.add(new GUIChest("", player2));
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren()
-                .addAll((chests.get(1).getImageView()), (GUISpots.get(spot).getButton()));
+        vbox.getChildren().addAll((chests.get(1).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
-      }
-      else {
+      } else {
         receptors.add(new GUICreature("unknown", 0, 0, 0));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
-                .addAll((receptors.get(indexCreature++).getImageView()), (GUISpots.get(spot).getButton()));
+            .addAll(
+                (receptors.get(indexCreature++).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
       }
-
     }
   }
 
@@ -99,8 +96,8 @@ public class GUILine {
 
     ObservableList<Node> children = gridPane.getChildren();
     for (Node node : children) {
-      if(gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
-        ((VBox)node).getChildren().set(0, receptors.get(spot).getImageView());
+      if (gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
+        ((VBox) node).getChildren().set(0, receptors.get(spot).getImageView());
         break;
       }
     }
@@ -116,8 +113,7 @@ public class GUILine {
   }
 
   public GUISpot getSpot(int index) {
-    if (GUISpots == null)
-      return null;
+    if (GUISpots == null) return null;
     return GUISpots.get(index);
   }
 

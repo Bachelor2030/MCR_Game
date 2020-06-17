@@ -1,6 +1,7 @@
 package gui;
 
 import gameLogic.commands.guiCommands.EndGame;
+import gameLogic.commands.playersAction.EndTurn;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
 import gui.gameWindows.*;
@@ -439,7 +440,12 @@ public class GameBoard extends Application {
     player1.addHand(handPlayer);
     player1.setClientSharedState(clientAdapter.getClientSharedState());
 
-    player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>(), clientAdapter.getClientSharedState());
+    player2 =
+        new GUIPlayer(
+            guiParser.getEnemyFromInit()[0],
+            guiParser.getEnemyFromInit()[1],
+            new ArrayList<>(),
+            clientAdapter.getClientSharedState());
     clientAdapter.getClientSharedState().setMyTurn(guiParser.getTurnFromInit());
   }
 

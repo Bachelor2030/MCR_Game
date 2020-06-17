@@ -1,7 +1,7 @@
 package gui.gameWindows;
 
-import gui.receptors.GUICard;
 import gui.board.GUIBoard;
+import gui.receptors.GUICard;
 import gui.receptors.GUIPlayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
