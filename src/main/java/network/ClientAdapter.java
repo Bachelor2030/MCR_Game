@@ -195,6 +195,7 @@ public class ClientAdapter {
         }*/
 
         while (!clientSharedState.getIntendToSendJson()) {}
+        clientSharedState.setIntendToSendJson(false);
 
         if (clientSharedState.jsonToSendEmpty()) {
             return;
