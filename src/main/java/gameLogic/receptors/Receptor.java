@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public abstract class Receptor {
-    protected Macro lastMove;
+    protected Macro lastMove = new Macro(new ArrayList<>());
     protected String name;
 
     private String imgPath = "src/main/resources/design/images/creatures/empty.jpg";

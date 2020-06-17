@@ -43,7 +43,6 @@ public class Card implements Invocator {
      */
     public void play() {
         if(command != null) {
-            System.out.println("Playing : " + this);
             command.execute(command.getReceptor());
         }
     }

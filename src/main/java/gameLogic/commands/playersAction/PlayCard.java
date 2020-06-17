@@ -1,7 +1,9 @@
 package gameLogic.commands.playersAction;
 
+import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gameLogic.receptors.Player;
+import javafx.util.Pair;
 import network.Messages;
 import gameLogic.invocator.card.Card;
 import org.json.JSONException;
@@ -9,13 +11,16 @@ import org.json.JSONObject;
 
 public class PlayCard extends PlayersAction {
     private Card cardToPlay;
+    private Spot spot;
 
     public PlayCard() {
         super(CommandName.PLAY_CARD);
     }
 
-    public void setCardToPlay(Card cardToPlay) {
+    public PlayCard(Card cardToPlay, Spot spot) {
+        super(CommandName.PLAY_CARD);
         this.cardToPlay = cardToPlay;
+        this.spot = spot;
     }
 
     @Override

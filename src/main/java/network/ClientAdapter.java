@@ -195,13 +195,14 @@ public class ClientAdapter {
         }*/
 
         while (!clientSharedState.getIntendToSendJson()) {}
-        clientSharedState.setIntendToSendJson(false);
 
         if (clientSharedState.jsonToSendEmpty()) {
             return;
         }
 
         JSONObject play = clientSharedState.popJsonToSend();
+
+        clientSharedState.setIntendToSendJson(false);
 
         String jsonAnswer = sendJson(play, outPrintWriter, inBufferedReader);
         String jsonType = readJsonType(jsonAnswer);
