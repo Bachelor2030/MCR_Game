@@ -2,7 +2,6 @@ package gui.receptors;
 
 import gameLogic.invocator.card.Card;
 import gameLogic.receptors.Player;
-import gui.GUICard;
 import javafx.scene.image.Image;
 import network.states.ClientSharedState;
 

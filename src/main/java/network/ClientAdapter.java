@@ -1,7 +1,7 @@
 package network;
 
 import gameLogic.invocator.card.CardType;
-import gui.GUICard;
+import gui.receptors.GUICard;
 import gui.GameBoard;
 import network.jsonUtils.GUIParser;
 import network.states.ClientSharedState;
