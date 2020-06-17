@@ -41,8 +41,8 @@ public class GameBoard extends Application {
   // ******************************************************************
 
   // Taille fenêtre
-  public static final int WIDTH_WINDOW = 1200;
-  public static final int HEIGHT_WINDOW = 700;
+  public static final int WIDTH_WINDOW = 1400;
+  public static final int HEIGHT_WINDOW = 750;
 
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
   private GridPane gridIslandsPanel;
@@ -201,22 +201,21 @@ public class GameBoard extends Application {
     // On crée un bouton pour lancer le serveur
     GameButton startServer = new GameButton("Lancer Serveur", "bouton-menu-principal");
     startServer
-            .getButton()
-            .setOnAction(
-                    event -> {
-                      // TODO
-                      serverIsOn =  !serverIsOn;
-                      if (serverIsOn) {
-                        startServer.getButton().setText("Server launched.\nCan't stop server for now");
-                        server.serveClients();
-                      } else {
-                        startServer.getButton().setText("Server launched.\nCan't stop server for now");
-                        //server.getServerSharedState().endGame();
-                        //server.closeClientSocket();
-                      }
-
-                    }
-            );
+      .getButton()
+      .setOnAction(
+            event -> {
+              // TODO
+              serverIsOn =  !serverIsOn;
+              if (serverIsOn) {
+                startServer.getButton().setText("Server launched.\nCan't stop server for now");
+                server.serveClients();
+              } else {
+                startServer.getButton().setText("Server launched.\nCan't stop server for now");
+                //server.getServerSharedState().endGame();
+                //server.closeClientSocket();
+              }
+            }
+      );
 
 
     parameterWindow.addGameButton(startServer);
