@@ -2,7 +2,6 @@ package gui.receptors;
 
 import gameLogic.invocator.card.CardType;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,18 +12,17 @@ import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.SQLOutput;
 
 import static network.utilities.JsonClient.jsonType;
 
 public class GUICard {
-    private final int id;         // the ID of the card
-    private String name;          // the name of the card
-    private String description;   // the description of the card
-    private int cost;             // the cost (in action points)
-    private CardType type;        //type de la carte
-    private ImageView view;
-    private ToggleButton button;
+  private final int id; // the ID of the card
+  private String name; // the name of the card
+  private String description; // the description of the card
+  private int cost; // the cost (in action points)
+  private CardType type; // type de la carte
+  private ImageView view;
+  private ToggleButton button;
 
   private ClientSharedState clientSharedState;
 
@@ -33,33 +31,56 @@ public class GUICard {
       TRAP_PATH = "src/main/resources/design/images/cards/trap.png",
       ERROR_PATH = "src/main/resources/design/images/cards/cardSample.png";
 
-    public GUICard(int id, String name, CardType type, int cost, String description) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.type = type;
-        this.description = description;
-    }
+  public GUICard(int id, String name, CardType type, int cost, String description) {
+    this.id = id;
+    this.name = name;
+    this.cost = cost;
+    this.type = type;
+    this.description = description;
+  }
 
-    public GUICard(int id, String name, CardType type, int cost, ClientSharedState clientSharedState) throws FileNotFoundException {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.type = type;
-        this.clientSharedState = clientSharedState;
-        Image image = new Image(new FileInputStream(definePictureAccordingToType()));
-        view = new ImageView(image);
-        view.setFitWidth(image.getWidth() * 0.35);
-        view.setFitHeight(image.getHeight() * 0.35);
-        button = new ToggleButton();
-        button.getStyleClass().add("toggle-unselected");
-        button.setGraphic(view);
+  public GUICard(int id, String name, CardType type, int cost, ClientSharedState clientSharedState)
+      throws FileNotFoundException {
+    this.id = id;
+    this.name = name;
+    this.cost = cost;
+    this.type = type;
+    this.clientSharedState = clientSharedState;
+    Image image = new Image(new FileInputStream(definePictureAccordingToType()));
+    view = new ImageView(image);
+    view.setFitWidth(image.getWidth() * 0.35);
+    view.setFitHeight(image.getHeight() * 0.35);
+    button = new ToggleButton();
+    button.getStyleClass().add("toggle-unselected");
+    button.setOnAction(
+        actionEvent -> {
+          if (!clientSharedState.isMyTurn()) {
+            return;
+          }
 
-        // informations de la carte dans une bulle
-        Tooltip t = new Tooltip(
-                        "- Informations -\n\nType : " + type + "\n" + name + "\n" + "PA : " + cost + "\n");
-        button.setTooltip(t);
-    }
+          if (clientSharedState.getSelectedCard() == null
+              || clientSharedState.getSelectedCard().getName().equals("empty")) {
+            clientSharedState.setSelectedCard(this);
+          } else if (clientSharedState.getSelectedCard() == this) {
+            try {
+              clientSharedState.setSelectedCard(
+                  new GUICard(0, "empty", CardType.SPELL, 0, clientSharedState));
+            } catch (FileNotFoundException e) {
+              e.printStackTrace();
+            }
+          }
+          System.out.println("Card clicked");
+        });
+    button.setGraphic(view);
+
+    // informations de la carte dans une bulle
+    Tooltip t =
+        new Tooltip(
+            "- Informations -\n\nType : " + type + "\n" + name + "\n" + "PA : " + cost + "\n");
+    button.setTooltip(t);
+  }
+
+
   private String definePictureAccordingToType() {
     switch (type) {
       case TRAP:

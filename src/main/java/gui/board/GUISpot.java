@@ -1,8 +1,6 @@
 package gui.board;
 
 import gameLogic.invocator.card.CardType;
-import gameLogic.receptors.Receptor;
-import gameLogic.receptors.Trap;
 import gui.maths.Vector2f;
 import gui.receptors.GUIReceptor;
 import gui.receptors.GUITrap;
@@ -24,6 +22,7 @@ import java.io.IOException;
 
 /** Cette classe représente une case qui constitue une ligne de combat */
 public class GUISpot {
+
   // un case est représentée par un numéro
   private final int number;
 
