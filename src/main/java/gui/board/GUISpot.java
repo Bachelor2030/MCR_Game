@@ -149,4 +149,12 @@ public class GUISpot {
   public boolean isTrapped() {
     return isTrapped;
   }
+
+  public void trap() {
+    isTrapped = true;
+  }
+
+  public void unTrap() {
+    isTrapped = false;
+  }
 }

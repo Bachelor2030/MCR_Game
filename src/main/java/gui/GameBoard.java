@@ -443,4 +443,14 @@ public class GameBoard extends Application {
   public void removeCard(int cardID) {
     player1.removeFromHand(cardID);
   }
+
+  public void placeTrap(int line, int position) {
+    GUIBoard.placeTrap(line, position);
+    // TODO mettre le piège
+  }
+
+  public void removeTrap(int line, int position) {
+    GUIBoard.removeTrap(line, position);
+    // TODO enlever le piège
+  }
 }

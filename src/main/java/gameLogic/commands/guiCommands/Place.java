@@ -5,6 +5,7 @@ import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gui.receptors.GUICreature;
 import gui.receptors.GUIReceptor;
+import gui.receptors.GUITrap;
 import network.Messages;
 
 import org.json.JSONException;
@@ -50,11 +51,20 @@ public class Place extends GuiCommand {
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
                 .getOccupant();
-        gameBoard.place(receptor, position.getLineNumber(), position.getSpotNumber());
+        if (receptor.getClass() == GUITrap.class) {
+            gameBoard.placeTrap(position.getLineNumber(), position.getSpotNumber());
+        } else {
+            gameBoard.place(receptor, position.getLineNumber(), position.getSpotNumber());
+        }
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
-        gameBoard.place(new GUICreature(), position.getLineNumber(), position.getSpotNumber());
+        if (receptor.getClass() == GUITrap.class) {
+            gameBoard.removeTrap(position.getLineNumber(), position.getSpotNumber());
+        } else {
+            gameBoard.place(new GUICreature(), position.getLineNumber(), position.getSpotNumber());
+        }
+
     }
 }
