@@ -3,7 +3,7 @@ package gameLogic.commands.guiCommands;
 import gui.GameBoard;
 import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
-import gameLogic.receptors.LiveReceptor;
+import gui.receptors.GUICreature;
 import network.Messages;
 
 import org.json.JSONException;
@@ -35,21 +35,19 @@ public class KnockOutCreature extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        // Todo : execution on the gui
-        LiveReceptor receptor = (LiveReceptor)gameBoard
+        ((GUICreature)gameBoard
                 .getGUIBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
-                .getOccupant();
+                .getOccupant()).knockOut();
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
-        // Todo : undo on the gui
-        LiveReceptor receptor = (LiveReceptor)gameBoard
+        ((GUICreature)gameBoard
                 .getGUIBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
-                .getOccupant();
+                .getOccupant()).wakeUp();
     }
 }

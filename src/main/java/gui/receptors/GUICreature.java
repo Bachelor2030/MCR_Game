@@ -2,6 +2,11 @@ package gui.receptors;
 
 public class GUICreature extends GUIReceptor {
     private int life, steps, attack;
+    private boolean asleep = false;
+
+    public GUICreature() {
+        super("", "");
+    }
 
     public GUICreature(String name, int life, int steps, int attack) {
         super(name, "src/main/resources/design/images/creatures/empty.jpg");
@@ -27,5 +32,13 @@ public class GUICreature extends GUIReceptor {
 
     public int getSteps() {
         return steps;
+    }
+
+    public void knockOut() {
+        asleep = true;
+    }
+
+    public void wakeUp() {
+        asleep = false;
     }
 }

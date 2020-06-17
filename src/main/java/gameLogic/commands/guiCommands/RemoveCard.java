@@ -1,6 +1,5 @@
 package gameLogic.commands.guiCommands;
 
-
 import gui.GameBoard;
 import gameLogic.commands.CommandName;
 import network.Messages;

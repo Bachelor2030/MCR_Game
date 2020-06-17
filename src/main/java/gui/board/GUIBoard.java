@@ -3,6 +3,7 @@ package gui.board;
 import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import gui.receptors.GUIPlayer;
+import gui.receptors.GUIReceptor;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -39,7 +40,7 @@ public class GUIBoard {
         }
     }
 
-    public void place(Receptor receptor, int lineCounter, int spot) {
+    public void place(GUIReceptor receptor, int lineCounter, int spot) {
         GUILines.get(lineCounter).setReceptor(receptor, spot);
     }
 

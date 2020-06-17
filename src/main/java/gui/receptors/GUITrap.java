@@ -1,9 +1,10 @@
 package gui.receptors;
 
-public class GUITrap {
+public class GUITrap extends GUIReceptor {
     private String description;
 
     public GUITrap(String description) {
+        super("", "");
         this.description = description;
     }
 

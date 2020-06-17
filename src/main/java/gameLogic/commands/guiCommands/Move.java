@@ -2,8 +2,8 @@ package gameLogic.commands.guiCommands;
 
 import gui.GameBoard;
 import gameLogic.board.Spot;
-import gameLogic.receptors.Creature;
 import gameLogic.commands.CommandName;
+import gui.receptors.GUICreature;
 import network.Messages;
 
 import org.json.JSONException;
@@ -40,23 +40,23 @@ public class Move extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        Creature creature = (Creature)gameBoard
+        GUICreature creature = (GUICreature)gameBoard
                 .getGUIBoard()
                 .getLine(from.getLineNumber())
                 .getSpot(from.getSpotNumber())
                 .getOccupant();
-        gameBoard.place(new Creature("empty", 0, 0,0), from.getLineNumber(), from.getSpotNumber());
+        gameBoard.place(new GUICreature(), from.getLineNumber(), from.getSpotNumber());
         gameBoard.place(creature, to.getLineNumber(), to.getSpotNumber());
     }
 
     @Override
     public void undo(GameBoard gameBoard) {
-        Creature creature = (Creature)gameBoard
+        GUICreature creature = (GUICreature)gameBoard
                 .getGUIBoard()
                 .getLine(to.getLineNumber())
                 .getSpot(to.getSpotNumber())
                 .getOccupant();
-        gameBoard.place(new Creature("empty", 0, 0,0), to.getLineNumber(), to.getSpotNumber());
+        gameBoard.place(new GUICreature(), to.getLineNumber(), to.getSpotNumber());
         gameBoard.place(creature, from.getLineNumber(), from.getSpotNumber());
     }
 }

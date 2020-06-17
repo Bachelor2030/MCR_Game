@@ -40,4 +40,13 @@ public class GUIReceptor {
     public void setImgPath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public void setTo(GUIReceptor receptor) {
+        System.out.println("I am a new receptor");
+        if(receptor == null) {
+            imagePath = "src/main/resources/design/images/creatures/empty.jpg";
+        } else {
+            imagePath = receptor.getImagePath();
+        }
+    }
 }
