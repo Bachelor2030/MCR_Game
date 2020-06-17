@@ -9,7 +9,6 @@ import gui.buttons.GameButton;
 import gui.gameWindows.*;
 import gui.receptors.GUIPlayer;
 import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -28,8 +27,6 @@ import network.ClientRunner;
 import network.ServerAdapter;
 import network.jsonUtils.GUIParser;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
