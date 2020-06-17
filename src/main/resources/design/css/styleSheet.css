@@ -129,6 +129,10 @@
     -fx-background-color: transparent;
 }
 
+.button-trap-island {
+
+}
+
 .toggle-unselected{
     -fx-border-color: transparent;
     -fx-border-width: 0;
@@ -136,19 +140,11 @@
     -fx-background-color: transparent;
 }
 
-.toggle-unselected:hover {
-
-}
-
 .toggle-selected{
     -fx-border-color: transparent;
     -fx-border-width: 0;
     -fx-background-radius: 0;
     -fx-background-color: transparent;
-}
-
-.toggle-selected:hover {
-
 }
 
 .toggle-selected:selected{

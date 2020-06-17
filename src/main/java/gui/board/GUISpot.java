@@ -1,17 +1,15 @@
 package gui.board;
 
 import gameLogic.invocator.card.CardType;
-import gui.maths.Vector2f;
-import gameLogic.receptors.Trap;
 import gameLogic.receptors.Receptor;
+import gameLogic.receptors.Trap;
+import gui.maths.Vector2f;
 import gui.receptors.GUIReceptor;
 import gui.receptors.GUITrap;
-import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
 import network.states.ClientSharedState;
 
 import java.io.FileInputStream;
@@ -19,7 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /** Cette classe représente une case qui constitue une ligne de combat */
-public class GUISpot extends Application {
+public class GUISpot {
   // un case est représentée par un numéro
   private final int number;
 
@@ -30,6 +28,9 @@ public class GUISpot extends Application {
 
   // l'éventuelle créature présente sur la case
   private GUIReceptor occupant;
+
+  // permet de savoir si une île est piégée
+  private boolean isTrapped;
 
   // l'image représentant le spot
   private FileInputStream imagePath =
@@ -53,7 +54,10 @@ public class GUISpot extends Application {
    * @throws IOException
    */
   public GUISpot(ClientSharedState clientSharedState) throws IOException {
-    this(spotCounter++, new Vector2f(STARTING_COORDINATE_X, STARTING_COORDINATE_Y), clientSharedState);
+    this(
+        spotCounter++,
+        new Vector2f(STARTING_COORDINATE_X, STARTING_COORDINATE_Y),
+        clientSharedState);
   }
 
   /**
@@ -63,10 +67,12 @@ public class GUISpot extends Application {
    * @param pos : sa position dans la fenêtre du jeu
    * @throws FileNotFoundException
    */
-  private GUISpot(int number, Vector2f pos, ClientSharedState clientSharedState) throws FileNotFoundException {
+  private GUISpot(int number, Vector2f pos, ClientSharedState clientSharedState)
+      throws FileNotFoundException {
     image = new Image(imagePath);
     imageView = new ImageView(image);
     this.clientSharedState = clientSharedState;
+    isTrapped = false;
     button = new Button();
     button.getStyleClass().add("button-island");
     button.setOnAction(
@@ -74,12 +80,12 @@ public class GUISpot extends Application {
           if (!clientSharedState.isMyTurn()) {
             return;
           }
-          if (clientSharedState.getSelectedCard() != null &&
-              !clientSharedState.getSelectedCard().getName().equals("empty") &&
-              clientSharedState.getSelectedCard().getType() != CardType.SPELL) {
+          if (clientSharedState.getSelectedCard() != null
+              && !clientSharedState.getSelectedCard().getName().equals("empty")
+              && clientSharedState.getSelectedCard().getType() != CardType.SPELL) {
 
-                clientSharedState.setChosenPosition(new int[]{(number/GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)});
-
+            clientSharedState.setChosenPosition(
+                new int[] {(number / GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)});
           }
           System.out.println("j'appuye sur une île");
         });
@@ -93,13 +99,7 @@ public class GUISpot extends Application {
   private void initDisplaySpot() {
     imageView.setFitWidth(image.getWidth() * MIN_WIDTH_RATIO);
     imageView.setFitHeight(image.getHeight() * MIN_WIDTH_RATIO);
-
-    //imageView.setX(pos.x);
-    //imageView.setY(pos.y);
   }
-
-  @Override
-  public void start(Stage stage) throws Exception {}
 
   /**
    * Permet de savoir si une case est occupée par une créature.
@@ -144,5 +144,9 @@ public class GUISpot extends Application {
 
   public Button getButton() {
     return button;
+  }
+
+  public boolean isTrapped() {
+    return isTrapped;
   }
 }
