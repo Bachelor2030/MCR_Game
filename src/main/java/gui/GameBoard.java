@@ -9,6 +9,7 @@ import gui.buttons.GameButton;
 import gui.gameWindows.*;
 import gui.receptors.GUIPlayer;
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -27,6 +28,8 @@ import network.ClientRunner;
 import network.ServerAdapter;
 import network.jsonUtils.GUIParser;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,8 +45,8 @@ public class GameBoard extends Application {
   // ******************************************************************
 
   // Taille fenêtre
-  public static final int WIDTH_WINDOW = 1200;
-  public static final int HEIGHT_WINDOW = 700;
+  public static final int WIDTH_WINDOW = 1400;
+  public static final int HEIGHT_WINDOW = 750;
 
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
   private GridPane gridIslandsPanel;
@@ -103,7 +106,7 @@ public class GameBoard extends Application {
     stage.initStyle(StageStyle.TRANSPARENT);
 
     stage.setTitle("MCR - BACHELOR HUNTERZ");
-    //stage.initStyle(StageStyle.TRANSPARENT);
+    stage.initStyle(StageStyle.DECORATED);
     stage.show();
 
   }
