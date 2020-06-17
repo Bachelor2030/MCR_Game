@@ -2,7 +2,6 @@ package network.jsonUtils;
 
 import gameLogic.board.Board;
 import gameLogic.board.Spot;
-import gameLogic.commands.CommandName;
 import gameLogic.commands.playersAction.PlayCard;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.invocator.card.Card;
@@ -11,7 +10,6 @@ import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;

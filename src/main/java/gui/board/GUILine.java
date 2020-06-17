@@ -5,7 +5,9 @@ import gameLogic.receptors.Creature;
 import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import gui.receptors.GUIChest;
+import gui.receptors.GUICreature;
 import gui.receptors.GUIPlayer;
+import gui.receptors.GUIReceptor;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -31,7 +33,7 @@ public class GUILine {
   private LinkedList<GUISpot> GUISpots;
 
   //La liste de creatures
-  private LinkedList<Receptor> receptors;
+  private LinkedList<GUIReceptor> receptors;
 
   //La liste de trésors
   private LinkedList<GUIChest> chests;
@@ -82,7 +84,7 @@ public class GUILine {
         gridPane.add(vbox, spot, noLine);
       }
       else {
-        receptors.add(new Creature("unknown", 0, 0, 0));
+        receptors.add(new GUICreature("unknown", 0, 0, 0));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
                 .addAll((receptors.get(indexCreature++).getImageView()), (GUISpots.get(spot).getButton()));
@@ -92,7 +94,7 @@ public class GUILine {
     }
   }
 
-  public void setReceptor(Receptor receptor, int spot) {
+  public void setReceptor(GUIReceptor receptor, int spot) {
     receptors.get(spot).setTo(receptor);
 
     ObservableList<Node> childrens = gridPane.getChildren();

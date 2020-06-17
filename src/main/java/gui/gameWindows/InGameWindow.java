@@ -99,7 +99,7 @@ public class InGameWindow extends GameWindow {
       informationPannelUser.getChildren().add(imageView);
     }
 
-    // on set l'image de player 2 en chequant si elle est pas égale à celle de base.
+    // on set l'image de player 2 en checkant si elle est pas égale à celle de base.
     // TODO remplace image 2 en reprenant info serveur
     else if (player2.getImage() != null) {
       ImageView imageView = new ImageView(player2.getImage());

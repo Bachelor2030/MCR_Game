@@ -1,7 +1,7 @@
 {
   "Game state": {
     "enemy name": "Caca",
-    // TODO ajouter image
+    "enemy image": "image path",
     "cards": [
       {
         "cost": 3,

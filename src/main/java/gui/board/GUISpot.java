@@ -4,6 +4,8 @@ import gameLogic.invocator.card.CardType;
 import gui.maths.Vector2f;
 import gameLogic.receptors.Trap;
 import gameLogic.receptors.Receptor;
+import gui.receptors.GUIReceptor;
+import gui.receptors.GUITrap;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -27,7 +29,7 @@ public class GUISpot extends Application {
   private ClientSharedState clientSharedState;
 
   // l'éventuelle créature présente sur la case
-  private Receptor occupant;
+  private GUIReceptor occupant;
 
   // l'image représentant le spot
   private FileInputStream imagePath =
@@ -105,7 +107,7 @@ public class GUISpot extends Application {
    * @return true si occupée, false sinon.
    */
   public boolean isEmpty() {
-    return occupant == null || occupant.getClass() == Trap.class;
+    return occupant == null || occupant.getClass() == GUITrap.class;
   }
 
   /**
@@ -113,7 +115,7 @@ public class GUISpot extends Application {
    *
    * @param occupant : la créature
    */
-  public void setOccupant(Receptor occupant) {
+  public void setOccupant(GUIReceptor occupant) {
     this.occupant = occupant;
   }
 
@@ -127,7 +129,7 @@ public class GUISpot extends Application {
    *
    * @return la créature, si elle occupe la case. Sinon null.
    */
-  public Receptor getOccupant() {
+  public GUIReceptor getOccupant() {
     return occupant;
   }
 
