@@ -100,12 +100,8 @@ public class InGameWindow extends GameWindow {
 
     // on set l'image de player 2 en chequant si elle est pas égale à celle de base.
     // TODO remplace image 2 en reprenant info serveur
-    else if (!(player2.getImage().equals("src/main/resources/design/images/creatures/empty.jpg"))) {
-      ImageView imageView =
-          new ImageView(
-              new Image(
-                  new FileInputStream(
-                      "src/main/resources/design/images/characters/character.png")));
+    else if (player2.getImage() != null) {
+      ImageView imageView = new ImageView(player2.getImage());
       imageView.setFitWidth(player1.getImage().getWidth() / 2.5);
       imageView.setFitHeight(player1.getImage().getHeight() / 2.5);
       informationPannelUser.getChildren().add(imageView);
