@@ -396,6 +396,7 @@ public class GameBoard extends Application {
             player1,
             player2,
             isGaming,
+            clientAdapter.getClientSharedState(),
             currentStage,
             handPlayer);
   }
@@ -428,12 +429,8 @@ public class GameBoard extends Application {
     player1.addHand(handPlayer);
     player1.setClientSharedState(clientAdapter.getClientSharedState());
 
-    player2 =
-        new GUIPlayer(
-            guiParser.getEnemyFromInit()[0],
-            guiParser.getEnemyFromInit()[1],
-            new ArrayList<>(),
-            clientAdapter.getClientSharedState());
+    player2 = new GUIPlayer(guiParser.getEnemyFromInit()[0], guiParser.getEnemyFromInit()[1], new ArrayList<>(), clientAdapter.getClientSharedState());
+    clientAdapter.getClientSharedState().setMyTurn(guiParser.getTurnFromInit());
   }
 
   public void addCard(GUICard card) {

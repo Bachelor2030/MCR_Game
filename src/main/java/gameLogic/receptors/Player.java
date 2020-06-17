@@ -19,6 +19,7 @@ public class Player extends Receptor {
     private static final int NBR_CARDS_PER_DECK = 50;
     private static final int NBR_CARDS_MAX_IN_HAND = 10;
     private static final int NBR_ACTION_POINTS_MAX = 15;
+    private static final int ACTION_POINTS_START = 15;
 
     // Players deck of cards
     private ArrayList<Card> deck = new ArrayList<>(NBR_CARDS_PER_DECK);
@@ -279,6 +280,8 @@ public class Player extends Receptor {
         play = true;
         currentTurn = turn;
 
+        discard.put(currentTurn, new ArrayList<>());
+
         // Takes a card if possible otherwise
         // one card of the deck is thrown away
         if (hand.size() < NBR_CARDS_MAX_IN_HAND) {
@@ -296,8 +299,9 @@ public class Player extends Receptor {
             }
         }
 
-        if(turn <= NBR_ACTION_POINTS_MAX) {
-            actionPoints = turn;
+        int points = turn + ACTION_POINTS_START;
+        if(points <= NBR_ACTION_POINTS_MAX) {
+            actionPoints = points;
         } else {
             actionPoints = NBR_ACTION_POINTS_MAX;
         }
