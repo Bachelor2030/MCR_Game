@@ -58,9 +58,7 @@ public class ParameterWindow extends GameWindow {
       socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
       playerIpField.setText(
               String.valueOf(socket.getLocalAddress().getHostAddress()));
-    } catch (UnknownHostException e) {
-      e.printStackTrace();
-    } catch (SocketException e) {
+    } catch (UnknownHostException | SocketException e) {
       e.printStackTrace();
     }
 

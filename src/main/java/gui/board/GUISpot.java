@@ -1,7 +1,6 @@
 package gui.board;
 
 import gameLogic.invocator.card.CardType;
-import gui.GUICard;
 import gui.maths.Vector2f;
 import gameLogic.receptors.Trap;
 import gameLogic.receptors.Receptor;

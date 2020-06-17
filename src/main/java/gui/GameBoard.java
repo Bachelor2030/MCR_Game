@@ -2,18 +2,17 @@ package gui;
 
 import gameLogic.commands.guiCommands.EndGame;
 import gameLogic.commands.playersAction.EndTurn;
-import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
 import gui.gameWindows.*;
+import gui.receptors.GUICard;
 import gui.receptors.GUIPlayer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -353,7 +352,16 @@ public class GameBoard extends Application {
                 // System.out.println(endGame.toJson());
                 System.out.println("you hit the abandon button...");
               });
+
+      GameButton undoButton = new GameButton("Undo", "header-button");
+      undoButton
+              .getButton()
+              .setOnAction(
+                      actionEvent -> {
+                        System.out.println("you hit the undo button...");
+                      });
       buttons.add(validateTourButton);
+      buttons.add(undoButton);
       buttons.add(abandonTourButton);
     }
 

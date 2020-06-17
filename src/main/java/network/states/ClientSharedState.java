@@ -1,10 +1,8 @@
 package network.states;
 
-import gui.GUICard;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.util.LinkedList;
+import gui.receptors.GUICard;
 
 public class ClientSharedState {
 
