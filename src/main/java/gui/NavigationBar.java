@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import network.states.ClientSharedState;
 
 import java.util.LinkedList;
 
@@ -33,6 +34,8 @@ public class NavigationBar {
 
   // fenêtre d'alert.
   private Alert alert;
+
+  private ClientSharedState clientSharedState;
 
   /**
    * @param buttons : les boutons à mettre dans la barre.
