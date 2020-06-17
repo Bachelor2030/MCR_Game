@@ -4,6 +4,8 @@ import gameLogic.invocator.card.CardType;
 import gameLogic.receptors.Receptor;
 import gameLogic.receptors.Trap;
 import gui.maths.Vector2f;
+import gui.receptors.GUIReceptor;
+import gui.receptors.GUITrap;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +27,7 @@ public class GUISpot {
   private ClientSharedState clientSharedState;
 
   // l'éventuelle créature présente sur la case
-  private Receptor occupant;
+  private GUIReceptor occupant;
 
   // permet de savoir si une île est piégée
   private boolean isTrapped;
@@ -105,7 +107,7 @@ public class GUISpot {
    * @return true si occupée, false sinon.
    */
   public boolean isEmpty() {
-    return occupant == null || occupant.getClass() == Trap.class;
+    return occupant == null || occupant.getClass() == GUITrap.class;
   }
 
   /**
@@ -113,7 +115,7 @@ public class GUISpot {
    *
    * @param occupant : la créature
    */
-  public void setOccupant(Receptor occupant) {
+  public void setOccupant(GUIReceptor occupant) {
     this.occupant = occupant;
   }
 
@@ -127,7 +129,7 @@ public class GUISpot {
    *
    * @return la créature, si elle occupe la case. Sinon null.
    */
-  public Receptor getOccupant() {
+  public GUIReceptor getOccupant() {
     return occupant;
   }
 

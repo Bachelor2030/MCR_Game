@@ -8,6 +8,7 @@ import gui.buttons.GameButton;
 import gui.gameWindows.*;
 import gui.receptors.GUICard;
 import gui.receptors.GUIPlayer;
+import gui.receptors.GUIReceptor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -403,7 +404,7 @@ public class GameBoard extends Application {
     return GUIBoard;
   }
 
-  public void place(Receptor receptor, int line, int position) {
+  public void place(GUIReceptor receptor, int line, int position) {
     GUIBoard.place(receptor, line, position);
     GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
   }
@@ -433,5 +434,13 @@ public class GameBoard extends Application {
             guiParser.getEnemyFromInit()[1],
             new ArrayList<>(),
             clientAdapter.getClientSharedState());
+  }
+
+  public void addCard(GUICard card) {
+    player1.addToHand(card);
+  }
+
+  public void removeCard(int cardID) {
+    player1.removeFromHand(cardID);
   }
 }

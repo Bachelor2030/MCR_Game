@@ -2,9 +2,9 @@ package gameLogic.commands.guiCommands;
 
 import gui.GameBoard;
 import gameLogic.board.Spot;
-import gameLogic.receptors.Creature;
 import gameLogic.commands.CommandName;
-import gameLogic.receptors.Receptor;
+import gui.receptors.GUICreature;
+import gui.receptors.GUIReceptor;
 import network.Messages;
 
 import org.json.JSONException;
@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class Place extends GuiCommand {
     private Spot position;
     private int cardID;
-    private Receptor receptor;
+    private GUIReceptor receptor;
 
     public Place() {
         super(CommandName.PLACE);
@@ -45,7 +45,7 @@ public class Place extends GuiCommand {
 
     @Override
     public void execute(GameBoard gameBoard) {
-        Receptor receptor = (Receptor)gameBoard
+        GUIReceptor receptor = gameBoard
                 .getGUIBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
@@ -55,6 +55,6 @@ public class Place extends GuiCommand {
 
     @Override
     public void undo(GameBoard gameBoard) {
-        gameBoard.place(new Creature("empty", 0, 0, 0), position.getLineNumber(), position.getSpotNumber());
+        gameBoard.place(new GUICreature(), position.getLineNumber(), position.getSpotNumber());
     }
 }

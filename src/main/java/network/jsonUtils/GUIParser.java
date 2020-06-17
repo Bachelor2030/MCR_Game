@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class GUIParser {
+    private static ArrayList<GUICard> cards = new ArrayList<>();
     private ClientSharedState clientSharedState;
     private String jsonMessage;
     private JSONObject gameState;
@@ -93,6 +94,41 @@ public class GUIParser {
             e.printStackTrace();
         }
         return enemy;
+    }
+
+    public static GUICard getCardFromId(int idCard) {
+        GUICard guiCard = null;
+        JSONObject obj;
+
+        try {
+            obj = new JSONObject(new JsonUtil().getJsonContent("src/main/resources/json/cards.json"));
+
+            JSONArray arr = obj.getJSONArray(Messages.JSON_TYPE_CARDS);
+
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject card = arr.getJSONObject(i);
+
+                int id = card.getInt("id");
+                String cardName = card.getString("name");
+                CardType cardType = CardType.getType(card.getString("type"));
+                int cardCost = card.getInt("cost");
+                String description = card.getString(Messages.JSON_TYPE_DESCRIPTION);
+
+                cards.add(new GUICard(id, cardName, cardType, cardCost, description));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (GUICard c :
+                cards) {
+            if (c.getId() == idCard) {
+                guiCard = c;
+                break;
+            }
+        }
+
+        return guiCard;
     }
 /*
     public ArrayList<Card> readInit(String jsonInit) {

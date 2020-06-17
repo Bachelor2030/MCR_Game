@@ -3,6 +3,7 @@ package gameLogic.receptors;
 import gameLogic.board.Spot;
 import gameLogic.commands.Macro;
 import gameLogic.commands.playersAction.PlayersAction;
+import gameLogic.invocator.Invocator;
 import network.Messages;
 
 import org.json.JSONException;
@@ -11,8 +12,8 @@ import org.json.JSONObject;
 /**
  * Modelizes a trap in the game
  */
-public class Trap extends Receptor {
-    private Macro effect;           // the effect the trap has on the first creature that lands on it
+public class Trap extends Receptor implements Invocator {
+    private Macro command;           // the effect the trap has on the first creature that lands on it
     private Spot position;      // the position at which the trap is
 
     /**
@@ -22,18 +23,18 @@ public class Trap extends Receptor {
      */
     public Trap(String name, Macro effect) {
         super("Trap " + name);
-        this.effect = effect;
+        setCommand(effect);
     }
 
-    public Macro getEffect() {
-        return effect;
+    public Macro getCommand() {
+        return command;
     }
 
     /**
      * Triggers the trap on the given victim
      */
     public void trigger(Creature creature) {
-        effect.execute(creature);
+        command.execute(creature);
         if (position != null)
             position.leave();
         position = null;
@@ -60,7 +61,7 @@ public class Trap extends Receptor {
     public JSONObject toJson() {
         JSONObject trap = super.toJson();
         try {
-            trap.put(Messages.JSON_TYPE_EFFECT, effect.toJson());
+            trap.put(Messages.JSON_TYPE_EFFECT, command.toJson());
             if (position != null) {
                 trap.put(Messages.JSON_TYPE_POSITION, position.toJson());
             }
@@ -69,5 +70,10 @@ public class Trap extends Receptor {
         }
 
         return trap;
+    }
+
+    @Override
+    public void setCommand(Macro command) {
+        this.command = command;
     }
 }

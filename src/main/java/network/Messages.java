@@ -40,9 +40,9 @@ public final class Messages {
     public static final String JSON_TYPE_MP = "MP";
     public static final String JSON_TYPE_AP = "AP";
     public static final String JSON_TYPE_TRAP = "trap";
+    public static final String JSON_TYPE_DESCRIPTION = "trap";
     public static final String JSON_TYPE_CARD_ID = "card id";
     public static final String JSON_TYPE_COMMANDS = "commands";
-    public static final String JSON_TYPE_ID = "id";
     public static final String JSON_TYPE_COST = "cost";
     public static final String JSON_TYPE_PLAYER = "Player";
     public static final String JSON_TYPE_RECEPTOR = "live receptor";
