@@ -43,7 +43,7 @@
       "creature" :
       {
         "name" : "Gregou",
-        "img" : "src/main/resources/design/images/creatures/bluey.gif",
+        "img" : "link to the image",
         "life" : 4,
         "steps" : 1,
         "attack" : 3

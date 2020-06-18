@@ -73,13 +73,14 @@ public class NetworkWaiting {
         case Messages.JSON_TYPE_UNDO:
         case Messages.JSON_TYPE_ABANDON:
         case Messages.JSON_TYPE_END_TURN:
+        case Messages.JSON_TYPE_GAME_END:
         case Messages.JSON_TYPE_PLAY:
           boolean goodPlay;
           goodPlay = game.playerSentMessage(playerId, receivedMessage);
 
           // wait for new play
           if (goodPlay) {
-            serverSharedState.setIntendToSendJson(playerId, true);
+            //serverSharedState.setIntendToSendJson(playerId, true);
             sendJsonType(Messages.JSON_TYPE_PLAY_OK, outPrintWriter, className);
             // Sending all game updates
             if (serverSharedState.getIntendToSendJson(playerId)) {

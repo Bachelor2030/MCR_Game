@@ -141,29 +141,6 @@ public class Game extends Receptor {
 
     JSONObject lastMoveJSON = lastMove.toJson();
 
-    // End turn envoyer end turn (le bon a chaque joueur
-    // serverAdapter.serverState.getOtherPlayer(playerId))
-    if (action.getName() == CommandName.END_TURN) {
-      JSONObject end = new JSONObject();
-      try {
-        lastMoveJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      try {
-        end.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_YOUR_TURN);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      serverAdapter
-          .getServerSharedState()
-          .pushJsonToSend(end, serverAdapter.getServerSharedState().otherPlayer(playerId));
-    }
-    try {
-      lastMoveJSON.put(Messages.JSON_TYPE, Messages.JSON_TYPE_UPDATE);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
     // Put json updates in serverAdapter.serverState.pushJsonToSend
     //serverAdapter.getServerSharedState().pushJsonToSend(lastMoveJSON, playerId);
 
