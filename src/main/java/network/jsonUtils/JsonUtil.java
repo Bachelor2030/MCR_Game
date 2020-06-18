@@ -2,10 +2,15 @@ package network.jsonUtils;
 
 import gameLogic.board.Board;
 import gameLogic.board.Spot;
+import gameLogic.commands.*;
 import gameLogic.commands.playersAction.*;
 import gameLogic.invocator.card.Card;
+import gameLogic.invocator.card.CardType;
+import gameLogic.receptors.Creature;
 import gameLogic.receptors.Player;
+import gameLogic.receptors.Trap;
 import network.Messages;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class JsonUtil {
 
@@ -77,5 +83,63 @@ public class JsonUtil {
       e.printStackTrace();
       return null;
     }
-  }
+}
+
+public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
+    ArrayList<Card> cards = new ArrayList<>();
+
+    JSONObject obj = new JSONObject(json);
+
+    JSONArray arr = obj.getJSONArray(Messages.JSON_TYPE_CARDS);
+
+    for (int i = 0; i < arr.length(); i++) {
+        JSONObject card = arr.getJSONObject(i);
+
+        int id = card.getInt(Messages.JSON_TYPE_CARD_ID);
+        String cardName = card.getString(Messages.JSON_TYPE_NAME);
+        CardType cardType = CardType.getType(card.getString(Messages.JSON_TYPE));
+        int cardCost = card.getInt(Messages.JSON_TYPE_COST);
+
+        ArrayList<ConcreteCommand> concreteCommands = new ArrayList<>();
+
+        if (cardType == CardType.CREATURE) {
+            Create create = new Create();
+            JSONObject jsonCreature = card.getJSONObject(Messages.JSON_TYPE_CREATURE);
+            Creature creature =
+                    new Creature(
+                            jsonCreature.getString(Messages.JSON_TYPE_NAME),
+                            jsonCreature.getInt(Messages.JSON_TYPE_LP),
+                            jsonCreature.getInt(Messages.JSON_TYPE_MP),
+                            jsonCreature.getInt(Messages.JSON_TYPE_AP));
+            create.setCreature(creature);
+            concreteCommands.add(create);
+        } else if (cardType == CardType.TRAP) {
+            JSONObject jsonTrap = card.getJSONObject(cardType.name().toLowerCase());
+            ArrayList<ConcreteCommand> trapCommands = new ArrayList<>();
+            JSONArray cmds = jsonTrap.getJSONArray(Messages.JSON_TYPE_COMMANDS);
+
+            for (int j = 0; j < cmds.length(); j++) {
+                trapCommands.add(CommandName.getCommandName(cmds.getString(j)).getCommand());
+            }
+
+            Trap trap = new Trap(jsonTrap.getString(Messages.JSON_TYPE_NAME), new Macro(trapCommands));
+
+            concreteCommands.add(new CreateTrap(trap));
+        }
+
+        Card c = new Card(id, cardName, cardType, cardCost);
+
+        c.setCommand(new Macro(concreteCommands));
+
+        for (Create create : c.getCommand().getCreateCreature()) {
+            create.getCreature().setOriginCard(c);
+
+        }
+
+        cards.add(c);
+    }
+
+    return cards;
+    }
+
 }

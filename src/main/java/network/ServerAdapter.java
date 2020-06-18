@@ -1,7 +1,9 @@
 package network;
 
 import gameLogic.Game;
+import gameLogic.commands.Create;
 import gameLogic.invocator.card.Card;
+import gameLogic.invocator.card.CardType;
 import gameLogic.receptors.Player;
 import network.jsonUtils.CardJsonParser;
 import network.jsonUtils.JsonUtil;
@@ -19,7 +21,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import static network.jsonUtils.ParserLauncher.parseJsonCards;
+import static network.jsonUtils.JsonUtil.parseJsonCards;
 import static network.states.ServerThreadState.CLIENT_LISTENING;
 import static network.states.ServerThreadState.INIT;
 import static network.utilities.Info.*;
@@ -115,7 +117,21 @@ public class ServerAdapter {
 
       CardJsonParser cardJsonParser = new CardJsonParser();
       List<Card> deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", allCards);
+      for (Card card : deck1) {
+          if (card.getType() == CardType.CREATURE) {
+            for (Create create : card.getCommand().getCreateCreature()) {
+                create.getCreature().setOwner(game.getPlayer(game.getFirstPlayerId()));
+            }
+          }
+      }
       List<Card> deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", allCards);
+      for (Card card : deck2) {
+        if (card.getType() == CardType.CREATURE) {
+          for (Create create : card.getCommand().getCreateCreature()) {
+            create.getCreature().setOwner(game.getPlayer((game.getFirstPlayerId() == 1 ? 2 : 1)));
+          }
+        }
+      }
 
       game.initGame(
           new Player(serverSharedState.getPlayerName(1), deck1, game),

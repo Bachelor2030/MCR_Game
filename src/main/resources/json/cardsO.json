@@ -1,0 +1,101 @@
+{
+  "pageInfo" : {
+    "pageName": "Card list",
+    "pageContent" : ["cards"]
+  },
+  "cards" : [
+    {
+      "id" : 1,
+      "name" : "Pier",
+      "type" : "Creature",
+      "cost" : 4,
+      "card commands" : [],
+      "creature" :
+      {
+        "name" : "Pier",
+        "img" : "src/main/resources/design/images/creatures/bluey.gif",
+        "life" : 6,
+        "steps" : 3,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 2,
+      "name" : "Sebas-chan",
+      "type" : "Creature",
+      "cost" : 9,
+      "card commands" : [],
+      "creature" :
+      {
+        "name" : "Sebas-chan",
+        "img" : "src/main/resources/design/images/creatures/bunny.gif",
+        "life" : 4,
+        "steps" : 2,
+        "attack" : 2
+      }
+    },
+    {
+      "id" : 3,
+      "name" : "Gregou",
+      "type" : "Creature",
+      "cost" : 10,
+      "card commands" : [],
+      "creature" :
+      {
+        "name" : "Gregou",
+        "img" : "src/main/resources/design/images/creatures/bunny.gif",
+        "life" : 4,
+        "steps" : 1,
+        "attack" : 3
+      }
+    },
+    {
+      "id" : 4,
+      "name" : "Black hole",
+      "type" : "Trap",
+      "cost" : 14,
+      "card commands" : [],
+      "trap" : {
+        "name" :"Black hole",
+        "commands" : ["Kill"],
+        "effect point" : 0
+      }
+    },
+    {
+      "id" : 5,
+      "name" : "Furnace",
+      "type" : "Spell",
+      "cost" : 3,
+      "card commands" : ["Hit"],
+      "target" : "all",
+      "effect point" : 3
+    },
+    {
+      "id" : 5,
+      "name" : "Coward",
+      "type" : "Spell",
+      "card commands" : ["Retreat_creature"],
+      "cost" : 3,
+      "effect point" : 4,
+      "target" : "one"
+    },
+    {
+      "id" : 6,
+      "name" : "All powerful you",
+      "type" : "Spell",
+      "card commands" : ["Change_AP"],
+      "cost" : 3,
+      "effect point" : 6,
+      "target" : "one"
+    },
+    {
+      "id" : 7,
+      "name" : "No fighting spirit for you",
+      "type" : "Spell",
+      "card commands" : ["Change_AP"],
+      "cost" : 3,
+      "effect point" : 1,
+      "target" : "one"
+    }
+  ]
+}
