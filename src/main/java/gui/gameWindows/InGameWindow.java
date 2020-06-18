@@ -132,7 +132,7 @@ public class InGameWindow extends GameWindow {
     informationPannelUser.getChildren().add(informationPanelUserTitle);
 
     //TODO afficher les points d'action
-    Label pointActionTitle = new Label("Points d'action : 10");
+    Label pointActionTitle = new Label("Points d'action : 15");
 
     informationPannelUser.getChildren().add(pointActionTitle);
 
