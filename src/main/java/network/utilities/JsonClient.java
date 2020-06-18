@@ -14,6 +14,15 @@ import static network.utilities.Info.printMessage;
 
 public class JsonClient {
 
+  /**
+   * Envoie du json au serveur connecté et attend une réponse
+   * @param jsonObject L'object json à envoyer
+   * @param outPrintWriter L'outPrintWriter dans lequel écrire le message
+   * @param inBufferedReader L'inBufferedReader dans lequel lire la réponse
+   * @return Le message reçu du serveur
+   * @throws IOException Si une IO erreur arrive
+   * @throws JSONException si le json ne peut être parsé
+   */
   public static String sendJson(
       JSONObject jsonObject, PrintWriter outPrintWriter, BufferedReader inBufferedReader)
       throws IOException, JSONException {
@@ -24,6 +33,12 @@ public class JsonClient {
     return receiveJson(inBufferedReader.readLine());
   }
 
+  /**
+   * Prend un objet json et retourne sa représentation en string
+   * @param jsonMessage
+   * @return
+   * @throws JSONException
+   */
   public static String receiveJson(String jsonMessage) throws JSONException {
     printMessage(clientClassName(), "<- " + jsonMessage);
 
@@ -31,6 +46,12 @@ public class JsonClient {
     return obj.toString();
   }
 
+  /**
+   * Rend un objet json contenant un simple type:message
+   * @param message Le message correspondant au type
+   * @return L'object json créé
+   * @throws JSONException Si la création du json échoue
+   */
   public static JSONObject jsonType(String message) throws JSONException {
     JSONObject json = new JSONObject();
     json.put(Messages.JSON_TYPE, message);
@@ -38,17 +59,38 @@ public class JsonClient {
     return json;
   }
 
+  /**
+   * Envoie directement sur le réseau un simple message de type
+   * @param type Le message correspondant au type
+   * @param outPrintWriter L'outPrintWriter dans lequel écrire le message
+   * @param inBufferedReader L'inBufferedReader dans lequel lire la réponse
+   * @return Le message de réponse du serveur
+   * @throws JSONException Si la création du json échoue
+   * @throws IOException Si une IO erreur arrive
+   */
   public static String sendJsonType(
       String type, PrintWriter outPrintWriter, BufferedReader inBufferedReader)
       throws JSONException, IOException {
     return sendJson(jsonType(type), outPrintWriter, inBufferedReader);
   }
 
+  /**
+   * Extrait le type d'un message json
+   * @param jsonMessage Le message json
+   * @return Le type extrait
+   * @throws JSONException Si la clé "type" ne peut être trouvée
+   */
   public static String readJsonType(String jsonMessage) throws JSONException {
     JSONObject obj = new JSONObject(jsonMessage);
     return obj.getString(Messages.JSON_TYPE);
   }
 
+  /**
+   * Détermine l'état d'un thread client en fonction du message d'init
+   * @param jsonMessage Le message json d'init
+   * @return Le ClientThreadState correspondant
+   * @throws JSONException Si le jsonMessage ne contient pas ce qui est attendu
+   */
   public static ClientThreadState getStateFromTurnInit(String jsonMessage) throws JSONException {
     JSONObject obj = new JSONObject(jsonMessage);
 

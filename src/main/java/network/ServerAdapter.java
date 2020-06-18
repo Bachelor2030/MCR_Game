@@ -42,9 +42,10 @@ public class ServerAdapter {
   ServerSharedState serverSharedState;
 
   /**
-   * Constructor
-   *
-   * @param port the port to listen on
+   * Constructeur de ServerAdapter
+   * @param port Le port sur lequel écouter
+   * @param nbrLines Le nombre de lignes composant le jeu [Non utilisé]
+   * @param lineLength La longueur des lignes [Non utilisé]
    */
   public ServerAdapter(int port, int nbrLines, int lineLength) {
     this.port = port;
@@ -60,9 +61,7 @@ public class ServerAdapter {
 
   /**
    * This method initiates the process. The server creates a socket and binds it to the previously
-   * specified port. It then waits for clients in a infinite loop. When a client arrives, the server
-   * will read its input line by line and send back the data converted to uppercase. This will
-   * continue until the client sends the "BYE" command.
+   * specified port. It then waits for clients in a infinite loop.
    */
   public void serveClients() {
     printMessage("ServerAdapter", "Starting the Receptionist Worker on a new thread...");
@@ -90,6 +89,7 @@ public class ServerAdapter {
         return;
       }
 
+      // On attend d'avoir deux joueurs
       while (serverSharedState.getPlayerCount() < 2) {
         printMessage(
             MessageLevel.Info,
@@ -99,9 +99,7 @@ public class ServerAdapter {
         try {
           clientSocket = serverSocket.accept();
           serverSharedState.incrementPlayerCount();
-          printMessage(
-              MessageLevel.Info,
-              receptionistClassName(),
+          printMessage( MessageLevel.Info, receptionistClassName(),
               "A new Player has arrived. Starting a new thread and delegating work to a new servant...");
           new Thread(new ServantWorker(clientSocket, serverSharedState.getPlayerCount())).start();
         } catch (IOException ex) {
@@ -115,8 +113,9 @@ public class ServerAdapter {
       // Wait for Player names to have been set
       while (!serverSharedState.playerNamesSet()) {}
 
+      // On parse les cartes des joueurs
       CardJsonParser cardJsonParser = new CardJsonParser();
-      List<Card> deck1 = cardJsonParser.parseJson(jsonPath + "cards1.json", allCards);
+      List<Card> deck1 = cardJsonParser.parseJson(jsonPath + "cardsnew.json", allCards);
       for (Card card : deck1) {
           if (card.getType() == CardType.CREATURE) {
             for (Create create : card.getCommand().getCreateCreature()) {
@@ -124,7 +123,7 @@ public class ServerAdapter {
             }
           }
       }
-      List<Card> deck2 = cardJsonParser.parseJson(jsonPath + "cards2.json", allCards);
+      List<Card> deck2 = cardJsonParser.parseJson(jsonPath + "cardsnew.json", allCards);
       for (Card card : deck2) {
         if (card.getType() == CardType.CREATURE) {
           for (Create create : card.getCommand().getCreateCreature()) {
@@ -140,8 +139,7 @@ public class ServerAdapter {
 
     /**
      * This inner class implements the behavior of the "servants", whose responsibility is to take
-     * care of clients once they have connected. This is where we implement the application protocol
-     * logic, i.e. where we read data sent by the client and where we generate the responses.
+     * care of clients once they have connected.
      */
     private class ServantWorker implements Runnable {
       Socket clientSocket;
@@ -150,6 +148,11 @@ public class ServerAdapter {
 
       int playerId;
 
+      /**
+       * Constructeur de ServantWorker
+       * @param clientSocket Le socket sur lequel le client est connecté
+       * @param playerId L'id du joueur connecté
+       */
       public ServantWorker(Socket clientSocket, int playerId) {
         this.playerId = playerId;
 
@@ -192,6 +195,7 @@ public class ServerAdapter {
                 sendJson(init, outPrintWriter, servantClassName(playerId));
                 break;
 
+                // Wait for other player to connect
               case INIT_WAITING:
                 while (serverSharedState.getPlayerCount() < 2
                     || serverSharedState.getPlayerName(serverSharedState.otherPlayer(playerId))
@@ -202,6 +206,7 @@ public class ServerAdapter {
                 serverSharedState.setWorkerState(playerId, INIT);
                 break;
 
+                // Wait for client message
               case SERVER_LISTENING:
                 awaitClientMessage(
                     game,
@@ -212,8 +217,8 @@ public class ServerAdapter {
                     servantClassName(playerId));
                 break;
 
+                // Client is waiting for update
               case CLIENT_LISTENING:
-
                 // Wait for backend to signify it's next Player's turn
                 while ( serverSharedState.getPlayingId() != playerId &&
                         serverSharedState.getWorkerState(playerId) == CLIENT_LISTENING) {}
@@ -238,18 +243,6 @@ public class ServerAdapter {
           cleanupResources(
               servantClassName(playerId), inBufferedReader, outPrintWriter, clientSocket);
         }
-      }
-    }
-  }
-
-  public void closeClientSocket() {
-    try {
-      clientSocket.close();
-    } catch (Exception e) {
-      if (serverSharedState.gameEnded()) {
-        printMessage(receptionistClassName(), "Closing server");
-      } else {
-        e.printStackTrace();
       }
     }
   }

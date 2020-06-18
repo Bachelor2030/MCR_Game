@@ -14,12 +14,12 @@ import java.util.*;
 
 /** Modelises a Player of the game */
 public class Player extends Receptor {
-  private static final int NBR_INIT_CARDS = 3;
+  private static final int NBR_INIT_CARDS = 10;
   private static final int NBR_CHESTS = 5;
   private static final int NBR_CARDS_PER_DECK = 50;
   private static final int NBR_CARDS_MAX_IN_HAND = 10;
-  private static final int NBR_ACTION_POINTS_MAX = 15;
-  private static final int ACTION_POINTS_START = 15;
+  private static final int NBR_ACTION_POINTS_MAX = 100;
+  private static final int ACTION_POINTS_START = 100;
 
   // Players deck of cards
   private ArrayList<Card> deck = new ArrayList<>(NBR_CARDS_PER_DECK);
