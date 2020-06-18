@@ -48,7 +48,7 @@ public class Create extends ConcreteCommand {
       e.printStackTrace();
     }
     serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
-    serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
+    //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
   }
 
   @Override

@@ -133,7 +133,7 @@ public class GUISpot {
    * @return true si occupée, false sinon.
    */
   public boolean isEmpty() {
-    return occupant == null || occupant.getClass() == GUITrap.class;
+    return occupant == null || occupant.getName().equals("empty") || occupant.getClass() == GUITrap.class;
   }
 
   /**

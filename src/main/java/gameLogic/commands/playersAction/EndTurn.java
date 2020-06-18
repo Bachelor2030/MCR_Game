@@ -21,14 +21,14 @@ public class EndTurn extends PlayersAction {
       JSONObject jsonObject = new JSONObject();
       jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_WAIT_TURN);
       serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
-      serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
+      //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
 
       int other = serverSharedState.otherPlayer(serverSharedState.getPlayingId() );
 
       jsonObject = new JSONObject();
       jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_YOUR_TURN);
       serverSharedState.pushJsonToSend(jsonObject, other);
-      serverSharedState.setIntendToSendJson(other, true);
+      //serverSharedState.setIntendToSendJson(other, true);
 
       serverSharedState.setWorkerState(serverSharedState.getPlayingId(), ServerThreadState.CLIENT_LISTENING);
       serverSharedState.setWorkerState(other, ServerThreadState.SERVER_LISTENING);
