@@ -19,7 +19,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import static network.jsonUtils.ParserLauncher.parseJsonCards;
+import static network.jsonUtils.JsonUtil.parseJsonCards;
 import static network.states.ServerThreadState.CLIENT_LISTENING;
 import static network.states.ServerThreadState.INIT;
 import static network.utilities.Info.*;
