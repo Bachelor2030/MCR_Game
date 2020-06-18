@@ -38,6 +38,7 @@ public class GUIBoard {
 
   public void place(GUIReceptor receptor, int lineCounter, int spot) {
     guiLines.get(lineCounter).setReceptor(receptor, spot);
+    guiLines.get(lineCounter).getSpot(spot).setOccupant(receptor);
   }
 
   public GUILine getLine(int index) {

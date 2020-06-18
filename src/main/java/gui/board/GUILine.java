@@ -92,7 +92,7 @@ public class GUILine {
   }
 
   public void setReceptor(GUIReceptor receptor, int spot) {
-    receptors.get(spot).setTo(receptor);
+    receptors.set(spot, receptor);
 
     ObservableList<Node> children = gridPane.getChildren();
     for (Node node : children) {
@@ -100,6 +100,7 @@ public class GUILine {
         ImageView imageView = receptors.get(spot).getImageView();
         imageView.setVisible(true); // please
         ((VBox) node).getChildren().set(0, imageView);
+        gridPane.setGridLinesVisible(true);
         break;
       }
     }

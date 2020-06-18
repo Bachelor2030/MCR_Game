@@ -62,18 +62,18 @@ public class Spot extends Receptor {
     return spotNumber;
   }
 
-  public Spot next(int ownerId) {
-    int change = (ownerId == 1 ? 1 : -1);
+  public Spot next(int ownerId, ServerSharedState serverSharedState) {
+    int change = (ownerId == serverSharedState.getPlayingFirstId() ? 1 : -1);
 
-    if (spotNumber + change < line.getNbSpots()) {
+    if (spotNumber + change < line.getNbSpots() && spotNumber + change >= 0) {
       return line.getSpot(spotNumber + change);
     }
     return null;
   }
 
-  public Spot previous(int ownerId) {
-    int change = (ownerId == 1 ? -1 : 1);
-    if (spotNumber + change > 0) return line.getSpot(spotNumber + change);
+  public Spot previous(int ownerId, ServerSharedState serverSharedState) {
+    int change = (ownerId == serverSharedState.getPlayingFirstId() ? 1 : -1);
+    if (spotNumber + change > 0 && spotNumber + change < line.getNbSpots()) return line.getSpot(spotNumber + change);
     return null;
   }
 

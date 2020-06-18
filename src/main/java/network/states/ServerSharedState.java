@@ -45,6 +45,10 @@ public class ServerSharedState {
     this.game = game;
   }
 
+  public synchronized int getPlayingFirstId() {
+    return playingFirstId;
+  }
+
   public synchronized boolean gameEnded() {
     return gameEnded;
   }
