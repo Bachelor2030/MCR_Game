@@ -4,6 +4,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+
 public abstract class GameWindow {
   protected HBox navigation;
   protected BorderPane racine;
