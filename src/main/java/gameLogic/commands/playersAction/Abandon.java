@@ -22,7 +22,7 @@ public class Abandon extends PlayersAction {
       jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_GAME_END);
       jsonObject.put(Messages.JSON_TYPE_LOSE_WIN, "L");
       serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
-      serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
+      //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
 
       int other = serverSharedState.otherPlayer(serverSharedState.getPlayingId() );
 
@@ -30,7 +30,7 @@ public class Abandon extends PlayersAction {
       jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_GAME_END);
       jsonObject.put(Messages.JSON_TYPE_LOSE_WIN, "W");
       serverSharedState.pushJsonToSend(jsonObject, other);
-      serverSharedState.setIntendToSendJson(other, true);
+      //serverSharedState.setIntendToSendJson(other, true);
 /*
       serverSharedState.setWorkerState(player.getId(), ServerThreadState.CLIENT_LISTENING);
       serverSharedState.setWorkerState(other, ServerThreadState.SERVER_LISTENING);*/
