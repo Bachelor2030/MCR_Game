@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Représente la fenêtre de choix de personnages
+ */
 public class CharacterWindow extends GameWindow {
   private final String
       DARK_DONINI_PATH = "src/main/resources/design/images/characters/darkDonini.png",
@@ -23,10 +26,21 @@ public class CharacterWindow extends GameWindow {
       MATT_PATH = "src/main/resources/design/images/characters/matt.png",
       GUS_PATH = "src/main/resources/design/images/characters/gus.png";
 
+  //Le corps de la page
   private VBox body;
 
+  //Groupe de bouton similaire à des radios-buttons -> un choix unique.
   private ToggleGroup radioButtonGroup;
 
+  /**
+   * Permet de créer une fenêtre où l'on choisit des personnages
+   * @param racine : la racine du projet
+   * @param navigation : la barre de navigation de la page
+   * @param stage : le stage, nécessaire à la GUI
+   * @param WIDTH_WINDOW : la largeur de la fenêtre
+   * @param player : le joueur
+   * @throws FileNotFoundException
+   */
   public CharacterWindow(
       BorderPane racine, HBox navigation, Stage stage, final int WIDTH_WINDOW, GUIPlayer player)
       throws FileNotFoundException {
@@ -34,6 +48,10 @@ public class CharacterWindow extends GameWindow {
     generate();
   }
 
+  /**
+   * Permet de générer le corps de la fenêtre.
+   * @throws FileNotFoundException
+   */
   private void generate() throws FileNotFoundException {
     body = new VBox();
     body.getStyleClass().add("parameters-body");
@@ -41,6 +59,7 @@ public class CharacterWindow extends GameWindow {
     Label title = new Label("Veuillez choisir un personnage :");
     title.getStyleClass().add("instructions-title");
 
+    //Permet d'alignr les personnages horizontalement.
     HBox characters = new HBox();
     radioButtonGroup = new ToggleGroup();
 
@@ -107,14 +126,16 @@ public class CharacterWindow extends GameWindow {
     return box;
   }
 
+  /**
+   * @return le corps de la page.
+   */
   public VBox getBody() {
     return body;
   }
 
-  public ToggleGroup getRadioButtonGroup() {
-    return radioButtonGroup;
-  }
-
+  /**
+   * @return Permet de récupérer l'imagePath du personnage choisi.
+   */
   public String defineSelectedUrl() {
     RadioButton selected = (RadioButton) radioButtonGroup.getSelectedToggle();
     switch (selected.getText()) {

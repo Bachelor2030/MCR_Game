@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -38,7 +39,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import static java.lang.System.exit;
+
 // TODO : commande qui font des actions graphiques. (genre déplacer créature)
+
 /** Permet de représenter l'entierté du jeu */
 public class GameBoard extends Application {
 
@@ -53,21 +57,23 @@ public class GameBoard extends Application {
   // Cors du jeu -> là où se trouvent les îles + créatures & shit
   private GridPane gridIslandsPanel;
 
-  private static boolean isGaming;
+  private static boolean isGaming; // les joueurs sont-ils en partie ?
 
-  private BorderPane racine;
+  private BorderPane racine; // la racine de l'affichage
 
-  private GUIPlayer player1, player2;
+  private GUIPlayer player1, player2; // les joueurs
   private GUIParser guiParser; // informations du tour pour le joueur
-  private ArrayList<GUICard> handPlayer;
+  private ArrayList<GUICard> handPlayer; // la main du joueur dont c'est le tour
   private final String jsonPath = "src/main/resources/json/";
-  private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
+  private String namePlayer1 = "",
+      IpPlayer1 = "",
+      portPlayer1 = ""; // informations liées au joueur1
 
-  private GUIBoard guiBoard;
+  private GUIBoard guiBoard; // le plateau du jeu
 
-  private Stage currentStage;
+  private Stage currentStage; // le stage lié à la GUI
 
-  private ClientAdapter clientAdapter;
+  private ClientAdapter clientAdapter; // l'état partagé du client
 
   private boolean serverIsOn = false;
   ServerAdapter server;
@@ -113,9 +119,17 @@ public class GameBoard extends Application {
     stage.show();
   }
 
+  /**
+   * Permet de terminer le jeu en testant si la partie est terminée et afficher les
+   * vainqueur/perdant
+   */
   public void exitGame() {
-    // TODO afficher la fenêtre de fin
     isGaming = false;
+
+    // TODO afficher la fenêtre de fin
+    // GameOverWindow gameOverWindow =
+    // new GameOverWindow(racine, defineHeader(true), currentStage, isGaming, player1, player2);
+
     try {
       inMainMenu();
     } catch (IOException e) {
@@ -287,6 +301,10 @@ public class GameBoard extends Application {
     racine.setCenter(characterWindow.getBody());
   }
 
+  /**
+   * Attend la connexion d'un autre player
+   * @throws IOException
+   */
   private void waitingForPlayer() throws IOException {
     WaitingWindow waitingWindow =
         new WaitingWindow(racine, defineHeader(false), false, currentStage);
@@ -319,7 +337,7 @@ public class GameBoard extends Application {
               actionEvent -> {
                 try {
                   inMainMenu();
-                  //TODO : afficher alert : voulez vous déclarer forfait ?
+                  // TODO : afficher alert : voulez vous déclarer forfait ?
                   System.out.println("you hit the returnMenu button...");
                 } catch (IOException e) {
                   e.printStackTrace();
@@ -358,31 +376,23 @@ public class GameBoard extends Application {
           .setOnAction(
               actionEvent -> {
                 displayNotYourTurnAlert();
-                // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
                 if (!clientAdapter.getClientSharedState().isMyTurn()) {
                   System.out.println("Please wait for your turn to validate it");
                   return;
                 } else {
-                  JSONObject json = null;
-                  try {
-                    json = JsonClient.jsonType(Messages.JSON_TYPE_GAME_END);
-                  } catch (JSONException e) {
-                    e.printStackTrace();
-                  }
-                  clientAdapter.getClientSharedState().pushJsonToSend(json);
-                  clientAdapter.getClientSharedState().setIntendToSendJson(true);
+                  AskIfReallyWantToQuit();
                 }
               });
 
       GameButton undoButton = new GameButton("Undo", "header-button");
       undoButton
-              .getButton()
-              .setOnAction(
-                      actionEvent -> {
-                        displayNotYourTurnAlert();
-                        //TODO implement undo button
-                        System.out.println("you hit the undo button...");
-                      });
+          .getButton()
+          .setOnAction(
+              actionEvent -> {
+                displayNotYourTurnAlert();
+                // TODO implement undo button
+                System.out.println("you hit the undo button...");
+              });
 
       buttons.add(validateTourButton);
       buttons.add(undoButton);
@@ -395,23 +405,60 @@ public class GameBoard extends Application {
     return navigationBar.getBarreNavigation();
   }
 
+  /**
+   * Demande à la personne si elle a vraiment envie de quitter la partie
+   */
+  private void AskIfReallyWantToQuit() {
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Quitter l'application");
+    alert.setHeaderText("");
+    alert.setContentText("Vous êtes en pleine partie, voulez-vous réellement quitter le jeu ?");
+
+    // enlève les boutons de base de la fenêtre.
+    alert.initStyle(StageStyle.UNDECORATED);
+    ButtonType oui = new ButtonType("Quitter");
+    ButtonType non = new ButtonType("Annuler");
+
+    alert.getButtonTypes().setAll(oui, non);
+
+    DialogPane dialogPane = alert.getDialogPane();
+    dialogPane
+        .getStylesheets()
+        .add(getClass().getResource("/design/css/styleSheet.css").toExternalForm());
+    alert.showAndWait();
+    if (alert.getResult() == oui) {
+      JSONObject json = null;
+      try {
+        json = JsonClient.jsonType(Messages.JSON_TYPE_GAME_END);
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      clientAdapter.getClientSharedState().pushJsonToSend(json);
+      clientAdapter.getClientSharedState().setIntendToSendJson(true);
+
+      exit(0);
+    }
+  }
+
+  /**
+   * Affiche une alerte indiquant que ce n'est pas notre tour
+   */
   private void displayNotYourTurnAlert() {
     if (!player1.getClientSharedState().isMyTurn()) {
-      // TODO: Afficher une alerte sur le GUI
       // on créé une alerte WARNING qui indique à l'utilisateur
       // que ce n'est pas à lui de jouer.
       Alert alert = new Alert(Alert.AlertType.WARNING);
       alert.setAlertType(Alert.AlertType.WARNING);
       alert.setTitle("Ce n'est pas à votre tour de jouer !");
       Image image =
-              new Image(
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
+          new Image(
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
       ImageView imageView = new ImageView(image);
       alert.setGraphic(imageView);
       DialogPane dialogPane = alert.getDialogPane();
       dialogPane
-              .getStylesheets()
-              .add(getClass().getResource("/design/css/styleSheet.css").toExternalForm());
+          .getStylesheets()
+          .add(getClass().getResource("/design/css/styleSheet.css").toExternalForm());
       alert.show();
     }
   }
@@ -446,27 +493,50 @@ public class GameBoard extends Application {
             handPlayer);
   }
 
+  /**
+   * @return le guiboard
+   */
   public GUIBoard getGuiBoard() {
     return guiBoard;
   }
 
+  /**
+   * place le récepteur à la position donnée
+   * @param receptor : le récepteur à placer
+   * @param line : la ligne
+   * @param position : le spot
+   */
   public void place(GUIReceptor receptor, int line, int position) {
     guiBoard.place(receptor, line, position);
     guiBoard.getLine(line).getSpot(position).setOccupant(receptor);
   }
 
+  /**
+   * @return le client adapter
+   */
   public ClientAdapter getClientAdapter() {
     return clientAdapter;
   }
 
+  /**
+   * Permet de modifier le ClientAdapter
+   * @param clientAdapter : le client adapter
+   */
   public void setClientAdapter(ClientAdapter clientAdapter) {
     this.clientAdapter = clientAdapter;
   }
 
+  /**
+   * @return la main du joueur
+   */
   public ArrayList<GUICard> getHandPlayer() {
     return handPlayer;
   }
 
+  /**
+   * Envoie l'état initial au GUI (l'état au commencement de la partie)
+   * @param initMessage : les informationsà parser
+   */
   public void sendInit(String initMessage) {
     GUIParser guiParser = new GUIParser(initMessage, clientAdapter.getClientSharedState());
 
@@ -483,6 +553,10 @@ public class GameBoard extends Application {
     clientAdapter.getClientSharedState().setMyTurn(guiParser.getTurnFromInit());
   }
 
+  /**
+   * Ajoute un carte à la main du joueur
+   * @param card : la carte à ajouter
+   */
   public void addCard(GUICard card) {
     player1.addToHand(card);
     try {
@@ -492,6 +566,10 @@ public class GameBoard extends Application {
     }
   }
 
+  /**
+   * Retire une carte de la main du joueur
+   * @param cardID : l'id de la carte
+   */
   public void removeCard(int cardID) {
     player1.removeFromHand(cardID);
     try {
@@ -501,19 +579,32 @@ public class GameBoard extends Application {
     }
   }
 
+
+  /**
+   * Permet de placer un piège
+   * @param line : la ligne
+   * @param position : le spot
+   */
   public void placeTrap(int line, int position) {
     guiBoard.placeTrap(line, position);
     DropShadow shadow = new DropShadow();
     shadow.setColor(Color.RED);
     guiBoard.getLine(line).getSpot(position).getButton().setEffect(shadow);
-    //TODO Need to test
   }
 
+  /**
+   * Permet d'enlever un piège
+   * @param line : la ligne
+   * @param position : le spot
+   */
   public void removeTrap(int line, int position) {
     guiBoard.removeTrap(line, position);
     guiBoard.getLine(line).getSpot(position).getButton().getStyleClass().add("button-island");
   }
 
+  /**
+   * Met la vue à jour
+   */
   public void updateStage() {
     System.out.println("Updating stage");
     currentStage.show();
