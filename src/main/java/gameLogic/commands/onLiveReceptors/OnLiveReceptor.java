@@ -6,6 +6,7 @@ import gameLogic.commands.ConcreteCommand;
 import gameLogic.receptors.LiveReceptor;
 import gameLogic.receptors.Receptor;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,9 +18,9 @@ public abstract class OnLiveReceptor extends ConcreteCommand {
     super(name);
   }
 
-  public abstract void execute(LiveReceptor liveReceptor);
+  public abstract void execute(LiveReceptor liveReceptor, ServerSharedState serverSharedState);
 
-  public abstract void undo(LiveReceptor liveReceptor);
+  public abstract void undo(LiveReceptor liveReceptor, ServerSharedState serverSharedState);
 
   @Override
   public LiveReceptor getReceptor() {
@@ -27,15 +28,15 @@ public abstract class OnLiveReceptor extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor) {
+  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
     this.receptor = (LiveReceptor) receptor;
-    execute(((Spot) receptor).getOccupant());
+    execute(((Spot) receptor).getOccupant(), serverSharedState);
   }
 
   @Override
-  public void undo(Receptor receptor) {
+  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
     this.receptor = (LiveReceptor) receptor;
-    undo(((Spot) receptor).getOccupant());
+    undo(((Spot) receptor).getOccupant(), serverSharedState);
   }
 
   @Override

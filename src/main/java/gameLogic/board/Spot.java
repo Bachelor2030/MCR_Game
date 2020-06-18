@@ -3,6 +3,7 @@ package gameLogic.board;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.receptors.Receptor;
 import gameLogic.receptors.Trap;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -77,6 +78,6 @@ public class Spot extends Receptor {
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action) {}
+  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
 
 }

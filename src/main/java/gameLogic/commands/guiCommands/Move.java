@@ -6,6 +6,7 @@ import gui.GameBoard;
 import gui.board.GUISpot;
 import gui.receptors.GUICreature;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -6,6 +6,7 @@ import gameLogic.commands.onLiveReceptors.onCreature.OnCreature;
 import gameLogic.receptors.Creature;
 import gameLogic.receptors.Receptor;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,12 +32,12 @@ public class Create extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor) {
+  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
     creature.place((Spot) receptor);
   }
 
   @Override
-  public void undo(Receptor receptor) {
+  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
     this.creature.place(null);
   }
 }
