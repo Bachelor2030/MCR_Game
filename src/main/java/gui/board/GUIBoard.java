@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -105,5 +106,17 @@ public class GUIBoard {
       }
       System.out.println("");
     }
+  }
+
+  public GridPane getGridIslandPanel(int line) {
+    return guiLines.get(line).getGridIslandPanel();
+  }
+
+  public ArrayList<GridPane> getGridIslandPanels() {
+    ArrayList<GridPane> gridPanes = new ArrayList<>();
+    for (GUILine line : guiLines) {
+        gridPanes.add(line.getGridIslandPanel());
+    }
+    return gridPanes;
   }
 }

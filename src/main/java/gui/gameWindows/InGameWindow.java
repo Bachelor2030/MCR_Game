@@ -5,6 +5,7 @@ import gui.receptors.GUICard;
 import gui.receptors.GUIPlayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -16,8 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class InGameWindow extends GameWindow {
-  private GridPane gridIslandsPanel;
-  private GUIBoard GUIBoard;
+  private GUIBoard guiBoard;
   private GUIPlayer player1, player2;
   private ArrayList<GUICard> handPlayer;
   private ClientSharedState clientSharedState;
@@ -26,8 +26,7 @@ public class InGameWindow extends GameWindow {
   public InGameWindow(
       BorderPane racine,
       HBox navigation,
-      GridPane gridIslandsPanel,
-      GUIBoard GUIBoard,
+      GUIBoard guiBoard,
       GUIPlayer player1,
       GUIPlayer player2,
       boolean isGaming,
@@ -36,8 +35,7 @@ public class InGameWindow extends GameWindow {
       ArrayList<GUICard> handPlayer)
       throws IOException {
     super(racine, navigation, isGaming, stage);
-    this.gridIslandsPanel = gridIslandsPanel;
-    this.GUIBoard = GUIBoard;
+    this.guiBoard = guiBoard;
     this.player1 = player1;
     this.player2 = player2;
     this.handPlayer = handPlayer;
@@ -75,25 +73,30 @@ public class InGameWindow extends GameWindow {
    * @return le gridPane sur lequel se déplace les créatures.
    * @throws IOException
    */
-  private GridPane displayInGameField() throws IOException {
+  private Group displayInGameField() throws IOException {
     VBox corpsInstruction = new VBox(); // contient les lignes du board.
     corpsInstruction.getStyleClass().add("instructions-body");
-    gridIslandsPanel = new GridPane(); // représente le board du jeu.
-    gridIslandsPanel.getStyleClass().add("corps-gridPane");
 
-    VBox vbox = new VBox(); // contient une créature et un emplacement.
+    ArrayList<GridPane> gridIslandsPanel = guiBoard.getGridIslandPanels();
 
-    int numRows = 4;
-    for (int i = 0; i < numRows; ++i) {
+    for (GridPane gridPane : gridIslandsPanel ) {
+      gridPane.getStyleClass().add("corps-gridPane");
       RowConstraints rc = new RowConstraints();
-      rc.setPercentHeight(100 / numRows);
-      gridIslandsPanel.getRowConstraints().add(rc);
+      rc.setPercentHeight(100 / gridIslandsPanel.size());
+      gridPane.getRowConstraints().add(rc);
+      gridPane.setAlignment(Pos.CENTER);
+    }
+    // Répertoire contenant nos îles
+    // GUIBoard = new GUIBoard(gridIslandsPanel, vbox, player1, player2);
+
+    Group group = new Group();
+    for (int i = 0; i < gridIslandsPanel.size(); i++) {
+      if (!group.getChildren().contains(gridIslandsPanel.get(i))) {
+        group.getChildren().add(gridIslandsPanel.get(i));
+      }
     }
 
-    // Répertoire contenant nos îles
-    GUIBoard = new GUIBoard(gridIslandsPanel, vbox, player1, player2);
-    gridIslandsPanel.setAlignment(Pos.CENTER);
-    return gridIslandsPanel;
+    return group;
   }
 
   /** @return les informations du Player */
