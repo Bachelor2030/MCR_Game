@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -45,7 +46,7 @@ public class InGameWindow extends GameWindow {
     generateBody();
   }
 
-  private void generateBody() throws IOException {
+  public void generateBody() throws IOException {
 
     if (clientSharedState.isPlayerTurn(player1.getName())) {
       // On créé l'espace d'infos du joueur 1
@@ -151,6 +152,7 @@ public class InGameWindow extends GameWindow {
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
+    int i = 0;
     for (GUICard card : handPlayer) {
       footerCardsPlayer.getChildren().add(card.getButton());
       card.getButton()
@@ -167,6 +169,8 @@ public class InGameWindow extends GameWindow {
                   clientSharedState.setSelectedCard(null);
                 }
               });
+
+      groupButtons.getToggles().clear();
       groupButtons.getToggles().add(card.getButton());
     }
 
