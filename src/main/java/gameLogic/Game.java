@@ -165,7 +165,7 @@ public class Game extends Receptor {
       e.printStackTrace();
     }
     // Put json updates in serverAdapter.serverState.pushJsonToSend
-    serverAdapter.getServerSharedState().pushJsonToSend(lastMoveJSON, playerId);
+    //serverAdapter.getServerSharedState().pushJsonToSend(lastMoveJSON, playerId);
 
     // Pour end game il faudra faire autrement /!\ ne pas s'en occuper, le serveur s'en charge
     return true;

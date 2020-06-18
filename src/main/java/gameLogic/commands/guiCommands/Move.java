@@ -1,12 +1,10 @@
 package gameLogic.commands.guiCommands;
 
-import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gui.GameBoard;
 import gui.board.GUISpot;
 import gui.receptors.GUICreature;
 import network.Messages;
-import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +42,7 @@ public class Move extends GuiCommand {
     GUICreature creature =
         (GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(from.getLineNumber())
                 .getSpot(from.getSpotNumber())
                 .getOccupant();
@@ -57,7 +55,7 @@ public class Move extends GuiCommand {
     GUICreature creature =
         (GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(to.getLineNumber())
                 .getSpot(to.getSpotNumber())
                 .getOccupant();

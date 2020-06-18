@@ -1,6 +1,5 @@
 package gameLogic.commands.guiCommands;
 
-import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gui.GameBoard;
 import gui.board.GUISpot;
@@ -8,6 +7,7 @@ import gui.receptors.GUICreature;
 import gui.receptors.GUIReceptor;
 import gui.receptors.GUITrap;
 import network.Messages;
+import network.jsonUtils.GUIParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,8 +22,7 @@ public class Place extends GuiCommand {
 
   public void setCardID(int cardID) {
     this.cardID = cardID;
-    // TODO change that
-    receptor = null;
+    receptor = GUIParser.getCreatureFromCard(cardID);
   }
 
   public void setPosition(GUISpot position) {
@@ -46,12 +45,6 @@ public class Place extends GuiCommand {
 
   @Override
   public void execute(GameBoard gameBoard) {
-    GUIReceptor receptor =
-        gameBoard
-            .getGUIBoard()
-            .getLine(position.getLineNumber())
-            .getSpot(position.getSpotNumber())
-            .getOccupant();
     if (receptor.getClass() == GUITrap.class) {
       gameBoard.placeTrap(position.getLineNumber(), position.getSpotNumber());
     } else {
