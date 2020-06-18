@@ -503,4 +503,9 @@ public class GameBoard extends Application {
     guiBoard.removeTrap(line, position);
     guiBoard.getLine(line).getSpot(position).getButton().getStyleClass().add("button-island");
   }
+
+  public void updateStage() {
+    System.out.println("Updating stage");
+    currentStage.show();
+  }
 }

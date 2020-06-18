@@ -1,6 +1,7 @@
 package network;
 
 import gui.GameBoard;
+import javafx.application.Platform;
 import network.jsonUtils.GUIParser;
 import network.states.ClientSharedState;
 import network.states.ClientThreadState;
@@ -145,7 +146,12 @@ public class ClientAdapter {
 
           case Messages.JSON_TYPE_UPDATE:
             clientThreadState = ClientThreadState.SERVER_LISTENING;
-            GUIParser.getCommand(receivedAnswer, gameBoard.getGuiBoard()).execute(gameBoard);
+            final String update = receivedAnswer;
+            Platform.runLater(
+                () -> {
+                  GUIParser.getCommand(update, gameBoard.getGuiBoard()).execute(gameBoard);
+                  gameBoard.updateStage();
+                });
             clientSharedState.setMyTurn(true);
             break;
 
