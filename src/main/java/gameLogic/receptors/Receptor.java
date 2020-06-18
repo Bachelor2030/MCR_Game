@@ -32,7 +32,7 @@ public abstract class Receptor {
   public Receptor(String name, ServerSharedState serverSharedState) {
     this.name = name;
     this.serverSharedState = serverSharedState;
-    lastMove = new Macro(new ArrayList<>(), serverSharedState);
+    lastMove = new Macro(new ArrayList<>());
     initDisplay();
   }
 

@@ -14,7 +14,7 @@ public class CreateTrap extends ConcreteCommand {
   private Trap trap;
 
   public CreateTrap() {
-    super(CommandName.CREATE_TRAP, null);
+    super(CommandName.CREATE_TRAP);
   }
 
   public void setTrap(Trap trap) {

@@ -10,16 +10,16 @@ public class Advance extends MoveCreature {
   }
 
   @Override
-  public void execute(Creature creature, ServerSharedState serverSharedState) {
+  public void execute(Creature creature) {
     from = creature.getPosition();
-    creature.advance(serverSharedState);
+    creature.advance();
     from = creature.getPosition();
   }
 
   @Override
-  public void undo(Creature creature, ServerSharedState serverSharedState) {
+  public void undo(Creature creature) {
     from = creature.getPosition();
-    creature.retreat(creature.getSteps(), serverSharedState);
+    creature.retreat(creature.getSteps());
     from = creature.getPosition();
   }
 }

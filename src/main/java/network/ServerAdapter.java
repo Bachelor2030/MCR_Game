@@ -53,7 +53,7 @@ public class ServerAdapter {
     serverSharedState = new ServerSharedState(game.getFirstPlayerId(), game);
 
     try {
-      allCards = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"));
+      allCards = parseJsonCards(new JsonUtil().getJsonContent(jsonPath + "cards.json"), serverSharedState);
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -133,8 +133,8 @@ public class ServerAdapter {
       }
 
       game.initGame(
-          new Player(serverSharedState.getPlayerName(1), deck1, game),
-          new Player(serverSharedState.getPlayerName(2), deck2, game));
+          new Player(serverSharedState.getPlayerName(1), deck1, game, serverSharedState),
+          new Player(serverSharedState.getPlayerName(2), deck2, game, serverSharedState));
     }
 
     /**

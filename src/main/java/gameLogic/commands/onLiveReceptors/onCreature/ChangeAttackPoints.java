@@ -20,13 +20,13 @@ public class ChangeAttackPoints extends OnCreature {
   }
 
   @Override
-  public void execute(Creature creature, ServerSharedState serverSharedState) {
+  public void execute(Creature creature) {
     oldAP = creature.getAttackPoints();
     creature.setAttackPoints(newAP);
   }
 
   @Override
-  public void undo(Creature creature, ServerSharedState serverSharedState) {
+  public void undo(Creature creature) {
     creature.setAttackPoints(oldAP);
   }
 

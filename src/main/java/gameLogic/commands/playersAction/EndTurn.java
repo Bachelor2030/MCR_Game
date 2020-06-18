@@ -14,33 +14,33 @@ public class EndTurn extends PlayersAction {
   }
 
   @Override
-  public void execute(Player player, ServerSharedState serverSharedState) {
-    player.endTurn(serverSharedState);
+  public void execute(Player player) {
+    player.endTurn();
 
     try {
       JSONObject jsonObject = new JSONObject();
       jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_WAIT_TURN);
-      serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
+      player.getServerSharedState().pushJsonToSend(jsonObject, player.getServerSharedState().getPlayingId());
       //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
 
-      int other = serverSharedState.otherPlayer(serverSharedState.getPlayingId() );
+      int other = player.getServerSharedState().otherPlayer(player.getServerSharedState().getPlayingId() );
 
       jsonObject = new JSONObject();
       jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_YOUR_TURN);
-      serverSharedState.pushJsonToSend(jsonObject, other);
+      player.getServerSharedState().pushJsonToSend(jsonObject, other);
       //serverSharedState.setIntendToSendJson(other, true);
 
-      serverSharedState.setWorkerState(serverSharedState.getPlayingId(), ServerThreadState.CLIENT_LISTENING);
-      serverSharedState.setWorkerState(other, ServerThreadState.SERVER_LISTENING);
+      player.getServerSharedState().setWorkerState(player.getServerSharedState().getPlayingId(), ServerThreadState.CLIENT_LISTENING);
+      player.getServerSharedState().setWorkerState(other, ServerThreadState.SERVER_LISTENING);
 
-      serverSharedState.nextPlayer();
+      player.getServerSharedState().nextPlayer();
     } catch (JSONException e) {
       e.printStackTrace();
     }
   }
 
   @Override
-  public void undo(Player player, ServerSharedState serverSharedState) {
+  public void undo(Player player) {
     player.continueTurn();
   }
 }

@@ -30,10 +30,10 @@ public abstract class GuiCommand extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor, ServerSharedState serverSharedState) {}
+  public void execute(Receptor receptor) {}
 
   @Override
-  public void undo(Receptor receptor, ServerSharedState serverSharedState) {}
+  public void undo(Receptor receptor) {}
 
   @Override
   public JSONObject toJson() {

@@ -10,12 +10,12 @@ public class Retreat extends MoveCreature {
   }
 
   @Override
-  public void execute(Creature creature, ServerSharedState serverSharedState) {
-    creature.retreat(creature.getSteps(), serverSharedState);
+  public void execute(Creature creature) {
+    creature.retreat(creature.getSteps());
   }
 
   @Override
-  public void undo(Creature creature, ServerSharedState serverSharedState) {
-    creature.advance(serverSharedState);
+  public void undo(Creature creature) {
+    creature.advance();
   }
 }

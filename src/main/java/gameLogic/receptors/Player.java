@@ -90,7 +90,7 @@ public class Player extends Receptor {
     }
 
     for (int i = 0; i < NBR_CHESTS; ++i) {
-      chests.add(new Chest(name + " - Chest " + (i + 1), this));
+      chests.add(new Chest(name + " - Chest " + (i + 1), this, super.getServerSharedState()));
     }
   }
 
