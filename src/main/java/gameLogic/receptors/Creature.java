@@ -39,7 +39,8 @@ public class Creature extends LiveReceptor {
   }
 
   /** Moves the creature of it's number of steps and hits the first ennemy encountered */
-  public void advance() {
+  public int advance() {
+    int counter = 0;
     for (int step = 0; step < steps; ++step) {
       if (position.next(owner.getId()) == null) {
         returnToDeck();
@@ -51,6 +52,7 @@ public class Creature extends LiveReceptor {
         if (position.isTrapped()) {
           ((Trap) position.getOccupant()).trigger(this);
         }
+        ++counter;
       } else {
         break;
       }
@@ -64,10 +66,12 @@ public class Creature extends LiveReceptor {
         }
       }
     }
+    return counter;
   }
 
   /** Returns the creature creating card in it's owner's deck */
   private void returnToDeck() {
+    lifePoints = 0;
     owner.addToDeck(originCard);
   }
 
