@@ -81,6 +81,7 @@ public class GUILine {
         vbox.getChildren().addAll((chests.get(1).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
       } else {
+        //TODO add progressbar
         receptors.add(new GUICreature("unknown", 0, 0, 0));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
