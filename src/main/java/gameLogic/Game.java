@@ -9,6 +9,8 @@ import gameLogic.receptors.Receptor;
 import network.Messages;
 import network.ServerAdapter;
 import network.jsonUtils.JsonUtil;
+import network.states.ServerSharedState;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -119,9 +121,9 @@ public class Game extends Receptor {
         initJSON.put(Messages.JSON_TYPE_TURN, Messages.JSON_TYPE_WAIT_TURN);
       }
 
-      JSONObject cardsJSON = new JSONObject();
+      JSONArray cardsJSON = new JSONArray();
       for (Card card : player.getHand()) {
-        cardsJSON.put(Messages.JSON_TYPE_CARD_ID, card.getID());
+        cardsJSON.put(card.toJSON());
       }
       initJSON.put(Messages.JSON_TYPE_CARDS, cardsJSON);
 

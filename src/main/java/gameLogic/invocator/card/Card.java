@@ -119,5 +119,16 @@ public class Card implements Invocator {
   public int hashCode() {
     return Objects.hash(ID, command, name, cost, type);
   }
-
+  public JSONObject toJSON() {
+    JSONObject c = new JSONObject();
+    try {
+      c.put(Messages.JSON_TYPE_CARD_ID, ID);
+      c.put(Messages.JSON_TYPE_NAME, name);
+      c.put(Messages.JSON_TYPE, type);
+      c.put(Messages.JSON_TYPE_COST, cost);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    return c;
+  }
 }
