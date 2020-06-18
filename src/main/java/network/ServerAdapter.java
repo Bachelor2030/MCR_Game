@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static network.jsonUtils.ParserLauncher.parseJsonCards;
+import static network.states.ServerThreadState.CLIENT_LISTENING;
 import static network.states.ServerThreadState.INIT;
 import static network.utilities.Info.*;
 import static network.utilities.JsonServer.sendJson;
@@ -198,19 +199,16 @@ public class ServerAdapter {
               case CLIENT_LISTENING:
 
                 // Wait for backend to signify it's next Player's turn
-                while (serverSharedState.getPlayingId() != playerId) {}
+                while ( serverSharedState.getPlayingId() != playerId &&
+                        serverSharedState.getWorkerState(playerId) == CLIENT_LISTENING) {}
 
-                while (serverSharedState.getIntendToSendJson(playerId)) {
+                if (serverSharedState.getIntendToSendJson(playerId)) {
                   while (!serverSharedState.jsonToSendEmpty(playerId)) {
                     JSONObject jsonObject = serverSharedState.popJsonToSend(playerId);
                     sendJson(jsonObject, outPrintWriter, servantClassName(playerId));
                   }
                 }
 
-                /* TODO: Send "your turn" from logic class?
-                sendJsonType(
-                    Messages.JSON_TYPE_YOUR_TURN, outPrintWriter, servantClassName(playerId));
-                serverSharedState.setWorkerState(playerId, ServerThreadState.SERVER_LISTENING);*/
                 break;
             }
           }
