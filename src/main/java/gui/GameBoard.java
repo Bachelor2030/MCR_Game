@@ -22,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import network.ClientAdapter;
@@ -504,6 +505,7 @@ public class GameBoard extends Application {
   public void placeTrap(int line, int position) {
     guiBoard.placeTrap(line, position);
     DropShadow shadow = new DropShadow();
+    shadow.setColor(Color.RED);
     guiBoard.getLine(line).getSpot(position).getButton().setEffect(shadow);
     //TODO Need to test
   }
