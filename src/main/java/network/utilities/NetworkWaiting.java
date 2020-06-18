@@ -73,6 +73,7 @@ public class NetworkWaiting {
         case Messages.JSON_TYPE_UNDO:
         case Messages.JSON_TYPE_ABANDON:
         case Messages.JSON_TYPE_END_TURN:
+        case Messages.JSON_TYPE_GAME_END:
         case Messages.JSON_TYPE_PLAY:
           boolean goodPlay;
           goodPlay = game.playerSentMessage(playerId, receivedMessage);
