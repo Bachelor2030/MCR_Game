@@ -14,13 +14,26 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+/**
+ * Cette classe représente la page de paramètre
+ */
 public class ParameterWindow extends GameWindow {
 
+  //Le nom par défaut
   public final String defaultName = "ASCII";
 
-  private VBox body;
+  private VBox body; //le corps de la fenêtre.
+
+  //Les différents fields à renseigner.
   private TextField playerNameField, playerIpField, playerPortField;
 
+  /**
+   * Le constructeur de la classe.
+   * @param racine : la racine du jeu
+   * @param navigation : la barre de navigation
+   * @param stage : le stage permettant d'afficher la GUI
+   * @param isGaming : la partie a-t-elle commencé ou non
+   */
   public ParameterWindow(BorderPane racine, HBox navigation, Stage stage, boolean isGaming) {
     super(racine, navigation, isGaming, stage);
     body = new VBox(10);
@@ -29,7 +42,11 @@ public class ParameterWindow extends GameWindow {
     generateBody();
   }
 
+  /**
+   * Permet de générer le corps de la page
+   */
   private void generateBody() {
+    //On fait en sorte que la page n'occupe de 80% de l'espace.
     body.prefWidthProperty().bind(stage.widthProperty().multiply(0.80));
 
     // Titre : Settings
@@ -61,11 +78,6 @@ public class ParameterWindow extends GameWindow {
       e.printStackTrace();
     }
 
-    /*
-    playerIpField.setText(
-        String.valueOf(InetAddress.getLoopbackAddress())); // récupère l'adresse IP
-     */
-
     // Port du joueur
     Label playerPort = new Label("Port");
     playerPort.getStyleClass().add("parameters-label");
@@ -89,22 +101,38 @@ public class ParameterWindow extends GameWindow {
     body.setSpacing(25); // espace entre les éléments
   }
 
+  /**
+   * Permet d'ajouter un bouton au corps
+   * @param button : le bout à ajouter
+   */
   public void addGameButton(GameButton button) {
     body.getChildren().add(button.getButton());
   }
 
+  /**
+   * @return le textfield contenant le nom du joueur
+   */
   public TextField getPlayerNameField() {
     return playerNameField;
   }
 
+  /**
+   * @return le textfield contenant l'IP du joueur
+   */
   public TextField getPlayerIpField() {
     return playerIpField;
   }
 
+  /**
+   * @return le textfield contenant le port du joueur
+   */
   public TextField getPlayerPortField() {
     return playerPortField;
   }
 
+  /**
+   * @return le corps de la page
+   */
   public VBox getBody() {
     return body;
   }

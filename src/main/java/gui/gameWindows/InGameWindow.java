@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -17,13 +16,29 @@ import network.states.ClientSharedState;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * La fenêtre représentant la partie de jeu
+ */
 public class InGameWindow extends GameWindow {
-  private GUIBoard guiBoard;
-  private GUIPlayer player1, player2;
-  private ArrayList<GUICard> handPlayer;
-  private ClientSharedState clientSharedState;
-  private ToggleGroup groupButtons;
+  private GUIBoard guiBoard; //Le board contenant les iles
+  private GUIPlayer player1, player2; //Les joueurs
+  private ArrayList<GUICard> handPlayer; //Le deck du joueur en cours
+  private ClientSharedState clientSharedState; //L'état partagé du client
+  private ToggleGroup groupButtons; //un groupe de bouton permettant de sélectionner une carte à la fois
 
+  /**
+   * Constructeur d'une vue en pleine partie
+   * @param racine : la racine du projet
+   * @param navigation : la barre de navigation
+   * @param guiBoard : le board du jeu
+   * @param player1 : le joueur de gauche
+   * @param player2 : le joueur de droite
+   * @param isGaming : indique si la partie a commencé
+   * @param clientSharedState : l'état partagé du client
+   * @param stage : le stage servant à l'affichage de la GUI
+   * @param handPlayer : le deck du joueur1
+   * @throws IOException
+   */
   public InGameWindow(
       BorderPane racine,
       HBox navigation,
@@ -46,6 +61,10 @@ public class InGameWindow extends GameWindow {
     generateBody();
   }
 
+  /**
+   * Permet de générer le corps de la fenêtre
+   * @throws IOException
+   */
   public void generateBody() throws IOException {
 
     if (clientSharedState.isPlayerTurn(player1.getName())) {
@@ -80,6 +99,7 @@ public class InGameWindow extends GameWindow {
 
     ArrayList<GridPane> gridIslandsPanel = guiBoard.getGridIslandPanels();
 
+    //Aligne correctement les îles
     for (GridPane gridPane : gridIslandsPanel ) {
       gridPane.getStyleClass().add("corps-gridPane");
       gridPane.setAlignment(Pos.CENTER);
@@ -131,8 +151,7 @@ public class InGameWindow extends GameWindow {
     informationPanelUserTitle.getStyleClass().add("titre-label");
     informationPannelUser.getChildren().add(informationPanelUserTitle);
 
-    //TODO afficher les points d'action
-    Label pointActionTitle = new Label("Points d'action : 100");
+    Label pointActionTitle = new Label("Points d'action : 15");
 
     informationPannelUser.getChildren().add(pointActionTitle);
 

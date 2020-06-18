@@ -26,8 +26,7 @@ public class Trap extends Receptor implements Invocator {
   }
 
   /**
-   * Permet de récupérer la command du piège courrant
-   * @return
+   * @return la commande sous forme de macro
    */
   public Macro getCommand() {
     return command;
@@ -54,8 +53,7 @@ public class Trap extends Receptor implements Invocator {
   }
 
   /**
-   * Permet de récupérer la position du piège
-   * @return
+   * @return la position du piège
    */
   public Spot getPosition() {
     return position;
@@ -65,6 +63,9 @@ public class Trap extends Receptor implements Invocator {
   public void playTurn(int turn, PlayersAction action) {}
 
   @Override
+  /**
+   * Permet de modifier une commande.
+   */
   public void setCommand(Macro command) {
     this.command = command;
   }

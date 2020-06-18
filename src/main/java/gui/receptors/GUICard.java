@@ -15,30 +15,43 @@ import java.io.FileNotFoundException;
 
 import static network.utilities.JsonClient.jsonType;
 
+/**
+ * Représentation d'une carte pour la GUI
+ */
 public class GUICard {
   private final int id; // the ID of the card
-  private String name; // the name of the card
-  private String description; // the description of the card
-  private int cost; // the cost (in action points)
-  private CardType type; // type de la carte
-  private ImageView view;
-  private ToggleButton button;
+  private final String name; // the name of the card
+  private final int cost; // the cost (in action points)
+  private final CardType type; // type de la carte
+  private ImageView view; //la view liée à l'image
+  private ToggleButton button; //le button lié à la carte (pour pouvoir appuyer dessus)
+  private ClientSharedState clientSharedState; //l'état partagé du client
 
-  private ClientSharedState clientSharedState;
-
-  private final String SPELL_PATH = "src/main/resources/design/images/cards/spell.png",
-      CREATURE_PATH = "src/main/resources/design/images/cards/creature.png",
-      TRAP_PATH = "src/main/resources/design/images/cards/trap.png",
-      ERROR_PATH = "src/main/resources/design/images/cards/cardSample.png";
-
+  /**
+   * Constructeur de la classe.
+   * @param id : l'id de la carte
+   * @param name : le nom de la carte
+   * @param type : le type de la carte (spell, trap, creature)
+   * @param cost : le coût (point d'action) de la carte
+   * @param description : la description de la carte
+   */
   public GUICard(int id, String name, CardType type, int cost, String description) {
     this.id = id;
     this.name = name;
     this.cost = cost;
     this.type = type;
-    this.description = description;
+    // the description of the card
   }
 
+  /**
+   * Constructeur de la classe
+   * @param id : l'id de la carte
+   * @param name : le nom de la carte
+   * @param type : le type de la carte (spell, trap, creature)
+   * @param cost : le coût (point d'action) de la carte
+   * @param clientSharedState : l'état partagé du client
+   * @throws FileNotFoundException
+   */
   public GUICard(int id, String name, CardType type, int cost, ClientSharedState clientSharedState)
       throws FileNotFoundException {
     this.id = id;
@@ -62,6 +75,10 @@ public class GUICard {
   }
 
   private String definePictureAccordingToType() {
+    String SPELL_PATH = "src/main/resources/design/images/cards/spell.png";
+    String CREATURE_PATH = "src/main/resources/design/images/cards/creature.png";
+    String TRAP_PATH = "src/main/resources/design/images/cards/trap.png";
+    String ERROR_PATH = "src/main/resources/design/images/cards/cardSample.png";
     switch (type) {
       case TRAP:
         return TRAP_PATH;
@@ -74,6 +91,11 @@ public class GUICard {
     }
   }
 
+  /**
+   * Permet de récupérer le JSON lié à la carte
+   * @return les informations de la carte sous forme de JSON
+   * @throws JSONException
+   */
   public JSONObject getJson() throws JSONException {
     JSONObject play = jsonType(Messages.JSON_TYPE_PLAY);
     play.put(Messages.JSON_TYPE_CARD_ID, clientSharedState.getSelectedCard().getId());
@@ -88,31 +110,38 @@ public class GUICard {
     return play;
   }
 
+  /**
+   * @return l'id de la carte
+   */
   public int getId() {
     return id;
   }
 
+  /**
+   * @return le nom de la carte
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * @return le coût de la carte
+   */
   public int getCost() {
     return cost;
   }
 
+  /**
+   * @return le type de la carte (spell, trap, creature)
+   */
   public CardType getType() {
     return type;
   }
 
-  public ImageView getView() {
-    return view;
-  }
-
+  /**
+   * @return le bouton lié à la carte
+   */
   public ToggleButton getButton() {
     return button;
-  }
-
-  public GUIReceptor getCreature() {
-    return null;
   }
 }

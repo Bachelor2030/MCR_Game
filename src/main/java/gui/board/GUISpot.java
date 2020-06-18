@@ -194,7 +194,6 @@ public class GUISpot {
 
 
   public JSONObject toJson() {
-    // TODO
     return null;
   }
 

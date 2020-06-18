@@ -1,7 +1,5 @@
 package gui.receptors;
 
-import gameLogic.invocator.card.Card;
-import gameLogic.receptors.Player;
 import javafx.scene.image.Image;
 import network.states.ClientSharedState;
 
@@ -9,10 +7,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * Représentation d'un player pour la GUI
+ */
 public class GUIPlayer extends GUIReceptor {
-  private ClientSharedState clientSharedState;
-  private ArrayList<GUICard> hand = new ArrayList<>();
+  private ClientSharedState clientSharedState; //l'état partagé du client
+  private ArrayList<GUICard> hand = new ArrayList<>(); //les cartes présentes dans la main du joueur
 
+  /**
+   * Constructeur de la classe
+   * @param name : le nom du joueur
+   * @param imagePath : l'image du joueur
+   * @param hand : la main du joueur (cartes présentes dans sa main)
+   * @param clientSharedState : l'état partagé du client
+   */
   public GUIPlayer(
       String name, String imagePath, ArrayList<GUICard> hand, ClientSharedState clientSharedState) {
     super(name, imagePath);
@@ -22,58 +30,37 @@ public class GUIPlayer extends GUIReceptor {
   }
 
   /**
-   * Permet de construire un joueur selon les données fournies.
-   *
-   * @param player : le joueur
-   * @throws FileNotFoundException
+   * Initialise un player vide
    */
-  public GUIPlayer(Player player, ClientSharedState clientSharedState)
-      throws FileNotFoundException {
-    super(player.getName(), player.getImgPath());
-    initializeCards(player.getHand());
-    this.clientSharedState = clientSharedState;
-  }
-
   public GUIPlayer() {
     super("", "");
   }
 
+  /**
+   * Permet de modifier l'était partage du client.
+   * @param clientSharedState : l'état partagé du client
+   */
   public void setClientSharedState(ClientSharedState clientSharedState) {
     this.clientSharedState = clientSharedState;
   }
 
+  /**
+   * @return l'état partagé du client.
+   */
   public ClientSharedState getClientSharedState() {
     return clientSharedState;
   }
 
+  /**
+   * @return le nom du client.
+   */
   public String getName() {
     return name;
   }
 
   /**
-   * Permet de convertir un deck ArrayList<Card> en ArrayList<GUICard>
-   *
-   * @param deck : le deck contenant des cartes de type Card.
-   * @throws FileNotFoundException
+   * @return l'image liée au client
    */
-  private void initializeCards(ArrayList<Card> deck) throws FileNotFoundException {
-    for (Card card : deck) {
-      this.hand.add(toGUICard(card));
-    }
-  }
-
-  /**
-   * Permet de créer une GUICard à partir d'une Card.
-   *
-   * @param card : carte de type Card.
-   * @return une GUICard générée à partir d'une Card.
-   * @throws FileNotFoundException
-   */
-  private GUICard toGUICard(Card card) throws FileNotFoundException {
-    return new GUICard(
-        card.getID(), card.getName(), card.getType(), card.getCost(), clientSharedState);
-  }
-
   public Image getImage() {
     try {
       return new Image(new FileInputStream(imagePath));
@@ -83,26 +70,51 @@ public class GUIPlayer extends GUIReceptor {
     return new Image(imagePath);
   }
 
+  /**
+   * Permet d'ajouter une liste de cartes dans la main du joueur.
+   * @param newHand : la liste de cartes à ajouter.
+   */
   public void addHand(ArrayList<GUICard> newHand) {
     hand.addAll(newHand);
   }
 
+  /**
+   * Permet de modifier l'imagePath.
+   * @param imagePath : le nouveau chemin de l'image.
+   */
   public void setImgPath(String imagePath) {
     this.imagePath = imagePath;
   }
 
+  /**
+   * Permet de modifier le nom du joueur.
+   * @param name : le nom de remplacement.
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+  /**
+   * @return l'image path du joueur.
+   */
   public String getImagePath() {
     return imagePath;
   }
 
+  /**
+   * Permet d'ajouter une carte à la main du joueur.
+   * (utile pour chaque début de tour -> 1 carte s'ajoute !)
+   * @param card : la carte à ajouter.
+   */
   public void addToHand(GUICard card) {
     hand.add(card);
   }
 
+  /**
+   * Supprime une carte spécifique dans la main du joueur.
+   * (utile lorsqu'une carte a été jouée)
+   * @param cardID : l'id de la carte
+   */
   public void removeFromHand(int cardID) {
     for (GUICard card : hand) {
       if (card.getId() == cardID) {
@@ -112,6 +124,9 @@ public class GUIPlayer extends GUIReceptor {
     }
   }
 
+  /**
+   * @return les cartes présentes dans la main du joueur.
+   */
   public ArrayList<GUICard> getHand() {
     return hand;
   }

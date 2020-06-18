@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import static gui.GameBoard.WIDTH_WINDOW;
 
+/** Modélise la barre de navigation présente sur certaines pages du jeu */
 public class NavigationBar {
   // les boutons à rajouter.
   private LinkedList<GameButton> buttons;
