@@ -8,14 +8,31 @@ import java.io.PrintWriter;
 
 import static network.utilities.Info.printMessage;
 
+/**
+ * Classe utile pour envoyer du json depuis le serveur.
+ * Différente de la classe client car les méthodes n'attendent pas de réponse.
+ */
 public abstract class JsonServer {
 
+  /**
+   * Envoi du json au client
+   * @param jsonObject L'object json à envoyer
+   * @param outPrintWriter L'outPrintWriter dans lequel écrire le message
+   * @param className Le nom de la classe qui appelle la fonction
+   */
   public static void sendJson(JSONObject jsonObject, PrintWriter outPrintWriter, String className) {
     printMessage(className, "-> " + jsonObject.toString());
     outPrintWriter.println(jsonObject.toString());
     outPrintWriter.flush();
   }
 
+  /**
+   * Envoie directement sur le réseau un simple message de type
+   * @param message Le message correspondant au type
+   * @param outPrintWriter L'outPrintWriter dans lequel écrire le message
+   * @param className Le nom de la classe qui appelle la fonction
+   * @throws JSONException Si la création du json échoue
+   */
   public static void sendJsonType(String message, PrintWriter outPrintWriter, String className)
       throws JSONException {
     JSONObject json = new JSONObject();
@@ -24,6 +41,11 @@ public abstract class JsonServer {
     sendJson(json, outPrintWriter, className);
   }
 
+/**
+ * Prend un objet json et retourne sa représentation en string
+ * @param jsonMessage Le message json
+ * @param className Le nom de la classe appelante
+ */
   public static String readJson(String jsonMessage, String className) {
     printMessage(className, "<- " + jsonMessage);
     try {
@@ -34,6 +56,12 @@ public abstract class JsonServer {
     }
   }
 
+  /**
+   * Extrait le type d'un message json
+   * @param jsonMessage Le message json
+   * @param className Le nom de la classe appelante
+   * @return Le type extrait
+   */
   public static String readJsonType(String jsonMessage, String className) {
     String type;
 
@@ -48,6 +76,12 @@ public abstract class JsonServer {
     }
   }
 
+  /**
+   * Extrait le nom d'un joueur d'un message json
+   * @param jsonMessage Le message json
+   * @param className Le nom de la classe appelante
+   * @return Le nom du joueur extrait, ou error s'il n'y en a pas
+   */
   public static String readJsonPlayerName(String jsonMessage, String className) {
     String name;
 
@@ -62,6 +96,11 @@ public abstract class JsonServer {
     }
   }
 
+  /**
+   * Affiche un message d'erreur json et renvoie une  string "Error"
+   * @param className Le nom de la classe appelante
+   * @return La string "Error"
+   */
   public static String jsonError(String className) {
     printMessage(className, "Answer was not Json!");
 

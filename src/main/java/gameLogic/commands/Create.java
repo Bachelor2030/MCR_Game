@@ -47,7 +47,9 @@ public class Create extends ConcreteCommand {
     } catch (JSONException e) {
       e.printStackTrace();
     }
+    // Send update to both clientss
     serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
+    serverSharedState.pushJsonToSend(jsonObject, serverSharedState.otherPlayer(serverSharedState.getPlayingId()));
     //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
   }
 
