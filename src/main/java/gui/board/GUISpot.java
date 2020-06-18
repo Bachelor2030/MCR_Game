@@ -56,9 +56,9 @@ public class GUISpot {
    *
    * @throws IOException
    */
-  public GUISpot(ClientSharedState clientSharedState) throws IOException {
+  public GUISpot(int line, ClientSharedState clientSharedState) throws IOException {
     this(
-        spotCounter++,
+        spotCounter++, line,
         new Vector2f(STARTING_COORDINATE_X, STARTING_COORDINATE_Y),
         clientSharedState);
   }
@@ -70,7 +70,7 @@ public class GUISpot {
    * @param pos : sa position dans la fenêtre du jeu
    * @throws FileNotFoundException
    */
-  private GUISpot(int number, Vector2f pos, ClientSharedState clientSharedState)
+  private GUISpot(int number, int line, Vector2f pos, ClientSharedState clientSharedState)
       throws FileNotFoundException {
     image = new Image(imagePath);
     imageView = new ImageView(image);
@@ -103,7 +103,7 @@ public class GUISpot {
             if (clientSharedState.getSelectedCard() != null) {
 
               clientSharedState.setChosenPosition(
-                  new Pair<>((number / GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)));
+                  new Pair<>(line, number % GUILine.NB_SPOTS));
 
               try {
                 JSONObject json = clientSharedState.getSelectedCard().getJson();
@@ -116,7 +116,7 @@ public class GUISpot {
           }
         });
     button.setGraphic(imageView);
-    this.number = number % 10;
+    this.number = number % (GUILine.NB_SPOTS);
     this.pos = pos;
     initDisplaySpot();
   }

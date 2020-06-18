@@ -5,6 +5,7 @@ import gameLogic.commands.CommandName;
 import gameLogic.invocator.card.Card;
 import gameLogic.receptors.Player;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,15 +35,14 @@ public class PlayCard extends PlayersAction {
   }
 
   @Override
-  public void execute(Player player) {
-    if (!player.playCard(cardToPlay, spot)) {
-      player.removeLastMove(this);
+  public void execute(Player player, ServerSharedState serverSharedState) {
+    if (player.playCard(cardToPlay, spot, serverSharedState)) {
+      player.addLastMoves(cardToPlay.getCommand().getCommands());
     }
-    player.addLastMoves(cardToPlay.getCommand().getCommands());
   }
 
   @Override
-  public void undo(Player player) {
-    player.undoCard(cardToPlay);
+  public void undo(Player player, ServerSharedState serverSharedState) {
+    player.undoCard(cardToPlay, serverSharedState);
   }
 }

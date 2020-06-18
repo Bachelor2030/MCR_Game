@@ -4,6 +4,7 @@ import gameLogic.commands.CommandName;
 import gameLogic.invocator.card.Card;
 import gameLogic.invocator.card.CardType;
 import gameLogic.receptors.Player;
+import network.states.ServerSharedState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ public class DrawTypeFromDiscard extends CardMovement {
   }
 
   @Override
-  public void execute(Player player) {
+  public void execute(Player player, ServerSharedState serverSharedState) {
     HashMap<Integer, List<Card>> discard = player.getDiscard();
     for (int i = 1; i <= discard.size(); ++i) {
       for (Card c : discard.get(i)) {
@@ -36,7 +37,7 @@ public class DrawTypeFromDiscard extends CardMovement {
   }
 
   @Override
-  public void undo(Player player) {
+  public void undo(Player player, ServerSharedState serverSharedState) {
     if (card != null) {
       player.discardCard(card);
     }

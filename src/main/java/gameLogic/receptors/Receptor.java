@@ -6,6 +6,7 @@ import gameLogic.commands.playersAction.PlayersAction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,14 +42,14 @@ public abstract class Receptor {
     return lastMove;
   }
 
-  public abstract void playTurn(int turn, PlayersAction action);
+  public abstract void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState);
 
-  public void undoLastMove() {
-    lastMove.undo(lastMove.getReceptor());
+  public void undoLastMove(ServerSharedState serverSharedState) {
+    lastMove.undo(lastMove.getReceptor(), serverSharedState);
   }
 
-  public void redoLastMove() {
-    lastMove.execute(lastMove.getReceptor());
+  public void redoLastMove(ServerSharedState serverSharedState) {
+    lastMove.execute(lastMove.getReceptor(), serverSharedState);
   }
 
   @Override

@@ -2,6 +2,7 @@ package gameLogic.commands;
 
 import gameLogic.receptors.Receptor;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,18 +68,18 @@ public class Macro implements Command {
   }
 
   @Override
-  public void execute(Receptor receptor) {
+  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
     this.receptor = receptor;
     for (Command command : commands) {
-      command.execute(receptor);
+      command.execute(receptor, serverSharedState);
     }
   }
 
   @Override
-  public void undo(Receptor receptor) {
+  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
     this.receptor = receptor;
     for (Command command : commands) {
-      command.undo(receptor);
+      command.undo(receptor, serverSharedState);
     }
   }
 

@@ -3,6 +3,7 @@ package gameLogic.receptors;
 import gameLogic.commands.playersAction.PlayersAction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import network.states.ServerSharedState;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,7 +49,7 @@ public class Chest extends LiveReceptor {
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action) {}
+  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
 
   public ImageView getImageView() {
     return imageView;
