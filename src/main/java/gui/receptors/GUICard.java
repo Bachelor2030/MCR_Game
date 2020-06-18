@@ -111,4 +111,8 @@ public class GUICard {
   public ToggleButton getButton() {
     return button;
   }
+
+  public GUIReceptor getCreature() {
+    return null;
+  }
 }

@@ -5,6 +5,7 @@ import gameLogic.commands.ConcreteCommand;
 import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,9 +16,9 @@ public abstract class PlayersAction extends ConcreteCommand {
     super(name);
   }
 
-  public abstract void execute(Player player);
+  public abstract void execute(Player player, ServerSharedState serverSharedState);
 
-  public abstract void undo(Player player);
+  public abstract void undo(Player player, ServerSharedState serverSharedState);
 
   @Override
   public Receptor getReceptor() {
@@ -25,17 +26,17 @@ public abstract class PlayersAction extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor) {
+  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
     player = (Player) receptor;
     player.addLastMove(this);
-    execute((Player) receptor);
+    execute((Player) receptor, serverSharedState);
   }
 
   @Override
-  public void undo(Receptor receptor) {
+  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
     player = (Player) receptor;
     player.removeLastMove(this);
-    undo((Player) receptor);
+    undo((Player) receptor, serverSharedState);
   }
 
   @Override

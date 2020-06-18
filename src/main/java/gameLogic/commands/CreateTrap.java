@@ -5,12 +5,12 @@ import gameLogic.receptors.Player;
 import gameLogic.receptors.Receptor;
 import gameLogic.receptors.Trap;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CreateTrap extends ConcreteCommand {
   private Player player;
-  private Spot position;
   private Trap trap;
 
   public CreateTrap(Trap trap) {
@@ -20,10 +20,6 @@ public class CreateTrap extends ConcreteCommand {
 
   public CreateTrap() {
     super(CommandName.CREATE_TRAP);
-  }
-
-  public void setPosition(Spot position) {
-    this.position = position;
   }
 
   public void setTrap(Trap trap) {
@@ -39,12 +35,12 @@ public class CreateTrap extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor) {
-    trap.setPosition(position);
+  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
+    trap.setPosition((Spot)receptor);
   }
 
   @Override
-  public void undo(Receptor receptor) {
+  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
     trap.setPosition(null);
   }
 

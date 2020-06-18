@@ -2,6 +2,7 @@ package gameLogic.commands.onLiveReceptors.onCreature;
 
 import gameLogic.commands.CommandName;
 import gameLogic.receptors.Creature;
+import network.states.ServerSharedState;
 
 public class KnockOut extends OnCreature {
   public KnockOut() {
@@ -9,12 +10,12 @@ public class KnockOut extends OnCreature {
   }
 
   @Override
-  public void execute(Creature creature) {
+  public void execute(Creature creature, ServerSharedState serverSharedState) {
     creature.knockOut();
   }
 
   @Override
-  public void undo(Creature creature) {
+  public void undo(Creature creature, ServerSharedState serverSharedState) {
     creature.wakeUp();
   }
 }

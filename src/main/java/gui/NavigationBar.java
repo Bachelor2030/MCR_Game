@@ -7,10 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import network.states.ClientSharedState;
 
 import java.util.LinkedList;
 
@@ -33,6 +32,8 @@ public class NavigationBar {
 
   // fenêtre d'alert.
   private Alert alert;
+
+  private ClientSharedState clientSharedState;
 
   /**
    * @param buttons : les boutons à mettre dans la barre.
@@ -68,36 +69,37 @@ public class NavigationBar {
     // On lui applique d'autres styles présents dans la feuille CSS
     barreNavigation.getStyleClass().add(styleClass);
 
-    // SEPARATEUR - séparer les utility buttons sur la droite
-    // utility buttons : minimize, quit.
-    final Pane spacer = new Pane();
-    HBox.setHgrow(spacer, Priority.ALWAYS);
+    /*
+        // SEPARATEUR - séparer les utility buttons sur la droite
+        // utility buttons : minimize, quit.
+        final Pane spacer = new Pane();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
-    barreNavigation.getChildren().add(spacer);
+        barreNavigation.getChildren().add(spacer);
 
-    minimizeButton = new UtilButton("header-quit-button", "/design/images/minimize.png");
-    minimizeButton
-        .getButton()
-        .setOnAction(
-            event -> {
-              Stage stage = (Stage) minimizeButton.getButton().getScene().getWindow();
-              stage.setIconified(true);
-            });
+        minimizeButton = new UtilButton("header-quit-button", "/design/images/minimize.png");
+        minimizeButton
+            .getButton()
+            .setOnAction(
+                event -> {
+                  Stage stage = (Stage) minimizeButton.getButton().getScene().getWindow();
+                  stage.setIconified(true);
+                });
 
-    quitButton = new UtilButton("header-quit-button", "/design/images/quit.png");
-    quitButton
-        .getButton()
-        .setOnAction(
-            event -> {
-              if (isGaming) {
-                generateAlert();
-              } else {
-                ((Stage) quitButton.getButton().getScene().getWindow()).close();
-              }
-            });
+        quitButton = new UtilButton("header-quit-button", "/design/images/quit.png");
+        quitButton
+            .getButton()
+            .setOnAction(
+                event -> {
+                  if (isGaming) {
+                    generateAlert();
+                  } else {
+                    ((Stage) quitButton.getButton().getScene().getWindow()).close();
+                  }
+                });
 
-    barreNavigation.getChildren().addAll(minimizeButton.getButton(), quitButton.getButton());
-
+        barreNavigation.getChildren().addAll(minimizeButton.getButton(), quitButton.getButton());
+    */
     return barreNavigation;
   }
 

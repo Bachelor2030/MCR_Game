@@ -1,11 +1,13 @@
 package gameLogic.board;
 
+import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.receptors.Receptor;
 import gameLogic.receptors.Trap;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Spot {
+public class Spot extends Receptor {
   private int spotNumber;
   private Line line;
   private Receptor occupant;
@@ -60,13 +62,22 @@ public class Spot {
     return spotNumber;
   }
 
-  public Spot next() {
-    if (spotNumber + 1 < line.getNbSpots()) return line.getSpot(spotNumber + 1);
+  public Spot next(int ownerId) {
+    int change = (ownerId == 1 ? 1 : -1);
+
+    if (spotNumber + change < line.getNbSpots()) {
+      return line.getSpot(spotNumber + change);
+    }
     return null;
   }
 
-  public Spot previous() {
-    if (spotNumber - 1 > 0) return line.getSpot(spotNumber - 1);
+  public Spot previous(int ownerId) {
+    int change = (ownerId == 1 ? -1 : 1);
+    if (spotNumber + change > 0) return line.getSpot(spotNumber + change);
     return null;
   }
+
+  @Override
+  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
+
 }

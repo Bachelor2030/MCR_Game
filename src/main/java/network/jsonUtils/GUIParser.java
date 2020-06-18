@@ -1,7 +1,11 @@
 package network.jsonUtils;
 
+import gameLogic.commands.CommandName;
+import gameLogic.commands.guiCommands.*;
 import gameLogic.invocator.card.CardType;
+import gui.board.GUIBoard;
 import gui.receptors.GUICard;
+import gui.receptors.GUICreature;
 import network.Messages;
 import network.states.ClientSharedState;
 import org.json.JSONArray;
@@ -99,6 +103,34 @@ public class GUIParser {
     return enemy;
   }
 
+  public static GUICreature getCreatureFromCard(int idCard) {
+
+    try {
+      JSONObject obj = new JSONObject(new JsonUtil().getJsonContent("src/main/resources/json/cards.json"));
+
+      JSONArray arr = obj.getJSONArray(Messages.JSON_TYPE_CARDS);
+
+      for (int i = 0; i < arr.length(); i++) {
+
+        JSONObject card = arr.getJSONObject(i);
+        if (card.getInt("id") == idCard) {
+          JSONObject creature = card.getJSONObject(Messages.JSON_TYPE_CREATURE);
+          String name = creature.getString(Messages.JSON_TYPE_NAME);
+          String img = creature.getString(Messages.JSON_TYPE_IMAGE);
+          int life = creature.getInt(Messages.JSON_TYPE_LP);
+          int steps = creature.getInt(Messages.JSON_TYPE_MP);
+          int attack = creature.getInt(Messages.JSON_TYPE_AP);
+
+          return new GUICreature(name, img, life, steps, attack);
+        }
+      }
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
   public static GUICard getCardFromId(int idCard) {
     GUICard guiCard = null;
     JSONObject obj;
@@ -115,9 +147,9 @@ public class GUIParser {
         String cardName = card.getString("name");
         CardType cardType = CardType.getType(card.getString("type"));
         int cardCost = card.getInt("cost");
-        String description = card.getString(Messages.JSON_TYPE_DESCRIPTION);
+        // TODO String description = card.getString(Messages.JSON_TYPE_DESCRIPTION);
 
-        cards.add(new GUICard(id, cardName, cardType, cardCost, description));
+        cards.add(new GUICard(id, cardName, cardType, cardCost, "description"));
       }
     } catch (JSONException e) {
       e.printStackTrace();
@@ -132,42 +164,63 @@ public class GUIParser {
 
     return guiCard;
   }
-  /*
-     public ArrayList<Card> readInit(String jsonInit) {
-         ArrayList<Card> playerCards = new ArrayList<>();
-         try {
-             JSONObject init = new JSONObject(jsonInit);
-             JSONObject gameStat = init.getJSONObject(Messages.JSON_GAMESTATE);
-             JSONArray cards = gameStat.getJSONArray(Messages.JSON_TYPE_CARDS);
 
-             for (int c = 0; c < cards.length(); c++) {
-                 JSONObject card = cards.getJSONObject(c);
-                 Card playersCard =
-                         new Card(card.getInt(Messages.JSON_TYPE_CARD_ID),
-                                 card.getString(Messages.JSON_TYPE_NAME),
-                                 CardType.getType(card.getString(Messages.JSON_TYPE)),
-                                 card.getInt(Messages.JSON_TYPE_COST));
+  public static GuiCommand getCommand(String serverMessage, GUIBoard guiBoard) {
+    GuiCommand command = null;
+    try {
+      JSONObject jsonObject = new JSONObject(serverMessage);
+      CommandName commandName = CommandName.getCommandName(jsonObject.getString(Messages.JSON_TYPE_COMMAND));
 
-                 ArrayList<ConcreteCommand> cardCommand = new ArrayList<>();
-                 JSONArray commands = card
-                         .getJSONObject(Messages.JSON_TYPE_COMMANDS)
-                         .getJSONArray(Messages.JSON_TYPE_COMMANDS);
+      if(commandName.equals(CommandName.ADD_CARD)) {
+        command = new AddCard();
+        ((AddCard)command).setCardID(jsonObject.getInt(Messages.JSON_TYPE_CARD_ID));
+      }
+      else if(commandName.equals(CommandName.REMOVE_CARD)) {
+        command = new RemoveCard();
+        ((RemoveCard)command).setCardID(jsonObject.getInt(Messages.JSON_TYPE_CARD_ID));
+      }
+      else if(commandName.equals(CommandName.KNOCK_OUT_CREATURE)) {
+        command = new KnockOutCreature();
+        ((KnockOutCreature)command)
+                .setPosition(guiBoard
+                        .getSpot(jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION)
+                                .getInt(Messages.JSON_TYPE_LINE),
+                                jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION).getInt(Messages.JSON_TYPE_SPOT)));
+      }
+      else if(commandName.equals(CommandName.CHANGE_POINTS)) {
+        command = new ChangePoints();
+        ((ChangePoints)command).setNewPointValue(jsonObject.getInt(Messages.JSON_TYPE_EFFECT));
+        ((ChangePoints)command).setPointsType(jsonObject.getString(Messages.JSON_TYPE_POINTS_TYPE).charAt(0));
+        ((ChangePoints)command).setPosition(guiBoard
+                .getSpot(jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION)
+                                .getInt(Messages.JSON_TYPE_LINE),
+                        jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION).getInt(Messages.JSON_TYPE_SPOT)));
+      }
+      else if(commandName.equals(CommandName.MOVE)) {
+        command = new Move();
+        ((Move)command).setFrom(guiBoard
+                .getSpot(jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION_FROM)
+                                .getInt(Messages.JSON_TYPE_LINE),
+                        jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION).getInt(Messages.JSON_TYPE_SPOT)));
 
-                 for (int cmd = 0; cmd < commands.length(); cmd++) {
-                     CommandName name = CommandName
-                             .getCommandName(commands.getJSONObject(cmd).getString(Messages.JSON_TYPE_NAME));
-                     cardCommand.add(name.getCommand());
-                 }
+        ((Move)command).setTo(guiBoard
+                .getSpot(jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION_TO)
+                                .getInt(Messages.JSON_TYPE_LINE),
+                        jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION).getInt(Messages.JSON_TYPE_SPOT)));
+      }
+      else if(commandName.equals(CommandName.PLACE)) {
+        command = new Place();
+        ((Place)command).setPosition(guiBoard
+                .getSpot(jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION).getInt(Messages.JSON_TYPE_LINE),
+                        jsonObject.getJSONObject(Messages.JSON_TYPE_POSITION).getInt(Messages.JSON_TYPE_SPOT)));
 
-                 playersCard.setCommand(new Macro(cardCommand));
-                 playerCards.add(playersCard);
-             }
+        ((Place)command).setCardID(jsonObject.getInt(Messages.JSON_TYPE_CARD_ID));
+      }
 
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    return command;
+  }
 
-         } catch (JSONException e) {
-             e.printStackTrace();
-         }
-         return playerCards;
-     }
-  */
 }

@@ -50,14 +50,24 @@ public class InGameWindow extends GameWindow {
 
   private void generateBody() throws IOException {
 
+    if(clientSharedState.isPlayerTurn(player1.getName())) {
+      // On créé l'espace d'infos du joueur 1
+      racine.setLeft(getPlayerInformations(player1.getName()));
+
+      // On créé l'espace d'infos du joueur 2
+      racine.setRight(getPlayerInformations(player2.getName()));
+    }
+    else {
+      // On créé l'espace d'infos du joueur 1
+      racine.setLeft(getPlayerInformations(player2.getName()));
+
+      // On créé l'espace d'infos du joueur 2
+      racine.setRight(getPlayerInformations(player1.getName()));
+    }
     // On met en place le corps du texte
     racine.setCenter(displayInGameField());
 
-    // On créé l'espace d'infos du joueur 1
-    racine.setLeft(getPlayerInformations(player1.getName()));
 
-    // On créé l'espace d'infos du joueur 1
-    racine.setRight(getPlayerInformations(player2.getName()));
 
     // On crée un footer dans le BorderPane
     racine.setBottom(footerBar());
@@ -93,6 +103,14 @@ public class InGameWindow extends GameWindow {
   private VBox getPlayerInformations(String labelTitle) {
     VBox informationPannelUser = new VBox();
 
+    Label isPlaying = new Label("- Playing now -");
+    isPlaying.getStyleClass().add("isPlaying-label");
+    informationPannelUser.getChildren().add(isPlaying);
+    if(!(clientSharedState.isPlayerTurn(labelTitle)))
+    {
+      isPlaying.setText("");
+    }
+
     // on set l'image de player 1
     if (labelTitle.equals(player1.getName())) {
       ImageView imageView = new ImageView(player1.getImage());
@@ -117,8 +135,8 @@ public class InGameWindow extends GameWindow {
     // On créé le titre "Actions"
     Label informationPanelUserTitle = new Label(labelTitle);
     informationPanelUserTitle.getStyleClass().add("titre-label");
-
-    informationPannelUser.getChildren().addAll(informationPanelUserTitle);
+    informationPannelUser.getChildren().add(informationPanelUserTitle);
+    
     return informationPannelUser;
   }
   /**

@@ -5,7 +5,7 @@ import gameLogic.commands.CommandName;
 import gameLogic.commands.ConcreteCommand;
 import gameLogic.commands.CreateTrap;
 import gameLogic.commands.Macro;
-import gameLogic.commands.onLiveReceptors.onCreature.Create;
+import gameLogic.commands.Create;
 import gameLogic.invocator.card.Card;
 import gameLogic.invocator.card.CardType;
 import gameLogic.receptors.Creature;

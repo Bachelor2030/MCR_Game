@@ -1,21 +1,21 @@
 package gameLogic.commands.guiCommands;
 
-import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gui.GameBoard;
+import gui.board.GUISpot;
 import gui.receptors.GUICreature;
 import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class KnockOutCreature extends GuiCommand {
-  private Spot position;
+  private GUISpot position;
 
   public KnockOutCreature() {
     super(CommandName.KNOCK_OUT_CREATURE);
   }
 
-  public void setPosition(Spot position) {
+  public void setPosition(GUISpot position) {
     this.position = position;
   }
 
@@ -36,7 +36,7 @@ public class KnockOutCreature extends GuiCommand {
   public void execute(GameBoard gameBoard) {
     ((GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
                 .getOccupant())
@@ -47,7 +47,7 @@ public class KnockOutCreature extends GuiCommand {
   public void undo(GameBoard gameBoard) {
     ((GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
                 .getOccupant())

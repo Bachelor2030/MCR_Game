@@ -1,7 +1,6 @@
 package gui;
 
 import gameLogic.commands.guiCommands.EndGame;
-import gameLogic.commands.playersAction.EndTurn;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
 import gui.gameWindows.*;
@@ -13,7 +12,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -61,7 +63,7 @@ public class GameBoard extends Application {
   private final String jsonPath = "src/main/resources/json/";
   private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
 
-  private GUIBoard GUIBoard;
+  private GUIBoard guiBoard;
 
   private Stage currentStage;
 
@@ -316,6 +318,7 @@ public class GameBoard extends Application {
               actionEvent -> {
                 try {
                   inMainMenu();
+                  //TODO : afficher alert : voulez vous déclarer forfait ?
                   System.out.println("you hit the returnMenu button...");
                 } catch (IOException e) {
                   e.printStackTrace();
@@ -331,8 +334,8 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                displayNotYourTurnAlert();
                 if (!clientAdapter.getClientSharedState().isMyTurn()) {
-                  // TODO: Afficher une alerte sur le GUI
                   System.out.println("Please wait for your turn to validate it");
                   return;
                 } else {
@@ -353,6 +356,7 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                displayNotYourTurnAlert();
                 if (!clientAdapter.getClientSharedState().isMyTurn()) {
                   return;
                 }
@@ -371,6 +375,8 @@ public class GameBoard extends Application {
           .getButton()
           .setOnAction(
               actionEvent -> {
+                displayNotYourTurnAlert();
+                //TODO implement undo button
                 System.out.println("you hit the undo button...");
               });
       buttons.add(validateTourButton);
@@ -382,6 +388,27 @@ public class GameBoard extends Application {
     navigationBar.generate();
 
     return navigationBar.getBarreNavigation();
+  }
+
+  private void displayNotYourTurnAlert() {
+    if (!player1.getClientSharedState().isMyTurn()) {
+      // TODO: Afficher une alerte sur le GUI
+      // on créé une alerte WARNING qui indique à l'utilisateur
+      // que ce n'est pas à lui de jouer.
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setAlertType(Alert.AlertType.WARNING);
+      alert.setTitle("Ce n'est pas à votre tour de jouer !");
+      Image image =
+              new Image(
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
+      ImageView imageView = new ImageView(image);
+      alert.setGraphic(imageView);
+      DialogPane dialogPane = alert.getDialogPane();
+      dialogPane
+              .getStylesheets()
+              .add(getClass().getResource("/design/css/styleSheet.css").toExternalForm());
+      alert.show();
+    }
   }
 
   /** PAGE INSTRUCTIONS */
@@ -398,12 +425,15 @@ public class GameBoard extends Application {
    */
   public void inGame(BorderPane racine) throws IOException {
     isGaming = true;
+
+    guiBoard = new GUIBoard(new GridPane(), new VBox(), player1, player2);
+
     InGameWindow inGameWindow =
         new InGameWindow(
             racine,
             defineHeader(false),
             gridIslandsPanel,
-            GUIBoard,
+                guiBoard,
             player1,
             player2,
             isGaming,
@@ -412,13 +442,13 @@ public class GameBoard extends Application {
             handPlayer);
   }
 
-  public GUIBoard getGUIBoard() {
-    return GUIBoard;
+  public GUIBoard getGuiBoard() {
+    return guiBoard;
   }
 
   public void place(GUIReceptor receptor, int line, int position) {
-    GUIBoard.place(receptor, line, position);
-    GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
+    guiBoard.place(receptor, line, position);
+    guiBoard.getLine(line).getSpot(position).setOccupant(receptor);
   }
 
   public ClientAdapter getClientAdapter() {
@@ -458,12 +488,14 @@ public class GameBoard extends Application {
   }
 
   public void placeTrap(int line, int position) {
-    GUIBoard.placeTrap(line, position);
-    // TODO mettre le piège
+    guiBoard.placeTrap(line, position);
+    DropShadow shadow = new DropShadow();
+    guiBoard.getLine(line).getSpot(position).getButton().setEffect(shadow);
+    //TODO Need to test
   }
 
   public void removeTrap(int line, int position) {
-    GUIBoard.removeTrap(line, position);
-    // TODO enlever le piège
+    guiBoard.removeTrap(line, position);
+    guiBoard.getLine(line).getSpot(position).getButton().getStyleClass().add("button-island");
   }
 }

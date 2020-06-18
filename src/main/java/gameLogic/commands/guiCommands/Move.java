@@ -1,25 +1,25 @@
 package gameLogic.commands.guiCommands;
 
-import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gui.GameBoard;
+import gui.board.GUISpot;
 import gui.receptors.GUICreature;
 import network.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Move extends GuiCommand {
-  private Spot from, to;
+  private GUISpot from, to;
 
   public Move() {
     super(CommandName.MOVE);
   }
 
-  public void setTo(Spot to) {
+  public void setTo(GUISpot to) {
     this.to = to;
   }
 
-  public void setFrom(Spot from) {
+  public void setFrom(GUISpot from) {
     this.from = from;
   }
 
@@ -42,7 +42,7 @@ public class Move extends GuiCommand {
     GUICreature creature =
         (GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(from.getLineNumber())
                 .getSpot(from.getSpotNumber())
                 .getOccupant();
@@ -55,7 +55,7 @@ public class Move extends GuiCommand {
     GUICreature creature =
         (GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(to.getLineNumber())
                 .getSpot(to.getSpotNumber())
                 .getOccupant();

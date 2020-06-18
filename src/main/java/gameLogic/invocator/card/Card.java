@@ -1,8 +1,12 @@
 package gameLogic.invocator.card;
 
+import gameLogic.board.Spot;
 import gameLogic.commands.Macro;
 import gameLogic.invocator.Invocator;
+import gameLogic.receptors.LiveReceptor;
+import gameLogic.receptors.Receptor;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,16 +35,16 @@ public class Card implements Invocator {
     this.ID = id;
   }
 
-  public void undo() {
+  public void undo(ServerSharedState serverSharedState) {
     if (command != null) {
-      command.undo(command.getReceptor());
+      command.undo(command.getReceptor(), serverSharedState);
     }
   }
 
   /** Plays the card which executes its commands */
-  public void play() {
-    if (command != null) {
-      command.execute(command.getReceptor());
+  public void play(Spot spot, ServerSharedState serverSharedState) {
+    if (command != null && spot != null) {
+      command.execute(spot, serverSharedState);
     }
   }
 

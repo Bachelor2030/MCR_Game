@@ -1,12 +1,14 @@
 package gameLogic.receptors;
 
 import gameLogic.Game;
+import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gameLogic.commands.ConcreteCommand;
 import gameLogic.commands.CreateTrap;
-import gameLogic.commands.onLiveReceptors.onCreature.Create;
+import gameLogic.commands.Create;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.invocator.card.Card;
+import network.states.ServerSharedState;
 
 import java.util.*;
 
@@ -37,6 +39,7 @@ public class Player extends Receptor {
       play; // False when the Player ends his/her turn
 
   private Game game;
+  private int id;
 
   /**
    * Creates a Player with the given name and deck
@@ -124,16 +127,16 @@ public class Player extends Receptor {
    * @param card the card to play
    * @return true if the card can be played, false otherwise
    */
-  public boolean playCard(Card card) {
+  public boolean playCard(Card card, Spot spot, ServerSharedState serverSharedState) {
     if (!hand.contains(card)) return false;
 
     if (card != null && actionPoints >= card.getCost()) {
 
-      card.play();
+      card.play(spot, serverSharedState);
 
       ArrayList<Create> createCreatures = card.getCommand().getCreateCreature();
       for (Create create : createCreatures) {
-        creatures.addAll(Arrays.asList(create.getCreatures()));
+        creatures.addAll(Arrays.asList(create.getCreature()));
       }
 
       discard.get(currentTurn).add(card);
@@ -244,20 +247,20 @@ public class Player extends Receptor {
     return card;
   }
 
-  public void undoCard(Card cardToUndo) {
+  public void undoCard(Card cardToUndo, ServerSharedState serverSharedState) {
     if (discard.get(currentTurn).remove(cardToUndo)) {
       hand.add(cardToUndo);
-      cardToUndo.undo();
+      cardToUndo.undo(serverSharedState);
       actionPoints += cardToUndo.getCost();
     }
   }
 
-  public void endTurn() {
+  public void endTurn(ServerSharedState serverSharedState) {
     play = false;
     for (Creature creature : creatures) {
-      creature.playTurn(currentTurn, null);
+      creature.playTurn(currentTurn, null, serverSharedState);
       if (!creature.isAlive()) {
-        creatures.remove(creature);
+        creatures.remove(creature); // dead
       }
     }
 
@@ -309,10 +312,18 @@ public class Player extends Receptor {
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action) {
+  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {
     if (currentTurn != turn) {
       setTurn(turn);
     }
-    action.execute(this);
+    action.execute(this, serverSharedState);
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 }

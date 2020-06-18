@@ -3,7 +3,9 @@ package gui.board;
 import gui.maths.Vector2f;
 import gui.receptors.GUIReceptor;
 import gui.receptors.GUITrap;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
@@ -54,9 +56,9 @@ public class GUISpot {
    *
    * @throws IOException
    */
-  public GUISpot(ClientSharedState clientSharedState) throws IOException {
+  public GUISpot(int line, ClientSharedState clientSharedState) throws IOException {
     this(
-        spotCounter++,
+        spotCounter++, line,
         new Vector2f(STARTING_COORDINATE_X, STARTING_COORDINATE_Y),
         clientSharedState);
   }
@@ -68,7 +70,7 @@ public class GUISpot {
    * @param pos : sa position dans la fenêtre du jeu
    * @throws FileNotFoundException
    */
-  private GUISpot(int number, Vector2f pos, ClientSharedState clientSharedState)
+  private GUISpot(int number, int line, Vector2f pos, ClientSharedState clientSharedState)
       throws FileNotFoundException {
     image = new Image(imagePath);
     imageView = new ImageView(image);
@@ -80,6 +82,20 @@ public class GUISpot {
         actionEvent -> {
           if (!clientSharedState.isMyTurn()) {
             // TODO: Afficher une alerte sur le GUI
+            // on créé une alerte WARNING qui indique à l'utilisateur
+            // que ce n'est pas à lui de jouer.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.setTitle("Ce n'est pas à votre tour de jouer !");
+            Image image = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
+            ImageView imageView = new ImageView(image);
+            alert.setGraphic(imageView);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane
+                    .getStylesheets()
+                    .add(getClass().getResource("/design/css/styleSheet.css").toExternalForm());
+            alert.show();
+
             System.out.println("Please wait for your turn");
             return;
           } else {
@@ -87,7 +103,7 @@ public class GUISpot {
             if (clientSharedState.getSelectedCard() != null) {
 
               clientSharedState.setChosenPosition(
-                  new Pair<>((number / GUILine.NB_SPOTS), (number % GUILine.NB_SPOTS)));
+                  new Pair<>(line, number % GUILine.NB_SPOTS));
 
               try {
                 JSONObject json = clientSharedState.getSelectedCard().getJson();
@@ -100,7 +116,7 @@ public class GUISpot {
           }
         });
     button.setGraphic(imageView);
-    this.number = number % 10;
+    this.number = number % (GUILine.NB_SPOTS);
     this.pos = pos;
     initDisplaySpot();
   }
@@ -166,5 +182,18 @@ public class GUISpot {
 
   public void unTrap() {
     isTrapped = false;
+  }
+
+  public JSONObject toJson() {
+    // TODO
+    return null;
+  }
+
+  public int getLineNumber() {
+    return (number / GUILine.NB_SPOTS);
+  }
+
+  public int getSpotNumber() {
+    return (number % GUILine.NB_SPOTS);
   }
 }

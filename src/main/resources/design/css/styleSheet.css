@@ -129,10 +129,6 @@
     -fx-background-color: transparent;
 }
 
-.button-trap-island {
-
-}
-
 .toggle-unselected{
     -fx-border-color: transparent;
     -fx-border-width: 0;
@@ -172,6 +168,10 @@
     -fx-pref-height: 300;
 }
 
+.isPlaying-label {
+    -fx-text-fill: #2ff1b0;
+}
+
 
 /* ************************************************ */
 /* COLONNE DROITE */
@@ -195,4 +195,9 @@
     -fx-graphic: url("/design/images/yUQuit.png");
     -fx-alignment: center;
     -fx-background-color: #CDAEF3;
+}
+
+.alert.dialog-pane {
+    -fx-alignment: center;
+    -fx-background-color: #a5acea;
 }

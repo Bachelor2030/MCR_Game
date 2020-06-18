@@ -143,6 +143,12 @@ public class ClientAdapter {
             clientSharedState.setFinishedInit(true);
             break;
 
+          case Messages.JSON_TYPE_UPDATE:
+            clientThreadState = ClientThreadState.SERVER_LISTENING;
+            GUIParser.getCommand(receivedAnswer, gameBoard.getGuiBoard()).execute(gameBoard);
+            clientSharedState.setMyTurn(true);
+            break;
+
           case Messages.JSON_TYPE_YOUR_TURN:
             clientThreadState = ClientThreadState.SERVER_LISTENING;
             clientSharedState.setMyTurn(true);
