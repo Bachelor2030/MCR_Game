@@ -16,9 +16,9 @@ public abstract class PlayersAction extends ConcreteCommand {
     super(name);
   }
 
-  public abstract void execute(Player player, ServerSharedState serverSharedState);
+  public abstract void execute(Player player);
 
-  public abstract void undo(Player player, ServerSharedState serverSharedState);
+  public abstract void undo(Player player);
 
   @Override
   public Receptor getReceptor() {
@@ -26,17 +26,17 @@ public abstract class PlayersAction extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
+  public void execute(Receptor receptor) {
     player = (Player) receptor;
     player.addLastMove(this);
-    execute((Player) receptor, serverSharedState);
+    execute((Player) receptor);
   }
 
   @Override
-  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
+  public void undo(Receptor receptor) {
     player = (Player) receptor;
     player.removeLastMove(this);
-    undo((Player) receptor, serverSharedState);
+    undo((Player) receptor);
   }
 
   @Override

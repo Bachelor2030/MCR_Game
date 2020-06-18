@@ -46,6 +46,9 @@ public class Creature extends LiveReceptor {
       if (position.next(owner.getId(), serverSharedState) == null) {
         returnToDeck();
       }
+      if (position.next(owner.getId(), serverSharedState) == null) {
+        return counter;
+      }
 
       if (position.next(owner.getId(), serverSharedState).isEmpty()) {
         position.leave();

@@ -1,7 +1,6 @@
 package gameLogic;
 
 import gameLogic.board.Board;
-import gameLogic.commands.CommandName;
 import gameLogic.commands.Macro;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.invocator.card.Card;
@@ -11,7 +10,6 @@ import network.Messages;
 import network.ServerAdapter;
 import network.jsonUtils.JsonUtil;
 import network.states.ServerSharedState;
-import network.states.ServerThreadState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +46,9 @@ public class Game extends Receptor {
     serverAdapter.getServerSharedState().setFinishedInit();
   }
 
+  /**
+   * Permet de faire passer le jeu au tour suivant
+   */
   public void nextTurn() {
     System.out.println("Turn " + (++turn));
   }
@@ -87,10 +88,19 @@ public class Game extends Receptor {
     return false;
   }
 
+  /**
+   * Permet de récupérer le tour courrant du jeu
+   * @return
+   */
   public int getTurn() {
     return turn;
   }
 
+  /**
+   * Permet d'envoyer l'état initial du jeu courant pour le joueur donné
+   * @param playerId l'identifiant du joueur dont on veux avoir l'état initial
+   * @return
+   */
   public JSONObject initState(int playerId) {
     JSONObject gameJSON = new JSONObject();
     try {
@@ -125,10 +135,29 @@ public class Game extends Receptor {
     return gameJSON;
   }
 
+  /**
+   * Permet de récupérer l'identifiant du premier joueur (celui qui joue en premier)
+   * @return
+   */
   public int getFirstPlayerId() {
     return firstPlayerId;
   }
 
+  /**
+   * retourne le joueur correspondant à l'identifiant donné
+   * @param id
+   * @return
+   */
+  public Player getPlayer(int id) {
+    return (id == firstPlayerId ? player1 : player2);
+  }
+
+  /**
+   * Permet de déchiffrer le message envoyé par le client, d'en extraire la commande et de l'executer
+   * @param playerId l'identifiant du joueur ayant envoyé le message
+   * @param receivedMessage le message envoyé depuis le serveur
+   * @return
+   */
   public boolean playerSentMessage(int playerId, String receivedMessage) {
     Player player = (playerId == firstPlayerId ? player1 : player2);
 
@@ -163,8 +192,4 @@ public class Game extends Receptor {
 
   @Override
   public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
-
-  public Player getPlayer(int id) {
-    return (id == firstPlayerId ? player1 : player2);
-  }
 }
