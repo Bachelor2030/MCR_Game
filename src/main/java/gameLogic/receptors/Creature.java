@@ -43,13 +43,13 @@ public class Creature extends LiveReceptor {
   public int advance(ServerSharedState serverSharedState) {
     int counter = 0;
     for (int step = 0; step < steps; ++step) {
-      if (position.next(owner.getId()) == null) {
+      if (position.next(owner.getId(), serverSharedState) == null) {
         returnToDeck();
       }
 
-      if (position.next(owner.getId()).isEmpty()) {
+      if (position.next(owner.getId(), serverSharedState).isEmpty()) {
         position.leave();
-        position = position.next(owner.getId());
+        position = position.next(owner.getId(), serverSharedState);
         if (position.isTrapped()) {
           ((Trap) position.getOccupant()).trigger(this, serverSharedState);
         }
@@ -58,12 +58,12 @@ public class Creature extends LiveReceptor {
         break;
       }
     }
-    if (lifePoints > 0 && !position.next(owner.getId()).isEmpty() && position.next(owner.getId()) != null) {
-      if (!((LiveReceptor) position.next(owner.getId()).getOccupant()).isAlly(this)) {
+    if (lifePoints > 0 && !position.next(owner.getId(), serverSharedState).isEmpty() && position.next(owner.getId(), serverSharedState) != null) {
+      if (!((LiveReceptor) position.next(owner.getId(), serverSharedState).getOccupant()).isAlly(this)) {
 
-        ((LiveReceptor) position.next(owner.getId()).getOccupant()).loseLifePoints(attackPoints);
-        if (((LiveReceptor) position.next(owner.getId()).getOccupant()).getType().equals(this.getType())) {
-          this.loseLifePoints(((Creature) position.next(owner.getId()).getOccupant()).getAttackPoints());
+        ((LiveReceptor) position.next(owner.getId(), serverSharedState).getOccupant()).loseLifePoints(attackPoints);
+        if (((LiveReceptor) position.next(owner.getId(), serverSharedState).getOccupant()).getType().equals(this.getType())) {
+          this.loseLifePoints(((Creature) position.next(owner.getId(), serverSharedState).getOccupant()).getAttackPoints());
         }
       }
     }
@@ -83,9 +83,9 @@ public class Creature extends LiveReceptor {
    */
   public void retreat(int distance, ServerSharedState serverSharedState) {
     for (int step = 0; step < distance; ++step) {
-      if (position.previous(owner.getId()).isEmpty()) {
+      if (position.previous(owner.getId(), serverSharedState).isEmpty()) {
         position.leave();
-        position = position.previous(owner.getId());
+        position = position.previous(owner.getId(), serverSharedState);
         if (position.isTrapped()) {
           ((Trap) position.getOccupant()).trigger(this, serverSharedState);
         }

@@ -79,7 +79,7 @@ public class NetworkWaiting {
 
           // wait for new play
           if (goodPlay) {
-            serverSharedState.setIntendToSendJson(playerId, true);
+            //serverSharedState.setIntendToSendJson(playerId, true);
             sendJsonType(Messages.JSON_TYPE_PLAY_OK, outPrintWriter, className);
             // Sending all game updates
             if (serverSharedState.getIntendToSendJson(playerId)) {

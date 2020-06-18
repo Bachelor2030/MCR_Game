@@ -49,10 +49,12 @@ public class Macro implements Command {
     JSONObject macro = new JSONObject();
 
     try {
-      ConcreteCommand command = commands.get(commands.size()-1);
+      if (commands.size() != 0) {
+        ConcreteCommand command = commands.get(commands.size()-1);
+        // Add last command name
+        macro.put(Messages.JSON_TYPE_COMMAND, command.name);
+      }
 
-      // Add last command name
-      macro.put(Messages.JSON_TYPE_COMMAND, command.name);
 
       // TODO ajouter ce qu'il faut
 

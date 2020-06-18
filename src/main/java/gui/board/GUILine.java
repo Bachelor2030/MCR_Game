@@ -81,7 +81,6 @@ public class GUILine {
         vbox.getChildren().addAll((chests.get(1).getImageView()), (GUISpots.get(spot).getButton()));
         gridPane.add(vbox, spot, noLine);
       } else {
-        //TODO add progressbar
         receptors.add(new GUICreature("unknown", 0, 0, 0));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren()
@@ -93,12 +92,14 @@ public class GUILine {
   }
 
   public void setReceptor(GUIReceptor receptor, int spot) {
-    receptors.get(spot).setTo(receptor);
+    receptors.set(spot, receptor);
 
     ObservableList<Node> children = gridPane.getChildren();
     for (Node node : children) {
       if (gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
-        ((ImageView)((VBox)node).getChildren().get(0)).setImage(receptors.get(spot).getImageView().getImage());
+        ImageView imageView = receptors.get(spot).getImageView();
+        imageView.setVisible(true); // please
+        ((VBox) node).getChildren().set(0, imageView);
         break;
       }
     }

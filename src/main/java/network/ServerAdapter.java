@@ -196,6 +196,10 @@ public class ServerAdapter {
                 break;
 
               case CLIENT_LISTENING:
+
+                // Wait for backend to signify it's next Player's turn
+                while (serverSharedState.getPlayingId() != playerId) {}
+
                 while (serverSharedState.getIntendToSendJson(playerId)) {
                   while (!serverSharedState.jsonToSendEmpty(playerId)) {
                     JSONObject jsonObject = serverSharedState.popJsonToSend(playerId);
@@ -203,13 +207,10 @@ public class ServerAdapter {
                   }
                 }
 
-                // Wait for backend to signify it's next Player's turn
-                while (serverSharedState.getPlayingId() != playerId) {}
-
-                // TODO: Send "your turn" from logic class?
+                /* TODO: Send "your turn" from logic class?
                 sendJsonType(
                     Messages.JSON_TYPE_YOUR_TURN, outPrintWriter, servantClassName(playerId));
-                serverSharedState.setWorkerState(playerId, ServerThreadState.SERVER_LISTENING);
+                serverSharedState.setWorkerState(playerId, ServerThreadState.SERVER_LISTENING);*/
                 break;
             }
           }
