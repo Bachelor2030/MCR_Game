@@ -10,13 +10,13 @@ public class Draw extends CardMovement {
   }
 
   @Override
-  public void execute(Player player, ServerSharedState serverSharedState) {
+  public void execute(Player player) {
     card = player.drawCard();
     setCard(card);
   }
 
   @Override
-  public void undo(Player player, ServerSharedState serverSharedState) {
+  public void undo(Player player) {
     player.removeFromHand(card);
     player.addToTopDeck(card);
   }

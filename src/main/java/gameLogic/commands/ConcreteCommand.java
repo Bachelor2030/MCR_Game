@@ -2,6 +2,7 @@ package gameLogic.commands;
 
 import gameLogic.receptors.Receptor;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 public abstract class ConcreteCommand implements Command {
   protected final CommandName name;
+  private ServerSharedState serverSharedState;
 
   public ConcreteCommand(CommandName name) {
     this.name = name;
@@ -19,6 +21,14 @@ public abstract class ConcreteCommand implements Command {
   }
 
   public abstract Receptor getReceptor();
+
+  public void setServerSharedState(ServerSharedState serverSharedState) {
+    this.serverSharedState = serverSharedState;
+  }
+
+  public ServerSharedState getServerSharedState() {
+    return serverSharedState;
+  }
 
   public JSONObject toJson() {
     JSONObject command = new JSONObject();

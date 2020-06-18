@@ -14,22 +14,22 @@ public class Abandon extends PlayersAction {
   }
 
   @Override
-  public void execute(Player player, ServerSharedState serverSharedState) {
+  public void execute(Player player) {
     player.abandon();
 
     try {
       JSONObject jsonObject = new JSONObject();
       jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_GAME_END);
       jsonObject.put(Messages.JSON_TYPE_LOSE_WIN, "L");
-      serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
+      player.getServerSharedState().pushJsonToSend(jsonObject, player.getServerSharedState().getPlayingId());
       //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
 
-      int other = serverSharedState.otherPlayer(serverSharedState.getPlayingId() );
+      int other = player.getServerSharedState().otherPlayer(player.getServerSharedState().getPlayingId() );
 
       jsonObject = new JSONObject();
       jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_GAME_END);
       jsonObject.put(Messages.JSON_TYPE_LOSE_WIN, "W");
-      serverSharedState.pushJsonToSend(jsonObject, other);
+      player.getServerSharedState().pushJsonToSend(jsonObject, other);
       //serverSharedState.setIntendToSendJson(other, true);
 /*
       serverSharedState.setWorkerState(player.getId(), ServerThreadState.CLIENT_LISTENING);
@@ -40,7 +40,7 @@ public class Abandon extends PlayersAction {
   }
 
   @Override
-  public void undo(Player player, ServerSharedState serverSharedState) {
+  public void undo(Player player) {
     player.undoAbandon();
   }
 }

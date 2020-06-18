@@ -14,9 +14,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * Modélise la classe recevant les commandes
+ */
 public abstract class Receptor {
-  protected Macro lastMove = new Macro(new ArrayList<>());
+  protected Macro lastMove;
   protected String name;
+
+  private ServerSharedState serverSharedState;
 
   private String imgPath = "src/main/resources/design/images/creatures/empty.jpg";
   private FileInputStream fis;
@@ -24,8 +29,10 @@ public abstract class Receptor {
   private Image image;
   private ImageView imageView;
 
-  public Receptor(String name) {
+  public Receptor(String name, ServerSharedState serverSharedState) {
     this.name = name;
+    this.serverSharedState = serverSharedState;
+    lastMove = new Macro(new ArrayList<>());
     initDisplay();
   }
 
@@ -34,22 +41,41 @@ public abstract class Receptor {
     initDisplay();
   }
 
+  /**
+   * Permet de récupérer le nom du recepteur
+   * @return
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Permet de récupérer la dernière action faite pa le recepteur
+   * @return
+   */
   public Macro getLastMove() {
     return lastMove;
   }
 
-  public abstract void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState);
+  /**
+   * Permet de faire jouer son tour au recepteur courrant
+   * @param turn le numéro du tour à jouer
+   * @param action l'action à executer pour le tour donné
+   */
+  public abstract void playTurn(int turn, PlayersAction action);
 
-  public void undoLastMove(ServerSharedState serverSharedState) {
-    lastMove.undo(lastMove.getReceptor(), serverSharedState);
+  /**
+   * Permet d'annuler la dernière action (Commande) faite sur le recepteur
+   */
+  public void undoLastMove() {
+    lastMove.undo(lastMove.getReceptor());
   }
 
-  public void redoLastMove(ServerSharedState serverSharedState) {
-    lastMove.execute(lastMove.getReceptor(), serverSharedState);
+  /**
+   * Permet de réexecuter la dernière action faite sur le recepteur
+   */
+  public void redoLastMove() {
+    lastMove.execute(lastMove.getReceptor());
   }
 
   @Override
@@ -57,6 +83,9 @@ public abstract class Receptor {
     return name;
   }
 
+  /**
+   * Permet d'initialiser l'affichage
+   */
   private void initDisplay() {
     try {
       image = new Image(new FileInputStream(imgPath));
@@ -68,8 +97,8 @@ public abstract class Receptor {
     }
   }
 
-  public ImageView getImageView() {
-    return imageView;
+  public ServerSharedState getServerSharedState() {
+    return serverSharedState;
   }
 
   public Image getImage() {

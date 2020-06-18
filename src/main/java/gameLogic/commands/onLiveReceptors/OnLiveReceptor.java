@@ -28,13 +28,13 @@ public abstract class OnLiveReceptor extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
-    execute(((Spot)receptor).getOccupant(), serverSharedState);
+  public void execute(Receptor receptor) {
+    execute(((Spot)receptor).getOccupant());
   }
 
   @Override
-  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
-    undo(((Spot) receptor).getOccupant(), serverSharedState);
+  public void undo(Receptor receptor) {
+    undo(((Spot) receptor).getOccupant());
   }
 
   @Override

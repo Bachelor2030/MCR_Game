@@ -22,8 +22,8 @@ public class Chest extends LiveReceptor {
    * @param name the name of the current chest
    * @param owner the Player that owns the current chest
    */
-  public Chest(String name, Player owner) {
-    super(name, CHEST_LIFE_POINTS, "Chest");
+  public Chest(String name, Player owner, ServerSharedState serverSharedState) {
+    super(name, CHEST_LIFE_POINTS, "Chest", serverSharedState);
     super.setOwner(owner);
     initDisplayChest();
   }
@@ -49,9 +49,5 @@ public class Chest extends LiveReceptor {
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
-
-  public ImageView getImageView() {
-    return imageView;
-  }
+  public void playTurn(int turn, PlayersAction action) {}
 }

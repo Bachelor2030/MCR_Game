@@ -21,7 +21,7 @@ public class DrawTypeFromDiscard extends CardMovement {
   }
 
   @Override
-  public void execute(Player player, ServerSharedState serverSharedState) {
+  public void execute(Player player) {
     HashMap<Integer, List<Card>> discard = player.getDiscard();
     for (int i = 1; i <= discard.size(); ++i) {
       for (Card c : discard.get(i)) {
@@ -37,7 +37,7 @@ public class DrawTypeFromDiscard extends CardMovement {
   }
 
   @Override
-  public void undo(Player player, ServerSharedState serverSharedState) {
+  public void undo(Player player) {
     if (card != null) {
       player.discardCard(card);
     }

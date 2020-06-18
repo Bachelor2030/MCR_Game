@@ -10,12 +10,12 @@ public class Discard extends CardMovement {
   }
 
   @Override
-  public void execute(Player player, ServerSharedState serverSharedState) {
+  public void execute(Player player) {
     player.discardCard(card);
   }
 
   @Override
-  public void undo(Player player, ServerSharedState serverSharedState) {
+  public void undo(Player player) {
     player.giveCard(card);
   }
 }

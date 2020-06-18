@@ -35,16 +35,16 @@ public class Card implements Invocator {
     this.ID = id;
   }
 
-  public void undo(ServerSharedState serverSharedState) {
+  public void undo() {
     if (command != null) {
-      command.undo(command.getReceptor(), serverSharedState);
+      command.undo(command.getReceptor());
     }
   }
 
   /** Plays the card which executes its commands */
-  public void play(Spot spot, ServerSharedState serverSharedState) {
+  public void play(Spot spot) {
     if (command != null && spot != null) {
-      command.execute(spot, serverSharedState);
+      command.execute(spot);
     }
   }
 
@@ -120,17 +120,4 @@ public class Card implements Invocator {
     return Objects.hash(ID, command, name, cost, type);
   }
 
-  public JSONObject toJSON() {
-    JSONObject c = new JSONObject();
-    try {
-      c.put(Messages.JSON_TYPE_CARD_ID, ID);
-      c.put(Messages.JSON_TYPE_NAME, name);
-      c.put(Messages.JSON_TYPE, type);
-      c.put(Messages.JSON_TYPE_COST, cost);
-      c.put(Messages.JSON_TYPE_COMMANDS, command.toJson());
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    return c;
-  }
 }

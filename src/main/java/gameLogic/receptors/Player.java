@@ -6,6 +6,7 @@ import gameLogic.commands.CommandName;
 import gameLogic.commands.ConcreteCommand;
 import gameLogic.commands.CreateTrap;
 import gameLogic.commands.Create;
+import gameLogic.commands.playersAction.PlayCard;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.invocator.card.Card;
 import network.states.ServerSharedState;
@@ -47,8 +48,8 @@ public class Player extends Receptor {
    * @param name the name of the Player
    * @param deck the dock of cards the Player has
    */
-  public Player(String name, List<Card> deck, Game game) {
-    super(name);
+  public Player(String name, List<Card> deck, Game game, ServerSharedState serverSharedState) {
+    super(name, serverSharedState);
     this.game = game;
     actionPoints = 0;
     this.setImgPath("src/main/resources/design/images/characters/character.png");
@@ -89,21 +90,12 @@ public class Player extends Receptor {
     }
 
     for (int i = 0; i < NBR_CHESTS; ++i) {
-      chests.add(new Chest(name + " - Chest " + (i + 1), this));
+      chests.add(new Chest(name + " - Chest " + (i + 1), this, super.getServerSharedState()));
     }
   }
 
   public ArrayList<Card> getHand() {
     return hand;
-  }
-
-  /**
-   * Returns the number of cards the Player has in his/her hand
-   *
-   * @return size of the hand list of cards
-   */
-  public int getNbrCardsInHand() {
-    return hand.size();
   }
 
   /**
@@ -127,12 +119,12 @@ public class Player extends Receptor {
    * @param card the card to play
    * @return true if the card can be played, false otherwise
    */
-  public boolean playCard(Card card, Spot spot, ServerSharedState serverSharedState) {
+  public boolean playCard(Card card, Spot spot) {
     if (!hand.contains(card)) return false;
 
     if (card != null && actionPoints >= card.getCost()) {
 
-      card.play(spot, serverSharedState);
+      card.play(spot);
 
       ArrayList<Create> createCreatures = card.getCommand().getCreateCreature();
       for (Create create : createCreatures) {
@@ -247,18 +239,19 @@ public class Player extends Receptor {
     return card;
   }
 
-  public void undoCard(Card cardToUndo, ServerSharedState serverSharedState) {
+  public void undoCard(Card cardToUndo) {
     if (discard.get(currentTurn).remove(cardToUndo)) {
       hand.add(cardToUndo);
-      cardToUndo.undo(serverSharedState);
+      cardToUndo.undo();
       actionPoints += cardToUndo.getCost();
     }
   }
 
-  public void endTurn(ServerSharedState serverSharedState) {
+  public void endTurn() {
     play = false;
+
     for (Creature creature : creatures) {
-      creature.playTurn(currentTurn, null, serverSharedState);
+      creature.playTurn(currentTurn, new PlayCard());
       if (!creature.isAlive()) {
         creatures.remove(creature); // dead
       }
@@ -312,11 +305,11 @@ public class Player extends Receptor {
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {
+  public void playTurn(int turn, PlayersAction action) {
     if (currentTurn != turn) {
       setTurn(turn);
     }
-    action.execute(this, serverSharedState);
+    action.execute(this);
   }
 
   public int getId() {
