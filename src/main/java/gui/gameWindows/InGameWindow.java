@@ -131,10 +131,14 @@ public class InGameWindow extends GameWindow {
     informationPannelUser.getStyleClass().add("menuLabelsGauche-vbox");
     informationPannelUser.setAlignment(Pos.CENTER);
 
-    // On créé le titre "Actions"
     Label informationPanelUserTitle = new Label(labelTitle);
     informationPanelUserTitle.getStyleClass().add("titre-label");
     informationPannelUser.getChildren().add(informationPanelUserTitle);
+
+    //TODO afficher les points d'action
+    Label pointActionTitle = new Label("Points d'action : 10");
+
+    informationPannelUser.getChildren().add(pointActionTitle);
 
     return informationPannelUser;
   }
