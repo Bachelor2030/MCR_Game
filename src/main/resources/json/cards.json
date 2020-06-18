@@ -13,7 +13,7 @@
       "creature" : 
       {
         "name" : "Pier",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/donini.gif",
         "life" : 6,
         "steps" : 3,
         "attack" : 4
@@ -28,7 +28,7 @@
       "creature" : 
       {
         "name" : "Sebas-chan",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/seb.gif",
         "life" : 4,
         "steps" : 2,
         "attack" : 2            
@@ -43,7 +43,7 @@
       "creature" :
       {
         "name" : "Gregou",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/gregoire.gif",
         "life" : 4,
         "steps" : 1,
         "attack" : 3
@@ -117,7 +117,7 @@
       "cost" : 6,
       "creature" : {
         "name" : "Gus the cook",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/gus.gif",
         "life" : 4,
         "steps" : 2,
         "attack" : 5
@@ -131,7 +131,7 @@
       "cost" : 5,
       "creature" : {
         "name" : "Matt the dwarf",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/matthieu.gif",
         "life" : 7,
         "steps" : 1,
         "attack" : 4
@@ -169,7 +169,7 @@
       "cost" : 8,
       "creature" : {
         "name" : "Clarusso the elf",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/clarisse.gif",
         "life" : 7,
         "steps" : 1,
         "attack" : 4
@@ -183,7 +183,7 @@
       "cost" : 8,
       "creature" : {
         "name" : "Cosmic Elodie",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/darine.gif",
         "life" : 3,
         "steps" : 3,
         "attack" : 5
@@ -197,7 +197,7 @@
       "cost" : 7,
       "creature" : {
         "name" : "Loris the Vampire",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/loris-cruel.gif",
         "life" : 2,
         "steps" : 4,
         "attack" : 4
@@ -211,7 +211,7 @@
       "cost" : 6,
       "creature" : {
         "name" : "Guy-Laurent the brazilian fighter",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/guy-laurent.gif",
         "life" : 2,
         "steps" : 1,
         "attack" : 5
@@ -225,7 +225,7 @@
       "cost" : 9,
       "creature" : {
         "name" : "Unicorn of death",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/unicorn.gif",
         "life" : 6,
         "steps" : 4,
         "attack" : 5
@@ -239,7 +239,7 @@
       "cost" : 4,
       "creature" : {
         "name" : "Jaquette the Bear",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/david.gif",
         "life" : 1,
         "steps" : 1,
         "attack" : 1
@@ -253,7 +253,7 @@
       "cost" : 5,
       "creature" : {
         "name" : "Alexandre the wizard",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/alex.gif",
         "life" : 2,
         "steps" : 2,
         "attack" : 5
@@ -267,7 +267,7 @@
       "cost" : 6,
       "creature" : {
         "name" : "Mateo the bauf'",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/mateo.gif",
         "life" : 2,
         "steps" : 3,
         "attack" : 4
@@ -281,7 +281,7 @@
       "cost" : 4,
       "creature" : {
         "name" : "Alison or power of the kittens",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/alisson.gif",
         "life" : 1,
         "steps" : 2,
         "attack" : 3
@@ -315,7 +315,7 @@
       "cost" : 6,
       "creature" : {
         "name" : "Loris Gibbs",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/loris-gibbs.gif",
         "life" : 3,
         "steps" : 3,
         "attack" : 3
@@ -329,7 +329,7 @@
       "cost" : 7,
       "creature" : {
         "name" : "Guillaume, killer on wheels",
-        "img" : "link to the image",
+        "img" : "src/main/resources/design/images/creatures/guillaume-wheels.gif",
         "life" : 4,
         "steps" : 6,
         "attack" : 2
