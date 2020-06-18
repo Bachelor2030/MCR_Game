@@ -6,6 +6,9 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
+/**
+ * Etat partagé entre les threads servantWorker et la classe logique du backend
+ */
 public class ServerSharedState {
   private ServerThreadState[] serverThreadStates;
   private String[] playerNames;
@@ -19,6 +22,11 @@ public class ServerSharedState {
   private int playerCount = 0;
   private Game game;
 
+  /**
+   * Constructeur de ServerSharedState
+   * @param playingFirstId L'id du joueur jouant en premier
+   * @param game La classe gérant la logique du jeu
+   */
   public ServerSharedState(int playingFirstId, Game game) {
     serverThreadStates = new ServerThreadState[2];
     serverThreadStates[0] = ServerThreadState.CONNECTING;
