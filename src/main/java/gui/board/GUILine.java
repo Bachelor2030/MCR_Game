@@ -55,7 +55,7 @@ public class GUILine {
     guiSpots = new LinkedList<>();
     this.gridPane = gridPane;
 
-    //Permet d'initialiser toutes les îles contenues dans une ligne
+    // Permet d'initialiser toutes les îles contenues dans une ligne
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
       vbox = new VBox(); // On créé une box verticale pour aligner la créature à l'île.
       guiSpots.add(new GUISpot(noLine, clientSharedState));
@@ -80,7 +80,7 @@ public class GUILine {
   public void setReceptor(GUIReceptor receptor, int spot) {
     ObservableList<Node> children = gridPane.getChildren();
     for (Node node : children) {
-      if (gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
+      if (gridPane.getRowIndex(node) == noLine && GridPane.getColumnIndex(node) == spot) {
         ImageView imageView = receptor.getImageView();
         imageView.setVisible(true); // please
         ((VBox) node).getChildren().set(0, imageView);

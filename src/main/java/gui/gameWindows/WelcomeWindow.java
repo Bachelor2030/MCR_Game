@@ -14,10 +14,19 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/** Permet de générer la fenêtre de début du logiciel */
 public class WelcomeWindow extends GameWindow {
-  private int WIDTH_WINDOW;
-  private Stage stage;
+  private int WIDTH_WINDOW; // la largeur de la fenêtre
+  private Stage stage; //le stage liée à l'affichage de la GUI
 
+  /**
+   * Le constructeur de la classe
+   * @param racine : la racine du jeu
+   * @param navigation : la barre de navigation
+   * @param stage : le stage permettant d'afficher la GUI
+   * @param WIDTH_WINDOW : la largeur de la fenêtre
+   * @param player : le joueur
+   */
   public WelcomeWindow(
       BorderPane racine, HBox navigation, Stage stage, final int WIDTH_WINDOW, Player player) {
     super(racine, navigation, false, stage);
@@ -25,6 +34,10 @@ public class WelcomeWindow extends GameWindow {
     this.WIDTH_WINDOW = WIDTH_WINDOW;
   }
 
+  /**
+   * Permet de générer le corps de la fenêtre.
+   * @throws FileNotFoundException
+   */
   private void generate() throws FileNotFoundException {
     VBox principalMenu = new VBox();
     VBox buttons = new VBox();

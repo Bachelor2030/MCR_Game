@@ -25,6 +25,9 @@ public class Trap extends Receptor implements Invocator {
     setCommand(effect);
   }
 
+  /**
+   * @return la commande sous forme de macro
+   */
   public Macro getCommand() {
     return command;
   }
@@ -46,14 +49,23 @@ public class Trap extends Receptor implements Invocator {
     this.position = position;
   }
 
+  /**
+   * @return la position du piège
+   */
   public Spot getPosition() {
     return position;
   }
 
   @Override
+  /**
+   * Réalise le tour d'un player
+   */
   public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
 
   @Override
+  /**
+   * Transforme les informations d'un trap en JSON
+   */
   public JSONObject toJson() {
     JSONObject trap = super.toJson();
     try {
@@ -69,6 +81,9 @@ public class Trap extends Receptor implements Invocator {
   }
 
   @Override
+  /**
+   * Permet de modifier une commande.
+   */
   public void setCommand(Macro command) {
     this.command = command;
   }

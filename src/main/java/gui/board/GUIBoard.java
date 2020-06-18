@@ -18,18 +18,14 @@ public class GUIBoard {
   // le nombre de lignes
   private static final int NB_LINES = 4;
 
-  // compteur de ligne
-  private static int lineCounter;
-
   // les lignes du board
   private LinkedList<GUILine> guiLines;
 
-  /**
-   * Constructeur de la classe GUIBoard
-   */
+  /** Constructeur de la classe GUIBoard */
   public GUIBoard(GridPane gridPane, VBox vbox, GUIPlayer player1, GUIPlayer player2)
       throws IOException {
-    lineCounter = 0;
+    // compteur de ligne
+    int lineCounter = 0;
     guiLines = new LinkedList<>();
     for (int line = 0; line < NB_LINES; ++line) {
       guiLines.add(
@@ -61,24 +57,6 @@ public class GUIBoard {
       return guiLines.get(index);
     }
     return null;
-  }
-
-  /**
-   * Permet de récupérer la liste des lignes du board.
-   *
-   * @return la liste des lignes du board.
-   */
-  public LinkedList<GUILine> getGuiLines() {
-    return guiLines;
-  }
-
-  /**
-   * Permet de savoir le nombre de lignes constituant un board.
-   *
-   * @return le nombre de lignes constituant un board.
-   */
-  public int getNB_LINES() {
-    return NB_LINES;
   }
 
   /**
@@ -118,15 +96,6 @@ public class GUIBoard {
    */
   public GUILine getLineAt(int number) {
     return guiLines.get(number);
-  }
-
-  /**
-   * Permet de récupérer une ligne sous forme de GridPane.
-   * @param line : l'index de la ligne (0 à NB_LIGNES-1)
-   * @return une ligne sous forme de GridPane
-   */
-  public GridPane getGridIslandPanel(int line) {
-    return guiLines.get(line).getGridIslandPanel();
   }
 
   /**

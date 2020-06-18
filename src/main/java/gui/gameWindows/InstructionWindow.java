@@ -13,9 +13,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Cette classe représente la page d'instructions présente au début du jeu.
+ */
 public class InstructionWindow extends GameWindow {
-  private VBox body;
+  private VBox body; //le corps de la fenêtre.
 
+  /**
+   * Constructeur de la classe.
+   * @param racine : la racine du projet
+   * @param navigation : la barre de navigation
+   * @param isGaming : la partie a-t-elle commencé ou non
+   * @param stage : le stage servant à l'affichage de la GUI
+   */
   public InstructionWindow(BorderPane racine, HBox navigation, boolean isGaming, Stage stage) {
     super(racine, navigation, isGaming, stage);
     body = new VBox();
@@ -23,6 +33,10 @@ public class InstructionWindow extends GameWindow {
     generateBody();
   }
 
+  /**
+   * Permet de construire le corps de la fenêtre.
+   * Cette méthode se contente de lire un texte présent dans un fichier et de l'afficher.
+   */
   private void generateBody() {
     Label instructionsTitle = new Label("Instructions");
     instructionsTitle.getStyleClass().add("instructions-title");
@@ -48,10 +62,6 @@ public class InstructionWindow extends GameWindow {
     body.getChildren().addAll(instructionsTitle, textBox);
     body.setAlignment(Pos.CENTER);
     body.setSpacing(50);
-
-    // ------------------------------------------------------------------
-    // REGLAGES RACINE
-    // ------------------------------------------------------------------
 
     racine.setCenter(body);
   }
