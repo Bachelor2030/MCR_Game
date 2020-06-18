@@ -259,7 +259,7 @@ public class Player extends Receptor {
     for (Creature creature : creatures) {
       creature.playTurn(currentTurn, null);
       if (!creature.isAlive()) {
-        creatures.remove(creature);
+        creatures.remove(creature); // dead
       }
     }
 
