@@ -23,6 +23,7 @@ public class GUISpot {
 
   // un case est représentée par un numéro
   private final int number;
+  private final int lineNumber;
 
   // Compteur de case
   private static int spotCounter = 0;
@@ -117,6 +118,7 @@ public class GUISpot {
         });
     button.setGraphic(imageView);
     this.number = number % (GUILine.NB_SPOTS);
+    this.lineNumber = line;
     this.pos = pos;
     initDisplaySpot();
   }
@@ -190,7 +192,7 @@ public class GUISpot {
   }
 
   public int getLineNumber() {
-    return (number / GUILine.NB_SPOTS);
+    return lineNumber;
   }
 
   public int getSpotNumber() {
