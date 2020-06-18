@@ -11,6 +11,7 @@ import network.Messages;
 import network.ServerAdapter;
 import network.jsonUtils.JsonUtil;
 import network.states.ServerSharedState;
+import network.states.ServerThreadState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -136,8 +137,20 @@ public class Game extends Receptor {
       return false;
     }
 
+    try {
+      JSONObject jsonObject = new JSONObject();
+      jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_UPDATE_END);
+      serverAdapter.getServerSharedState().pushJsonToSend(jsonObject, serverAdapter.getServerSharedState().getPlayingId());
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+
     player.playTurn(turn, action, serverAdapter.getServerSharedState());
     lastMove = new Macro(player.getLastMove().getCommands());
+
+
+    serverAdapter.getServerSharedState().setIntendToSendJson(serverAdapter.getServerSharedState().getPlayingId(), true);
+    serverAdapter.getServerSharedState().setIntendToSendJson(serverAdapter.getServerSharedState().otherPlayer(serverAdapter.getServerSharedState().getPlayingId()), true);
 
     JSONObject lastMoveJSON = lastMove.toJson();
 

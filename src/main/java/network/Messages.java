@@ -7,6 +7,7 @@ public final class Messages {
 
   public static final String JSON_TYPE_PLAY = "play";
   public static final String JSON_TYPE_UPDATE = "update";
+  public static final String JSON_TYPE_UPDATE_END = "update end";
   public static final String JSON_TYPE_END_TURN = "end turn";
   public static final String JSON_TYPE_ABANDON = "abandon";
   public static final String JSON_TYPE_UNDO = "undo";

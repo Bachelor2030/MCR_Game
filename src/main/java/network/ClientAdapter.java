@@ -139,21 +139,21 @@ public class ClientAdapter {
 
             clientSharedState.setEnemyName(initParser.getEnemyFromInit()[0]);
             clientSharedState.setEnemyImagePath(initParser.getEnemyFromInit()[1]);
-            // todo: Parse the rest of init and determine how to give it to the gui (if not same way
-            // as for enemy name)
             clientSharedState.setFinishedInit(true);
             break;
 
           case Messages.JSON_TYPE_UPDATE:
-            clientThreadState = ClientThreadState.SERVER_LISTENING;
             final String update = receivedAnswer;
             Platform.runLater(
                 () -> {
                   GUIParser.getCommand(update, gameBoard.getGuiBoard()).execute(gameBoard);
                   gameBoard.updateStage();
+                  gameBoard.getGuiBoard().displayBoard();
                 });
-            clientSharedState.setMyTurn(true);
             break;
+
+          case Messages.JSON_TYPE_UPDATE_END:
+            clientThreadState = ClientThreadState.SERVER_LISTENING;
 
           case Messages.JSON_TYPE_YOUR_TURN:
             clientThreadState = ClientThreadState.SERVER_LISTENING;

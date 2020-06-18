@@ -47,7 +47,7 @@ public class PlayCard extends PlayersAction {
       jsonObject.put(Messages.JSON_TYPE_CARD_ID, cardToPlay.getID());
 
       serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
-      serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
+      //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
 
     } catch (JSONException e) {
       e.printStackTrace();

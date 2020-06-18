@@ -89,7 +89,7 @@ public class GUIBoard {
           // chest
           System.out.print("c ");
         }
-        if (guiLines.get(line).getSpot(spot).getOccupant() != null) {
+        if (!guiLines.get(line).getSpot(spot).isEmpty()) {
 
           //creature
           System.out.print("x ");
