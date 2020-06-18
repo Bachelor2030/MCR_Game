@@ -186,25 +186,6 @@ public class ClientAdapter {
 
   private void awaitClientInput() throws IOException, JSONException {
     System.out.println("Waiting for client input");
-    /*        clientSharedState.setMyTurn(true);
-
-    while ( clientSharedState.getSelectedCard() == null ||
-            clientSharedState.getSelectedCard().getName().equals("empty") ||
-            (   clientSharedState.getChosenPosition() == null &&
-                clientSharedState.getSelectedCard().getType() != CardType.SPELL)) {}
-
-    JSONObject play = jsonType(Messages.JSON_TYPE_PLAY);
-    play.put(Messages.JSON_TYPE_CARD_ID, clientSharedState.getSelectedCard().getId());
-    clientSharedState.setSelectedCard(new GUICard(0, "empty", CardType.SPELL, 0, clientSharedState));
-
-    if(clientSharedState.getChosenPosition() != null && clientSharedState.getChosenPosition()[0] >= 0) {
-        JSONObject position = new JSONObject();
-        position.put(Messages.JSON_TYPE_LINE, clientSharedState.getChosenPosition()[0]);
-        position.put(Messages.JSON_TYPE_SPOT, clientSharedState.getChosenPosition()[1]);
-        clientSharedState.setChosenPosition(new int[]{-1, -1});
-
-        play.put(Messages.JSON_TYPE_POSITION, position);
-    }*/
 
     while (!clientSharedState.getIntendToSendJson()) {}
 

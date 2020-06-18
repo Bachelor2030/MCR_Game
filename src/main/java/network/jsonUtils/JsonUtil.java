@@ -128,7 +128,14 @@ public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
         }
 
         Card c = new Card(id, cardName, cardType, cardCost);
+
         c.setCommand(new Macro(concreteCommands));
+
+        for (Create create : c.getCommand().getCreateCreature()) {
+            create.getCreature().setOriginCard(c);
+
+        }
+
         cards.add(c);
     }
 

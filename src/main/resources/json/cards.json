@@ -1,3 +1,4 @@
+
 {
   "pageInfo" : {
     "pageName": "Card list",
@@ -10,7 +11,7 @@
       "type" : "Creature",
       "description" : "Whomst has awakened the ancient one ?",
       "cost" : 4,
-      "creature" : 
+      "creature" :
       {
         "name" : "Pier",
         "img" : "src/main/resources/design/images/creatures/donini.gif",
@@ -25,13 +26,13 @@
       "type" : "Creature",
       "description" : "Prepare for trouble...",
       "cost" : 9,
-      "creature" : 
+      "creature" :
       {
         "name" : "Sebas-chan",
         "img" : "src/main/resources/design/images/creatures/seb.gif",
         "life" : 4,
         "steps" : 2,
-        "attack" : 2            
+        "attack" : 2
       }
     },
     {
@@ -50,7 +51,7 @@
       }
     },
     {
-      "id" : 5,
+      "id" : 4,
       "name" : "Furnace",
       "type" : "Spell",
       "description" : "Tempered by the fires of Hell, he arose. \nHit selected ennemy creature for 3 damages.",
@@ -359,4 +360,3 @@
     }
   ]
 }
-

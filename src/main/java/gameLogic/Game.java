@@ -163,4 +163,8 @@ public class Game extends Receptor {
 
   @Override
   public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
+
+  public Player getPlayer(int id) {
+    return (id == firstPlayerId ? player1 : player2);
+  }
 }

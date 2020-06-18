@@ -3,12 +3,12 @@
     {
       "type" : "update",
       "command" : "Add_card",
-      "card id" : 1,
+      "id" : 1,
     },
     {
       "type" : "update",
       "command" : "Remove_card",
-      "card id" : 1
+      "id" : 1
     },
     {
       "type" : "update",
@@ -47,7 +47,7 @@
         "line" : 1,
         "spot" : 1
       },
-      "card id" : 1
+      "id" : 1
     }
   ]
 }
