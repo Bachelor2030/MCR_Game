@@ -10,7 +10,7 @@ public class GUICreature extends GUIReceptor
   private int initialLife;
 
   public GUICreature() {
-    super("", "");
+    super("", "src/main/resources/design/images/creatures/empty.jpg");
   }
 
   public GUICreature(String name, int life, int steps, int attack) {
