@@ -10,6 +10,7 @@ import gameLogic.receptors.Creature;
 import gameLogic.receptors.Player;
 import gameLogic.receptors.Trap;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,7 +86,7 @@ public class JsonUtil {
     }
 }
 
-public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
+public static ArrayList<Card> parseJsonCards(String json, ServerSharedState serverSharedState) throws JSONException {
     ArrayList<Card> cards = new ArrayList<>();
 
     JSONObject obj = new JSONObject(json);
@@ -110,7 +111,8 @@ public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
                             jsonCreature.getString(Messages.JSON_TYPE_NAME),
                             jsonCreature.getInt(Messages.JSON_TYPE_LP),
                             jsonCreature.getInt(Messages.JSON_TYPE_MP),
-                            jsonCreature.getInt(Messages.JSON_TYPE_AP));
+                            jsonCreature.getInt(Messages.JSON_TYPE_AP),
+                            serverSharedState);
             create.setCreature(creature);
             concreteCommands.add(create);
         } else if (cardType == CardType.TRAP) {
@@ -122,9 +124,11 @@ public static ArrayList<Card> parseJsonCards(String json) throws JSONException {
                 trapCommands.add(CommandName.getCommandName(cmds.getString(j)).getCommand());
             }
 
-            Trap trap = new Trap(jsonTrap.getString(Messages.JSON_TYPE_NAME), new Macro(trapCommands));
+            Trap trap = new Trap(jsonTrap.getString(Messages.JSON_TYPE_NAME), new Macro(trapCommands), serverSharedState);
+            CreateTrap createTrap = new CreateTrap();
+            createTrap.setTrap(trap);
 
-            concreteCommands.add(new CreateTrap(trap));
+            concreteCommands.add(createTrap);
         }
 
         Card c = new Card(id, cardName, cardType, cardCost);

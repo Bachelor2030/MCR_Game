@@ -3,6 +3,7 @@ package gameLogic.board;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.receptors.Receptor;
 import gameLogic.receptors.Trap;
+import network.Messages;
 import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +14,7 @@ public class Spot extends Receptor {
   private Receptor occupant;
 
   public Spot(Line line, int spotNumber) {
+    super();
     this.spotNumber = spotNumber;
     this.line = line;
   }
@@ -46,8 +48,8 @@ public class Spot extends Receptor {
   public JSONObject toJson() {
     JSONObject position = new JSONObject();
     try {
-      position.put("line", getLineNumber());
-      position.put("spot", spotNumber);
+      position.put(Messages.JSON_TYPE_LINE, getLineNumber());
+      position.put(Messages.JSON_TYPE_SPOT, spotNumber);
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -78,6 +80,6 @@ public class Spot extends Receptor {
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
+  public void playTurn(int turn, PlayersAction action) {}
 
 }

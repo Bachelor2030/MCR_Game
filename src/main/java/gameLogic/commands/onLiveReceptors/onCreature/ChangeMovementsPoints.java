@@ -20,13 +20,13 @@ public class ChangeMovementsPoints extends OnCreature {
   }
 
   @Override
-  public void execute(Creature creature, ServerSharedState serverSharedState) {
+  public void execute(Creature creature) {
     oldMP = creature.getSteps();
     creature.setMovementsPoints(newMP);
   }
 
   @Override
-  public void undo(Creature creature, ServerSharedState serverSharedState) {
+  public void undo(Creature creature) {
     creature.setMovementsPoints(oldMP);
   }
 

@@ -38,6 +38,13 @@ public class ClientAdapter {
 
   boolean finishedInit = false;
 
+  /**
+   * Constructeur de ClientAdapter
+   * @param gameBoard La gameBoard utilisée par le GUI
+   * @param host L'ip du serveur
+   * @param port Le port utilisé par le serveur
+   * @param playerName Le nom du joueur
+   */
   public ClientAdapter(GameBoard gameBoard, String host, int port, String playerName) {
     this.host = host;
     this.port = port;
@@ -50,6 +57,11 @@ public class ClientAdapter {
     return clientSharedState;
   }
 
+  /**
+   * Fonction principale du ClientAdapter.
+   * Fonction bloquante tant que l'état du client n'est pas "GAME_ENDED"
+   * Alterne entre attendre un input client et un message serveur
+   */
   public void run() {
     // Setting up connection
     setup(host, port);
@@ -81,6 +93,11 @@ public class ClientAdapter {
     }
   }
 
+  /**
+   * Bind le socket à un host et un port
+   * @param host L'adresse IP du serveur
+   * @param port Le port sélectionné
+   */
   public void setup(String host, int port) {
     try {
       clientSocket = new Socket(host, port);
@@ -95,6 +112,13 @@ public class ClientAdapter {
     }
   }
 
+  /**
+   * Envoie les greetings (handshake) au serveur
+   * @param playerName Le nom du joueur envoyant ses greetings au serveur
+   * @param imagePath Le path de l'image qu'il a sélectionée
+   * @throws IOException Si une erreur d'IO survient (dans les streams)
+   * @throws JSONException Si le message reçu ou envoyé n'est pas conforme au json
+   */
   public void greetings(String playerName, String imagePath) throws IOException, JSONException {
 
     JSONObject obj = new JSONObject();
@@ -119,6 +143,10 @@ public class ClientAdapter {
     clientThreadState = ClientThreadState.CLIENT_LISTENING;
   }
 
+  /**
+   * Attente active sur un message provenant du serveur.
+   * Le message sera traité en fonction de son champ "type"
+   */
   private void awaitServerMessage() {
     String receivedAnswer;
 
@@ -184,6 +212,13 @@ public class ClientAdapter {
     }
   }
 
+  /**
+   * Attente active sur le json à envoyer par le client (généré depuis la GUI)
+   * Joue le coup donné, et vérifie la réponse du serveur concernant la
+   * validité du coup.
+   * @throws IOException Lors d'une erreur d'IO sur les streams
+   * @throws JSONException Si le json à envoyer n'est pas conforme
+   */
   private void awaitClientInput() throws IOException, JSONException {
     System.out.println("Waiting for client input");
 
@@ -212,6 +247,9 @@ public class ClientAdapter {
     }
   }
 
+  /**
+   * Engage la procédure pour couper la connexion au serveur et quitter le jeu
+   */
   public void exit() {
     if (clientThreadState == ClientThreadState.ERROR) {
       printMessage(
@@ -246,6 +284,9 @@ public class ClientAdapter {
     }
   }
 
+  /**
+   * Ferme les différents streams et objets ouverts par le client
+   */
   public void cleanupResources() {
     try {
       inBufferedReader.close();

@@ -35,53 +35,24 @@ public class Macro implements Command {
     return concreteCommands;
   }
 
-  public ArrayList<CreateTrap> getCreateTrap() {
-    ArrayList<CreateTrap> concreteCommands = new ArrayList<>();
-    for (ConcreteCommand concreteCommand : commands) {
-      if (concreteCommand.getName() == CommandName.CREATE_TRAP) {
-        concreteCommands.add((CreateTrap) concreteCommand);
-      }
-    }
-    return concreteCommands;
-  }
-
-  public JSONObject toJson() {
-    JSONObject macro = new JSONObject();
-
-    try {
-      if (commands.size() != 0) {
-        ConcreteCommand command = commands.get(commands.size()-1);
-        // Add last command name
-        macro.put(Messages.JSON_TYPE_COMMAND, command.name);
-      }
-
-
-      // TODO ajouter ce qu'il faut
-
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-
-    return macro;
-  }
 
   public Receptor getReceptor() {
     return receptor;
   }
 
   @Override
-  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
+  public void execute(Receptor receptor) {
     this.receptor = receptor;
     for (Command command : commands) {
-      command.execute(receptor, serverSharedState);
+      command.execute(receptor);
     }
   }
 
   @Override
-  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
+  public void undo(Receptor receptor) {
     this.receptor = receptor;
     for (Command command : commands) {
-      command.undo(receptor, serverSharedState);
+      command.undo(receptor);
     }
   }
 

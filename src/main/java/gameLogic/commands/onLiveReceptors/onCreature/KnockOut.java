@@ -10,12 +10,12 @@ public class KnockOut extends OnCreature {
   }
 
   @Override
-  public void execute(Creature creature, ServerSharedState serverSharedState) {
+  public void execute(Creature creature) {
     creature.knockOut();
   }
 
   @Override
-  public void undo(Creature creature, ServerSharedState serverSharedState) {
+  public void undo(Creature creature) {
     creature.wakeUp();
   }
 }

@@ -13,11 +13,6 @@ public class CreateTrap extends ConcreteCommand {
   private Player player;
   private Trap trap;
 
-  public CreateTrap(Trap trap) {
-    super(CommandName.CREATE_TRAP);
-    this.trap = trap;
-  }
-
   public CreateTrap() {
     super(CommandName.CREATE_TRAP);
   }
@@ -35,12 +30,12 @@ public class CreateTrap extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
+  public void execute(Receptor receptor) {
     trap.setPosition((Spot)receptor);
   }
 
   @Override
-  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
+  public void undo(Receptor receptor) {
     trap.setPosition(null);
   }
 

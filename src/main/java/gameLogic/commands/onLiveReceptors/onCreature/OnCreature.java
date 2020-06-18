@@ -15,9 +15,9 @@ public abstract class OnCreature extends OnLiveReceptor {
     return (Creature) receptor;
   }
 
-  public abstract void execute(Creature creature, ServerSharedState serverSharedState);
+  public abstract void execute(Creature creature);
 
-  public abstract void undo(Creature creature, ServerSharedState serverSharedState);
+  public abstract void undo(Creature creature);
 
   @Override
   public void execute(LiveReceptor receptor, ServerSharedState serverSharedState) {

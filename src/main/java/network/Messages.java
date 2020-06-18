@@ -1,5 +1,8 @@
 package network;
 
+/**
+ * Classe regroupant les strings composant les messages json
+ */
 public final class Messages {
 
   public static final String JSON_TYPE = "type";

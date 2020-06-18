@@ -8,6 +8,13 @@ import java.net.Socket;
 import static network.utilities.Info.printMessage;
 
 public abstract class Streams {
+  /**
+   * Ferme les différents streams et objets ouverts par le serveur
+   * @param className Le nom de la classe appelante
+   * @param inBufferedReader Le inBufferedReader dans lequel lire le message du client
+   * @param outPrintWriter Le outPrintWriter dans lequel répondre au client
+   * @param clientSocket La socket utilisée pour se connecter au client
+   */
   public static void cleanupResources(
       String className,
       BufferedReader inBufferedReader,

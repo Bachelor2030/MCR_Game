@@ -5,7 +5,6 @@ import gameLogic.commands.CommandName;
 import gameLogic.invocator.card.Card;
 import gameLogic.receptors.Player;
 import network.Messages;
-import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,8 +34,8 @@ public class PlayCard extends PlayersAction {
   }
 
   @Override
-  public void execute(Player player, ServerSharedState serverSharedState) {
-    if (player.playCard(cardToPlay, spot, serverSharedState)) {
+  public void execute(Player player) {
+    if (player.playCard(cardToPlay, spot)) {
       player.addLastMoves(cardToPlay.getCommand().getCommands());
     }
 
@@ -46,7 +45,7 @@ public class PlayCard extends PlayersAction {
       jsonObject.put(Messages.JSON_TYPE_COMMAND, CommandName.REMOVE_CARD);
       jsonObject.put(Messages.JSON_TYPE_CARD_ID, cardToPlay.getID());
 
-      serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
+      super.getServerSharedState().pushJsonToSend(jsonObject, super.getServerSharedState().getPlayingId());
       //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
 
     } catch (JSONException e) {
@@ -55,7 +54,7 @@ public class PlayCard extends PlayersAction {
   }
 
   @Override
-  public void undo(Player player, ServerSharedState serverSharedState) {
-    player.undoCard(cardToPlay, serverSharedState);
+  public void undo(Player player) {
+    player.undoCard(cardToPlay);
   }
 }

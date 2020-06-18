@@ -2,6 +2,9 @@ package network;
 
 import gui.GameBoard;
 
+/**
+ * Classe non utilisée permettant de lancer un clientAdapter manuellement
+ */
 public class ClientLauncher {
   public static void main(String[] args) {
     ClientAdapter client =

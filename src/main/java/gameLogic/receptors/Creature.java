@@ -24,8 +24,8 @@ public class Creature extends LiveReceptor {
    * @param steps the number of steps the creature can do in one move
    * @param attackPoints the number of life points the creature removes form an ennemy
    */
-  public Creature(String name, int lifePoints, int steps, int attackPoints) {
-    super(name, lifePoints, "Creature");
+  public Creature(String name, int lifePoints, int steps, int attackPoints, ServerSharedState serverSharedState) {
+    super(name, lifePoints, "Creature", serverSharedState);
     this.steps = steps;
     this.attackPoints = attackPoints;
     asleep = false;
@@ -40,30 +40,33 @@ public class Creature extends LiveReceptor {
   }
 
   /** Moves the creature of it's number of steps and hits the first ennemy encountered */
-  public int advance(ServerSharedState serverSharedState) {
+  public int advance() {
     int counter = 0;
     for (int step = 0; step < steps; ++step) {
-      if (position.next(owner.getId(), serverSharedState) == null) {
+      if (position.next(owner.getId(), getServerSharedState()) == null) {
         returnToDeck();
       }
+      if (position.next(owner.getId(), getServerSharedState()) == null) {
+        return counter;
+      }
 
-      if (position.next(owner.getId(), serverSharedState).isEmpty()) {
+      if (position.next(owner.getId(), getServerSharedState()).isEmpty()) {
         position.leave();
-        position = position.next(owner.getId(), serverSharedState);
+        position = position.next(owner.getId(), getServerSharedState());
         if (position.isTrapped()) {
-          ((Trap) position.getOccupant()).trigger(this, serverSharedState);
+          ((Trap) position.getOccupant()).trigger(this);
         }
         ++counter;
       } else {
         break;
       }
     }
-    if (lifePoints > 0 && !position.next(owner.getId(), serverSharedState).isEmpty() && position.next(owner.getId(), serverSharedState) != null) {
-      if (!((LiveReceptor) position.next(owner.getId(), serverSharedState).getOccupant()).isAlly(this)) {
+    if (lifePoints > 0 && !position.next(owner.getId(), getServerSharedState()).isEmpty() && position.next(owner.getId(), getServerSharedState()) != null) {
+      if (!((LiveReceptor) position.next(owner.getId(), getServerSharedState()).getOccupant()).isAlly(this)) {
 
-        ((LiveReceptor) position.next(owner.getId(), serverSharedState).getOccupant()).loseLifePoints(attackPoints);
-        if (((LiveReceptor) position.next(owner.getId(), serverSharedState).getOccupant()).getType().equals(this.getType())) {
-          this.loseLifePoints(((Creature) position.next(owner.getId(), serverSharedState).getOccupant()).getAttackPoints());
+        ((LiveReceptor) position.next(owner.getId(), getServerSharedState()).getOccupant()).loseLifePoints(attackPoints);
+        if (((LiveReceptor) position.next(owner.getId(), getServerSharedState()).getOccupant()).getType().equals(this.getType())) {
+          this.loseLifePoints(((Creature) position.next(owner.getId(), getServerSharedState()).getOccupant()).getAttackPoints());
         }
       }
     }
@@ -81,13 +84,13 @@ public class Creature extends LiveReceptor {
    *
    * @param distance the number of steps the creature must do backwards
    */
-  public void retreat(int distance, ServerSharedState serverSharedState) {
+  public void retreat(int distance) {
     for (int step = 0; step < distance; ++step) {
-      if (position.previous(owner.getId(), serverSharedState).isEmpty()) {
+      if (position.previous(owner.getId(), getServerSharedState()).isEmpty()) {
         position.leave();
-        position = position.previous(owner.getId(), serverSharedState);
+        position = position.previous(owner.getId(), getServerSharedState());
         if (position.isTrapped()) {
-          ((Trap) position.getOccupant()).trigger(this, serverSharedState);
+          ((Trap) position.getOccupant()).trigger(this);
         }
       } else {
         break;
@@ -130,9 +133,9 @@ public class Creature extends LiveReceptor {
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {
+  public void playTurn(int turn, PlayersAction action) {
     if (!asleep) {
-      advance(serverSharedState);
+      advance();
     }
     asleep = false;
   }

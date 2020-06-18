@@ -2,6 +2,7 @@ package gameLogic.receptors;
 
 import gameLogic.board.Spot;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,8 +13,8 @@ public abstract class LiveReceptor extends Receptor {
   protected Player owner;
   private final String type;
 
-  public LiveReceptor(String name, int lifePoints, String type) {
-    super(name);
+  public LiveReceptor(String name, int lifePoints, String type, ServerSharedState serverSharedState) {
+    super(name, serverSharedState);
     this.lifePoints = lifePoints;
     this.MAX_LIFE_POINTS = lifePoints;
     this.type = type;

@@ -16,6 +16,16 @@ import static network.utilities.JsonServer.*;
 
 public class NetworkWaiting {
 
+  /**
+   * Fonction bloquante qui attend qu'un client envoie une handshake après avoir bind une connexion
+   * @param serverSharedState L'état partagé du serveur
+   * @param inBufferedReader Le inBufferedReader dans lequel lire le message du client
+   * @param outPrintWriter Le outPrintWriter dans lequel répondre au client
+   * @param playerId L'id du joueur correspondant au thread appelant
+   * @param className Le nom de la classe appelante
+   * @throws IOException Si une erreur d'IO survient (dans les streams)
+   * @throws JSONException Si le message reçu ou envoyé n'est pas conforme au json
+   */
   public static void awaitClientHandshake(
       ServerSharedState serverSharedState,
       BufferedReader inBufferedReader,
@@ -54,6 +64,16 @@ public class NetworkWaiting {
     }
   }
 
+  /**
+   * @param game La classe représentant la logique serveur décidant de la validité des coups etc...
+   * @param serverSharedState L'état partagé du serveur
+   * @param inBufferedReader Le inBufferedReader dans lequel lire le message du client
+   * @param outPrintWriter Le outPrintWriter dans lequel répondre au client
+   * @param playerId L'id du joueur correspondant au thread appelant
+   * @param className Le nom de la classe appelante
+   * @throws IOException Si une erreur d'IO survient (dans les streams)
+   * @throws JSONException Si le message reçu ou envoyé n'est pas conforme au json
+   */
   public static void awaitClientMessage(
       Game game,
       ServerSharedState serverSharedState,

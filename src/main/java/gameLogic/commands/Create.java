@@ -33,7 +33,7 @@ public class Create extends ConcreteCommand {
   }
 
   @Override
-  public void execute(Receptor receptor, ServerSharedState serverSharedState) {
+  public void execute(Receptor receptor) {
     creature.place((Spot) receptor);
     JSONObject jsonObject = new JSONObject();
     try {
@@ -47,12 +47,19 @@ public class Create extends ConcreteCommand {
     } catch (JSONException e) {
       e.printStackTrace();
     }
-    serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
+    // Send update to both clientss
+    receptor.getServerSharedState().pushJsonToSend(jsonObject, receptor.getServerSharedState().getPlayingId());
+    receptor.getServerSharedState()
+            .pushJsonToSend(
+                    jsonObject,
+                    receptor
+                            .getServerSharedState()
+                            .otherPlayer(receptor.getServerSharedState().getPlayingId()));
     //serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
   }
 
   @Override
-  public void undo(Receptor receptor, ServerSharedState serverSharedState) {
+  public void undo(Receptor receptor) {
     this.creature.place(null);
   }
 }

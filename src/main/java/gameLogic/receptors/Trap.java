@@ -20,8 +20,8 @@ public class Trap extends Receptor implements Invocator {
    * @param name the name of the trap
    * @param effect teh effect the trap has
    */
-  public Trap(String name, Macro effect) {
-    super("Trap " + name);
+  public Trap(String name, Macro effect, ServerSharedState serverSharedState) {
+    super("Trap " + name, serverSharedState);
     setCommand(effect);
   }
 
@@ -32,9 +32,12 @@ public class Trap extends Receptor implements Invocator {
     return command;
   }
 
-  /** Triggers the trap on the given victim */
-  public void trigger(Creature creature, ServerSharedState serverSharedState) {
-    command.execute(creature, serverSharedState);
+  /**
+   * Déclache le piège sur la victime donnée en argument
+   * @param creature
+   */
+  public void trigger(Creature creature) {
+    command.execute(creature);
     if (position != null) position.leave();
     position = null;
   }
@@ -57,28 +60,7 @@ public class Trap extends Receptor implements Invocator {
   }
 
   @Override
-  /**
-   * Réalise le tour d'un player
-   */
-  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
-
-  @Override
-  /**
-   * Transforme les informations d'un trap en JSON
-   */
-  public JSONObject toJson() {
-    JSONObject trap = super.toJson();
-    try {
-      trap.put(Messages.JSON_TYPE_EFFECT, command.toJson());
-      if (position != null) {
-        trap.put(Messages.JSON_TYPE_POSITION, position.toJson());
-      }
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-
-    return trap;
-  }
+  public void playTurn(int turn, PlayersAction action) {}
 
   @Override
   /**

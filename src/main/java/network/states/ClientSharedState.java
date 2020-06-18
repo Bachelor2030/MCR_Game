@@ -6,6 +6,9 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
+/**
+ * Etat partagé entre un thread client et la GUI
+ */
 public class ClientSharedState {
 
   private GUICard selectedCard;
