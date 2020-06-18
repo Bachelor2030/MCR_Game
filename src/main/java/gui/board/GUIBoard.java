@@ -83,31 +83,6 @@ public class GUIBoard {
     return guiLines.get(number);
   }
 
-  public void displayBoard() {
-    for (int line = 0; line < NB_LINES; ++line) {
-      for (int spot = 0; spot < guiLines.get(line).getNB_SPOTS(); ++spot) {
-        if (spot == 0 || spot == 11) {
-          // chest
-          System.out.print("c ");
-        }
-        if (!guiLines.get(line).getSpot(spot).isEmpty()) {
-
-          //creature
-          System.out.print("x ");
-
-        } else {
-          System.out.print("  ");
-        }
-      }
-
-      System.out.println("");
-      for (int spot = 0; spot < guiLines.get(line).getNB_SPOTS(); ++spot) {
-        System.out.print("_ ");
-      }
-      System.out.println("");
-    }
-  }
-
   public GridPane getGridIslandPanel(int line) {
     return guiLines.get(line).getGridIslandPanel();
   }

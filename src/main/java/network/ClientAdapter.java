@@ -148,7 +148,6 @@ public class ClientAdapter {
                 () -> {
                   GUIParser.getCommand(update, gameBoard.getGuiBoard()).execute(gameBoard);
                   gameBoard.updateStage();
-                  gameBoard.getGuiBoard().displayBoard();
                 });
             break;
 
