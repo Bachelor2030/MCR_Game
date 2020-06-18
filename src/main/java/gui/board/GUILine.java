@@ -100,7 +100,6 @@ public class GUILine {
         ImageView imageView = receptors.get(spot).getImageView();
         imageView.setVisible(true); // please
         ((VBox) node).getChildren().set(0, imageView);
-        gridPane.setGridLinesVisible(true);
         break;
       }
     }
