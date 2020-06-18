@@ -1,0 +1,53 @@
+{
+  "commands" : [
+    {
+      "type" : "update",
+      "command" : "Add_card",
+      "card id" : 1,
+    },
+    {
+      "type" : "update",
+      "command" : "Remove_card",
+      "card id" : 1
+    },
+    {
+      "type" : "update",
+      "command" : "Change_points",
+      "point type" : 'L', // ou 'M' ou 'A'
+      "position" : {
+        "line" : 1,
+        "spot" : 1
+      },
+      "effect" : 1
+    },
+    {
+      "type" : "update",
+      "command" : "Move",
+      "from" : {
+        "line" : 1,
+        "spot" : 1
+      },
+      "to" : {
+        "line" : 1,
+        "spot" : 3
+      }
+    },
+    {
+      "type" : "update",
+      "command" : "Knock_out",
+      "position" : {
+        "line" : 1,
+        "spot" : 1
+      }
+    },
+    {
+      "type" : "update",
+      "command" : "Place",
+      "position" : {
+        "line" : 1,
+        "spot" : 1
+      },
+      "card id" : 1
+    }
+  ]
+}
