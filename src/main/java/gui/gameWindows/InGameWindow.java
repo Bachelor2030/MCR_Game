@@ -82,13 +82,8 @@ public class InGameWindow extends GameWindow {
 
     for (GridPane gridPane : gridIslandsPanel ) {
       gridPane.getStyleClass().add("corps-gridPane");
-      //RowConstraints rc = new RowConstraints();
-      //rc.setPercentHeight(100 / gridIslandsPanel.size());
-      //gridPane.getRowConstraints().add(rc);
       gridPane.setAlignment(Pos.CENTER);
     }
-    // Répertoire contenant nos îles
-    // GUIBoard = new GUIBoard(gridIslandsPanel, vbox, player1, player2);
 
     Group group = new Group();
     for (int i = 0; i < gridIslandsPanel.size(); i++) {
