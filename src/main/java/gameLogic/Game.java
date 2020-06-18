@@ -10,6 +10,7 @@ import gameLogic.receptors.Receptor;
 import network.Messages;
 import network.ServerAdapter;
 import network.jsonUtils.JsonUtil;
+import network.states.ServerSharedState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,7 +136,7 @@ public class Game extends Receptor {
       return false;
     }
 
-    player.playTurn(turn, action);
+    player.playTurn(turn, action, serverAdapter.getServerSharedState());
     lastMove = new Macro(player.getLastMove().getCommands());
 
     JSONObject lastMoveJSON = lastMove.toJson();
@@ -164,12 +165,12 @@ public class Game extends Receptor {
       e.printStackTrace();
     }
     // Put json updates in serverAdapter.serverState.pushJsonToSend
-    serverAdapter.getServerSharedState().pushJsonToSend(lastMoveJSON, playerId);
+    //serverAdapter.getServerSharedState().pushJsonToSend(lastMoveJSON, playerId);
 
     // Pour end game il faudra faire autrement /!\ ne pas s'en occuper, le serveur s'en charge
     return true;
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action) {}
+  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
 }

@@ -3,6 +3,7 @@ package gameLogic.commands.onLiveReceptors.onCreature;
 import gameLogic.commands.CommandName;
 import gameLogic.receptors.Creature;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,13 +20,13 @@ public class ChangeMovementsPoints extends OnCreature {
   }
 
   @Override
-  public void execute(Creature creature) {
+  public void execute(Creature creature, ServerSharedState serverSharedState) {
     oldMP = creature.getSteps();
     creature.setMovementsPoints(newMP);
   }
 
   @Override
-  public void undo(Creature creature) {
+  public void undo(Creature creature, ServerSharedState serverSharedState) {
     creature.setMovementsPoints(oldMP);
   }
 

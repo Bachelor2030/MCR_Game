@@ -1,6 +1,5 @@
 package gameLogic.commands.guiCommands;
 
-import gameLogic.board.Spot;
 import gameLogic.commands.CommandName;
 import gui.GameBoard;
 import gui.board.GUISpot;
@@ -66,7 +65,7 @@ public class ChangePoints extends GuiCommand {
     GUICreature creature =
         (GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
                 .getOccupant();
@@ -97,7 +96,7 @@ public class ChangePoints extends GuiCommand {
     GUICreature creature =
         (GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
                 .getOccupant();

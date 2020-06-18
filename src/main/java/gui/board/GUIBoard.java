@@ -16,7 +16,7 @@ public class GUIBoard {
 
   // TODO : rentre paramétrique.
   // le nombre de lignes
-  private final int NB_LINES = 4;
+  public static final int NB_LINES = 4;
 
   // compteur de ligne
   private static int lineCounter;

@@ -3,6 +3,7 @@ package gameLogic.commands.onLiveReceptors;
 import gameLogic.commands.CommandName;
 import gameLogic.receptors.LiveReceptor;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,12 +19,12 @@ public class Heal extends OnLiveReceptor {
   }
 
   @Override
-  public void execute(LiveReceptor liveReceptor) {
+  public void execute(LiveReceptor liveReceptor, ServerSharedState serverSharedState) {
     liveReceptor.gainLifePoints(lifePoints);
   }
 
   @Override
-  public void undo(LiveReceptor liveReceptor) {
+  public void undo(LiveReceptor liveReceptor, ServerSharedState serverSharedState) {
     liveReceptor.loseLifePoints(lifePoints);
   }
 

@@ -41,13 +41,13 @@ public final class Messages {
   public static final String JSON_TYPE_EFFECT = "effect";
   public static final String JSON_TYPE_POSITION = "position";
   public static final String JSON_TYPE_NAME = "name";
-  public static final String JSON_TYPE_IMAGE = "image";
+  public static final String JSON_TYPE_IMAGE = "img";
   public static final String JSON_TYPE_OWNER = "owner";
 
-  public static final String JSON_TYPE_LP = "LP";
-  public static final String JSON_TYPE_MP = "MP";
-  public static final String JSON_TYPE_AP = "AP";
-  public static final String JSON_TYPE_DESCRIPTION = "trap";
+  public static final String JSON_TYPE_LP = "life";
+  public static final String JSON_TYPE_MP = "steps";
+  public static final String JSON_TYPE_AP = "attack";
+  public static final String JSON_TYPE_DESCRIPTION = "description";
   public static final String JSON_TYPE_CARD_ID = "card id";
   public static final String JSON_TYPE_COMMANDS = "commands";
   public static final String JSON_TYPE_COST = "cost";
@@ -58,8 +58,9 @@ public final class Messages {
   public static final String JSON_TYPE_ENEMY_IMAGE = "enemy image";
   public static final String JSON_TYPE_COMMAND = "command";
   public static final String JSON_TYPE_POINTS_TYPE = "point type";
+  public static final String JSON_TYPE_CREATURE = "creature";
 
-  private Messages() {
+    private Messages() {
     throw new IllegalStateException("Can't instantiate the messages class");
   }
 }

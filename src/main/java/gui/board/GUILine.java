@@ -7,13 +7,13 @@ import gui.receptors.GUIReceptor;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import network.states.ClientSharedState;
 
+import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -39,8 +39,6 @@ public class GUILine {
   private VBox vBox;
   private GridPane gridPane;
 
-  // le groupe d'îlots qu'on affichera par la suite
-  Group root;
 
   public GUILine(int noLine) {
     this.noLine = noLine;
@@ -71,7 +69,7 @@ public class GUILine {
     int indexCreature = 0;
     for (int spot = 0; spot < NB_SPOTS; ++spot) {
       vbox = new VBox(); // On créé une box verticale pour aligne la créature à l'île.
-      GUISpots.add(new GUISpot(clientSharedState));
+      GUISpots.add(new GUISpot(noLine, clientSharedState));
       if (spot == 0) {
         chests.add(new GUIChest("", player1));
         vbox.setAlignment(Pos.CENTER);
@@ -100,7 +98,9 @@ public class GUILine {
     ObservableList<Node> children = gridPane.getChildren();
     for (Node node : children) {
       if (gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
-        ((VBox) node).getChildren().set(0, receptors.get(spot).getImageView());
+        ImageView imageView = receptors.get(spot).getImageView();
+        imageView.setVisible(true); // please
+        ((VBox) node).getChildren().set(0, imageView);
         break;
       }
     }

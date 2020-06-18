@@ -3,6 +3,7 @@ package gameLogic.commands.onLiveReceptors.onCreature;
 import gameLogic.commands.CommandName;
 import gameLogic.receptors.Creature;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,13 +20,13 @@ public class ChangeAttackPoints extends OnCreature {
   }
 
   @Override
-  public void execute(Creature creature) {
+  public void execute(Creature creature, ServerSharedState serverSharedState) {
     oldAP = creature.getAttackPoints();
     creature.setAttackPoints(newAP);
   }
 
   @Override
-  public void undo(Creature creature) {
+  public void undo(Creature creature, ServerSharedState serverSharedState) {
     creature.setAttackPoints(oldAP);
   }
 

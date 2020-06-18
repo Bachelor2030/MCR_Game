@@ -2,6 +2,7 @@ package gameLogic.commands.cardMovement;
 
 import gameLogic.commands.CommandName;
 import gameLogic.receptors.Player;
+import network.states.ServerSharedState;
 
 public class Draw extends CardMovement {
   public Draw() {
@@ -9,13 +10,13 @@ public class Draw extends CardMovement {
   }
 
   @Override
-  public void execute(Player player) {
+  public void execute(Player player, ServerSharedState serverSharedState) {
     card = player.drawCard();
     setCard(card);
   }
 
   @Override
-  public void undo(Player player) {
+  public void undo(Player player, ServerSharedState serverSharedState) {
     player.removeFromHand(card);
     player.addToTopDeck(card);
   }

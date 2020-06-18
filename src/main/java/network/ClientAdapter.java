@@ -1,6 +1,5 @@
 package network;
 
-import gameLogic.commands.guiCommands.GuiCommand;
 import gui.GameBoard;
 import network.jsonUtils.GUIParser;
 import network.states.ClientSharedState;
@@ -146,7 +145,7 @@ public class ClientAdapter {
 
           case Messages.JSON_TYPE_UPDATE:
             clientThreadState = ClientThreadState.SERVER_LISTENING;
-            GUIParser.getCommand(receivedAnswer, gameBoard.getGUIBoard()).execute(gameBoard);
+            GUIParser.getCommand(receivedAnswer, gameBoard.getGuiBoard()).execute(gameBoard);
             clientSharedState.setMyTurn(true);
             break;
 
