@@ -431,6 +431,7 @@ public class GameBoard extends Application {
     isGaming = true;
 
     guiBoard = new GUIBoard(new GridPane(), new VBox(), player1, player2);
+    guiBoard.displayBoard();
 
     InGameWindow inGameWindow =
         new InGameWindow(
