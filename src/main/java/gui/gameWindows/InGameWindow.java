@@ -82,9 +82,9 @@ public class InGameWindow extends GameWindow {
 
     for (GridPane gridPane : gridIslandsPanel ) {
       gridPane.getStyleClass().add("corps-gridPane");
-      RowConstraints rc = new RowConstraints();
-      rc.setPercentHeight(100 / gridIslandsPanel.size());
-      gridPane.getRowConstraints().add(rc);
+      //RowConstraints rc = new RowConstraints();
+      //rc.setPercentHeight(100 / gridIslandsPanel.size());
+      //gridPane.getRowConstraints().add(rc);
       gridPane.setAlignment(Pos.CENTER);
     }
     // Répertoire contenant nos îles
@@ -152,7 +152,6 @@ public class InGameWindow extends GameWindow {
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
-    int i = 0;
     for (GUICard card : handPlayer) {
       footerCardsPlayer.getChildren().add(card.getButton());
       card.getButton()
@@ -169,9 +168,9 @@ public class InGameWindow extends GameWindow {
                   clientSharedState.setSelectedCard(null);
                 }
               });
-
       groupButtons.getToggles().clear();
       groupButtons.getToggles().add(card.getButton());
+
     }
 
     footerCardsPlayer.setVisible(true);
