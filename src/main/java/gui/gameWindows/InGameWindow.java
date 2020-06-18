@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -45,7 +46,7 @@ public class InGameWindow extends GameWindow {
     generateBody();
   }
 
-  private void generateBody() throws IOException {
+  public void generateBody() throws IOException {
 
     if (clientSharedState.isPlayerTurn(player1.getName())) {
       // On créé l'espace d'infos du joueur 1
@@ -81,13 +82,8 @@ public class InGameWindow extends GameWindow {
 
     for (GridPane gridPane : gridIslandsPanel ) {
       gridPane.getStyleClass().add("corps-gridPane");
-      RowConstraints rc = new RowConstraints();
-      rc.setPercentHeight(100 / gridIslandsPanel.size());
-      gridPane.getRowConstraints().add(rc);
       gridPane.setAlignment(Pos.CENTER);
     }
-    // Répertoire contenant nos îles
-    // GUIBoard = new GUIBoard(gridIslandsPanel, vbox, player1, player2);
 
     Group group = new Group();
     for (int i = 0; i < gridIslandsPanel.size(); i++) {
@@ -155,7 +151,7 @@ public class InGameWindow extends GameWindow {
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
-    for (GUICard card : handPlayer) {
+    for (GUICard card : player1.getHand()) {
       footerCardsPlayer.getChildren().add(card.getButton());
       card.getButton()
           .selectedProperty()
@@ -171,7 +167,9 @@ public class InGameWindow extends GameWindow {
                   clientSharedState.setSelectedCard(null);
                 }
               });
+      groupButtons.getToggles().clear();
       groupButtons.getToggles().add(card.getButton());
+
     }
 
     footerCardsPlayer.setVisible(true);

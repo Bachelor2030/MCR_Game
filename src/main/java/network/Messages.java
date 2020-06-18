@@ -49,7 +49,7 @@ public final class Messages {
   public static final String JSON_TYPE_MP = "steps";
   public static final String JSON_TYPE_AP = "attack";
   public static final String JSON_TYPE_DESCRIPTION = "description";
-  public static final String JSON_TYPE_CARD_ID = "card id";
+  public static final String JSON_TYPE_CARD_ID = "id";
   public static final String JSON_TYPE_COMMANDS = "commands";
   public static final String JSON_TYPE_COST = "cost";
   public static final String JSON_TYPE_PLAYER = "Player";

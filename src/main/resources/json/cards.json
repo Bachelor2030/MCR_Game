@@ -8,12 +8,12 @@
       "id" : 1,
       "name" : "Pier",
       "type" : "Creature",
+      "description" : "Whomst has awakened the ancient one ?",
       "cost" : 4,
-      "card commands" : [],
       "creature" : 
       {
         "name" : "Pier",
-        "img" : "src/main/resources/design/images/creatures/bluey.gif",
+        "img" : "link to the image",
         "life" : 6,
         "steps" : 3,
         "attack" : 4
@@ -23,12 +23,12 @@
       "id" : 2,
       "name" : "Sebas-chan",
       "type" : "Creature",
+      "description" : "Prepare for trouble...",
       "cost" : 9,
-      "card commands" : [],
       "creature" : 
       {
         "name" : "Sebas-chan",
-        "img" : "src/main/resources/design/images/creatures/bunny.gif",
+        "img" : "link to the image",
         "life" : 4,
         "steps" : 2,
         "attack" : 2            
@@ -38,33 +38,22 @@
       "id" : 3,
       "name" : "Gregou",
       "type" : "Creature",
+      "description" : "... and make it double.",
       "cost" : 10,
-      "card commands" : [],
       "creature" :
       {
         "name" : "Gregou",
-        "img" : "src/main/resources/design/images/creatures/shark.gif",
+        "img" : "link to the image",
         "life" : 4,
         "steps" : 1,
         "attack" : 3
       }
     },
     {
-      "id" : 4,
-      "name" : "Black hole",
-      "type" : "Trap",
-      "cost" : 14,
-      "card commands" : [],
-      "trap" : {
-        "name" :"Black hole",
-        "commands" : ["Kill"],
-        "effect point" : 0
-      }
-    },
-    {
       "id" : 5,
       "name" : "Furnace",
       "type" : "Spell",
+      "description" : "Tempered by the fires of Hell, he arose. \nHit selected ennemy creature for 3 damages.",
       "cost" : 3,
       "card commands" : ["Hit"],
       "target" : "all",
@@ -74,6 +63,7 @@
       "id" : 5,
       "name" : "Coward",
       "type" : "Spell",
+      "description" : "Run, you coward ! \nRetreats enemy creature of 4 spots.",
       "card commands" : ["Retreat_creature"],
       "cost" : 3,
       "effect point" : 4,
@@ -83,6 +73,7 @@
       "id" : 6,
       "name" : "All powerful you",
       "type" : "Spell",
+      "description" : "UNLIMITED POWER \nAdds 6 to your action points.",
       "card commands" : ["Change_AP"],
       "cost" : 3,
       "effect point" : 6,
@@ -92,10 +83,279 @@
       "id" : 7,
       "name" : "No fighting spirit for you",
       "type" : "Spell",
+      "description" : "First you crush their spirit, then their bones. \nSubstract 1 to ennemy AP.",
       "card commands" : ["Change_AP"],
       "cost" : 3,
       "effect point" : 1,
       "target" : "one"
+    },
+    {
+      "id" : 8,
+      "name" : "As slowly as necessary",
+      "type" : "Spell",
+      "description" : "In the words of great Berset... \nSubstract 2 to creature Movement points.",
+      "card commands" : ["Change_MP"],
+      "cost" : 3,
+      "effect point" : -2,
+      "target" : "one"
+    },
+    {
+      "id" : 9,
+      "name" : "As fast as possible",
+      "type" : "Spell",
+      "description" : "Great Berset said a lot of things.\nAdds 2 to your creature Movement Points.",
+      "card commands" : ["Change_MP"],
+      "cost" : 3,
+      "effect point" : 2,
+      "target" : "one"
+    },
+    {
+      "id" : 10,
+      "name" : "Gus the cook",
+      "type" : "Creature",
+      "description" : "",
+      "cost" : 6,
+      "creature" : {
+        "name" : "Gus the cook",
+        "img" : "link to the image",
+        "life" : 4,
+        "steps" : 2,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 11,
+      "name" : "Matt the dwarf",
+      "type" : "Creature",
+      "description" : "Y'all got anymore mithril ?",
+      "cost" : 5,
+      "creature" : {
+        "name" : "Matt the dwarf",
+        "img" : "link to the image",
+        "life" : 7,
+        "steps" : 1,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 14,
+      "name" : "Feliz Coronavidad",
+      "type" : "Trap",
+      "description" : "Joy to the world, COVID is born. \nKnocks out the creature stepping on it.",
+      "cost" : 7,
+      "trap" : {
+        "name" :"Feliz Coronavidad",
+        "commands" : ["Knock_Out"],
+        "effect point" : 0
+      }
+    },
+    {
+      "id" : 15,
+      "name" : "3.43",
+      "type" : "Trap",
+      "description" : "I'm sorry, see you next year ! \nRetreats ennemy creature of 3 spots.",
+      "cost" : 4,
+      "trap" : {
+        "name" :"3.43",
+        "commands" : ["Retreat_creature"],
+        "effect point" : -3
+      }
+    },
+    {
+      "id" : 16,
+      "name" : "Clarusso the elf",
+      "type" : "Creature",
+      "description" : "The way I see it, we either die horribly or have a lot of fun.",
+      "cost" : 8,
+      "creature" : {
+        "name" : "Clarusso the elf",
+        "img" : "link to the image",
+        "life" : 7,
+        "steps" : 1,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 17,
+      "name" : "Cosmic Elodie",
+      "type" : "Creature",
+      "description" : "Into the void you go.",
+      "cost" : 8,
+      "creature" : {
+        "name" : "Cosmic Elodie",
+        "img" : "link to the image",
+        "life" : 3,
+        "steps" : 3,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 18,
+      "name" : "Loris the Vampire",
+      "type" : "Creature",
+      "description" : "Ich bin ein fahrrad.",
+      "cost" : 7,
+      "creature" : {
+        "name" : "Loris the Vampire",
+        "img" : "link to the image",
+        "life" : 2,
+        "steps" : 4,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 19,
+      "name" : "Guy-Laurent the brazilian fighter",
+      "type" : "Creature",
+      "description" : "",
+      "cost" : 6,
+      "creature" : {
+        "name" : "Guy-Laurent the brazilian fighter",
+        "img" : "link to the image",
+        "life" : 2,
+        "steps" : 1,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 20,
+      "name" : "Unicorn of death",
+      "type" : "Creature",
+      "description" : "Watch me neigh neigh.",
+      "cost" : 9,
+      "creature" : {
+        "name" : "Unicorn of death",
+        "img" : "link to the image",
+        "life" : 6,
+        "steps" : 4,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 21,
+      "name" : "Jaquette the Bear",
+      "type" : "Creature",
+      "description" : "Hello Drawacard, I am Jaquette.",
+      "cost" : 4,
+      "creature" : {
+        "name" : "Jaquette the Bear",
+        "img" : "link to the image",
+        "life" : 1,
+        "steps" : 1,
+        "attack" : 1
+      }
+    },
+    {
+      "id" : 22,
+      "name" : "Alexandre the wizard",
+      "type" : "Creature",
+      "description" : "Let me do it.",
+      "cost" : 5,
+      "creature" : {
+        "name" : "Alexandre the wizard",
+        "img" : "link to the image",
+        "life" : 2,
+        "steps" : 2,
+        "attack" : 5
+      }
+    },
+    {
+      "id" : 24,
+      "name" : "Mateo the bauf'",
+      "type" : "Creature",
+      "description" : "Ah crap, here we go again...",
+      "cost" : 6,
+      "creature" : {
+        "name" : "Mateo the bauf'",
+        "img" : "link to the image",
+        "life" : 2,
+        "steps" : 3,
+        "attack" : 4
+      }
+    },
+    {
+      "id" : 25,
+      "name" : "Alison or power of the kittens",
+      "type" : "Creature",
+      "description" : "*meow*",
+      "cost" : 4,
+      "creature" : {
+        "name" : "Alison or power of the kittens",
+        "img" : "link to the image",
+        "life" : 1,
+        "steps" : 2,
+        "attack" : 3
+      }
+    },
+    {
+      "id" : 26,
+      "name" : "Sleep my child",
+      "type" : "Spell",
+      "description" : "Here comes the sandman. \nKnocks out your opponent creature.",
+      "card commands" : ["Knock_Out"],
+      "cost" : 15,
+      "effect point" : 0,
+      "target" : "one"
+    },
+    {
+      "id" : 32,
+      "name" : "It's (not) a trap (anymore)",
+      "type" : "Spell",
+      "description" : "It was dangerous, now it is safe. Dude, trust me. \nDestroys a trap.",
+      "card commands" : ["Kill"],
+      "cost" : 15,
+      "effect point" : 0,
+      "target" : "one"
+    },
+    {
+      "id" : 27,
+      "name" : "Loris Gibbs",
+      "type" : "Creature",
+      "description" : "What Google Doc ?",
+      "cost" : 6,
+      "creature" : {
+        "name" : "Loris Gibbs",
+        "img" : "link to the image",
+        "life" : 3,
+        "steps" : 3,
+        "attack" : 3
+      }
+    },
+    {
+      "id" : 28,
+      "name" : "Guillaume, killer on wheels",
+      "type" : "Creature",
+      "description" : "Zoom zoom",
+      "cost" : 7,
+      "creature" : {
+        "name" : "Guillaume, killer on wheels",
+        "img" : "link to the image",
+        "life" : 4,
+        "steps" : 6,
+        "attack" : 2
+      }
+    },
+    {
+      "id" : 30,
+      "name" : "Draw cowboy",
+      "type" : "Spell",
+      "description" : "When you fight, you don't tell your life's story. \nDraw 2 cards.",
+      "card commands" : ["Draw", "Draw"],
+      "cost" : 15,
+      "effect point" : 0,
+      "target" : "one"
+    },
+    {
+      "id" : 31,
+      "name" : "Black hole",
+      "type" : "Trap",
+      "description" : "This little manoeuvre is gonna cost us 51 year. \nKnocks out the creature who steps on it.",
+      "cost" : 14,
+      "trap" : {
+        "name" :"Black hole",
+        "commands" : ["Kill"],
+        "effect point" : 0
+      }
     }
   ]
 }

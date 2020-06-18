@@ -71,6 +71,7 @@ public class GameBoard extends Application {
 
   private boolean serverIsOn = false;
   ServerAdapter server;
+  private InGameWindow inGameWindow;
 
   /** Thread principal du GUI. Gère l'affichage général de la "scene". */
   @Override
@@ -432,7 +433,7 @@ public class GameBoard extends Application {
 
     guiBoard = new GUIBoard(new GridPane(), new VBox(), player1, player2);
 
-    InGameWindow inGameWindow =
+    inGameWindow =
         new InGameWindow(
             racine,
             defineHeader(false),
@@ -443,7 +444,6 @@ public class GameBoard extends Application {
             clientAdapter.getClientSharedState(),
             currentStage,
             handPlayer);
-
   }
 
   public GUIBoard getGuiBoard() {
@@ -485,10 +485,20 @@ public class GameBoard extends Application {
 
   public void addCard(GUICard card) {
     player1.addToHand(card);
+    try {
+      inGameWindow.generateBody();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void removeCard(int cardID) {
     player1.removeFromHand(cardID);
+    try {
+      inGameWindow.generateBody();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void placeTrap(int line, int position) {
