@@ -443,7 +443,6 @@ public class GameBoard extends Application {
             clientAdapter.getClientSharedState(),
             currentStage,
             handPlayer);
-    guiBoard.displayBoard();
 
   }
 
