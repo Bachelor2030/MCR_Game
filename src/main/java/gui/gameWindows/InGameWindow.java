@@ -12,7 +12,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import network.states.ClientSharedState;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -50,14 +49,13 @@ public class InGameWindow extends GameWindow {
 
   private void generateBody() throws IOException {
 
-    if(clientSharedState.isPlayerTurn(player1.getName())) {
+    if (clientSharedState.isPlayerTurn(player1.getName())) {
       // On créé l'espace d'infos du joueur 1
       racine.setLeft(getPlayerInformations(player1.getName()));
 
       // On créé l'espace d'infos du joueur 2
       racine.setRight(getPlayerInformations(player2.getName()));
-    }
-    else {
+    } else {
       // On créé l'espace d'infos du joueur 1
       racine.setLeft(getPlayerInformations(player2.getName()));
 
@@ -66,8 +64,6 @@ public class InGameWindow extends GameWindow {
     }
     // On met en place le corps du texte
     racine.setCenter(displayInGameField());
-
-
 
     // On crée un footer dans le BorderPane
     racine.setBottom(footerBar());
@@ -84,6 +80,7 @@ public class InGameWindow extends GameWindow {
     corpsInstruction.getStyleClass().add("instructions-body");
     gridIslandsPanel = new GridPane(); // représente le board du jeu.
     gridIslandsPanel.getStyleClass().add("corps-gridPane");
+
     VBox vbox = new VBox(); // contient une créature et un emplacement.
 
     int numRows = 4;
@@ -106,8 +103,7 @@ public class InGameWindow extends GameWindow {
     Label isPlaying = new Label("- Playing now -");
     isPlaying.getStyleClass().add("isPlaying-label");
     informationPannelUser.getChildren().add(isPlaying);
-    if(!(clientSharedState.isPlayerTurn(labelTitle)))
-    {
+    if (!(clientSharedState.isPlayerTurn(labelTitle))) {
       isPlaying.setText("");
     }
 
@@ -123,8 +119,8 @@ public class InGameWindow extends GameWindow {
     // TODO remplace image 2 en reprenant info serveur
     else if (player2.getImage() != null) {
       ImageView imageView = new ImageView(player2.getImage());
-      imageView.setFitWidth(player1.getImage().getWidth() / 2.5);
-      imageView.setFitHeight(player1.getImage().getHeight() / 2.5);
+      imageView.setFitWidth(player2.getImage().getWidth() / 2.5);
+      imageView.setFitHeight(player2.getImage().getHeight() / 2.5);
       informationPannelUser.getChildren().add(imageView);
     }
 
@@ -136,7 +132,7 @@ public class InGameWindow extends GameWindow {
     Label informationPanelUserTitle = new Label(labelTitle);
     informationPanelUserTitle.getStyleClass().add("titre-label");
     informationPannelUser.getChildren().add(informationPanelUserTitle);
-    
+
     return informationPannelUser;
   }
   /**

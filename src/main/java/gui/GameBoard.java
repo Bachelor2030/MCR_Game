@@ -372,13 +372,14 @@ public class GameBoard extends Application {
 
       GameButton undoButton = new GameButton("Undo", "header-button");
       undoButton
-          .getButton()
-          .setOnAction(
-              actionEvent -> {
-                displayNotYourTurnAlert();
-                //TODO implement undo button
-                System.out.println("you hit the undo button...");
-              });
+              .getButton()
+              .setOnAction(
+                      actionEvent -> {
+                        displayNotYourTurnAlert();
+                        //TODO implement undo button
+                        System.out.println("you hit the undo button...");
+                      });
+
       buttons.add(validateTourButton);
       buttons.add(undoButton);
       buttons.add(abandonTourButton);
@@ -440,6 +441,7 @@ public class GameBoard extends Application {
             clientAdapter.getClientSharedState(),
             currentStage,
             handPlayer);
+
   }
 
   public GUIBoard getGuiBoard() {
