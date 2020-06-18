@@ -1,12 +1,12 @@
 package network.states;
 
 import gameLogic.Game;
+import network.ServerAdapter;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
 
 public class ServerSharedState {
-
   private ServerThreadState[] serverThreadStates;
   private String[] playerNames;
   private PlayState[] playStates;

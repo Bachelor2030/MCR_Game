@@ -63,7 +63,7 @@ public class GameBoard extends Application {
   private final String jsonPath = "src/main/resources/json/";
   private String namePlayer1 = "", IpPlayer1 = "", portPlayer1 = "";
 
-  private GUIBoard GUIBoard;
+  private GUIBoard guiBoard;
 
   private Stage currentStage;
 
@@ -425,12 +425,15 @@ public class GameBoard extends Application {
    */
   public void inGame(BorderPane racine) throws IOException {
     isGaming = true;
+
+    guiBoard = new GUIBoard(new GridPane(), new VBox(), player1, player2);
+
     InGameWindow inGameWindow =
         new InGameWindow(
             racine,
             defineHeader(false),
             gridIslandsPanel,
-            GUIBoard,
+                guiBoard,
             player1,
             player2,
             isGaming,
@@ -439,13 +442,13 @@ public class GameBoard extends Application {
             handPlayer);
   }
 
-  public GUIBoard getGUIBoard() {
-    return GUIBoard;
+  public GUIBoard getGuiBoard() {
+    return guiBoard;
   }
 
   public void place(GUIReceptor receptor, int line, int position) {
-    GUIBoard.place(receptor, line, position);
-    GUIBoard.getLine(line).getSpot(position).setOccupant(receptor);
+    guiBoard.place(receptor, line, position);
+    guiBoard.getLine(line).getSpot(position).setOccupant(receptor);
   }
 
   public ClientAdapter getClientAdapter() {
@@ -485,14 +488,14 @@ public class GameBoard extends Application {
   }
 
   public void placeTrap(int line, int position) {
-    GUIBoard.placeTrap(line, position);
+    guiBoard.placeTrap(line, position);
     DropShadow shadow = new DropShadow();
-    GUIBoard.getLine(line).getSpot(position).getButton().setEffect(shadow);
+    guiBoard.getLine(line).getSpot(position).getButton().setEffect(shadow);
     //TODO Need to test
   }
 
   public void removeTrap(int line, int position) {
-    GUIBoard.removeTrap(line, position);
-    GUIBoard.getLine(line).getSpot(position).getButton().getStyleClass().add("button-island");
+    guiBoard.removeTrap(line, position);
+    guiBoard.getLine(line).getSpot(position).getButton().getStyleClass().add("button-island");
   }
 }

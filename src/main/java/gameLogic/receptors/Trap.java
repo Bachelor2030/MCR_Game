@@ -5,6 +5,7 @@ import gameLogic.commands.Macro;
 import gameLogic.commands.playersAction.PlayersAction;
 import gameLogic.invocator.Invocator;
 import network.Messages;
+import network.states.ServerSharedState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,8 +30,8 @@ public class Trap extends Receptor implements Invocator {
   }
 
   /** Triggers the trap on the given victim */
-  public void trigger(Creature creature) {
-    command.execute(creature);
+  public void trigger(Creature creature, ServerSharedState serverSharedState) {
+    command.execute(creature, serverSharedState);
     if (position != null) position.leave();
     position = null;
   }
@@ -50,7 +51,7 @@ public class Trap extends Receptor implements Invocator {
   }
 
   @Override
-  public void playTurn(int turn, PlayersAction action) {}
+  public void playTurn(int turn, PlayersAction action, ServerSharedState serverSharedState) {}
 
   @Override
   public JSONObject toJson() {

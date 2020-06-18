@@ -2,6 +2,7 @@ package gameLogic.commands.cardMovement;
 
 import gameLogic.commands.CommandName;
 import gameLogic.receptors.Player;
+import network.states.ServerSharedState;
 
 public class Discard extends CardMovement {
   public Discard() {
@@ -9,12 +10,12 @@ public class Discard extends CardMovement {
   }
 
   @Override
-  public void execute(Player player) {
+  public void execute(Player player, ServerSharedState serverSharedState) {
     player.discardCard(card);
   }
 
   @Override
-  public void undo(Player player) {
+  public void undo(Player player, ServerSharedState serverSharedState) {
     player.giveCard(card);
   }
 }

@@ -36,7 +36,7 @@ public class KnockOutCreature extends GuiCommand {
   public void execute(GameBoard gameBoard) {
     ((GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
                 .getOccupant())
@@ -47,7 +47,7 @@ public class KnockOutCreature extends GuiCommand {
   public void undo(GameBoard gameBoard) {
     ((GUICreature)
             gameBoard
-                .getGUIBoard()
+                .getGuiBoard()
                 .getLine(position.getLineNumber())
                 .getSpot(position.getSpotNumber())
                 .getOccupant())
