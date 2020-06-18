@@ -113,7 +113,7 @@ public class GUIParser {
       for (int i = 0; i < arr.length(); i++) {
 
         JSONObject card = arr.getJSONObject(i);
-        if (card.getInt("id") == idCard) {
+        if (card.getInt(Messages.JSON_TYPE_CARD_ID) == idCard) {
           JSONObject creature = card.getJSONObject(Messages.JSON_TYPE_CREATURE);
           String name = creature.getString(Messages.JSON_TYPE_NAME);
           String img = creature.getString(Messages.JSON_TYPE_IMAGE);
@@ -143,13 +143,13 @@ public class GUIParser {
       for (int i = 0; i < arr.length(); i++) {
         JSONObject card = arr.getJSONObject(i);
 
-        int id = card.getInt("id");
-        String cardName = card.getString("name");
-        CardType cardType = CardType.getType(card.getString("type"));
-        int cardCost = card.getInt("cost");
-        // TODO String description = card.getString(Messages.JSON_TYPE_DESCRIPTION);
+        int id = card.getInt(Messages.JSON_TYPE_CARD_ID);
+        String cardName = card.getString(Messages.JSON_TYPE_NAME);
+        CardType cardType = CardType.getType(card.getString(Messages.JSON_TYPE));
+        int cardCost = card.getInt(Messages.JSON_TYPE_COST);
+        String description = card.getString(Messages.JSON_TYPE_DESCRIPTION);
 
-        cards.add(new GUICard(id, cardName, cardType, cardCost, "description"));
+        cards.add(new GUICard(id, cardName, cardType, cardCost, description));
       }
     } catch (JSONException e) {
       e.printStackTrace();
