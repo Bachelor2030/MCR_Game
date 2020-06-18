@@ -111,4 +111,8 @@ public class GUIPlayer extends GUIReceptor {
       }
     }
   }
+
+  public ArrayList<GUICard> getHand() {
+    return hand;
+  }
 }

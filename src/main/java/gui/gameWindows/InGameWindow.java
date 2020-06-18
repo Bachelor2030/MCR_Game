@@ -147,7 +147,7 @@ public class InGameWindow extends GameWindow {
     footerCardsPlayer.setPadding(new Insets(15, 15, 15, 15));
     footerCardsPlayer.getStyleClass().add("footer-header-hbox");
 
-    for (GUICard card : handPlayer) {
+    for (GUICard card : player1.getHand()) {
       footerCardsPlayer.getChildren().add(card.getButton());
       card.getButton()
           .selectedProperty()
