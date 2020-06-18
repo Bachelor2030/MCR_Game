@@ -31,7 +31,7 @@ public class InstructionWindow extends GameWindow {
     try (BufferedReader reader =
         new BufferedReader(new FileReader(new File("src/main/resources/utils/instructions.txt")))) {
 
-      while ((line = reader.readLine()) != null) fullText += line;
+      while ((line = reader.readLine()) != null) fullText += line + "\n";
 
     } catch (IOException e) {
       e.printStackTrace();

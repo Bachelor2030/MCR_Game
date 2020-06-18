@@ -98,9 +98,7 @@ public class GUILine {
     ObservableList<Node> children = gridPane.getChildren();
     for (Node node : children) {
       if (gridPane.getRowIndex(node) == noLine && gridPane.getColumnIndex(node) == spot) {
-        ImageView imageView = receptors.get(spot).getImageView();
-        imageView.setVisible(true); // please
-        ((VBox) node).getChildren().set(0, imageView);
+        ((ImageView)((VBox)node).getChildren().get(0)).setImage(receptors.get(spot).getImageView().getImage());
         break;
       }
     }
