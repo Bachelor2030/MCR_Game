@@ -1,6 +1,5 @@
 package gui;
 
-import gameLogic.commands.guiCommands.EndGame;
 import gui.board.GUIBoard;
 import gui.buttons.GameButton;
 import gui.gameWindows.*;
