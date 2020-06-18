@@ -9,7 +9,6 @@ import java.util.LinkedList;
 public class ServerSharedState {
   private ServerThreadState[] serverThreadStates;
   private String[] playerNames;
-  private PlayState[] playStates;
   private LinkedList<JSONObject>[] jsonToSend;
   private boolean[] intendToSendJson;
 
@@ -28,10 +27,6 @@ public class ServerSharedState {
     playerNames = new String[2];
     playerNames[0] = null;
     playerNames[1] = null;
-
-    playStates = new PlayState[2];
-    playStates[0] = PlayState.WAIT_PLAY;
-    playStates[1] = PlayState.WAIT_PLAY;
 
     jsonToSend = new LinkedList[2];
     jsonToSend[0] = new LinkedList<>();
@@ -91,14 +86,6 @@ public class ServerSharedState {
 
   public synchronized void setWorkerState(int playerId, ServerThreadState serverThreadState) {
     this.serverThreadStates[workerId(playerId)] = serverThreadState;
-  }
-
-  public synchronized void setPlayStates(int playerId, PlayState playState) {
-    playStates[workerId(playerId)] = playState;
-  }
-
-  public synchronized PlayState getPlayStates(int playerId) {
-    return playStates[workerId(playerId)];
   }
 
   public synchronized int getPlayerCount() {

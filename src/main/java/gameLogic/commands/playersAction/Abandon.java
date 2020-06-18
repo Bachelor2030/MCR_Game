@@ -4,6 +4,7 @@ import gameLogic.commands.CommandName;
 import gameLogic.receptors.Player;
 import network.Messages;
 import network.states.ServerSharedState;
+import network.states.ServerThreadState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +31,9 @@ public class Abandon extends PlayersAction {
       jsonObject.put(Messages.JSON_TYPE_LOSE_WIN, "W");
       serverSharedState.pushJsonToSend(jsonObject, other);
       serverSharedState.setIntendToSendJson(other, true);
-
+/*
+      serverSharedState.setWorkerState(player.getId(), ServerThreadState.CLIENT_LISTENING);
+      serverSharedState.setWorkerState(other, ServerThreadState.SERVER_LISTENING);*/
     } catch (JSONException e) {
       e.printStackTrace();
     }
