@@ -357,17 +357,20 @@ public class GameBoard extends Application {
           .setOnAction(
               actionEvent -> {
                 displayNotYourTurnAlert();
-                if (!clientAdapter.getClientSharedState().isMyTurn()) {
-                  return;
-                }
                 // TODO : ajouter un pop-up qui demander si on veut vraiment abandonner.
-                EndGame endGame = new EndGame();
-                endGame.setPlayerName(player1.getName());
-                endGame.setPlayerState('L');
-
-                // TODO send this to backend
-                // System.out.println(endGame.toJson());
-                System.out.println("you hit the abandon button...");
+                if (!clientAdapter.getClientSharedState().isMyTurn()) {
+                  System.out.println("Please wait for your turn to validate it");
+                  return;
+                } else {
+                  JSONObject json = null;
+                  try {
+                    json = JsonClient.jsonType(Messages.JSON_TYPE_GAME_END);
+                  } catch (JSONException e) {
+                    e.printStackTrace();
+                  }
+                  clientAdapter.getClientSharedState().pushJsonToSend(json);
+                  clientAdapter.getClientSharedState().setIntendToSendJson(true);
+                }
               });
 
       GameButton undoButton = new GameButton("Undo", "header-button");

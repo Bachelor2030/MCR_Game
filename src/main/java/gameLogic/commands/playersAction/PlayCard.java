@@ -39,6 +39,19 @@ public class PlayCard extends PlayersAction {
     if (player.playCard(cardToPlay, spot, serverSharedState)) {
       player.addLastMoves(cardToPlay.getCommand().getCommands());
     }
+
+    try {
+      JSONObject jsonObject = new JSONObject();
+      jsonObject.put(Messages.JSON_TYPE, Messages.JSON_TYPE_UPDATE);
+      jsonObject.put(Messages.JSON_TYPE_COMMAND, CommandName.REMOVE_CARD);
+      jsonObject.put(Messages.JSON_TYPE_CARD_ID, cardToPlay.getID());
+
+      serverSharedState.pushJsonToSend(jsonObject, serverSharedState.getPlayingId());
+      serverSharedState.setIntendToSendJson(serverSharedState.getPlayingId(), true);
+
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

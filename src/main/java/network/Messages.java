@@ -59,6 +59,7 @@ public final class Messages {
   public static final String JSON_TYPE_COMMAND = "command";
   public static final String JSON_TYPE_POINTS_TYPE = "point type";
   public static final String JSON_TYPE_CREATURE = "creature";
+  public static final String JSON_TYPE_LOSE_WIN = "end game status";
 
     private Messages() {
     throw new IllegalStateException("Can't instantiate the messages class");
